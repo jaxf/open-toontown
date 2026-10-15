@@ -311,23 +311,12 @@ def disk(root,name,center,rx,ry,texture,z=.07):
 
 
 def height(x,y,street):
-    from toontown.expansion.Services import keep_scenery
-    if not keep_scenery(19100 if street else 19000,x,y):return 0
-    if street:
-        # Banks rise behind the shop fronts. The road corridor stays level.
-        edge=max(0,abs(x)-82)/44
-    else:
-        edge=max(0,sqrt((x/1.04)**2+(y-.0)**2)-101)/45
-        # Clear the two tunnel corridors all the way through the terrain bank.
-        south=exp(-(x/28)**4) if y < -65 else 0
-        west=exp(-((y-20)/27)**4) if x < -65 else 0
-        edge*=1-max(south,west)
-    return min(26,edge**1.3*(10+5*sin(x/34)+4*cos(y/29)))
+    return 0.0
 
 
 def terrain(street=False):
     root=NodePath('root-route-terrain' if street else 'acorn-terrain')
-    mesh=Mesh('sculpted-grass-banks',GRASS)
+    mesh=Mesh('woodland-earth',DIRT)
     # Spatially separated collision patches avoid testing every terrain triangle
     # against each moving Toon on every frame.
     floor_patches={}
@@ -368,6 +357,9 @@ def terrain(street=False):
             ribbon(root,name+'-path',catmull(points),w,DIRT,.09,edges=True)
     from toontown.expansion.Services import add_paths
     add_paths(root,19100 if street else 19000,sys.modules[__name__],STONE)
+    if not street:
+        from tools.world_dressing import perimeter
+        perimeter(root,19000,sys.modules[__name__])
     # Invisible barrier beyond the scenery; the playable paths never touch it.
     walls=collider(root,'forest-boundary',1)
     for x,y,w,d in ((xmin,0,1,ymax-ymin),(xmax,0,1,ymax-ymin),

@@ -33,7 +33,7 @@ def reserve_footprints(path, zone):
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     for zone in sorted(E.ALL_ZONES):
-        folder='acorn' if zone in (19000,19100) else 'expansion'
+        folder='acorn' if zone==19000 else 'expansion'
         name=E.zone_name(zone).lower().replace(' ','_')+'.dna'
         reserve_footprints(ROOT/'assets'/folder/'dna'/name,zone)
     storage=[]

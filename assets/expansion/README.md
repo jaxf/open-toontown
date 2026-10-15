@@ -1,9 +1,9 @@
 # Expanded Toontown art kit
 
 All five expansion playgrounds and eight connecting streets now use native DNA
-layouts. This kit adds the four remaining playgrounds and seven remaining roads;
-Acorn Acreside and Root Route use the woodland kit in `../acorn`. All 13 areas
-now include native Toon HQ, gag-shop and trolley service DNA.
+layouts. Acorn Acreside retains the woodland kit in `../acorn`; Root Route now
+uses `dna/root_route.dna` and the shared world palette. Every exterior has a Toon
+HQ. Gag shops and trolleys appear only in the five playgrounds.
 
 | Location | Design |
 | --- | --- |
@@ -19,12 +19,16 @@ now include native Toon HQ, gag-shop and trolley service DNA.
 | Stagecoach Street | Studio storefronts transitioning into western shops and mesas |
 | Detour Drive | Long desert street, timber sidewalks and western porches |
 
-The seven roads span 600–760 units between tunnel mouths before accounting for
-their curves. Each has a distinct centerline, two native tunnel approaches,
-continuous shop rows, broad sidewalks, lamps and small rest courts. Shop names
-are scenery signs. Every area also has a separate functional gag shop, quest HQ
-and trolley using the original distributed service classes. Cog planners and
-battles remain unimplemented in these peaceful areas.
+The eight roads span roughly 930–1,190 units between tunnel mouths before their
+curves are included. Each has its own centerline, paired native tunnel approaches,
+shop rows, sidewalks, lamps and rest courts. Themed fences surround playgrounds
+and screen building backs; services retain open door and boarding approaches.
+Grounded props sit on level terrain, with distinct surface materials per theme.
+
+Native DistributedSuitPlannerAI populations follow generated, connected, two-way
+lanes in `patrols/`. Streets use the stock battle UI/state handlers; decorative
+storefronts remain scenery and cannot be taken over. These gameplay changes still
+require a live custom-engine client/AI walkthrough.
 
 ## Screenshots
 
@@ -76,7 +80,7 @@ those centerlines require intentionally regenerating terrain and placements.
 The map opens directly on one illustrated world. Original playgrounds, Cog HQs,
 MiniGolf and all five expansion neighborhoods have labeled travel buttons.
 There is no additional map/reveal button. Hovering a new neighborhood shows its
-connecting street names and emphasizes those routes. Current location, locked
+connecting street names, without connecting lines. Current location, locked
 travel, unavailable districts and safe mode remain explicit; the existing server
 teleport-access check is preserved. Home/playground return buttons stay available
 in the book when permitted. The separate admin panel still provides direct street
@@ -102,20 +106,26 @@ Per the requested workflow, no automated test suite was run for this update.
 Screenshots were rendered for visual iteration. Live multiplayer travel and the
 custom-engine runtime still need an in-game walkthrough.
 
-## Native services in every new area
+## Services and rebuilding
 
-All five playgrounds and all eight streets have a Toon HQ with four quest officers,
-a gag shop with two clerks, paired interior/exterior doors, and a multiplayer
-trolley. The AI creates the original HQBuildingAI, GagshopBuildingAI and
-DistributedTrolleyAI classes. NPC templates retain stock quest/shop behavior.
-Service interiors occupy exterior + 519/520; they are static reserved zones.
+All five playgrounds and eight streets have a native Toon HQ with four quest
+officers. Only playgrounds have a gag shop with two clerks and a multiplayer
+trolley. Native interior/exterior door wiring and minigame return routing remain.
+Interiors reserve exterior + 520 for HQs and exterior + 519 for playground shops.
 
-Street trolleys use the parent neighborhood's stock minigame theme/difficulty,
-and return to the street where the player boarded. Gag shops use the matching
-stock interior palette. Placement and service aprons are shared by model authoring
-and DNA generation, with scenery cleared from door and platform approaches.
+From the game root, deliberately regenerating layouts uses this order:
 
-The preview reader displays native service meshes and static door placement.
-Only the custom C++ DNA loader builds the runtime door triggers. Screenshots do
-not demonstrate quest, shopping, boarding, reward or return-trip interactions;
-those still require a live custom-engine client/AI walkthrough.
+```sh
+python tools/build_world_models.py
+python tools/author_world_layouts.py
+python -m tools.ground_world
+python tools/author_cog_patrols.py
+python tools/preview_world.py
+```
+
+`world_dressing.py` defines each fence treatment and the shared prop kits.
+`ground_world.py` bakes grounded aliases, so rerun it after layout authoring.
+For Acorn terrain changes, build `build_acorn_models.terrain()` and save it as
+`acorn_terrain`; the legacy Root Route models in that kit are not used at runtime.
+Controls live in `otp/avatar/ToonWalker.py`: Shift accelerates normal walking and
+physical left/right arrow polling preserves air steering during Ctrl-jumps.

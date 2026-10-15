@@ -165,7 +165,7 @@ def add_tunnels(parent, zone):
 
 
 def build_scene(zone, dna_store=None):
-    if zone in (E.ACORN, 19100):
+    if zone == E.ACORN:
         from .AcornDNA import load_scene
     else:
         from .WorldDNA import load_scene

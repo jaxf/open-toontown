@@ -44,12 +44,12 @@ prop "destination-sign" [
 ]
 prop "neighborhood-landmark" [
  code [ "clock_tower" ]
- pos [ -48.0000 45.0000 0.0000 ]
+ pos [ -48.0000 45.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 node "storefront-62000-0" [
- pos [ -84.0000 -9.0000 0.0000 ]
+ pos [ -84.0000 -9.0000 0.12 ]
  nhpr [ 100.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
 prop "painted-native-shop" [
@@ -66,7 +66,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-62000-1" [
- pos [ -94.0000 30.0000 0.0000 ]
+ pos [ -94.0000 30.0000 0.12 ]
  nhpr [ 75.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
 prop "painted-native-shop" [
@@ -83,7 +83,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-62000-2" [
- pos [ -80.0000 87.0000 0.0000 ]
+ pos [ -80.0000 87.0000 0.12 ]
  nhpr [ 30.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
 prop "painted-native-shop" [
@@ -100,7 +100,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-62000-3" [
- pos [ -36.0000 112.0000 0.0000 ]
+ pos [ -36.0000 112.0000 0.12 ]
  nhpr [ 5.0000 0 0 ]
  scale [ 1.0400 1.0400 1.0400 ]
 prop "painted-native-shop" [
@@ -118,7 +118,7 @@ prop "shop-name" [
 ]
 
 node "storefront-62000-5" [
- pos [ 63.0000 111.0000 0.0000 ]
+ pos [ 63.0000 111.0000 0.12 ]
  nhpr [ -35.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
 prop "painted-native-shop" [
@@ -135,7 +135,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-62000-6" [
- pos [ 109.0000 65.0000 0.0000 ]
+ pos [ 109.0000 65.0000 0.12 ]
  nhpr [ -85.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
 prop "painted-native-shop" [
@@ -153,7 +153,7 @@ prop "shop-name" [
 ]
 
 node "storefront-62000-8" [
- pos [ 79.0000 -84.0000 0.0000 ]
+ pos [ 79.0000 -84.0000 0.12 ]
  nhpr [ -150.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
 prop "painted-native-shop" [
@@ -170,7 +170,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-62000-9" [
- pos [ -21.0000 -88.0000 0.0000 ]
+ pos [ -21.0000 -88.0000 0.12 ]
  nhpr [ 140.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
 prop "painted-native-shop" [
@@ -188,106 +188,245 @@ prop "shop-name" [
 ]
 prop "tree-0" [
  code [ "dream_tree" ]
- pos [ -133.0000 109.0000 0.0000 ]
+ pos [ -133.0000 109.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 prop "tree-1" [
  code [ "dream_tree" ]
- pos [ -104.0000 80.0000 0.0000 ]
+ pos [ -104.0000 80.0000 0.12 ]
  nhpr [ 41.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 
 prop "tree-3" [
  code [ "dream_tree" ]
- pos [ 39.0000 117.0000 0.0000 ]
+ pos [ 39.0000 117.0000 0.12 ]
  nhpr [ 123.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 prop "tree-4" [
  code [ "dream_tree" ]
- pos [ 107.0000 101.0000 0.0000 ]
+ pos [ 107.0000 101.0000 0.12 ]
  nhpr [ 164.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 
 prop "tree-6" [
  code [ "dream_tree" ]
- pos [ 70.0000 -105.0000 0.0000 ]
+ pos [ 70.0000 -105.0000 0.12 ]
  nhpr [ 246.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 prop "tree-7" [
  code [ "dream_tree" ]
- pos [ -18.0000 -62.0000 0.0000 ]
+ pos [ -18.0000 -62.0000 0.12 ]
  nhpr [ 287.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 
 prop "tree-9" [
  code [ "dream_tree" ]
- pos [ -132.0000 -12.0000 0.0000 ]
+ pos [ -132.0000 -12.0000 0.12 ]
  nhpr [ 369.0000 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
 
 prop "plaza-lamp-0" [
  code [ "lamp_DL" ]
- pos [ 9.0000 -105.0000 0.0000 ]
+ pos [ 9.0000 -105.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-0" [
  code [ "bench" ]
- pos [ 14.0000 -101.0000 0.0000 ]
+ pos [ 14.0000 -101.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "plaza-lamp-1" [
  code [ "lamp_DL" ]
- pos [ 72.0000 -49.0000 0.0000 ]
+ pos [ 72.0000 -49.0000 0.12 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "plaza-lamp-2" [
  code [ "lamp_DL" ]
- pos [ 39.0000 -8.0000 0.0000 ]
+ pos [ 39.0000 -8.0000 0.12 ]
  nhpr [ 35.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-2" [
  code [ "bench" ]
- pos [ 44.0000 -4.0000 0.0000 ]
+ pos [ 44.0000 -4.0000 0.12 ]
  nhpr [ 35.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 
 prop "plaza-lamp-4" [
  code [ "lamp_DL" ]
- pos [ -61.0000 65.0000 0.0000 ]
+ pos [ -61.0000 65.0000 0.12 ]
  nhpr [ 30.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-4" [
  code [ "bench" ]
- pos [ -56.0000 69.0000 0.0000 ]
+ pos [ -56.0000 69.0000 0.12 ]
  nhpr [ 30.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 
 prop "garden-table-0" [
  code [ "garden_table" ]
- pos [ 60.0000 -30.0000 0.0000 ]
+ pos [ 60.0000 -30.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "garden-table-1" [
  code [ "garden_table" ]
- pos [ -43.0000 12.0000 0.0000 ]
+ pos [ -43.0000 12.0000 0.12 ]
  nhpr [ 34.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 
+prop "garden-cluster-0" [
+ code [ "planter_62000" ]
+ pos [ -74.1018 113.1040 0.12 ]
+ nhpr [ 22.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-0" [
+ code [ "bench" ]
+ pos [ -66.1018 115.1040 0.12 ]
+ nhpr [ 227.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-1" [
+ code [ "garden_table" ]
+ pos [ 122.5278 -116.5843 0.12 ]
+ nhpr [ 19.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-2" [
+ code [ "dream_tree" ]
+ pos [ 27.7474 -67.6271 0.12 ]
+ nhpr [ 10.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-3" [
+ code [ "planter_62000" ]
+ pos [ 20.8587 16.3651 0.12 ]
+ nhpr [ 245.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-3" [
+ code [ "bench" ]
+ pos [ 28.8587 18.3651 0.12 ]
+ nhpr [ 207.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-4" [
+ code [ "garden_table" ]
+ pos [ 49.3706 -60.8349 0.12 ]
+ nhpr [ 51.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-5" [
+ code [ "dream_tree" ]
+ pos [ -109.1713 114.4056 0.12 ]
+ nhpr [ 107.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-6" [
+ code [ "planter_62000" ]
+ pos [ 76.4685 91.4890 0.12 ]
+ nhpr [ 124.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-6" [
+ code [ "bench" ]
+ pos [ 84.4685 93.4890 0.12 ]
+ nhpr [ 321.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-7" [
+ code [ "garden_table" ]
+ pos [ -33.0847 -42.5448 0.12 ]
+ nhpr [ 72.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-8" [
+ code [ "dream_tree" ]
+ pos [ 46.4821 19.0377 0.12 ]
+ nhpr [ 123.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-9" [
+ code [ "planter_62000" ]
+ pos [ 68.0064 64.2472 0.12 ]
+ nhpr [ 321.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-9" [
+ code [ "bench" ]
+ pos [ 76.0064 66.2472 0.12 ]
+ nhpr [ 154.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-10" [
+ code [ "garden_table" ]
+ pos [ -63.4785 -42.9573 0.12 ]
+ nhpr [ 225.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-11" [
+ code [ "dream_tree" ]
+ pos [ 99.5536 -61.0140 0.12 ]
+ nhpr [ 190.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-12" [
+ code [ "planter_62000" ]
+ pos [ 72.4741 13.4334 0.12 ]
+ nhpr [ 350.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-12" [
+ code [ "bench" ]
+ pos [ 80.4741 15.4334 0.12 ]
+ nhpr [ 196.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-13" [
+ code [ "garden_table" ]
+ pos [ -122.6129 64.2848 0.12 ]
+ nhpr [ 165.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-14" [
+ code [ "dream_tree" ]
+ pos [ -90.4438 53.3406 0.12 ]
+ nhpr [ 119.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-15" [
+ code [ "planter_62000" ]
+ pos [ -52.1613 91.4983 0.12 ]
+ nhpr [ 334.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+
+prop "garden-cluster-16" [
+ code [ "garden_table" ]
+ pos [ 126.9847 -52.8174 0.12 ]
+ nhpr [ 73.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-17" [
+ code [ "dream_tree" ]
+ pos [ -76.3579 -77.2232 0.12 ]
+ nhpr [ 330.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
 ]
 ]

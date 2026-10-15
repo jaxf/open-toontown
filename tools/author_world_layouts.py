@@ -79,7 +79,7 @@ def street(zone):
             if i%3==0:
                 parts.append(scenery(theme,idx+200,(x+nx*side*71,y+ny*side*71,0),h))
             if theme==64000 and i%4==0:
-                parts.append(prop('sandstone-'+str(idx),'mesa',(x+nx*side*103,y+ny*side*103,1),h,1.3))
+                parts.append(prop('sandstone-'+str(idx),'mesa',(x+nx*side*103,y+ny*side*103,0),h,1.3))
     return ''.join(parts)
 
 
@@ -142,6 +142,23 @@ def playground(zone):
     elif zone==62000:
         for i,(x,y) in enumerate([(60,-30),(-43,12),(36,79)]):
             parts.append(prop('garden-table-'+str(i),'garden_table',(x,y,0),i*34,1.2))
+    # Deterministic scattered clusters: retain clear doors, paths and landmark views.
+    import random,re
+    from toontown.expansion.Services import keep_scenery
+    rng=random.Random(zone)
+    occupied=[tuple(map(float,m)) for m in re.findall(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]', ''.join(parts))]
+    added=0
+    for attempt in range(250):
+        x,y=rng.uniform(-130,130),rng.uniform(-118,125)
+        if not keep_scenery(zone,x,y):continue
+        if any((x-a)**2+(y-b)**2<21**2 for a,b in occupied):continue
+        if abs(x)<20 or (zone==61000 and x>0 and y>30):continue
+        kit={61000:['planter_61000','barrel','palm'],62000:['planter_62000','garden_table','dream_tree'],
+             63000:['planter_63000','movie_camera','music_planter'],64000:['planter_64000','cactus','barrel']}[zone]
+        parts.append(prop('garden-cluster-'+str(added),kit[added%3],(x,y,.12),rng.randrange(360),1.2 if added%3 else 1))
+        if added%3==0:parts.append(prop('cluster-bench-'+str(added),'bench',(x+8,y+2,.12),rng.randrange(360)))
+        occupied.append((x,y));added+=1
+        if added>=18:break
     return ''.join(parts)
 
 

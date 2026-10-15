@@ -14,9 +14,7 @@ PLAYGROUND_SERVICES={
 
 
 def street_court(zone):
-    if zone==19100:
-        points=curve([(0,-155),(0,-115),(30,-75),(40,-35),(35,5),(-15,50),(-25,95),(-10,135),(0,165)])
-    else:points=curve(ROADS[zone])
+    points=curve(ROADS[zone])
     i=min(range(len(points)),key=lambda i:abs(points[i][1]))
     x,y=points[i]
     # Place the bay on the inside of the world footprint, away from the banks.
@@ -29,7 +27,7 @@ def placements(zone):
         result=PLAYGROUND_SERVICES[zone]
     else:
         (x,y),_=street_court(zone)
-        result=dict(hq=(x-25,y+27,0,0),gagshop=(x+24,y+27,0,0),trolley=(x-15,y-40,0,0))
+        result=dict(hq=(x,y+15,0,0))
     # Stock service facades face +Y; trolley platforms face -Y.
     return {kind:(x,y,z,h if kind=='trolley' else h+180)
             for kind,(x,y,z,h) in result.items()}
@@ -61,6 +59,7 @@ def register_npcs(npc_dict):
     templates=[('gagshop',2006),('gagshop',2011),('hq',2007),('hq',2008),('hq',2009),('hq',2010)]
     for index,zone in enumerate(sorted(E.ALL_ZONES)):
         for offset,(kind,source) in enumerate(templates):
+            if kind not in placements(zone):continue
             npc_id=50000+index*10+offset
             old=npc_dict[source]
             name=(['Chuckles','Giggles','Officer Oak','Officer Olive','Officer Penny','Officer Pip'][offset])
@@ -73,7 +72,7 @@ def add_paths(root,zone,model_tools,paving):
     A=model_tools
     if zone not in PLAYGROUND_SERVICES:
         center,road=street_court(zone)
-        A.disk(root,'service-court',center,62,63,paving,.105)
+        A.disk(root,'service-court',center,35,40,paving,.105)
         A.ribbon(root,'service-court-approach',[road,center],15,paving,.11)
     else:
         anchors={19000:(0,-20),61000:(-37,-12),62000:(20,0),

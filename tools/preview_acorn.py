@@ -38,8 +38,8 @@ def main():
     shots=[
         (19000,'acorn',(195,-275,215),(0,12,5)),
         (19000,'acorn-walk',(0,-102,9),(0,38,24)),
-        (19100,'root-route',(210,-310,260),(0,5,0)),
-        (19100,'root-route-walk',(0,-134,9),(28,-60,14)),
+        (19100,'root-route',(370,-690,520),(0,0,0)),
+        (19100,'root-route-walk',(0,-503,9),(41,-423,14)),
     ]
     destination=ROOT/'docs/previews'
     destination.mkdir(exist_ok=True)

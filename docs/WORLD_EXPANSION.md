@@ -1,3 +1,15 @@
+## Street and playground finishing pass
+
+- Streets have only Toon HQs; gag-shop interiors, clerks and trolleys are playground-only.
+- Distinct perimeter fences and screened building/service yards have collision walls.
+- Woodland earth, coastal sand, purple garden brick, studio paving and desert dust replace generic grass.
+- Grounded prop aliases share level walking surfaces; deterministic clusters add benches, planters, palms, barrels, cameras and cacti.
+- All eight streets have longer curved centerlines and native server-owned Cog patrols (8–14 per street). Native battle states/UI are connected; decorative buildings cannot be taken over.
+- Hold Shift for 1.65× walking speed. Physical arrow polling preserves turning and the following camera while Ctrl-jumping.
+- The world map no longer draws connecting route lines.
+
+Scenes were rendered for visual review; no test suites were run. The custom Mac engine is unavailable on this host, so the client/AI gameplay changes still need a live walkthrough. Restart the complete local stack after pulling.
+
 ## Full world art update
 
 The remaining four playgrounds and seven streets have been rebuilt with native
@@ -12,7 +24,7 @@ rendered for visual iteration; a live custom-engine walkthrough remains outstand
 
 Five new neighborhoods and eight connecting promenades extend the existing
 world. This is a first playable implementation for layout testing, not a finished
-quest/content expansion. New areas are peaceful zones with authored native DNA scenery,
+quest/content expansion. New areas have authored native DNA scenery, native street Cog patrols,
 landmarks, collisions, music, and two-way native tunnel travel.
 
 **Art rebuild:** Acorn Acreside and Root Route now load editable native DNA,
@@ -20,7 +32,7 @@ textured Toontown storefronts and props, and custom modeled terrain and a hollow
 Great Oak. Root Route has a curved road, sidewalks and pocket courtyards. All remaining neighborhoods and streets now use the expanded art kit as well.
 See [the Acorn art kit and editor instructions](../assets/acorn/README.md).
 
-![Acorn Acreside rebuilt](previews/acorn-walk.png)
+![Acorn Acreside rebuilt](previews/acorn-acreside-walk.png)
 ![Root Route rebuilt](previews/root-route-walk.png)
 
 ![Expansion route map](previews/expansion-map.png)
@@ -117,10 +129,10 @@ an in-game pass using the custom engine. Keep the PR in draft until that pass.
 
 ## Remaining content work
 
-Every new playground and street now includes a native Toon HQ, gag shop and
-trolley, with quest officers, clerks, working door wiring and stock minigame flow.
+Every new area has a Toon HQ. Gag shops and trolleys are playground-only, with
+quest officers, clerks, door wiring and stock minigame flow.
 Other decorative shop fronts remain scenery. New bespoke NPC task chains, Cog
-patrols/buildings, fishing gameplay, ambient animations, custom music and further
+buildings, fishing gameplay, ambient animations, custom music and further
 art/terrain polish remain future work. The
 lagoon and creek are visual scenery. Existing game content is unchanged.
 

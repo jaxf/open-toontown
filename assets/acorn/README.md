@@ -5,15 +5,16 @@ modules, and custom modeled terrain, a hollow Great Oak, benches, fences, signs,
 and solid building backs. The remaining expansion locations now use the companion
 [expanded world art kit](../expansion/README.md).
 
-![Acorn Acreside at walking height](../../docs/previews/acorn-walk.png)
+![Acorn Acreside at walking height](../../docs/previews/acorn-acreside-walk.png)
 ![Root Route at walking height](../../docs/previews/root-route-walk.png)
 
 ## Layouts and models
 
 - `dna/acorn_acreside.dna`: woodland playground, loop path, eight storefronts,
   picnic areas, forest perimeter, and two tunnel exits.
-- `dna/root_route.dna`: winding street with twelve storefronts, sidewalks, two
-  small courtyards, and tunnels to Daisy Gardens and Acorn Acreside.
+- `../expansion/dna/root_route.dna`: current extended Root Route, using the WX
+  palette and shared fence/prop kit. The old local Root Route DNA is retained as an
+  earlier art source and is no longer loaded by the game.
 - `dna/storage_acorn.dna`: model aliases used by both layouts.
 - `models/*.bam.pz`: compressed, ready-to-load Panda3D models. Models reference
   textures in the existing resources checkout; no resource repository changes.
@@ -26,8 +27,7 @@ used by the running game. The C++ loader/editor GUI need the custom engine.
 
 Stock landmark modules are used as scenery props, with added doors, signs,
 building backs and collision volumes. They do not yet have working interiors or
-NPCs. Root Route remains a peaceful exploration street; Cog paths and battle
-cells have not been added. Tree canopies use textured billboard foliage, matching
+NPCs. Root Route now has native Cog patrol paths and battle cells in the expansion kit. Tree canopies use textured billboard foliage, matching
 the original game's tree convention; trunks, roots and branches are custom mesh.
 
 ## Open in OpenLevelEditor
@@ -48,7 +48,7 @@ the original game's tree convention; trunks, roots and branches are custom mesh.
    editor setup. Keep the original stock resources configured as its README
    requires; the Acorn kit references those assets by their usual phase paths.
 4. Start the editor with its compatible Python: `python ttle.py --hoods AC`.
-5. Open `assets/acorn/dna/acorn_acreside.dna` or `root_route.dna` from this repo.
+5. Open `assets/acorn/dna/acorn_acreside.dna` from this repo. Open Root Route with WX and the expansion layout instead.
    Save into that same file, then reload the game location to see the change.
 
 Use the built-in `AC` storage aliases for placing the kit's models. Storefronts

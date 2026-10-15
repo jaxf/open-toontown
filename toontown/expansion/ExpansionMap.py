@@ -1,10 +1,10 @@
 """The single illustrated Shtiker world map, including expansion destinations."""
 from pathlib import Path
-from panda3d.core import LineSegs, TextNode, Texture, Filename
+from panda3d.core import TextNode, Texture, Filename
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectButton, DGG
 from toontown.toonbase.ToonBaseGlobal import base
 from . import ExpansionGlobals as E
-from .WorldMapData import PINS, NAMES, map_point, road_points, STOCK_LINKS, stock_points
+from .WorldMapData import PINS, NAMES, map_point
 
 
 class ExpansionMap(DirectFrame):
@@ -14,7 +14,6 @@ class ExpansionMap(DirectFrame):
         self.travel=travel
         self.safeMode=False
         self.buttons={}
-        self.routes={}
         self.available=set(PINS)
         font=base.loader.loadFont('phase_3/models/fonts/MickeyFont')
         button_model=base.loader.loadModel('phase_3/models/gui/quit_button')
@@ -27,24 +26,6 @@ class ExpansionMap(DirectFrame):
         self.title=DirectLabel(parent=self,text='TOONTOWN',relief=None,
             text_font=font,text_scale=.065,text_fg=(.20,.32,.33,1),text_shadow=(1,.98,.84,1),
             text_shadowOffset=(.04,.04),pos=(0,0,.725))
-        for start,end,bend in STOCK_LINKS:
-            for width,color in [(3,(.33,.33,.25,.48)),(1.5,(1,.96,.79,.85))]:
-                line=LineSegs();line.setThickness(width);line.setColor(*color)
-                for i,(x,z) in enumerate(stock_points(start,end,bend)):
-                    (line.moveTo if i==0 else line.drawTo)(x,0,z)
-                node=self.attachNewNode(line.create())
-                node.setDepthTest(False);node.setDepthWrite(False)
-        for street in E.STREETS:
-            route=self.attachNewNode('map-road-'+str(street))
-            points=road_points(street)
-            # Cream center and muted ochre border echo the original painted map.
-            for width,color in [(5,(.37,.32,.22,.8)),(2.5,(1,.90,.58,.95))]:
-                line=LineSegs();line.setThickness(width);line.setColor(*color)
-                for i,(x,z) in enumerate(points):
-                    (line.moveTo if i==0 else line.drawTo)(x,0,z)
-                route.attachNewNode(line.create())
-            route.setDepthTest(False);route.setDepthWrite(False)
-            self.routes[street]=route
         for zone,point in PINS.items():
             x,z=map_point(point)
             name=NAMES[zone]
@@ -96,12 +77,9 @@ class ExpansionMap(DirectFrame):
         elif zone not in self.access:status='Discover this neighborhood to unlock teleporting.'
         else:status='Click to teleport.'
         self.caption['text']=NAMES[zone]+' — '+status+('\nTunnels: '+roads if roads else '')
-        for street,route in self.routes.items():
-            route.setColorScale(1,1,1,1 if zone in E.STREETS[street][2:4] else .25)
 
     def restore_caption(self,event=None):
         self.caption['text']=getattr(self,'default_caption','Select a neighborhood.')
-        for route in self.routes.values():route.clearColorScale()
 
     def choose(self,zone):
         self.describe(zone)

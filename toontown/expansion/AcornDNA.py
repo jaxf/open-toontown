@@ -14,8 +14,7 @@ ASSETS = Path(__file__).resolve().parents[2] / 'assets/acorn'
 # The game launches from its root, but editor/preview entry points may not.
 getModelPath().appendDirectory(Filename.fromOsSpecific(str(ASSETS.parents[1])))
 STORAGE = 'assets/acorn/dna/storage_acorn.dna'
-LAYOUTS = {19000: 'assets/acorn/dna/acorn_acreside.dna',
-           19100: 'assets/acorn/dna/root_route.dna'}
+LAYOUTS = {19000: 'assets/acorn/dna/acorn_acreside.dna'}
 
 
 def load_scene(zone, dna_store=None, storage=STORAGE, layouts=LAYOUTS):

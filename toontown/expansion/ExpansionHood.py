@@ -1,6 +1,8 @@
 from direct.showbase.MessengerGlobal import messenger
 from toontown.hood.ToonHood import ToonHood
 from toontown.hood.Place import Place
+from toontown.battle.BattlePlace import BattlePlace
+from direct.fsm.State import State
 from toontown.safezone.SafeZoneLoader import SafeZoneLoader
 from toontown.safezone.Playground import Playground
 from toontown.toonbase.ToonBaseGlobal import base
@@ -30,15 +32,64 @@ class ExpansionPlayground(Playground):
         Place.enterTeleportIn(self, requestStatus)
 
 
+class ExpansionStreet(BattlePlace, ExpansionPlayground):
+    def __init__(self, loader, parentFSM, doneEvent):
+        ExpansionPlayground.__init__(self, loader, parentFSM, doneEvent)
+        self.fsm.addState(State('WaitForBattle',self.enterWaitForBattle,self.exitWaitForBattle,['battle','walk']))
+        self.fsm.addState(State('battle',self.enterBattle,self.exitBattle,['walk','teleportOut','died']))
+        for name in ('walk','stickerBook','teleportIn'):
+            state=self.fsm.getStateNamed(name)
+            state.addTransition('WaitForBattle');state.addTransition('battle')
+
+    def load(self):
+        ExpansionPlayground.load(self)
+
+    def enter(self, requestStatus):
+        ExpansionPlayground.enter(self,requestStatus)
+        # The playground base turns collisions into native tunnel/door events;
+        # battle entry uses the stock TownBattle UI and server-owned suits.
+        base.localAvatar.setGeom(self.loader.geom)
+
+    def exit(self):
+        ExpansionPlayground.exit(self)
+        base.localAvatar.setGeom(base.render)
+
+    def enterTeleportOut(self, requestStatus):
+        if 'battle' in requestStatus:
+            self._teleportOutDone(requestStatus)
+        else:
+            ExpansionPlayground.enterTeleportOut(self,requestStatus)
+
+
 class ExpansionLoader(SafeZoneLoader):
     def __init__(self, hood, parentFSM, doneEvent, zoneId):
         SafeZoneLoader.__init__(self, hood, parentFSM, doneEvent)
         self.zoneId = zoneId
-        self.playgroundClass = ExpansionPlayground
+        self.playgroundClass = ExpansionStreet if zoneId in E.STREETS else ExpansionPlayground
         self.musicFile = E.NEIGHBORHOODS[hood.id]['music']
         self.activityMusicFile = self.musicFile
         self.safeZoneStorageDNAFile = None
         self.dnaFile = None
+
+    def load(self):
+        SafeZoneLoader.load(self)
+        if self.zoneId in E.STREETS:
+            from toontown.town.TownBattle import TownBattle
+            from toontown.toon import Toon
+            Toon.loadBattleAnims()
+            self.battleMusic=base.loader.loadMusic('phase_3.5/audio/bgm/encntr_general_bg.ogg')
+            self.townBattle=TownBattle('expansion-town-battle-done')
+            self.townBattle.load()
+
+    def unload(self):
+        if hasattr(self,'townBattle'):
+            from toontown.toon import Toon
+            Toon.unloadBattleAnims()
+            self.townBattle.unload()
+            self.townBattle.cleanup()
+            self.battleMusic.stop()
+            del self.townBattle,self.battleMusic
+        SafeZoneLoader.unload(self)
 
     def createSafeZone(self, dnaFile):
         self.geom = build_scene(self.zoneId, self.hood.dnaStore)

@@ -260,7 +260,11 @@ def western_shop(index):
 
 
 def shop(hood,index):
-    if hood==64000:return western_shop(index)
+    if hood==64000:
+        root=western_shop(index)
+        from tools.world_dressing import enclosure
+        enclosure(root,hood,A,(-15,-5,15,21),front_open=-1)
+        return root
     spec=PALETTES[hood];code=spec['code'];phase=spec['phase']
     style=code+'_'+('A1','B1','C1','D1')[index]
     root=NodePath('complete-'+str(hood)+'-shop-'+str(index))
@@ -292,6 +296,8 @@ def shop(hood,index):
         for x in (-12,12):
             A.board(root,'porch-post',(x,-4,5),(.6,.6,10),color,WOOD)
         A.board(root,'false-front',(0,1,height),(28,2,5),color,WOOD)
+    from tools.world_dressing import enclosure
+    enclosure(root,hood,A,(-15,-2,15,front+depth+2),front_open=-1)
     return root
 
 
@@ -301,7 +307,7 @@ def terrain(zone):
     root=NodePath('terrain-'+str(zone))
     path=curve(ROADS[zone]) if street else None
     ymin,ymax=(int(path[0][1])-40,int(path[-1][1])+40) if street else (-175,180)
-    xmin,xmax=(-180,180) if street else (-190,190)
+    xmin,xmax=(-215,215) if street else (-190,190)
     mesh=A.Mesh('painted-banks',spec['ground']);patches={}
     for x in range(xmin,xmax,10):
         for y in range(ymin,ymax,10):
@@ -309,15 +315,7 @@ def terrain(zone):
             floor=patches.setdefault(key,None)
             if floor is None:floor=patches[key]=A.collider(root,'terrain-patch-%s-%s'%key,2)
             def height(xx,yy):
-                edge=max(0,abs(xx)-116) if street else max(0,hypot(xx,yy)-145)
-                # Tunnel mouths/approaches are always level.
-                if street and (yy<ymin+70 or yy>ymax-70):edge=0
-                if not street:
-                    for gx,gy,gz,gh in PLAZA_GATES[zone]:
-                        if gh==0 and abs(xx-gx)<30 and yy<gy+85:edge=0
-                        if abs(gh)==90 and abs(yy-gy)<30 and abs(xx)>abs(gx)-85:edge=0
-                if not Services.keep_scenery(zone,xx,yy):edge=0
-                return min(28,edge*.38)*(1+.15*sin(yy/31))
+                return 0.0
             pts=[(xx,yy,height(xx,yy)) for xx,yy in ((x,y),(x+10,y),(x+10,y+10),(x,y+10))]
             mesh.face(pts,color=spec['tint']);A.collision_face(floor,pts)
     mesh.attach(root,ground_layer=0)
@@ -381,6 +379,8 @@ def terrain(zone):
         A.ribbon(root,'creek-footbridge',[(-16,8),(2,28),(19,47)],12,spec['paving'],.1)
         A.disk(root,'water-yard',(75,62),29,26,spec['paving'],.065)
     Services.add_paths(root,zone,A,spec['paving'])
+    from tools.world_dressing import perimeter
+    perimeter(root,zone,A)
     boundary=A.collider(root,'scenery-boundary',1)
     for x,y,w,d in ((xmin,(ymin+ymax)/2,1,ymax-ymin),(xmax,(ymin+ymax)/2,1,ymax-ymin),
                     (0,ymin,xmax-xmin,1),(0,ymax,xmax-xmin,1)):

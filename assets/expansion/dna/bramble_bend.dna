@@ -9,7 +9,7 @@ prop "winding-terrain" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 node "linktunnel_acorn_19000" [
- pos [ 0.0000 -310.0000 0.0000 ]
+ pos [ 0.0000 -480.5000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "native-tunnel" [
@@ -26,7 +26,7 @@ prop "destination-sign" [
 ]
 ]
 node "linktunnel_hush_62000" [
- pos [ 0.0000 345.0000 0.0000 ]
+ pos [ 0.0000 534.7500 0.0000 ]
  nhpr [ 180.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "native-tunnel" [
@@ -43,8 +43,8 @@ prop "destination-sign" [
 ]
 ]
 node "storefront-19000-0" [
- pos [ 17.2704 -233.8413 0.0000 ]
- nhpr [ 303.5023 0 0 ]
+ pos [ 31.3812 -414.4431 0.12 ]
+ nhpr [ 278.1838 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -61,19 +61,19 @@ prop "shop-name" [
 ]
 prop "streetlight-0" [
  code [ "lamp_DG" ]
- pos [ 6.4302 -241.0169 0.0000 ]
- nhpr [ 303.5023 0 0 ]
+ pos [ 18.5136 -416.2937 0.12 ]
+ nhpr [ 278.1838 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 prop "tree-200" [
  code [ "forest_tree" ]
- pos [ 51.4589 -211.2105 0.0000 ]
- nhpr [ 303.5023 0 0 ]
+ pos [ 71.9637 -408.6068 0.12 ]
+ nhpr [ 278.1838 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 node "storefront-19000-1" [
- pos [ -32.7614 -266.9594 0.0000 ]
- nhpr [ 123.5023 0 0 ]
+ pos [ -28.0078 -422.9841 0.12 ]
+ nhpr [ 98.1838 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_1" ]
@@ -90,19 +90,19 @@ prop "shop-name" [
 ]
 prop "streetlight-1" [
  code [ "lamp_DG" ]
- pos [ -21.9212 -259.7838 0.0000 ]
- nhpr [ 123.5023 0 0 ]
+ pos [ -15.1402 -421.1335 0.12 ]
+ nhpr [ 98.1838 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 prop "tree-201" [
  code [ "forest_tree" ]
- pos [ -66.9498 -289.5902 0.0000 ]
- nhpr [ 123.5023 0 0 ]
+ pos [ -68.5903 -428.8204 0.12 ]
+ nhpr [ 98.1838 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 node "storefront-19000-2" [
- pos [ -3.1227 -205.6799 0.0000 ]
- nhpr [ 304.9828 0 0 ]
+ pos [ 17.0152 -373.3585 0.12 ]
+ nhpr [ 296.7449 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_19000_2" ]
@@ -118,8 +118,8 @@ prop "shop-name" [
 ]
 ]
 node "storefront-19000-3" [
- pos [ -52.2821 -240.0798 0.0000 ]
- nhpr [ 124.9828 0 0 ]
+ pos [ -36.5660 -400.3596 0.12 ]
+ nhpr [ 116.7449 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_19000_3" ]
@@ -135,8 +135,8 @@ prop "shop-name" [
 ]
 ]
 node "storefront-19000-4" [
- pos [ -20.6365 -177.8720 0.0000 ]
- nhpr [ 302.8295 0 0 ]
+ pos [ -0.1755 -342.2904 0.12 ]
+ nhpr [ 299.6315 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -153,13 +153,13 @@ prop "shop-name" [
 ]
 prop "streetlight-4" [
  code [ "lamp_DG" ]
- pos [ -31.5602 -184.9198 0.0000 ]
- nhpr [ 302.8295 0 0 ]
+ pos [ -11.4754 -348.7178 0.12 ]
+ nhpr [ 299.6315 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 node "storefront-19000-5" [
- pos [ -71.0537 -210.4005 0.0000 ]
- nhpr [ 122.8295 0 0 ]
+ pos [ -52.3289 -371.9555 0.12 ]
+ nhpr [ 119.6315 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_1" ]
@@ -176,49 +176,49 @@ prop "shop-name" [
 ]
 prop "streetlight-5" [
  code [ "lamp_DG" ]
- pos [ -60.1300 -203.3526 0.0000 ]
- nhpr [ 122.8295 0 0 ]
+ pos [ -41.0290 -365.5281 0.12 ]
+ nhpr [ 119.6315 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 prop "tree-6" [
  code [ "forest_tree" ]
- pos [ -28.8073 -150.0545 0.0000 ]
- nhpr [ 293.3239 0 0 ]
+ pos [ -8.1682 -311.5668 0.12 ]
+ nhpr [ 294.5160 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 prop "rest-bench-6" [
  code [ "bench" ]
- pos [ -36.1536 -153.2220 0.0000 ]
- nhpr [ 293.3239 0 0 ]
+ pos [ -15.4470 -314.8863 0.12 ]
+ nhpr [ 294.5160 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "tree-206" [
  code [ "forest_tree" ]
- pos [ 2.4142 -136.5930 0.0000 ]
- nhpr [ 293.3239 0 0 ]
+ pos [ 22.7665 -297.4585 0.12 ]
+ nhpr [ 294.5160 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 prop "tree-7" [
  code [ "forest_tree" ]
- pos [ -96.7602 -179.3532 0.0000 ]
- nhpr [ 113.3239 0 0 ]
+ pos [ -75.4967 -342.2729 0.12 ]
+ nhpr [ 114.5160 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 prop "rest-bench-7" [
  code [ "bench" ]
- pos [ -89.4139 -176.1858 0.0000 ]
- nhpr [ 113.3239 0 0 ]
+ pos [ -68.2180 -338.9533 0.12 ]
+ nhpr [ 114.5160 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "tree-207" [
  code [ "forest_tree" ]
- pos [ -127.9817 -192.8148 0.0000 ]
- nhpr [ 113.3239 0 0 ]
+ pos [ -106.4315 -356.3811 0.12 ]
+ nhpr [ 114.5160 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 node "storefront-19000-8" [
- pos [ -37.4667 -137.1152 0.0000 ]
- nhpr [ 259.3424 0 0 ]
+ pos [ -29.4809 -282.9802 0.12 ]
+ nhpr [ 296.1590 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -235,13 +235,13 @@ prop "shop-name" [
 ]
 prop "streetlight-8" [
  code [ "lamp_DG" ]
- pos [ -50.2425 -134.7110 0.0000 ]
- nhpr [ 259.3424 0 0 ]
+ pos [ -41.1494 -288.7115 0.12 ]
+ nhpr [ 296.1590 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 node "storefront-19000-9" [
- pos [ -96.4317 -126.0188 0.0000 ]
- nhpr [ 79.3424 0 0 ]
+ pos [ -83.3354 -309.4321 0.12 ]
+ nhpr [ 116.1590 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_19000_1" ]
@@ -258,13 +258,13 @@ prop "shop-name" [
 ]
 prop "streetlight-9" [
  code [ "lamp_DG" ]
- pos [ -83.6560 -128.4230 0.0000 ]
- nhpr [ 79.3424 0 0 ]
+ pos [ -71.6669 -303.7009 0.12 ]
+ nhpr [ 116.1590 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 node "storefront-19000-10" [
- pos [ -28.7650 -114.9011 0.0000 ]
- nhpr [ 240.1782 0 0 ]
+ pos [ -42.4511 -254.5174 0.12 ]
+ nhpr [ 290.9799 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_2" ]
@@ -279,10 +279,26 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-
+node "storefront-19000-11" [
+ pos [ -98.4735 -275.9998 0.12 ]
+ nhpr [ 110.9799 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
 node "storefront-19000-12" [
- pos [ -13.6008 -92.8854 0.0000 ]
- nhpr [ 226.4302 0 0 ]
+ pos [ -49.6704 -229.9867 0.12 ]
+ nhpr [ 274.9771 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -297,19 +313,50 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-
+prop "streetlight-12" [
+ code [ "lamp_DG" ]
+ pos [ -62.6214 -231.1146 0.12 ]
+ nhpr [ 274.9771 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
 prop "tree-212" [
  code [ "forest_tree" ]
- pos [ 16.1052 -121.1442 0.0000 ]
- nhpr [ 226.4302 0 0 ]
+ pos [ -8.8250 -226.4297 0.12 ]
+ nhpr [ 274.9771 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-
-
-
+node "storefront-19000-13" [
+ pos [ -109.4442 -235.1922 0.12 ]
+ nhpr [ 94.9771 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_1" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-13" [
+ code [ "lamp_DG" ]
+ pos [ -96.4932 -234.0643 0.12 ]
+ nhpr [ 94.9771 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-213" [
+ code [ "forest_tree" ]
+ pos [ -150.2896 -238.7492 0.12 ]
+ nhpr [ 94.9771 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
 node "storefront-19000-14" [
- pos [ 9.0201 -74.2028 0.0000 ]
- nhpr [ 217.5792 0 0 ]
+ pos [ -48.8332 -204.7308 0.12 ]
+ nhpr [ 258.4836 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_19000_2" ]
@@ -324,10 +371,26 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-
+node "storefront-19000-15" [
+ pos [ -107.6252 -192.7519 0.12 ]
+ nhpr [ 78.4836 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
 node "storefront-19000-16" [
- pos [ 39.1261 -46.5709 0.0000 ]
- nhpr [ 230.8851 0 0 ]
+ pos [ -40.8016 -176.0975 0.12 ]
+ nhpr [ 250.4238 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -344,20 +407,36 @@ prop "shop-name" [
 ]
 prop "streetlight-16" [
  code [ "lamp_DG" ]
- pos [ 29.0396 -38.3695 0.0000 ]
- nhpr [ 230.8851 0 0 ]
+ pos [ -53.0501 -171.7417 0.12 ]
+ nhpr [ 250.4238 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-
+node "storefront-19000-17" [
+ pos [ -97.3334 -155.9939 0.12 ]
+ nhpr [ 70.4238 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
 prop "streetlight-17" [
  code [ "lamp_DG" ]
- pos [ 2.6596 -16.9197 0.0000 ]
- nhpr [ 50.8851 0 0 ]
+ pos [ -85.0848 -160.3497 0.12 ]
+ nhpr [ 70.4238 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 node "storefront-19000-18" [
- pos [ 60.7383 -13.5502 0.0000 ]
- nhpr [ 241.4251 0 0 ]
+ pos [ -28.5141 -148.4637 0.12 ]
+ nhpr [ 243.2796 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_2" ]
@@ -374,41 +453,72 @@ prop "shop-name" [
 ]
 prop "tree-218" [
  code [ "forest_tree" ]
- pos [ 96.7442 -33.1608 0.0000 ]
- nhpr [ 241.4251 0 0 ]
+ pos [ 8.1075 -166.8988 0.12 ]
+ nhpr [ 243.2796 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-
-
+node "storefront-19000-19" [
+ pos [ -82.1068 -121.4854 0.12 ]
+ nhpr [ 63.2796 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_1" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "tree-219" [
+ code [ "forest_tree" ]
+ pos [ -118.7285 -103.0503 0.12 ]
+ nhpr [ 63.2796 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
 prop "tree-20" [
  code [ "forest_tree" ]
- pos [ 82.8624 21.7408 0.0000 ]
- nhpr [ 253.6620 0 0 ]
+ pos [ -8.7531 -129.7944 0.12 ]
+ nhpr [ 230.4759 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 prop "rest-bench-20" [
  code [ "bench" ]
- pos [ 75.1854 23.9912 0.0000 ]
- nhpr [ 253.6620 0 0 ]
+ pos [ -14.9240 -124.7032 0.12 ]
+ nhpr [ 230.4759 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "streetlight-20" [
  code [ "lamp_DG" ]
- pos [ 63.6700 27.3668 0.0000 ]
- nhpr [ 253.6620 0 0 ]
+ pos [ -24.1802 -117.0664 0.12 ]
+ nhpr [ 230.4759 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-
-
+prop "tree-21" [
+ code [ "forest_tree" ]
+ pos [ -65.8335 -82.7006 0.12 ]
+ nhpr [ 50.4759 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+prop "rest-bench-21" [
+ code [ "bench" ]
+ pos [ -59.6627 -87.7918 0.12 ]
+ nhpr [ 50.4759 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
 prop "streetlight-21" [
  code [ "lamp_DG" ]
- pos [ 31.0430 36.9311 0.0000 ]
- nhpr [ 73.6620 0 0 ]
+ pos [ -50.4064 -95.4287 0.12 ]
+ nhpr [ 50.4759 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 node "storefront-19000-22" [
- pos [ 80.3995 67.9938 0.0000 ]
- nhpr [ 274.1422 0 0 ]
+ pos [ 7.1975 -102.4800 0.12 ]
+ nhpr [ 225.3083 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_2" ]
@@ -424,8 +534,8 @@ prop "shop-name" [
 ]
 ]
 node "storefront-19000-23" [
- pos [ 20.5562 63.6599 0.0000 ]
- nhpr [ 94.1422 0 0 ]
+ pos [ -35.4565 -60.2825 0.12 ]
+ nhpr [ 45.3083 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_19000_3" ]
@@ -441,8 +551,8 @@ prop "shop-name" [
 ]
 ]
 node "storefront-19000-24" [
- pos [ 71.0182 109.6095 0.0000 ]
- nhpr [ 290.9636 0 0 ]
+ pos [ 32.0780 -75.5739 0.12 ]
+ nhpr [ 230.3972 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_0" ]
@@ -459,19 +569,19 @@ prop "shop-name" [
 ]
 prop "streetlight-24" [
  code [ "lamp_DG" ]
- pos [ 58.8787 104.9584 0.0000 ]
- nhpr [ 290.9636 0 0 ]
+ pos [ 22.0618 -67.2869 0.12 ]
+ nhpr [ 230.3972 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 prop "tree-224" [
  code [ "forest_tree" ]
- pos [ 109.3043 124.2782 0.0000 ]
- nhpr [ 290.9636 0 0 ]
+ pos [ 63.6678 -101.7099 0.12 ]
+ nhpr [ 230.3972 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
 node "storefront-19000-25" [
- pos [ 14.9897 88.1430 0.0000 ]
- nhpr [ 110.9636 0 0 ]
+ pos [ -14.1509 -37.3262 0.12 ]
+ nhpr [ 50.3972 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_19000_1" ]
@@ -488,19 +598,268 @@ prop "shop-name" [
 ]
 prop "streetlight-25" [
  code [ "lamp_DG" ]
- pos [ 27.1292 92.7941 0.0000 ]
- nhpr [ 110.9636 0 0 ]
+ pos [ -4.1346 -45.6132 0.12 ]
+ nhpr [ 50.3972 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "tree-225" [
+
+node "storefront-19000-26" [
+ pos [ 53.8170 -41.4653 0.12 ]
+ nhpr [ 242.8866 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+node "storefront-19000-27" [
+ pos [ 0.4107 -14.1201 0.12 ]
+ nhpr [ 62.8866 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+node "storefront-19000-28" [
+ pos [ 69.0556 -8.4187 0.12 ]
+ nhpr [ 247.4793 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_4" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-28" [
+ code [ "lamp_DG" ]
+ pos [ 57.0470 -3.4395 0.12 ]
+ nhpr [ 247.4793 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+node "storefront-19000-29" [
+ pos [ 13.6311 14.5623 0.12 ]
+ nhpr [ 67.4793 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-29" [
+ code [ "lamp_DG" ]
+ pos [ 25.6397 9.5830 0.12 ]
+ nhpr [ 67.4793 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+node "storefront-19000-30" [
+ pos [ 81.3140 27.5042 0.12 ]
+ nhpr [ 255.0816 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_0" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "tree-230" [
  code [ "forest_tree" ]
- pos [ -23.2964 73.4743 0.0000 ]
- nhpr [ 110.9636 0 0 ]
+ pos [ 120.9321 16.9490 0.12 ]
+ nhpr [ 255.0816 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-node "storefront-62000-26" [
- pos [ 49.9431 147.7187 0.0000 ]
- nhpr [ 309.6374 0 0 ]
+node "storefront-19000-31" [
+ pos [ 23.3364 42.9508 0.12 ]
+ nhpr [ 75.0816 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_1" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "tree-231" [
+ code [ "forest_tree" ]
+ pos [ -16.2816 53.5060 0.12 ]
+ nhpr [ 75.0816 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+node "storefront-19000-32" [
+ pos [ 88.6181 64.8287 0.12 ]
+ nhpr [ 262.8650 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-32" [
+ code [ "lamp_DG" ]
+ pos [ 75.7188 66.4434 0.12 ]
+ nhpr [ 262.8650 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+node "storefront-19000-33" [
+ pos [ 29.0827 72.2812 0.12 ]
+ nhpr [ 82.8650 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-33" [
+ code [ "lamp_DG" ]
+ pos [ 41.9821 70.6665 0.12 ]
+ nhpr [ 82.8650 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-34" [
+ code [ "forest_tree" ]
+ pos [ 96.4815 104.5432 0.12 ]
+ nhpr [ 273.1557 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+prop "rest-bench-34" [
+ code [ "bench" ]
+ pos [ 88.4937 104.1028 0.12 ]
+ nhpr [ 273.1557 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "tree-35" [
+ code [ "forest_tree" ]
+ pos [ 22.5938 100.4696 0.12 ]
+ nhpr [ 93.1557 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+prop "rest-bench-35" [
+ code [ "bench" ]
+ pos [ 30.5816 100.9099 0.12 ]
+ nhpr [ 93.1557 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+node "storefront-19000-36" [
+ pos [ 84.2712 142.5068 0.12 ]
+ nhpr [ 282.2135 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_0" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-36" [
+ code [ "lamp_DG" ]
+ pos [ 71.5655 139.7566 0.12 ]
+ nhpr [ 282.2135 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-236" [
+ code [ "forest_tree" ]
+ pos [ 124.3432 151.1806 0.12 ]
+ nhpr [ 282.2135 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+node "storefront-19000-37" [
+ pos [ 25.6293 129.8135 0.12 ]
+ nhpr [ 102.2135 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_19000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_19000_1" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-37" [
+ code [ "lamp_DG" ]
+ pos [ 38.3350 132.5638 0.12 ]
+ nhpr [ 102.2135 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-237" [
+ code [ "forest_tree" ]
+ pos [ -14.4428 121.1398 0.12 ]
+ nhpr [ 102.2135 0 0 ]
+ scale [ 1.6000 1.6000 1.6000 ]
+]
+node "storefront-62000-38" [
+ pos [ 74.3720 178.2485 0.12 ]
+ nhpr [ 288.1558 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_62000_2" ]
@@ -515,9 +874,9 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-node "storefront-62000-27" [
- pos [ 3.7373 109.4431 0.0000 ]
- nhpr [ 129.6374 0 0 ]
+node "storefront-62000-39" [
+ pos [ 17.3592 159.5523 0.12 ]
+ nhpr [ 108.1558 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_62000_3" ]
@@ -532,9 +891,9 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-node "storefront-62000-28" [
- pos [ 25.2120 174.3163 0.0000 ]
- nhpr [ 314.0936 0 0 ]
+node "storefront-62000-40" [
+ pos [ 56.8557 215.6064 0.12 ]
+ nhpr [ 302.2369 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_62000_0" ]
@@ -549,15 +908,15 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-28" [
+prop "streetlight-40" [
  code [ "lamp_DL" ]
- pos [ 15.8754 165.2704 0.0000 ]
- nhpr [ 314.0936 0 0 ]
+ pos [ 45.8596 208.6719 0.12 ]
+ nhpr [ 302.2369 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-node "storefront-62000-29" [
- pos [ -17.8802 132.5663 0.0000 ]
- nhpr [ 134.0936 0 0 ]
+node "storefront-62000-41" [
+ pos [ 6.1046 183.6012 0.12 ]
+ nhpr [ 122.2369 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_62000_1" ]
@@ -572,15 +931,15 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-29" [
+prop "streetlight-41" [
  code [ "lamp_DL" ]
- pos [ -8.5436 141.6122 0.0000 ]
- nhpr [ 134.0936 0 0 ]
+ pos [ 17.1007 190.5356 0.12 ]
+ nhpr [ 122.2369 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-node "storefront-62000-30" [
- pos [ 9.5389 192.7316 0.0000 ]
- nhpr [ 295.3984 0 0 ]
+node "storefront-62000-42" [
+ pos [ 36.0713 245.3833 0.12 ]
+ nhpr [ 306.6797 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_62000_2" ]
@@ -595,15 +954,15 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "tree-230" [
+prop "tree-242" [
  code [ "dream_tree" ]
- pos [ 46.5761 210.3169 0.0000 ]
- nhpr [ 295.3984 0 0 ]
+ pos [ 68.9528 269.8742 0.12 ]
+ nhpr [ 306.6797 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-node "storefront-62000-31" [
- pos [ -44.6620 166.9970 0.0000 ]
- nhpr [ 115.3984 0 0 ]
+node "storefront-62000-43" [
+ pos [ -12.0480 209.5428 0.12 ]
+ nhpr [ 126.6797 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
  code [ "shop_62000_3" ]
@@ -618,15 +977,15 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "tree-231" [
+prop "tree-243" [
  code [ "dream_tree" ]
- pos [ -81.6992 149.4116 0.0000 ]
- nhpr [ 115.3984 0 0 ]
+ pos [ -44.9294 185.0518 0.12 ]
+ nhpr [ 126.6797 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-node "storefront-62000-32" [
- pos [ 5.8575 212.1551 0.0000 ]
- nhpr [ 268.7315 0 0 ]
+node "storefront-62000-44" [
+ pos [ 17.3239 271.5464 0.12 ]
+ nhpr [ 303.2289 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_62000_0" ]
@@ -641,15 +1000,15 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-32" [
+prop "streetlight-44" [
  code [ "lamp_DL" ]
- pos [ -7.1394 212.4429 0.0000 ]
- nhpr [ 268.7315 0 0 ]
+ pos [ 6.4496 264.4225 0.12 ]
+ nhpr [ 303.2289 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-node "storefront-62000-33" [
- pos [ -54.1278 213.4833 0.0000 ]
- nhpr [ 88.7315 0 0 ]
+node "storefront-62000-45" [
+ pos [ -32.8654 238.6672 0.12 ]
+ nhpr [ 123.2289 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
 prop "painted-native-shop" [
  code [ "shop_62000_1" ]
@@ -664,42 +1023,180 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-33" [
+prop "streetlight-45" [
  code [ "lamp_DL" ]
- pos [ -41.1310 213.1955 0.0000 ]
- nhpr [ 88.7315 0 0 ]
+ pos [ -21.9910 245.7910 0.12 ]
+ nhpr [ 123.2289 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "tree-34" [
+node "storefront-62000-46" [
+ pos [ 5.1249 295.5331 0.12 ]
+ nhpr [ 289.8730 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_4" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+node "storefront-62000-47" [
+ pos [ -51.3020 275.1369 0.12 ]
+ nhpr [ 109.8730 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "tree-48" [
  code [ "dream_tree" ]
- pos [ 16.8680 239.7112 0.0000 ]
- nhpr [ 259.4848 0 0 ]
+ pos [ 8.5654 320.0551 0.12 ]
+ nhpr [ 271.9434 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "rest-bench-34" [
+prop "rest-bench-48" [
  code [ "bench" ]
- pos [ 9.0023 241.1712 0.0000 ]
- nhpr [ 259.4848 0 0 ]
+ pos [ 0.5700 319.7838 0.12 ]
+ nhpr [ 271.9434 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-prop "tree-35" [
+prop "streetlight-48" [
+ code [ "lamp_DL" ]
+ pos [ -11.4231 319.3769 0.12 ]
+ nhpr [ 271.9434 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-248" [
  code [ "dream_tree" ]
- pos [ -55.8893 253.2159 0.0000 ]
- nhpr [ 79.4848 0 0 ]
+ pos [ 42.5458 321.2082 0.12 ]
+ nhpr [ 271.9434 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "rest-bench-35" [
+prop "tree-49" [
+ code [ "dream_tree" ]
+ pos [ -65.3920 317.5456 0.12 ]
+ nhpr [ 91.9434 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+prop "rest-bench-49" [
  code [ "bench" ]
- pos [ -48.0237 251.7559 0.0000 ]
- nhpr [ 79.4848 0 0 ]
+ pos [ -57.3966 317.8169 0.12 ]
+ nhpr [ 91.9434 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-node "storefront-62000-36" [
- pos [ 17.1196 268.7966 0.0000 ]
- nhpr [ 249.5184 0 0 ]
- scale [ 0.9400 0.9400 0.9400 ]
+prop "streetlight-49" [
+ code [ "lamp_DL" ]
+ pos [ -45.4035 318.2238 0.12 ]
+ nhpr [ 91.9434 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+prop "tree-249" [
+ code [ "dream_tree" ]
+ pos [ -99.3725 316.3925 0.12 ]
+ nhpr [ 91.9434 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+node "storefront-62000-50" [
+ pos [ 2.8914 349.2452 0.12 ]
+ nhpr [ 263.3218 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+node "storefront-62000-51" [
+ pos [ -56.7015 356.2227 0.12 ]
+ nhpr [ 83.3218 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+node "storefront-62000-52" [
+ pos [ 7.3060 382.2349 0.12 ]
+ nhpr [ 261.9571 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
 prop "painted-native-shop" [
  code [ "shop_62000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_4" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-52" [
+ code [ "lamp_DL" ]
+ pos [ -5.5661 384.0538 0.12 ]
+ nhpr [ 261.9571 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+node "storefront-62000-53" [
+ pos [ -52.1038 390.6298 0.12 ]
+ nhpr [ 81.9571 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-53" [
+ code [ "lamp_DL" ]
+ pos [ -39.2317 388.8110 0.12 ]
+ nhpr [ 81.9571 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
+]
+node "storefront-62000-54" [
+ pos [ 12.5197 412.3118 0.12 ]
+ nhpr [ 255.3666 0 0 ]
+ scale [ 0.9400 0.9400 0.9400 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_2" ]
  pos [ 0.0000 0.0000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -711,24 +1208,18 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-36" [
- code [ "lamp_DL" ]
- pos [ 4.9414 273.3453 0.0000 ]
- nhpr [ 249.5184 0 0 ]
- scale [ 1.1500 1.1500 1.1500 ]
-]
-prop "tree-236" [
+prop "tree-254" [
  code [ "dream_tree" ]
- pos [ 55.5278 254.4504 0.0000 ]
- nhpr [ 249.5184 0 0 ]
+ pos [ 52.1897 401.9538 0.12 ]
+ nhpr [ 255.3666 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-node "storefront-62000-37" [
- pos [ -39.0874 289.7909 0.0000 ]
- nhpr [ 69.5184 0 0 ]
+node "storefront-62000-55" [
+ pos [ -45.5341 427.4698 0.12 ]
+ nhpr [ 75.3666 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
 prop "painted-native-shop" [
- code [ "shop_62000_1" ]
+ code [ "shop_62000_3" ]
  pos [ 0.0000 0.0000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -740,17 +1231,57 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "streetlight-37" [
+prop "tree-255" [
+ code [ "dream_tree" ]
+ pos [ -85.2041 437.8278 0.12 ]
+ nhpr [ 75.3666 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+node "storefront-62000-56" [
+ pos [ 21.6743 443.8095 0.12 ]
+ nhpr [ 253.0845 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-56" [
  code [ "lamp_DL" ]
- pos [ -26.9092 285.2421 0.0000 ]
- nhpr [ 69.5184 0 0 ]
+ pos [ 9.2367 447.5920 0.12 ]
+ nhpr [ 253.0845 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "tree-237" [
- code [ "dream_tree" ]
- pos [ -77.4956 304.1371 0.0000 ]
- nhpr [ 69.5184 0 0 ]
- scale [ 1.7000 1.7000 1.7000 ]
+node "storefront-62000-57" [
+ pos [ -35.7298 461.2672 0.12 ]
+ nhpr [ 73.0845 0 0 ]
+ scale [ 0.9700 0.9700 0.9700 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "streetlight-57" [
+ code [ "lamp_DL" ]
+ pos [ -23.2923 457.4847 0.12 ]
+ nhpr [ 73.0845 0 0 ]
+ scale [ 1.1500 1.1500 1.1500 ]
 ]
 ]
 ]

@@ -61,14 +61,14 @@ prop "destination-sign" [
 ]
 prop "neighborhood-landmark" [
  code [ "theater" ]
- pos [ 35.0000 78.0000 0.0000 ]
+ pos [ 35.0000 78.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.1000 1.1000 1.1000 ]
 ]
 
 
 node "storefront-63000-2" [
- pos [ -59.0000 -23.0000 0.0000 ]
+ pos [ -59.0000 -23.0000 0.12 ]
  nhpr [ 85.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
 prop "painted-native-shop" [
@@ -86,7 +86,7 @@ prop "shop-name" [
 ]
 
 node "storefront-63000-4" [
- pos [ -73.0000 92.0000 0.0000 ]
+ pos [ -73.0000 92.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
 prop "painted-native-shop" [
@@ -103,7 +103,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-5" [
- pos [ -22.0000 94.0000 0.0000 ]
+ pos [ -22.0000 94.0000 0.12 ]
  nhpr [ -15.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
 prop "painted-native-shop" [
@@ -120,7 +120,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-6" [
- pos [ 49.0000 -112.0000 0.0000 ]
+ pos [ 49.0000 -112.0000 0.12 ]
  nhpr [ -95.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
 prop "painted-native-shop" [
@@ -137,7 +137,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-7" [
- pos [ 65.0000 -73.0000 0.0000 ]
+ pos [ 65.0000 -73.0000 0.12 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 1.0400 1.0400 1.0400 ]
 prop "painted-native-shop" [
@@ -154,7 +154,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-8" [
- pos [ 121.0000 -43.0000 0.0000 ]
+ pos [ 121.0000 -43.0000 0.12 ]
  nhpr [ -75.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
 prop "painted-native-shop" [
@@ -171,7 +171,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-9" [
- pos [ 132.0000 10.0000 0.0000 ]
+ pos [ 132.0000 10.0000 0.12 ]
  nhpr [ -70.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
 prop "painted-native-shop" [
@@ -188,7 +188,7 @@ prop "shop-name" [
 ]
 ]
 node "storefront-63000-10" [
- pos [ 99.0000 94.0000 0.0000 ]
+ pos [ 99.0000 94.0000 0.12 ]
  nhpr [ -15.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
 prop "painted-native-shop" [
@@ -208,131 +208,275 @@ prop "shop-name" [
 
 prop "tree-2" [
  code [ "music_tree" ]
- pos [ -148.0000 2.0000 0.0000 ]
+ pos [ -148.0000 2.0000 0.12 ]
  nhpr [ 82.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 
 prop "tree-4" [
  code [ "music_tree" ]
- pos [ 12.0000 126.0000 0.0000 ]
+ pos [ 12.0000 126.0000 0.12 ]
  nhpr [ 164.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 prop "tree-5" [
  code [ "music_tree" ]
- pos [ 126.0000 116.0000 0.0000 ]
+ pos [ 126.0000 116.0000 0.12 ]
  nhpr [ 205.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 prop "tree-6" [
  code [ "music_tree" ]
- pos [ 153.0000 -34.0000 0.0000 ]
+ pos [ 153.0000 -34.0000 0.12 ]
  nhpr [ 246.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 
 prop "tree-8" [
  code [ "music_tree" ]
- pos [ 57.0000 -144.0000 0.0000 ]
+ pos [ 57.0000 -144.0000 0.12 ]
  nhpr [ 328.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 prop "tree-9" [
  code [ "music_tree" ]
- pos [ -47.0000 35.0000 0.0000 ]
+ pos [ -47.0000 35.0000 0.12 ]
  nhpr [ 369.0000 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
 prop "plaza-lamp-0" [
  code [ "lamp_MM" ]
- pos [ -32.0000 -120.0000 0.0000 ]
+ pos [ -32.0000 -120.0000 0.12 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-0" [
  code [ "bench" ]
- pos [ -27.0000 -116.0000 0.0000 ]
+ pos [ -27.0000 -116.0000 0.12 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "plaza-lamp-1" [
  code [ "lamp_MM" ]
- pos [ 19.0000 -90.0000 0.0000 ]
+ pos [ 19.0000 -90.0000 0.12 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "plaza-lamp-2" [
  code [ "lamp_MM" ]
- pos [ -34.0000 -44.0000 0.0000 ]
+ pos [ -34.0000 -44.0000 0.12 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-2" [
  code [ "bench" ]
- pos [ -29.0000 -40.0000 0.0000 ]
+ pos [ -29.0000 -40.0000 0.12 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "plaza-lamp-3" [
  code [ "lamp_MM" ]
- pos [ 34.0000 -12.0000 0.0000 ]
+ pos [ 34.0000 -12.0000 0.12 ]
  nhpr [ -50.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "plaza-lamp-4" [
  code [ "lamp_MM" ]
- pos [ -78.0000 22.0000 0.0000 ]
+ pos [ -78.0000 22.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "rest-bench-4" [
  code [ "bench" ]
- pos [ -73.0000 26.0000 0.0000 ]
+ pos [ -73.0000 26.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
 prop "plaza-lamp-5" [
  code [ "lamp_MM" ]
- pos [ 93.0000 23.0000 0.0000 ]
+ pos [ 93.0000 23.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.2500 1.2500 1.2500 ]
 ]
 prop "studio-camera-0" [
  code [ "movie_camera" ]
- pos [ -68.0000 48.0000 0.0000 ]
+ pos [ -68.0000 48.0000 0.12 ]
  nhpr [ -40.0000 0 0 ]
  scale [ 1.4000 1.4000 1.4000 ]
 ]
 prop "studio-camera-1" [
  code [ "movie_camera" ]
- pos [ 85.0000 -54.0000 0.0000 ]
+ pos [ 85.0000 -54.0000 0.12 ]
  nhpr [ 55.0000 0 0 ]
  scale [ 1.4000 1.4000 1.4000 ]
 ]
 prop "studio-camera-2" [
  code [ "movie_camera" ]
- pos [ 13.0000 30.0000 0.0000 ]
+ pos [ 13.0000 30.0000 0.12 ]
  nhpr [ 20.0000 0 0 ]
  scale [ 1.4000 1.4000 1.4000 ]
 ]
 prop "music-planter-0" [
  code [ "music_planter" ]
- pos [ -60.0000 62.0000 0.0000 ]
+ pos [ -60.0000 62.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.8000 1.8000 1.8000 ]
 ]
 prop "music-planter-1" [
  code [ "music_planter" ]
- pos [ 76.0000 -36.0000 0.0000 ]
+ pos [ 76.0000 -36.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.8000 1.8000 1.8000 ]
 ]
 prop "music-planter-2" [
  code [ "music_planter" ]
- pos [ 48.0000 26.0000 0.0000 ]
+ pos [ 48.0000 26.0000 0.12 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.8000 1.8000 1.8000 ]
+]
+prop "garden-cluster-0" [
+ code [ "planter_63000" ]
+ pos [ -88.2221 -40.8686 0.12 ]
+ nhpr [ 268.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-0" [
+ code [ "bench" ]
+ pos [ -80.2221 -38.8686 0.12 ]
+ nhpr [ 68.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-1" [
+ code [ "movie_camera" ]
+ pos [ 129.2604 91.0449 0.12 ]
+ nhpr [ 123.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-2" [
+ code [ "music_planter" ]
+ pos [ 102.3062 115.7133 0.12 ]
+ nhpr [ 184.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-3" [
+ code [ "planter_63000" ]
+ pos [ 43.8916 50.8134 0.12 ]
+ nhpr [ 286.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-3" [
+ code [ "bench" ]
+ pos [ 51.8916 52.8134 0.12 ]
+ nhpr [ 248.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-4" [
+ code [ "movie_camera" ]
+ pos [ 46.2704 114.0792 0.12 ]
+ nhpr [ 147.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-5" [
+ code [ "music_planter" ]
+ pos [ -114.3148 112.3634 0.12 ]
+ nhpr [ 262.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-6" [
+ code [ "planter_63000" ]
+ pos [ -109.5211 -19.7738 0.12 ]
+ nhpr [ 280.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-6" [
+ code [ "bench" ]
+ pos [ -101.5211 -17.7738 0.12 ]
+ nhpr [ 15.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-7" [
+ code [ "movie_camera" ]
+ pos [ 73.8431 88.6030 0.12 ]
+ nhpr [ 352.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-8" [
+ code [ "music_planter" ]
+ pos [ -51.9084 96.2902 0.12 ]
+ nhpr [ 319.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-9" [
+ code [ "planter_63000" ]
+ pos [ -34.8412 -71.7415 0.12 ]
+ nhpr [ 267.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-9" [
+ code [ "bench" ]
+ pos [ -26.8412 -69.7415 0.12 ]
+ nhpr [ 61.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-10" [
+ code [ "movie_camera" ]
+ pos [ 51.0667 -29.8313 0.12 ]
+ nhpr [ 333.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-11" [
+ code [ "music_planter" ]
+ pos [ 70.0053 29.5629 0.12 ]
+ nhpr [ 315.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-12" [
+ code [ "planter_63000" ]
+ pos [ 91.5260 -1.4055 0.12 ]
+ nhpr [ 40.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-12" [
+ code [ "bench" ]
+ pos [ 99.5260 0.5945 0.12 ]
+ nhpr [ 246.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-13" [
+ code [ "movie_camera" ]
+ pos [ -24.2138 -11.9708 0.12 ]
+ nhpr [ 120.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-14" [
+ code [ "music_planter" ]
+ pos [ 115.9269 67.0961 0.12 ]
+ nhpr [ 196.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-15" [
+ code [ "planter_63000" ]
+ pos [ -48.5667 8.9407 0.12 ]
+ nhpr [ 15.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "cluster-bench-15" [
+ code [ "bench" ]
+ pos [ -40.5667 10.9407 0.12 ]
+ nhpr [ 242.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "garden-cluster-16" [
+ code [ "movie_camera" ]
+ pos [ -62.7673 118.5539 0.12 ]
+ nhpr [ 223.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-cluster-17" [
+ code [ "music_planter" ]
+ pos [ 98.1566 46.9002 0.12 ]
+ nhpr [ 149.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
 ]
 ]
 ]

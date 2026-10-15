@@ -33,7 +33,7 @@ NEIGHBORHOODS = {
                      landmark='Ten Gallon Water Tower', source=8000),
 }
 # Each street is a real, separate zone with a tunnel at both ends. These are
-# peaceful exploration streets in this release; no unsupported Cog planners.
+# winding streets have native Cog patrol paths and quest HQs.
 STREETS = {
     19100: ('Root Route', ACORN, 5000, ACORN),
     61100: ('Taffy Terrace', BRINY, 1000, BRINY),
@@ -93,8 +93,6 @@ def gate_transforms(zone):
     # Keep this travel manifest aligned with the editable Acorn DNA layouts.
     if zone == ACORN:
         return ((0, -110, 0, 0), (-118, 20, 0, -90))
-    if zone == 19100:
-        return ((0, -155, 0, 0), (0, 165, 0, 180))
     from .WorldLayout import ROADS, PLAZA_GATES
     if zone in ROADS:
         return ((0, ROADS[zone][0][1], 0, 0), (0, ROADS[zone][-1][1], 0, 180))
@@ -116,8 +114,6 @@ def destinations():
 
 def spawn_point(zone):
     # Root Route bends east here; the original center spawn is inside a shop.
-    if zone == 19100:
-        return (39, -18, .3, 0, 0, 0)
     from .WorldLayout import ROADS
     if zone in ROADS:
         return (0, ROADS[zone][0][1]+30, .3, 0, 0, 0)
@@ -126,7 +122,8 @@ def spawn_point(zone):
 # Native service interiors keep the stock branch + 500 + block convention.
 SERVICE_BLOCKS = {'gagshop': 19, 'hq': 20}
 INTERIOR_EXTERIORS = {zone+500+block: zone for zone in ALL_ZONES
-                      for block in SERVICE_BLOCKS.values()}
+                      for kind,block in SERVICE_BLOCKS.items()
+                      if kind=='hq' or zone in NEIGHBORHOODS}
 SERVICE_INTERIORS = frozenset(INTERIOR_EXTERIORS)
 
 

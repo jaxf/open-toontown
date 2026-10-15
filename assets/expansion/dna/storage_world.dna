@@ -1,9 +1,63 @@
 // Native expansion model palette.
+hood_model "assets/expansion/models/acorn_shop_fence.bam" [
+ store_node [ "prop" "acorn_shop_fence" "" ]
+]
 hood_model "assets/expansion/models/cactus.bam" [
  store_node [ "prop" "cactus" "" ]
 ]
 hood_model "assets/expansion/models/clock_tower.bam" [
  store_node [ "prop" "clock_tower" "" ]
+]
+hood_model "assets/expansion/models/grounded_anchor.bam" [
+ store_node [ "prop" "grounded_anchor" "" ]
+]
+hood_model "assets/expansion/models/grounded_barrel.bam" [
+ store_node [ "prop" "grounded_barrel" "" ]
+]
+hood_model "assets/expansion/models/grounded_bench.bam" [
+ store_node [ "prop" "grounded_bench" "" ]
+]
+hood_model "assets/expansion/models/grounded_dream_tree.bam" [
+ store_node [ "prop" "grounded_dream_tree" "" ]
+]
+hood_model "assets/expansion/models/grounded_flowerbox.bam" [
+ store_node [ "prop" "grounded_flowerbox" "" ]
+]
+hood_model "assets/expansion/models/grounded_forest_tree.bam" [
+ store_node [ "prop" "grounded_forest_tree" "" ]
+]
+hood_model "assets/expansion/models/grounded_garden_lamp.bam" [
+ store_node [ "prop" "grounded_garden_lamp" "" ]
+]
+hood_model "assets/expansion/models/grounded_garden_table.bam" [
+ store_node [ "prop" "grounded_garden_table" "" ]
+]
+hood_model "assets/expansion/models/grounded_garden_tree.bam" [
+ store_node [ "prop" "grounded_garden_tree" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_DD.bam" [
+ store_node [ "prop" "grounded_lamp_DD" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_DG.bam" [
+ store_node [ "prop" "grounded_lamp_DG" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_DL.bam" [
+ store_node [ "prop" "grounded_lamp_DL" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_MM.bam" [
+ store_node [ "prop" "grounded_lamp_MM" "" ]
+]
+hood_model "assets/expansion/models/grounded_music_planter.bam" [
+ store_node [ "prop" "grounded_music_planter" "" ]
+]
+hood_model "assets/expansion/models/grounded_music_tree.bam" [
+ store_node [ "prop" "grounded_music_tree" "" ]
+]
+hood_model "assets/expansion/models/grounded_palm.bam" [
+ store_node [ "prop" "grounded_palm" "" ]
+]
+hood_model "assets/expansion/models/grounded_woodland_bench.bam" [
+ store_node [ "prop" "grounded_woodland_bench" "" ]
 ]
 hood_model "assets/expansion/models/lighthouse.bam" [
  store_node [ "prop" "lighthouse" "" ]
@@ -16,6 +70,21 @@ hood_model "assets/expansion/models/movie_camera.bam" [
 ]
 hood_model "assets/expansion/models/pier_rail.bam" [
  store_node [ "prop" "pier_rail" "" ]
+]
+hood_model "assets/expansion/models/planter_19000.bam" [
+ store_node [ "prop" "planter_19000" "" ]
+]
+hood_model "assets/expansion/models/planter_61000.bam" [
+ store_node [ "prop" "planter_61000" "" ]
+]
+hood_model "assets/expansion/models/planter_62000.bam" [
+ store_node [ "prop" "planter_62000" "" ]
+]
+hood_model "assets/expansion/models/planter_63000.bam" [
+ store_node [ "prop" "planter_63000" "" ]
+]
+hood_model "assets/expansion/models/planter_64000.bam" [
+ store_node [ "prop" "planter_64000" "" ]
 ]
 hood_model "assets/expansion/models/shop_19000_0.bam" [
  store_node [ "prop" "shop_19000_0" "" ]
@@ -221,6 +290,9 @@ hood_model "assets/expansion/models/sign_8000.bam" [
 hood_model "assets/expansion/models/sign_9000.bam" [
  store_node [ "prop" "sign_9000" "" ]
 ]
+hood_model "assets/expansion/models/terrain_19100.bam" [
+ store_node [ "prop" "terrain_19100" "" ]
+]
 hood_model "assets/expansion/models/terrain_19200.bam" [
  store_node [ "prop" "terrain_19200" "" ]
 ]
@@ -263,54 +335,28 @@ hood_model "assets/expansion/models/water_tower.bam" [
 hood_model "assets/expansion/models/western_lamp.bam" [
  store_node [ "prop" "western_lamp" "" ]
 ]
-hood_model "assets/acorn/models/woodland_bench.bam" [
- store_node [ "prop" "bench" "" ]
-]
+hood_model "assets/expansion/models/grounded_bench.bam" [ store_node [ "prop" "bench" "" ] ]
 hood_model "phase_6/models/modules/safe_zone_tunnel_DD" [
  store_node [ "prop" "tunnel_DD" "prop_safe_zone_tunnel" ]
 ]
-hood_model "phase_6/models/props/streetlight_DD" [
- store_node [ "prop" "lamp_DD" "" ]
-]
+hood_model "assets/expansion/models/grounded_lamp_DD.bam" [ store_node [ "prop" "lamp_DD" "" ] ]
 hood_model "phase_8/models/modules/safe_zone_tunnel_DL" [
  store_node [ "prop" "tunnel_DL" "prop_safe_zone_tunnel" ]
 ]
-hood_model "phase_8/models/props/streetlight_DL" [
- store_node [ "prop" "lamp_DL" "" ]
-]
+hood_model "assets/expansion/models/grounded_lamp_DL.bam" [ store_node [ "prop" "lamp_DL" "" ] ]
 hood_model "phase_6/models/modules/safe_zone_tunnel_MM" [
  store_node [ "prop" "tunnel_MM" "prop_safe_zone_tunnel" ]
 ]
-hood_model "phase_6/models/props/streetlight_MM" [
- store_node [ "prop" "lamp_MM" "" ]
-]
+hood_model "assets/expansion/models/grounded_lamp_MM.bam" [ store_node [ "prop" "lamp_MM" "" ] ]
 hood_model "phase_8/models/modules/safe_zone_tunnel_DG" [
  store_node [ "prop" "tunnel_DG" "prop_safe_zone_tunnel" ]
 ]
-hood_model "phase_8/models/props/streetlight_DG" [
- store_node [ "prop" "lamp_DG" "" ]
-]
-hood_model "phase_3.5/models/props/trees" [
- store_node [ "prop" "forest_tree" "prop_tree_large_no_box_ul" ]
-]
-hood_model "phase_6/models/props/palm_tree_topflat" [
- store_node [ "prop" "palm" "" ]
-]
-hood_model "phase_8/models/props/trees_DL" [
- store_node [ "prop" "dream_tree" "prop_tree_DL_brickbox_ur" ]
-]
-hood_model "phase_6/models/props/trees_MM" [
- store_node [ "prop" "music_tree" "prop_tree_small_ur" ]
-]
-hood_model "phase_6/models/props/small_round_barrel" [
- store_node [ "prop" "barrel" "" ]
-]
-hood_model "phase_6/models/props/anchor" [
- store_node [ "prop" "anchor" "" ]
-]
-hood_model "phase_6/models/props/minnie_planter" [
- store_node [ "prop" "music_planter" "" ]
-]
-hood_model "phase_8/models/props/daisy_park_table" [
- store_node [ "prop" "garden_table" "" ]
-]
+hood_model "assets/expansion/models/grounded_lamp_DG.bam" [ store_node [ "prop" "lamp_DG" "" ] ]
+hood_model "assets/expansion/models/grounded_forest_tree.bam" [ store_node [ "prop" "forest_tree" "" ] ]
+hood_model "assets/expansion/models/grounded_palm.bam" [ store_node [ "prop" "palm" "" ] ]
+hood_model "assets/expansion/models/grounded_dream_tree.bam" [ store_node [ "prop" "dream_tree" "" ] ]
+hood_model "assets/expansion/models/grounded_music_tree.bam" [ store_node [ "prop" "music_tree" "" ] ]
+hood_model "assets/expansion/models/grounded_barrel.bam" [ store_node [ "prop" "barrel" "" ] ]
+hood_model "assets/expansion/models/grounded_anchor.bam" [ store_node [ "prop" "anchor" "" ] ]
+hood_model "assets/expansion/models/grounded_music_planter.bam" [ store_node [ "prop" "music_planter" "" ] ]
+hood_model "assets/expansion/models/grounded_garden_table.bam" [ store_node [ "prop" "garden_table" "" ] ]

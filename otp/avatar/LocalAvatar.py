@@ -14,7 +14,7 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import DistributedSmoothNode
 from otp.otpbase import OTPLocalizer
 from direct.controls.GhostWalker import GhostWalker
-from direct.controls.GravityWalker import GravityWalker
+from .ToonWalker import ToonWalker
 from direct.controls.ObserverWalker import ObserverWalker
 from direct.controls.SwimWalker import SwimWalker
 from direct.controls.TwoDWalker import TwoDWalker
@@ -164,7 +164,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         return False
 
     def setupControls(self, avatarRadius = 1.4, floorOffset = OTPGlobals.FloorOffset, reach = 4.0, wallBitmask = OTPGlobals.WallBitmask, floorBitmask = OTPGlobals.FloorBitmask, ghostBitmask = OTPGlobals.GhostBitmask):
-        walkControls = GravityWalker(legacyLifter=self.wantLegacyLifter())
+        walkControls = ToonWalker(legacyLifter=self.wantLegacyLifter())
         walkControls.setWallBitMask(wallBitmask)
         walkControls.setFloorBitMask(floorBitmask)
         walkControls.initializeCollisions(self.cTrav, self, avatarRadius, floorOffset, reach)
