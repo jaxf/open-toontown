@@ -1,0 +1,316 @@
+// Native expansion model palette.
+hood_model "assets/expansion/models/cactus.bam.pz" [
+ store_node [ "prop" "cactus" "" ]
+]
+hood_model "assets/expansion/models/clock_tower.bam.pz" [
+ store_node [ "prop" "clock_tower" "" ]
+]
+hood_model "assets/expansion/models/lighthouse.bam.pz" [
+ store_node [ "prop" "lighthouse" "" ]
+]
+hood_model "assets/expansion/models/mesa.bam.pz" [
+ store_node [ "prop" "mesa" "" ]
+]
+hood_model "assets/expansion/models/movie_camera.bam.pz" [
+ store_node [ "prop" "movie_camera" "" ]
+]
+hood_model "assets/expansion/models/pier_rail.bam.pz" [
+ store_node [ "prop" "pier_rail" "" ]
+]
+hood_model "assets/expansion/models/shop_19000_0.bam.pz" [
+ store_node [ "prop" "shop_19000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_19000_1.bam.pz" [
+ store_node [ "prop" "shop_19000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_19000_2.bam.pz" [
+ store_node [ "prop" "shop_19000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_19000_3.bam.pz" [
+ store_node [ "prop" "shop_19000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_61000_0.bam.pz" [
+ store_node [ "prop" "shop_61000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_61000_1.bam.pz" [
+ store_node [ "prop" "shop_61000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_61000_2.bam.pz" [
+ store_node [ "prop" "shop_61000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_61000_3.bam.pz" [
+ store_node [ "prop" "shop_61000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_62000_0.bam.pz" [
+ store_node [ "prop" "shop_62000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_62000_1.bam.pz" [
+ store_node [ "prop" "shop_62000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_62000_2.bam.pz" [
+ store_node [ "prop" "shop_62000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_62000_3.bam.pz" [
+ store_node [ "prop" "shop_62000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_63000_0.bam.pz" [
+ store_node [ "prop" "shop_63000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_63000_1.bam.pz" [
+ store_node [ "prop" "shop_63000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_63000_2.bam.pz" [
+ store_node [ "prop" "shop_63000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_63000_3.bam.pz" [
+ store_node [ "prop" "shop_63000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_64000_0.bam.pz" [
+ store_node [ "prop" "shop_64000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_64000_1.bam.pz" [
+ store_node [ "prop" "shop_64000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_64000_2.bam.pz" [
+ store_node [ "prop" "shop_64000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_64000_3.bam.pz" [
+ store_node [ "prop" "shop_64000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_0.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_1.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_2.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_3.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_4.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_4" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_19000_5.bam.pz" [
+ store_node [ "prop" "shop_sign_19000_5" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_0.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_1.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_2.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_3.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_4.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_4" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_61000_5.bam.pz" [
+ store_node [ "prop" "shop_sign_61000_5" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_0.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_1.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_2.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_3.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_4.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_4" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_62000_5.bam.pz" [
+ store_node [ "prop" "shop_sign_62000_5" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_0.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_1.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_2.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_3.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_4.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_4" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_63000_5.bam.pz" [
+ store_node [ "prop" "shop_sign_63000_5" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_0.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_0" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_1.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_1" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_2.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_2" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_3.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_3" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_4.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_4" "" ]
+]
+hood_model "assets/expansion/models/shop_sign_64000_5.bam.pz" [
+ store_node [ "prop" "shop_sign_64000_5" "" ]
+]
+hood_model "assets/expansion/models/sign_1000.bam.pz" [
+ store_node [ "prop" "sign_1000" "" ]
+]
+hood_model "assets/expansion/models/sign_19000.bam.pz" [
+ store_node [ "prop" "sign_19000" "" ]
+]
+hood_model "assets/expansion/models/sign_19100.bam.pz" [
+ store_node [ "prop" "sign_19100" "" ]
+]
+hood_model "assets/expansion/models/sign_19200.bam.pz" [
+ store_node [ "prop" "sign_19200" "" ]
+]
+hood_model "assets/expansion/models/sign_4000.bam.pz" [
+ store_node [ "prop" "sign_4000" "" ]
+]
+hood_model "assets/expansion/models/sign_5000.bam.pz" [
+ store_node [ "prop" "sign_5000" "" ]
+]
+hood_model "assets/expansion/models/sign_61000.bam.pz" [
+ store_node [ "prop" "sign_61000" "" ]
+]
+hood_model "assets/expansion/models/sign_61100.bam.pz" [
+ store_node [ "prop" "sign_61100" "" ]
+]
+hood_model "assets/expansion/models/sign_61200.bam.pz" [
+ store_node [ "prop" "sign_61200" "" ]
+]
+hood_model "assets/expansion/models/sign_62000.bam.pz" [
+ store_node [ "prop" "sign_62000" "" ]
+]
+hood_model "assets/expansion/models/sign_62100.bam.pz" [
+ store_node [ "prop" "sign_62100" "" ]
+]
+hood_model "assets/expansion/models/sign_63000.bam.pz" [
+ store_node [ "prop" "sign_63000" "" ]
+]
+hood_model "assets/expansion/models/sign_63100.bam.pz" [
+ store_node [ "prop" "sign_63100" "" ]
+]
+hood_model "assets/expansion/models/sign_63200.bam.pz" [
+ store_node [ "prop" "sign_63200" "" ]
+]
+hood_model "assets/expansion/models/sign_64000.bam.pz" [
+ store_node [ "prop" "sign_64000" "" ]
+]
+hood_model "assets/expansion/models/sign_64100.bam.pz" [
+ store_node [ "prop" "sign_64100" "" ]
+]
+hood_model "assets/expansion/models/sign_8000.bam.pz" [
+ store_node [ "prop" "sign_8000" "" ]
+]
+hood_model "assets/expansion/models/sign_9000.bam.pz" [
+ store_node [ "prop" "sign_9000" "" ]
+]
+hood_model "assets/expansion/models/terrain_19200.bam.pz" [
+ store_node [ "prop" "terrain_19200" "" ]
+]
+hood_model "assets/expansion/models/terrain_61000.bam.pz" [
+ store_node [ "prop" "terrain_61000" "" ]
+]
+hood_model "assets/expansion/models/terrain_61100.bam.pz" [
+ store_node [ "prop" "terrain_61100" "" ]
+]
+hood_model "assets/expansion/models/terrain_61200.bam.pz" [
+ store_node [ "prop" "terrain_61200" "" ]
+]
+hood_model "assets/expansion/models/terrain_62000.bam.pz" [
+ store_node [ "prop" "terrain_62000" "" ]
+]
+hood_model "assets/expansion/models/terrain_62100.bam.pz" [
+ store_node [ "prop" "terrain_62100" "" ]
+]
+hood_model "assets/expansion/models/terrain_63000.bam.pz" [
+ store_node [ "prop" "terrain_63000" "" ]
+]
+hood_model "assets/expansion/models/terrain_63100.bam.pz" [
+ store_node [ "prop" "terrain_63100" "" ]
+]
+hood_model "assets/expansion/models/terrain_63200.bam.pz" [
+ store_node [ "prop" "terrain_63200" "" ]
+]
+hood_model "assets/expansion/models/terrain_64000.bam.pz" [
+ store_node [ "prop" "terrain_64000" "" ]
+]
+hood_model "assets/expansion/models/terrain_64100.bam.pz" [
+ store_node [ "prop" "terrain_64100" "" ]
+]
+hood_model "assets/expansion/models/theater.bam.pz" [
+ store_node [ "prop" "theater" "" ]
+]
+hood_model "assets/expansion/models/water_tower.bam.pz" [
+ store_node [ "prop" "water_tower" "" ]
+]
+hood_model "assets/expansion/models/western_lamp.bam.pz" [
+ store_node [ "prop" "western_lamp" "" ]
+]
+hood_model "assets/acorn/models/woodland_bench.bam.pz" [
+ store_node [ "prop" "bench" "" ]
+]
+hood_model "phase_6/models/modules/safe_zone_tunnel_DD" [
+ store_node [ "prop" "tunnel_DD" "prop_safe_zone_tunnel" ]
+]
+hood_model "phase_6/models/props/streetlight_DD" [
+ store_node [ "prop" "lamp_DD" "" ]
+]
+hood_model "phase_8/models/modules/safe_zone_tunnel_DL" [
+ store_node [ "prop" "tunnel_DL" "prop_safe_zone_tunnel" ]
+]
+hood_model "phase_8/models/props/streetlight_DL" [
+ store_node [ "prop" "lamp_DL" "" ]
+]
+hood_model "phase_6/models/modules/safe_zone_tunnel_MM" [
+ store_node [ "prop" "tunnel_MM" "prop_safe_zone_tunnel" ]
+]
+hood_model "phase_6/models/props/streetlight_MM" [
+ store_node [ "prop" "lamp_MM" "" ]
+]
+hood_model "phase_8/models/modules/safe_zone_tunnel_DG" [
+ store_node [ "prop" "tunnel_DG" "prop_safe_zone_tunnel" ]
+]
+hood_model "phase_8/models/props/streetlight_DG" [
+ store_node [ "prop" "lamp_DG" "" ]
+]
+hood_model "phase_3.5/models/props/trees" [
+ store_node [ "prop" "forest_tree" "prop_tree_large_no_box_ul" ]
+]
+hood_model "phase_6/models/props/palm_tree_topflat" [
+ store_node [ "prop" "palm" "" ]
+]
+hood_model "phase_8/models/props/trees_DL" [
+ store_node [ "prop" "dream_tree" "prop_tree_DL_brickbox_ur" ]
+]
+hood_model "phase_6/models/props/trees_MM" [
+ store_node [ "prop" "music_tree" "prop_tree_small_ur" ]
+]
+hood_model "phase_6/models/props/small_round_barrel" [
+ store_node [ "prop" "barrel" "" ]
+]
+hood_model "phase_6/models/props/anchor" [
+ store_node [ "prop" "anchor" "" ]
+]
+hood_model "phase_6/models/props/minnie_planter" [
+ store_node [ "prop" "music_planter" "" ]
+]
+hood_model "phase_8/models/props/daisy_park_table" [
+ store_node [ "prop" "garden_table" "" ]
+]

@@ -2,8 +2,8 @@
 
 These two locations now use authored DNA layouts, original textured Toontown
 modules, and custom modeled terrain, a hollow Great Oak, benches, fences, signs,
-and solid building backs. The other expansion locations still use the earlier
-prototype art.
+and solid building backs. The remaining expansion locations now use the companion
+[expanded world art kit](../expansion/README.md).
 
 ![Acorn Acreside at walking height](../../docs/previews/acorn-walk.png)
 ![Root Route at walking height](../../docs/previews/root-route-walk.png)
@@ -95,3 +95,7 @@ this expansion. Existing building modules, props, texture images, fonts and sky
 are referenced from the project's original Open-Toontown resources. No source
 from OpenLevelEditor is vendored into the game; its DNA format and parser were
 used for interoperability and validation.
+
+All Acorn and Root Route scenes now also attach the shared native HQ, gag shop
+and trolley layouts from `../expansion/services`. Service terrain aprons are
+baked into the two terrain models. See the expanded kit for runtime details.

@@ -1,0 +1,303 @@
+// Authored, editable scene; scenery storefronts have no interiors.
+group "hush_hollow" [
+ visgroup "62000:world" [
+ vis [ "62000:world" ]
+prop "playground-terrain" [
+ code [ "terrain_62000" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "linktunnel_hush_62100" [
+ code [ "DCS" ]
+ pos [ 25.0000 -135.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "native-tunnel" [
+ code [ "tunnel_DL" ]
+ pos [ -60.0000 -95.0000 -6.6666 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "destination-sign" [
+ code [ "sign_62100" ]
+ pos [ 0.0000 1.0000 18.0000 ]
+ nhpr [ 180.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+]
+prop "linktunnel_acorn_19200" [
+ code [ "DCS" ]
+ pos [ -150.0000 55.0000 0.0000 ]
+ nhpr [ -90.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+prop "native-tunnel" [
+ code [ "tunnel_DL" ]
+ pos [ -60.0000 -95.0000 -6.6666 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "destination-sign" [
+ code [ "sign_19200" ]
+ pos [ 0.0000 1.0000 18.0000 ]
+ nhpr [ 180.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+]
+prop "neighborhood-landmark" [
+ code [ "clock_tower" ]
+ pos [ -48.0000 45.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "storefront-62000-0" [
+ code [ "DCS" ]
+ pos [ -84.0000 -9.0000 0.0000 ]
+ nhpr [ 100.0000 0 0 ]
+ scale [ 0.8800 0.8800 0.8800 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_0" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "storefront-62000-1" [
+ code [ "DCS" ]
+ pos [ -94.0000 30.0000 0.0000 ]
+ nhpr [ 75.0000 0 0 ]
+ scale [ 1.1200 1.1200 1.1200 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_1" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "storefront-62000-2" [
+ code [ "DCS" ]
+ pos [ -80.0000 87.0000 0.0000 ]
+ nhpr [ 30.0000 0 0 ]
+ scale [ 0.9600 0.9600 0.9600 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "storefront-62000-3" [
+ code [ "DCS" ]
+ pos [ -36.0000 112.0000 0.0000 ]
+ nhpr [ 5.0000 0 0 ]
+ scale [ 1.0400 1.0400 1.0400 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_3" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+
+prop "storefront-62000-5" [
+ code [ "DCS" ]
+ pos [ 63.0000 111.0000 0.0000 ]
+ nhpr [ -35.0000 0 0 ]
+ scale [ 1.1200 1.1200 1.1200 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_5" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "storefront-62000-6" [
+ code [ "DCS" ]
+ pos [ 109.0000 65.0000 0.0000 ]
+ nhpr [ -85.0000 0 0 ]
+ scale [ 0.9600 0.9600 0.9600 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_2" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_0" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+
+prop "storefront-62000-8" [
+ code [ "DCS" ]
+ pos [ 79.0000 -84.0000 0.0000 ]
+ nhpr [ -150.0000 0 0 ]
+ scale [ 0.8800 0.8800 0.8800 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_0" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_2" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "storefront-62000-9" [
+ code [ "DCS" ]
+ pos [ -21.0000 -88.0000 0.0000 ]
+ nhpr [ 140.0000 0 0 ]
+ scale [ 1.1200 1.1200 1.1200 ]
+prop "painted-native-shop" [
+ code [ "shop_62000_1" ]
+ pos [ 0.0000 0.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.0000 1.0000 1.0000 ]
+]
+prop "shop-name" [
+ code [ "shop_sign_62000_3" ]
+ pos [ 0.0000 -0.8000 14.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 0.9500 0.9500 0.9500 ]
+]
+]
+prop "tree-0" [
+ code [ "dream_tree" ]
+ pos [ -133.0000 109.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+prop "tree-1" [
+ code [ "dream_tree" ]
+ pos [ -104.0000 80.0000 0.0000 ]
+ nhpr [ 41.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+
+prop "tree-3" [
+ code [ "dream_tree" ]
+ pos [ 39.0000 117.0000 0.0000 ]
+ nhpr [ 123.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+prop "tree-4" [
+ code [ "dream_tree" ]
+ pos [ 107.0000 101.0000 0.0000 ]
+ nhpr [ 164.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+
+prop "tree-6" [
+ code [ "dream_tree" ]
+ pos [ 70.0000 -105.0000 0.0000 ]
+ nhpr [ 246.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+prop "tree-7" [
+ code [ "dream_tree" ]
+ pos [ -18.0000 -62.0000 0.0000 ]
+ nhpr [ 287.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+
+prop "tree-9" [
+ code [ "dream_tree" ]
+ pos [ -132.0000 -12.0000 0.0000 ]
+ nhpr [ 369.0000 0 0 ]
+ scale [ 1.7000 1.7000 1.7000 ]
+]
+
+prop "plaza-lamp-0" [
+ code [ "lamp_DL" ]
+ pos [ 9.0000 -105.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.2500 1.2500 1.2500 ]
+]
+prop "rest-bench-0" [
+ code [ "bench" ]
+ pos [ 14.0000 -101.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "plaza-lamp-1" [
+ code [ "lamp_DL" ]
+ pos [ 72.0000 -49.0000 0.0000 ]
+ nhpr [ -90.0000 0 0 ]
+ scale [ 1.2500 1.2500 1.2500 ]
+]
+prop "plaza-lamp-2" [
+ code [ "lamp_DL" ]
+ pos [ 39.0000 -8.0000 0.0000 ]
+ nhpr [ 35.0000 0 0 ]
+ scale [ 1.2500 1.2500 1.2500 ]
+]
+prop "rest-bench-2" [
+ code [ "bench" ]
+ pos [ 44.0000 -4.0000 0.0000 ]
+ nhpr [ 35.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+
+prop "plaza-lamp-4" [
+ code [ "lamp_DL" ]
+ pos [ -61.0000 65.0000 0.0000 ]
+ nhpr [ 30.0000 0 0 ]
+ scale [ 1.2500 1.2500 1.2500 ]
+]
+prop "rest-bench-4" [
+ code [ "bench" ]
+ pos [ -56.0000 69.0000 0.0000 ]
+ nhpr [ 30.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+
+prop "garden-table-0" [
+ code [ "garden_table" ]
+ pos [ 60.0000 -30.0000 0.0000 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+prop "garden-table-1" [
+ code [ "garden_table" ]
+ pos [ -43.0000 12.0000 0.0000 ]
+ nhpr [ 34.0000 0 0 ]
+ scale [ 1.2000 1.2000 1.2000 ]
+]
+
+]
+]

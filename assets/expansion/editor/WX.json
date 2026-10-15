@@ -1,0 +1,7 @@
+{
+  "name_longhand": "expanded_toontown",
+  "storage_files": [
+    "assets/expansion/dna/storage_world.dna",
+    "assets/expansion/services/storage_services.dna"
+  ]
+}

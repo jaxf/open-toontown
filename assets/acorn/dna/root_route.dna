@@ -1,5 +1,5 @@
 // Authored exploration layout; edit this file in OpenLevelEditor.
-// Storefronts are scenery. No Cog paths or interior doors are registered yet.
+// Decorative shops are scenery. Native services attach from assets/expansion/services.
 group "root_route" [
  visgroup "19100:woodland" [
  vis [ "19100:woodland" ]
@@ -131,49 +131,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "the-tea-leaf" [
- code [ "DCS" ]
- pos [ -11.0000 -70.0000 0.0000 ]
- nhpr [ 115.0000 0 0 ]
- scale [ 0.7800 0.7800 0.7800 ]
-prop "textured-storefront" [
- code [ "DG_A2" ]
- pos [ -14.0000 0.0000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "shop-door" [
- code [ "round_door" ]
- pos [ 0.0000 -3.0600 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
- color [ 0.76 0.86 0.55 1 ]
-]
-prop "shop-sign" [
- code [ "tea_sign" ]
- pos [ 0.0000 -3.6000 12.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "solid-shop-front" [
- code [ "shop_barrier" ]
- pos [ 0.0000 -2.6000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 28.0000 12.0000 33.0000 ]
-]
-prop "timber-building-shell" [
- code [ "shop_shell_DG_A2" ]
- pos [ 0.0000 -2.6000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 28.0000 12.0000 27.0000 ]
-]
-prop "window-garden" [
- code [ "flowerbox" ]
- pos [ -11.0000 -4.3000 0.1000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 0.5500 0.5500 0.5500 ]
-]
-]
+
 prop "root-of-the-joke" [
  code [ "DCS" ]
  pos [ 73.0000 -69.0000 0.0000 ]
@@ -346,49 +304,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "acorny-jokes" [
- code [ "DCS" ]
- pos [ -38.0000 29.0000 0.0000 ]
- nhpr [ 60.0000 0 0 ]
- scale [ 0.8000 0.8000 0.8000 ]
-prop "textured-storefront" [
- code [ "DG_A2" ]
- pos [ -14.0000 0.0000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "shop-door" [
- code [ "round_door" ]
- pos [ 0.0000 -3.0600 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
- color [ 0.76 0.86 0.55 1 ]
-]
-prop "shop-sign" [
- code [ "acorny_sign" ]
- pos [ 0.0000 -3.6000 12.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "solid-shop-front" [
- code [ "shop_barrier" ]
- pos [ 0.0000 -2.6000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 28.0000 12.0000 33.0000 ]
-]
-prop "timber-building-shell" [
- code [ "shop_shell_DG_A2" ]
- pos [ 0.0000 -2.6000 0.0000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 28.0000 12.0000 27.0000 ]
-]
-prop "window-garden" [
- code [ "flowerbox" ]
- pos [ -11.0000 -4.3000 0.1000 ]
- nhpr [ 0.0000 0 0 ]
- scale [ 0.5500 0.5500 0.5500 ]
-]
-]
+
 prop "seed-library" [
  code [ "DCS" ]
  pos [ -63.0000 81.0000 0.0000 ]
@@ -591,12 +507,7 @@ prop "roadside-flower-lamp-4" [
  nhpr [ 220.0000 0 0 ]
  scale [ 1.0500 1.0500 1.0500 ]
 ]
-prop "roadside-flower-lamp-5" [
- code [ "garden_lamp" ]
- pos [ -35.0000 55.0000 0.1000 ]
- nhpr [ 275.0000 0 0 ]
- scale [ 1.0500 1.0500 1.0500 ]
-]
+
 prop "roadside-flower-lamp-6" [
  code [ "garden_lamp" ]
  pos [ -8.0000 110.0000 0.1000 ]
@@ -651,18 +562,8 @@ prop "roadside-planter-2" [
  nhpr [ 74.0000 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-prop "roadside-planter-3" [
- code [ "garden_tree" ]
- pos [ -23.0000 5.0000 0.1000 ]
- nhpr [ 111.0000 0 0 ]
- scale [ 1.2000 1.2000 1.2000 ]
-]
-prop "roadside-planter-4" [
- code [ "garden_tree" ]
- pos [ 2.0000 65.0000 0.1000 ]
- nhpr [ 148.0000 0 0 ]
- scale [ 1.2000 1.2000 1.2000 ]
-]
+
+
 prop "roadside-planter-5" [
  code [ "garden_tree" ]
  pos [ -44.0000 109.0000 0.1000 ]
@@ -717,13 +618,7 @@ prop "forest--1-5" [
  scale [ 2.1000 2.1000 2.1000 ]
  color [ 1 0.92 0.72 1 ]
 ]
-prop "forest--1-6" [
- code [ "forest_tree_b" ]
- pos [ -95.0000 -25.0000 2.2341 ]
- nhpr [ 258.0000 0 0 ]
- scale [ 1.7000 1.7000 1.7000 ]
- color [ 1 0.92 0.72 1 ]
-]
+
 prop "forest--1-7" [
  code [ "forest_tree" ]
  pos [ -103.0000 0.0000 5.1381 ]
@@ -945,48 +840,13 @@ prop "garden-fence-2" [
  nhpr [ 90.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-prop "garden-fence-3" [
- code [ "garden_fence" ]
- pos [ -86.0000 -70.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-4" [
- code [ "garden_fence" ]
- pos [ -86.0000 -50.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-5" [
- code [ "garden_fence" ]
- pos [ -86.0000 -30.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-6" [
- code [ "garden_fence" ]
- pos [ -86.0000 -10.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-7" [
- code [ "garden_fence" ]
- pos [ -86.0000 10.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-8" [
- code [ "garden_fence" ]
- pos [ -86.0000 30.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
-prop "garden-fence-9" [
- code [ "garden_fence" ]
- pos [ -86.0000 50.0000 0.0000 ]
- nhpr [ 90.0000 0 0 ]
- scale [ 1.0000 1.0000 1.0000 ]
-]
+
+
+
+
+
+
+
 prop "garden-fence-10" [
  code [ "garden_fence" ]
  pos [ -86.0000 70.0000 0.0000 ]

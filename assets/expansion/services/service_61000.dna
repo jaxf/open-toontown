@@ -1,0 +1,18 @@
+group "services-61000" [ visgroup "61000:services" [ vis [ "61000:services" ]
+landmark_building "sz20:toon_landmark_service_hq_DNARoot" [
+ code [ "service_hq_DD" ]
+ building_type [ "hq" ]
+ title [ "Toon HQ" ]
+ pos [ -115 -85 0 ]
+ nhpr [ 280 0 0 ]
+]
+landmark_building "sz19:toon_landmark_service_gagshop_DNARoot" [
+ code [ "service_gagshop_DD" ]
+ building_type [ "gagshop" ]
+ title [ "Gag Shop" ]
+ pos [ 62 -80 0 ]
+ nhpr [ 25 0 0 ]
+ door [ code [ "door_double_square_ur" ] color [ 1 .83 .58 1 ] ]
+]
+prop "prop_trolley_station_DNARoot" [ code [ "service_trolley_DD" ] pos [ -100 85 0 ] nhpr [ 0 0 0 ] ]
+] ]

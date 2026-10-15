@@ -334,7 +334,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         )
         self.generateHood(GZHoodDataAI, ToontownGlobals.GolfZone)
 
-        # New exploration neighborhoods have procedural geometry, no DNA.
+        # Expansion exteriors use authored DNA; services use native AI classes.
         from toontown.expansion import ExpansionGlobals
         from toontown.expansion.ExpansionHoodDataAI import ExpansionHoodDataAI
         for hoodId in ExpansionGlobals.NEIGHBORHOODS:

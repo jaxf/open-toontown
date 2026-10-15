@@ -17,7 +17,7 @@ NEIGHBORHOODS = {
                 landmark='The Great Oak', source=5000),
     BRINY: dict(name='Briny Boardwalk', short='briny', theme='seaside',
                 colors=((.27, .65, .68, 1), (.89, .41, .35, 1), (1, .88, .60, 1)),
-                sky=(1, .76, .70, 1), music='phase_6/audio/bgm/DD_nbrhood.ogg',
+                sky=(1, .94, .85, 1), music='phase_6/audio/bgm/DD_nbrhood.ogg',
                 landmark='Loopy Lighthouse', source=1000),
     HUSH: dict(name='Hush Hollow', short='hush', theme='spooky',
                colors=((.32, .24, .43, 1), (.22, .49, .48, 1), (1, .68, .30, 1)),
@@ -95,6 +95,11 @@ def gate_transforms(zone):
         return ((0, -110, 0, 0), (-118, 20, 0, -90))
     if zone == 19100:
         return ((0, -155, 0, 0), (0, 165, 0, 180))
+    from .WorldLayout import ROADS, PLAZA_GATES
+    if zone in ROADS:
+        return ((0, ROADS[zone][0][1], 0, 0), (0, ROADS[zone][-1][1], 0, 180))
+    if zone in PLAZA_GATES:
+        return PLAZA_GATES[zone]
     if zone in SOURCE_GATES:
         return (SOURCE_GATES[zone],)
     if zone in STREETS:
@@ -113,4 +118,29 @@ def spawn_point(zone):
     # Root Route bends east here; the original center spawn is inside a shop.
     if zone == 19100:
         return (39, -18, .3, 0, 0, 0)
+    from .WorldLayout import ROADS
+    if zone in ROADS:
+        return (0, ROADS[zone][0][1]+30, .3, 0, 0, 0)
     return (0, -18, .3, 0, 0, 0)
+
+# Native service interiors keep the stock branch + 500 + block convention.
+SERVICE_BLOCKS = {'gagshop': 19, 'hq': 20}
+INTERIOR_EXTERIORS = {zone+500+block: zone for zone in ALL_ZONES
+                      for block in SERVICE_BLOCKS.values()}
+SERVICE_INTERIORS = frozenset(INTERIOR_EXTERIORS)
+
+
+def exterior_zone(zone):
+    return INTERIOR_EXTERIORS.get(zone, zone)
+
+
+def service_interior(zone, kind):
+    return zone+500+SERVICE_BLOCKS[kind]
+
+
+def minigame_theme(zone):
+    hood=hood_id(exterior_zone(zone))
+    if hood in NEIGHBORHOODS:
+        source=NEIGHBORHOODS[hood]['source']
+        return 2000 if source==8000 else source
+    return hood

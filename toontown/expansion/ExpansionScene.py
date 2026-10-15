@@ -167,88 +167,9 @@ def add_tunnels(parent, zone):
 def build_scene(zone, dna_store=None):
     if zone in (E.ACORN, 19100):
         from .AcornDNA import load_scene
-        return load_scene(zone, dna_store)
-    hood = E.hood_id(zone)
-    spec = E.NEIGHBORHOODS[hood]
-    a,b,c = spec['colors']
-    root=NodePath('expansion-%s' % zone)
-    street=zone in E.STREETS
-    width,depth=(86,210) if street else (210,210)
-    floor(root,'ground',0,0,width,depth,color=a if hood==E.ACORN else c)
-    # Invisible fall-proof boundary sits beyond the tunnel interiors.
-    for x,y,w,d in ((-width/2,0,2,depth),(width/2,0,2,depth),
-                    (0,-depth/2,width,2),(0,depth/2,width,2)):
-        wall=box(root,'boundary',(x,y,5),(w,d,10),a,True)
-        wall.hide()
-    if street:
-        floor(root,'promenade',0,0,20,175,.03,(.71,.60,.45,1))
-        names=('Window Shopping','A Little Offbeat','Pun Intended','Open Sesame','The Last Laugh','Small Change')
-        for i,y in enumerate((-48,-6,36)):
-            for side in (-1,1):
-                index=i*2+(side==1)
-                shop(root,names[index],(side*29,y,0),side*-90,spec['colors'],spec['theme'],index)
-                if hood in (E.ACORN,E.HUSH):
-                    tree(root,side*29,y+17,b if i%2 else a,.7)
-        # The far end introduces the next neighborhood's palette.
-        destination=E.STREETS[zone][3]
-        if destination in E.NEIGHBORHOODS and destination != hood:
-            other=E.NEIGHBORHOODS[destination]
-            shop(root,'Around the Bend',(-29,66,0),90,other['colors'],other['theme'],0)
     else:
-        floor(root,'central-plaza',0,-12,40,70,.03,(.78,.68,.50,1))
-        floor(root,'cross-path',0,0,140,16,.04,(.78,.68,.50,1))
-        names={E.ACORN:('Knot a Problem','Acorny Jokes','Leaf It to Me','Branch Office'),
-               E.BRINY:('Saltwater Smiles','Pier Pressure','Taffy Together','Shell We Dance'),
-               E.HUSH:('Boo-tique','Rest in Pieces','Fright & Early','The Creak Easy'),
-               E.DOODLEWOOD:('Take Two','Reel Deals','Props to You','Star Treatment'),
-               E.TUMBLEWEED:('Dry Humor','High Noon Noodles','Cactus Practice','Well I Never')}[hood]
-        layouts = {
-            E.ACORN: ((-39,-32,135),(39,-32,-135),(-39,35,45),(39,35,-45)),
-            E.BRINY: ((-43,42,0),(40,42,0),(-35,-30,150),(35,-30,-150)),
-            E.HUSH: ((-36,25,50),(36,35,-50),(-30,-35,135),(38,-27,-120)),
-            E.DOODLEWOOD: ((-40,32,90),(40,32,-90),(-40,-32,90),(40,-32,-90)),
-            E.TUMBLEWEED: ((-30,-38,90),(38,-20,-90),(-36,24,90),(37,45,-90)),
-        }
-        for i,(x,y,h) in enumerate(layouts[hood]):
-            shop(root,names[i],(x,y,0),h,spec['colors'],spec['theme'],i)
-        landmark(root,hood)
-        # Each neighborhood has a different ground treatment and silhouette.
-        if hood == E.BRINY:
-            for y in range(-45,54,6):
-                box(root,'boardwalk', (0,y,.04),(122,5.8,.06),(.64,.46,.31,1))
-        elif hood == E.HUSH:
-            cylinder(root,'cobblestone-plaza',(0,12,.04),32,.04,(.49,.47,.53,1),sides=24)
-        elif hood == E.DOODLEWOOD:
-            box(root,'studio-carpet',(0,-20,.08),(16,70,.08),a)
-            for y in range(-45,18,12):
-                for x in (-12,12):
-                    cylinder(root,'velvet-rope-post',(x,y,0),.3,3,c)
-        elif hood == E.TUMBLEWEED:
-            for x,y,h in ((-5,-55,-20),(0,-25,12),(-4,5,-20),(2,35,15)):
-                box(root,'dry-creek',(x,y,.03),(12,35,.04),(.58,.36,.22,1)).setH(h)
-            box(root,'creek-footbridge',(0,0,.12),(30,11,.15),(.64,.46,.31,1))
-        if hood in (E.ACORN,E.HUSH):
-            for i in range(12):
-                ang=i*2*pi/12
-                # Keep the three tunnel paths clear.
-                if i in (0,6,9):
-                    continue
-                tree(root,cos(ang)*82,sin(ang)*82,b if i%3 else a,1.2)
-        elif hood==E.BRINY:
-            floor(root,'lagoon',0,76,125,28,.02,(.18,.59,.71,1))
-            for x in range(-55,56,5):
-                box(root,'boardwalk-plank',(x,54,.18),(4.8,16,.35),(.65,.45,.28,1))
-            for x in (-49,49):
-                cylinder(root,'parasol',(x,18,9),7,3,b,0,12)
-                box(root,'parasol-pole',(x,18,4.5),(.4,.4,9),CREAM,True)
-        elif hood==E.DOODLEWOOD:
-            for x in (-67,67):
-                box(root,'backlot-wall',(x,50,10),(18,3,20),b,True)
-                label(root,'STAGE '+str(abs(x)//10),(x,48,10),1.4,DARK)
-        else:
-            for x,y in ((-75,50),(75,50),(-75,-40),(75,-40)):
-                cylinder(root,'cactus',(x,y,0),1.4,11,b,1)
-                box(root,'cactus-arm',(x+2,y,6),(5,2,2),b,True)
-                cylinder(root,'mesa',(x,y+30,0),16,20,a,12,7)
-    add_tunnels(root,zone)
+        from .WorldDNA import load_scene
+    root=load_scene(zone,dna_store)
+    from .Services import attach_services
+    attach_services(root,zone,dna_store)
     return root

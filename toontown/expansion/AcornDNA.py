@@ -16,16 +16,16 @@ LAYOUTS = {19000: 'assets/acorn/dna/acorn_acreside.dna',
            19100: 'assets/acorn/dna/root_route.dna'}
 
 
-def load_scene(zone, dna_store=None):
+def load_scene(zone, dna_store=None, storage=STORAGE, layouts=LAYOUTS):
     from direct.showbase import ShowBaseGlobal
     loader = ShowBaseGlobal.base.loader
     if dna_store is not None:
-        loader.loadDNAFile(dna_store, STORAGE)
-        node = loader.loadDNAFile(dna_store, LAYOUTS[zone])
+        loader.loadDNAFile(dna_store, storage)
+        node = loader.loadDNAFile(dna_store, layouts[zone])
         if node is None:
-            raise RuntimeError('Failed to load Acorn DNA: '+LAYOUTS[zone])
+            raise RuntimeError('Failed to load DNA: '+layouts[zone])
         return NodePath(node)
-    return preview_scene(zone, loader)
+    return preview_scene(zone, loader, storage, layouts)
 
 
 def parse(path):
@@ -55,8 +55,8 @@ def parse(path):
     return block()
 
 
-def storage_models(loader):
-    data = parse(ASSETS/'dna/storage_acorn.dna')
+def storage_models(loader, storage=STORAGE):
+    data = parse(ASSETS.parents[1]/storage)
     models = {}
     for i in range(0, len(data), 3):
         kind, filename, entries = data[i:i+3]
@@ -79,17 +79,17 @@ def storage_models(loader):
     return models
 
 
-def preview_scene(zone, loader):
-    models = storage_models(loader)
+def preview_scene(zone, loader, storage=STORAGE, layouts=LAYOUTS):
+    models = storage_models(loader, storage)
     root = NodePath('expansion-%s' % zone)
 
     def traverse(entries, parent):
         i = 0
         while i < len(entries):
             kind = entries[i]
-            if kind in ('group', 'visgroup', 'prop'):
+            if kind in ('group', 'visgroup', 'prop', 'landmark_building'):
                 name, children = entries[i+1:i+3]
-                if kind == 'prop':
+                if kind in ('prop','landmark_building'):
                     code = children[children.index('code')+1][0]
                     node = parent.attachNewNode(name) if code == 'DCS' else models[code].copyTo(parent)
                     node.setName(name)
@@ -102,9 +102,17 @@ def preview_scene(zone, loader):
                 {'pos': parent.setPos, 'nhpr': parent.setHpr,
                  'scale': parent.setScale, 'color': parent.setColorScale}[kind](*value)
                 i += 2
-            elif kind in ('code', 'vis'):
+            elif kind == 'door':
+                children=entries[i+1]
+                code=children[children.index('code')+1][0]
+                door=models[code].copyTo(parent)
+                origin=parent.find('**/door_origin')
+                if not origin.isEmpty():
+                    door.setMat(origin.getMat(parent))
+                i += 2
+            elif kind in ('code', 'vis', 'title', 'building_type'):
                 i += 2
             else:
                 raise ValueError('Unsupported preview DNA node '+kind)
-    traverse(parse(ASSETS/'dna'/Path(LAYOUTS[zone]).name), root)
+    traverse(parse(ASSETS.parents[1]/layouts[zone]), root)
     return root

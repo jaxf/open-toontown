@@ -43,7 +43,7 @@ class ExpansionLoader(SafeZoneLoader):
     def createSafeZone(self, dnaFile):
         self.geom = build_scene(self.zoneId, self.hood.dnaStore)
         self.geom.reparentTo(base.hidden)
-        if self.zoneId in (E.ACORN, 19100):
+        if self.zoneId in E.ALL_ZONES:
             self.makeDictionaries(self.hood.dnaStore)
         else:
             self.nodeList = [self.geom]
@@ -51,16 +51,24 @@ class ExpansionLoader(SafeZoneLoader):
         self.animPropDict = {}
 
     def handlePlaygroundDone(self):
-        # Force a loader rebuild when moving between an expansion plaza and
-        # promenade, even when they share the same neighborhood ID.
-        self.doneStatus = self.place.doneStatus
-        messenger.send(self.doneEvent)
+        status=self.place.doneStatus
+        if status.get('loader') == 'minigame':
+            self.hood.trolleyReturnZone = self.zoneId
+        if E.exterior_zone(status['zoneId'])==self.zoneId and status.get('shardId') is None:
+            self.fsm.request('quietZone',[status])
+        else:
+            self.doneStatus=status
+            messenger.send(self.doneEvent)
+
+    def handleToonInteriorDone(self):
+        self.handlePlaygroundDone()
 
 
 class ExpansionHood(ToonHood):
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         ToonHood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.id = hoodId
+        self.trolleyReturnZone = hoodId
         self.storageDNAFile = None
         self.skyFile = 'phase_3.5/models/props/TT_sky'
         self.titleColor = E.NEIGHBORHOODS[hoodId]['colors'][2]
@@ -80,5 +88,15 @@ class ExpansionHood(ToonHood):
 
     def loadLoader(self, requestStatus):
         self.loader = ExpansionLoader(self, self.fsm.getStateNamed('safeZoneLoader'),
-                                      self.loaderDoneEvent, requestStatus['zoneId'])
+                                      self.loaderDoneEvent, E.exterior_zone(requestStatus['zoneId']))
         self.loader.load()
+
+    def handlePurchaseDone(self):
+        status = self.purchase.getDoneStatus()
+        if status['where'] == 'playground':
+            self.fsm.request('quietZone', [{'loader': 'safeZoneLoader',
+                'where': 'playground', 'how': 'teleportIn',
+                'hoodId': self.hoodId, 'zoneId': self.trolleyReturnZone,
+                'shardId': None, 'avId': -1}])
+        else:
+            ToonHood.handlePurchaseDone(self)

@@ -1,14 +1,23 @@
+## Full world art update
+
+The remaining four playgrounds and seven streets have been rebuilt with native
+DNA, original textured modules and new themed models. The Shtiker map is now one
+illustrated world with original and expansion destination buttons. See the
+[art kit, screenshots and editor guide](../assets/expansion/README.md).
+
+The test suite was not run for this update, as requested. Scene/UI previews were
+rendered for visual iteration; a live custom-engine walkthrough remains outstanding.
+
 # Beyond the Tunnels — first exploration build
 
 Five new neighborhoods and eight connecting promenades extend the existing
 world. This is a first playable implementation for layout testing, not a finished
-quest/content expansion. New areas are peaceful zones with procedural scenery,
+quest/content expansion. New areas are peaceful zones with authored native DNA scenery,
 landmarks, collisions, music, and two-way native tunnel travel.
 
 **Art rebuild:** Acorn Acreside and Root Route now load editable native DNA,
 textured Toontown storefronts and props, and custom modeled terrain and a hollow
-Great Oak. Root Route has a curved road, sidewalks and pocket courtyards. The
-other four neighborhoods and remaining streets still use the prototype art.
+Great Oak. Root Route has a curved road, sidewalks and pocket courtyards. All remaining neighborhoods and streets now use the expanded art kit as well.
 See [the Acorn art kit and editor instructions](../assets/acorn/README.md).
 
 ![Acorn Acreside rebuilt](previews/acorn-walk.png)
@@ -30,10 +39,9 @@ Bramble Bend connects Acorn Acreside and Hush Hollow. Limelight Lane connects
 Briny Boardwalk and Doodlewood Studios. Stagecoach Street connects Doodlewood
 Studios and Tumbleweed Terrace. Every connection has a return tunnel.
 
-Open the Shtickerbook map and choose **New neighborhoods**. The expansion map
-opens automatically while in a new neighborhood. Visiting a new neighborhood
-unlocks its playground teleport. All original map destinations remain available
-on the original map.
+Open the Shtickerbook map to see all original and new neighborhoods together.
+Visiting a new neighborhood unlocks its playground teleport. The illustrated
+map has directly selectable labeled buttons and curved route overlays.
 
 ## Admin testing
 
@@ -69,7 +77,7 @@ through the main game is needed.
 
 1. Keep the resources checkout described in the main README. No separate resource
    repository edits are needed. The Acorn models are included under `assets/acorn`;
-   keep that directory with the game checkout.
+   keep both `assets/acorn` and `assets/expansion` with the game checkout.
 2. Stop the game client, AI, UberDOG, and Astron. Update all of them to this branch.
 3. Restart in the normal order: Astron → UberDOG → AI → client.
 4. Open **Admin**, max the test Toon, and select **Acorn Acreside** (or any other
@@ -85,7 +93,7 @@ The project still requires its custom Panda3D fork with `panda3d.otp` and
 `panda3d.toontown` to play. Standard Panda3D can render the scene/UI previews and
 run geometry tests, but cannot run the complete legacy client/server.
 
-## Validation
+## Previous validation (before this update)
 
 - `python -m unittest discover -s tests -v` — 17 checks covering all reciprocal
   routes, reachability, static/dynamic boundaries, the actual routing functions,
@@ -109,15 +117,10 @@ an in-game pass using the custom engine. Keep the PR in draft until that pass.
 
 ## Remaining content work
 
-The first pass establishes exploration and testing. New shop fronts are scenery;
-shop interiors, NPC task chains, Cog patrols/buildings, fishing gameplay, ambient
-animations, custom music, and final art/terrain polish are not included yet. The
+Every new playground and street now includes a native Toon HQ, gag shop and
+trolley, with quest officers, clerks, working door wiring and stock minigame flow.
+Other decorative shop fronts remain scenery. New bespoke NPC task chains, Cog
+patrols/buildings, fishing gameplay, ambient animations, custom music and further
+art/terrain polish remain future work. The
 lagoon and creek are visual scenery. Existing game content is unchanged.
 
-| Acorn Acreside | Briny Boardwalk |
-| --- | --- |
-| ![Acorn](previews/acorn.png) | ![Briny](previews/briny.png) |
-
-| Hush Hollow | Doodlewood Studios | Tumbleweed Terrace |
-| --- | --- | --- |
-| ![Hush](previews/hush.png) | ![Doodlewood](previews/doodlewood.png) | ![Tumbleweed](previews/tumbleweed.png) |

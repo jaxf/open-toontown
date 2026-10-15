@@ -311,6 +311,8 @@ def disk(root,name,center,rx,ry,texture,z=.07):
 
 
 def height(x,y,street):
+    from toontown.expansion.Services import keep_scenery
+    if not keep_scenery(19100 if street else 19000,x,y):return 0
     if street:
         # Banks rise behind the shop fronts. The road corridor stays level.
         edge=max(0,abs(x)-82)/44
@@ -364,6 +366,8 @@ def terrain(street=False):
         ]:
             ribbon(root,name,catmull(points),w+1,STONE,.04)
             ribbon(root,name+'-path',catmull(points),w,DIRT,.09,edges=True)
+    from toontown.expansion.Services import add_paths
+    add_paths(root,19100 if street else 19000,sys.modules[__name__],STONE)
     # Invisible barrier beyond the scenery; the playable paths never touch it.
     walls=collider(root,'forest-boundary',1)
     for x,y,w,d in ((xmin,0,1,ymax-ymin),(xmax,0,1,ymax-ymin),
@@ -436,12 +440,16 @@ def save(model,name):
                 path=Path(f.toOsSpecific())
                 if path.is_absolute():
                     setter(Filename(path.relative_to(resources).as_posix()))
-    raw=OUT/(name+'.bam')
+    # Encode into memory and let Python write atomically. Panda's direct .pz
+    # writer can leave an incomplete zlib trailer on some offscreen build hosts.
+    import zlib
     packed=OUT/(name+'.bam.pz')
-    assert model.writeBamFile(Filename.fromOsSpecific(str(raw)))
-    assert compressFile(Filename.fromOsSpecific(str(raw)),
-                        Filename.fromOsSpecific(str(packed)),9)
-    raw.unlink()
+    temporary=packed.with_suffix('.tmp')
+    from panda3d.core import StringStream
+    stream=StringStream()
+    assert model.writeBamStream(stream)
+    temporary.write_bytes(zlib.compress(stream.getData(),9))
+    temporary.replace(packed)
     model.removeNode()
 
 
