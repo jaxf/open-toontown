@@ -240,8 +240,13 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.nametag.manage(base.marginManager)
         DistributedToon.DistributedToon.announceGenerate(self)
         from otp.friends import FriendInfo
+        from toontown.expansion.AdminPanel import AdminPanel
+        self.adminPanel = AdminPanel()
 
     def disable(self):
+        if hasattr(self, 'adminPanel'):
+            self.adminPanel.destroy()
+            del self.adminPanel
         self.laffMeter.destroy()
         del self.laffMeter
         self.questMap.destroy()

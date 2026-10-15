@@ -47,3 +47,9 @@ How you commit changes is your choice, but please include what you did and a bas
 * `minigames: Fix crash when entering the trolley`
 * `racing: Fix possible race condition when two racers tied`
 * `golf: Refix wonky physics once and for all (hopefully)`
+
+# World expansion and admin testing
+The first exploration build adds five neighborhoods, connected tunnels, an
+expanded Shtickerbook map, and server-authorized admin testing controls.
+See [the expansion guide](docs/WORLD_EXPANSION.md) for routes, screenshots,
+restart requirements, validation, and the content still to be built.

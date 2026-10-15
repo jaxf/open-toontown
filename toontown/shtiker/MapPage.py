@@ -19,7 +19,7 @@ class MapPage(ShtikerPage.ShtikerPage):
         mapModel.removeNode()
         self.allZones = []
         for hood in ToontownGlobals.Hoods:
-            if hood not in [ToontownGlobals.GolfZone, ToontownGlobals.FunnyFarm]:
+            if hood not in [ToontownGlobals.GolfZone, ToontownGlobals.FunnyFarm] and hood not in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS:
                 self.allZones.append(hood)
 
         self.cloudScaleList = (((0.55, 0, 0.4), (0.35, 0, 0.25)),
@@ -140,10 +140,24 @@ class MapPage(ShtikerPage.ShtikerPage):
             self.clouds.append(hoodClouds)
 
         cloudModel.removeNode()
+        from toontown.expansion.ExpansionMap import ExpansionMap
+        self.expansionMap = ExpansionMap(self, self.__buttonCallback, self.hideExpansionMap)
+        self.expansionButton = DirectButton(parent=self.map, text='New neighborhoods',
+            text_scale=.035, pos=(0, 0, -.61), command=self.showExpansionMap)
         self.resetFrameSize()
         return
 
+    def showExpansionMap(self):
+        self.map.hide()
+        self.expansionMap.refresh(self.book.safeMode)
+
+    def hideExpansionMap(self):
+        self.expansionMap.hide()
+        self.map.show()
+
     def unload(self):
+        self.expansionMap.destroy()
+        self.expansionButton.destroy()
         for labelButton in self.labels:
             labelButton.destroy()
 
@@ -155,12 +169,13 @@ class MapPage(ShtikerPage.ShtikerPage):
 
     def enter(self):
         ShtikerPage.ShtikerPage.enter(self)
+        self.hideExpansionMap()
         try:
             zone = base.cr.playGame.getPlace().getZoneId()
         except:
             zone = 0
 
-        if base.localAvatar.lastHood >= ToontownGlobals.BossbotHQ:
+        if ZoneUtil.isCogHQZone(base.localAvatar.lastHood):
             self.safeZoneButton['text'] = TTLocalizer.MapPageBackToCogHQ
         else:
             self.safeZoneButton['text'] = TTLocalizer.MapPageBackToPlayground
@@ -216,6 +231,9 @@ class MapPage(ShtikerPage.ShtikerPage):
                 label.show()
                 for cloud in clouds:
                     cloud.show()
+
+        if base.cr.playGame.getPlaceId() in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS:
+            self.showExpansionMap()
 
     def exit(self):
         ShtikerPage.ShtikerPage.exit(self)

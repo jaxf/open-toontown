@@ -799,6 +799,9 @@ class HoodMgr(DirectObject.DirectObject):
      ToontownGlobals.CashbotHQ: 'cashhq',
      ToontownGlobals.LawbotHQ: 'lawhq',
      ToontownGlobals.GolfZone: 'gz'}
+    hoodName2Id.update({s['short']: h for h, s in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS.items()})
+    hoodId2Name.update({h: s['short'] for h, s in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS.items()})
+    dropPoints.update({h: ((0, -18, .1, 0, 0, 0),) for h in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS})
     DefaultDropPoint = [0,
      0,
      0,

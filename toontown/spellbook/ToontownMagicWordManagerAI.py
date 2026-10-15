@@ -63,6 +63,40 @@ for word in spellbook['words']:
 class ToontownMagicWordManagerAI(DistributedObjectAI.DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToontownMagicWordManagerAI')
 
+    def requestAdminAction(self, action, zoneId):
+        from toontown.expansion.AdminPolicy import validate_request
+        from toontown.expansion.ExpansionGlobals import destinations, STOCK_STREETS
+        from toontown.hood import ZoneUtil
+        from toontown.toonbase import ToontownGlobals
+        from time import monotonic
+
+        avId = self.air.getAvatarIdFromSender()
+        toon = self.air.doId2do.get(avId)
+        error = validate_request(toon, action, zoneId)
+        if error:
+            if avId:
+                self.generateResponse(avId, 'Success', returnValue=error)
+            return
+        if avId in self.air.tutorialManager.playerDict:
+            self.generateResponse(avId, 'Success', returnValue='Finish or skip the tutorial first.')
+            return
+        now = monotonic()
+        if now - getattr(toon, '_lastAdminAction', -10) < 1:
+            return
+        toon._lastAdminAction = now
+        if action == 'max':
+            # Use the existing server implementation, never client setters.
+            result = MagicWordIndex['max']['class'].handleWord(toon, avId, toon)
+            toon.b_setHoodsVisited(list(ToontownGlobals.HoodsForTeleportAll))
+            toon.b_setTeleportAccess(list(ToontownGlobals.HoodsForTeleportAll))
+            self.generateResponse(avId, 'Success', returnValue=result + ' All map travel unlocked.')
+        else:
+            self.sendTeleportResponse(avId, ZoneUtil.getLoaderName(zoneId),
+                                      ZoneUtil.getToonWhereName(zoneId), 'adminStreet' if zoneId in STOCK_STREETS else 'teleportIn',
+                                      ZoneUtil.getHoodId(zoneId), zoneId, 0)
+            self.generateResponse(avId, 'Success', returnValue='Traveling to ' + destinations()[zoneId] + '.')
+        self.air.writeServerEvent('admin-world-test', avId, '%s:%s' % (action, zoneId))
+
     def requestExecuteMagicWord(self, affectRange, affectType, affectExtra, lastClickedAvId, magicWord):
         avId = self.air.getAvatarIdFromSender()
 
@@ -189,7 +223,10 @@ class ToontownMagicWordManagerAI(DistributedObjectAI.DistributedObjectAI):
         magicWord = magicWord.lower()
 
         # Lookup the info for this word
-        magicWordInfo = MagicWordIndex[magicWord]
+        magicWordInfo = MagicWordIndex.get(magicWord)
+        if magicWordInfo is None:
+            self.generateResponse(avId=avId, responseType='BadWord')
+            return
 
         # Make sure the invoker has a high enough Access Level to use this Magic Word in the first place
         # If they don't, them let them know about it

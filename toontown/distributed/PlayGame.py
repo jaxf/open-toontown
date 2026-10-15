@@ -8,6 +8,8 @@ from direct.fsm import State
 from direct.task.Task import Task
 from .ToontownMsgTypes import *
 from toontown.toonbase import ToontownGlobals
+from toontown.expansion.ExpansionHood import ExpansionHood
+from toontown.expansion import ExpansionGlobals
 from toontown.hood import TTHood
 from toontown.hood import DDHood
 from toontown.hood import MMHood
@@ -62,6 +64,9 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.GolfZone: 'GZHood',
      ToontownGlobals.PartyHood: 'PartyHood'}
 
+    Hood2ClassDict.update({h: ExpansionHood for h in ExpansionGlobals.NEIGHBORHOODS})
+    Hood2StateDict.update({h: 'ExpansionHood' for h in ExpansionGlobals.NEIGHBORHOODS})
+
     def __init__(self, parentFSM, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
         self.place = None
@@ -81,7 +86,8 @@ class PlayGame(StateData.StateData):
           'BossbotHQ',
           'TutorialHood',
           'EstateHood',
-          'PartyHood']),
+          'PartyHood', 'ExpansionHood']),
+         State.State('ExpansionHood', self.enterTTHood, self.exitTTHood, ['quietZone']),
          State.State('TTHood', self.enterTTHood, self.exitTTHood, ['quietZone']),
          State.State('DDHood', self.enterDDHood, self.exitDDHood, ['quietZone']),
          State.State('BRHood', self.enterBRHood, self.exitBRHood, ['quietZone']),

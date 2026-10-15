@@ -1,0 +1,109 @@
+# Beyond the Tunnels — first exploration build
+
+Five new neighborhoods and eight connecting promenades extend the existing
+world. This is a first playable implementation for layout testing, not a finished
+quest/content expansion. New areas are peaceful zones with procedural scenery,
+landmarks, collisions, music, and two-way native tunnel travel.
+
+![Expansion route map](previews/expansion-map.png)
+
+## Locations and routes
+
+| Playground | Zone | Design | Entrance from the original world |
+| --- | --- | --- | --- |
+| Acorn Acreside | 19000 | Autumn trees, a hollow Great Oak, timber storefronts | Daisy Gardens → Root Route |
+| Briny Boardwalk | 61000 | Wooden boardwalk, pastel shops, lagoon, striped lighthouse | Donald's Dock → Taffy Terrace |
+| Hush Hollow | 62000 | Plum and teal buildings, pumpkin props, crooked clock tower | Donald's Dreamland → Forty Winks Way |
+| Doodlewood Studios | 63000 | Theater, film reel, red carpet, backlot facades | Minnie's Melodyland → Encore Avenue |
+| Tumbleweed Terrace | 64000 | Adobe storefronts, cacti, dry creek, hat-shaped water tower | Goofy Speedway → Detour Drive |
+
+Bramble Bend connects Acorn Acreside and Hush Hollow. Limelight Lane connects
+Briny Boardwalk and Doodlewood Studios. Stagecoach Street connects Doodlewood
+Studios and Tumbleweed Terrace. Every connection has a return tunnel.
+
+Open the Shtickerbook map and choose **New neighborhoods**. The expansion map
+opens automatically while in a new neighborhood. Visiting a new neighborhood
+unlocks its playground teleport. All original map destinations remain available
+on the original map.
+
+## Admin testing
+
+The **Admin** button appears in the upper-right while walking with an account
+whose existing server-assigned access level is ADMIN (300) or SYSTEM_ADMIN (400).
+It hides during battles, transitions, boarding groups, and other activities.
+This change does not alter account roles or the login provider's default role.
+
+![Admin testing controls](previews/admin-panel.png)
+
+**Max my Toon + unlock travel** uses the existing server max-toon routine:
+137 Laff, all seven gag tracks and maximum experience, maximum gag capacity,
+full inventory, jellybeans/bank, four task slots, maximum Cog disguises, final
+quest tier, and travel access. It permanently clears the active task list.
+It does not award every fishing/gardening/racing collectible or cosmetic.
+
+The scrollable destination list includes the new playgrounds and promenades,
+original playgrounds, Cog HQ exteriors, factory exterior, MiniGolf, and all 17
+original streets. Original street teleports arrive through their actual playground
+tunnel instead of carrying over coordinates from another zone. Instanced battles,
+private estates, and unallocated zone IDs are intentionally not listed.
+
+Requests affect only the authenticated sender's Toon. The AI independently checks
+ADMIN access, the action and destination allowlists, tutorial state, and a one-second
+rate limit. Mutations use the existing server setters and are logged. Editing a
+client or making the button visible cannot grant admin access.
+
+Finish or use the game's existing skip option for the introductory tutorial first;
+the testing controls are available once walking in the world. No progression
+through the main game is needed.
+
+## Running this branch
+
+1. Keep the resources checkout described in the main README. No separate resource
+   repository edits or generated binary assets are needed for these areas.
+2. Stop the game client, AI, UberDOG, and Astron. Update all of them to this branch.
+3. Restart in the normal order: Astron → UberDOG → AI → client.
+4. Open **Admin**, max the test Toon, and select **Acorn Acreside** (or any other
+   listed location). Use the physical tunnels to exercise the complete route graph.
+
+A full restart is required: `etc/toon.dc` adds an RPC and the dynamic allocator now
+starts at **65000**, reserving **61000–64999** for static neighborhoods. Existing
+Welcome Valley and legacy 20000–21999 mappings are unchanged. Do not mix old and
+new clients/servers or hot-reload this into a running district with allocated
+instances in the reserved range. No saved Toon IDs or account IDs are renumbered.
+
+The project still requires its custom Panda3D fork with `panda3d.otp` and
+`panda3d.toontown` to play. Standard Panda3D can render the scene/UI previews and
+run geometry tests, but cannot run the complete legacy client/server.
+
+## Validation
+
+- `python -m unittest discover -s tests -v` — 14 checks covering all reciprocal
+  routes, reachability, static/dynamic boundaries, the actual routing functions,
+  permission denial, the actual admin RPC with fake transport, rate limiting,
+  scene construction, tunnel origins, and floor/wall collision probes.
+- Both `etc/otp.dc` and `etc/toon.dc` parse with Panda3D's DCFile parser.
+- All 17 original street arrival visgroups were checked against resource DNA.
+- `python tools/preview_expansion.py` renders the actual five neighborhood scenes.
+- `python tools/preview_expansion_ui.py` renders actual UI widgets with mock avatar
+  state; it is not a multiplayer session.
+- Source entrance floor/wall probes use the original neighborhood terrain models.
+  They do not include every DNA-placed prop, NPC, or distributed building.
+
+Full client/AI integration, travel movies in a live district, multiplayer visibility,
+reconnect/persistence, and source entrances with the complete DNA scene still need
+an in-game pass using the custom engine. Keep the PR in draft until that pass.
+
+## Remaining content work
+
+The first pass establishes exploration and testing. New shop fronts are scenery;
+shop interiors, NPC task chains, Cog patrols/buildings, fishing gameplay, ambient
+animations, custom music, and final art/terrain polish are not included yet. The
+lagoon and creek are visual scenery. Existing game content is unchanged.
+
+| Acorn Acreside | Briny Boardwalk |
+| --- | --- |
+| ![Acorn](previews/acorn.png) | ![Briny](previews/briny.png) |
+
+| Hush Hollow | Doodlewood Studios | Tumbleweed Terrace |
+| --- | --- | --- |
+| ![Hush](previews/hush.png) | ![Doodlewood](previews/doodlewood.png) | ![Tumbleweed](previews/tumbleweed.png) |
