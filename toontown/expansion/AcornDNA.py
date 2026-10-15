@@ -1,6 +1,8 @@
 """Native DNA loading for the two art-pass locations.
 
-The game always uses its C++ DNA loader. The deliberately limited preview reader
+The game uses the C++ DNA loader for layouts and native DNAStorage for models.
+Model catalogs load through Panda's Python loader to avoid the native storage
+parser crash seen on the Mac custom engine. The limited preview reader
 is only for standard Panda3D tooling; it rejects unsupported DNA instead of
 silently producing a misleading preview. Layouts remain the source of truth.
 """
@@ -22,7 +24,7 @@ def load_scene(zone, dna_store=None, storage=STORAGE, layouts=LAYOUTS):
     if dna_store is not None:
         # Flush before entering C++ so a native fault leaves its exact stage.
         print('[Expansion DNA] Loading storage: '+storage, flush=True)
-        loader.loadDNAFile(dna_store, storage)
+        storage_models(loader, storage, dna_store=dna_store)
         print('[Expansion DNA] Storage loaded; loading scene: '+layouts[zone], flush=True)
         node = loader.loadDNAFile(dna_store, layouts[zone])
         if node is None:
@@ -60,14 +62,17 @@ def parse(path):
     return block()
 
 
-def storage_models(loader, storage=STORAGE):
+def storage_models(loader, storage=STORAGE, dna_store=None):
     data = parse(ASSETS.parents[1]/storage)
     models = {}
     for i in range(0, len(data), 3):
         kind, filename, entries = data[i:i+3]
         if kind not in ('model', 'hood_model', 'place_model'):
             raise ValueError('Unsupported storage node '+kind)
-        model = loader.loadModel(filename)
+        if dna_store is not None:
+            print('[Expansion DNA] Loading model: '+filename, flush=True)
+        # Match native hood_model/place_model lifetime without its static Loader.
+        model = loader.loadModel(filename, noCache=(kind != 'model'))
         if model is None or model.isEmpty():
             raise ValueError('Missing model '+filename)
         for j in range(0, len(entries), 2):
@@ -81,6 +86,14 @@ def storage_models(loader, storage=STORAGE):
                 raise ValueError('Missing model node '+code)
             # Keep the loaded model alive through its selected NodePath.
             models[code] = node
+            if dna_store is not None:
+                print('[Expansion DNA] Registering model: '+code, flush=True)
+                method = {'model': 'storeNode', 'hood_model': 'storeHoodNode',
+                          'place_model': 'storePlaceNode'}[kind]
+                getattr(dna_store, method)(code, node, category)
+                dna_store.storeCatalogString(category, code)
+        if dna_store is not None:
+            print('[Expansion DNA] Model ready: '+filename, flush=True)
     return models
 
 

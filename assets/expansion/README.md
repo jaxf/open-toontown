@@ -46,7 +46,10 @@ hood configuration directory, and start with `python ttle.py --hoods WX`.
 Open any layout under `dna/`. `storage_world.dna` declares its model palette.
 The matching `services/service_ZONE.dna` contains the native service buildings
 and trolley; load `services/storage_services.dna` for that palette.
-The game uses the native C++ DNA loader. Standard-Panda3D render tooling uses the
+The game loads model catalogs through Panda's Python loader and registers each
+node in native DNAStorage; layouts and door triggers still use the C++ DNA loader.
+This bypasses the Mac crash observed inside native storage-file loading and logs
+the specific model if lower-level loading fails. Standard-Panda3D tooling uses the
 same strict preview reader as the Acorn kit. The custom-engine client/editor GUI
 were not run for this update.
 
