@@ -150,8 +150,10 @@ def main():
     def alias(code,path,node=''):
         entries.append(f'hood_model "{path}" [\n store_node [ "prop" "{code}" "{node}" ]\n]\n')
     for p in sorted((ROOT/'assets/expansion/models').glob('*.bam.pz')):
-        alias(p.name[:-7],p.relative_to(ROOT).as_posix())
-    alias('bench','assets/acorn/models/woodland_bench.bam.pz')
+        # Native DNA replaces the final extension with bam. Let Panda resolve
+        # the compressed .bam.pz file from its logical .bam filename.
+        alias(p.name[:-7],p.relative_to(ROOT).as_posix()[:-3])
+    alias('bench','assets/acorn/models/woodland_bench.bam')
     for code,phase in [('DD',6),('DL',8),('MM',6),('DG',8)]:
         alias('tunnel_'+code,f'phase_{phase}/models/modules/safe_zone_tunnel_{code}','prop_safe_zone_tunnel')
         alias('lamp_'+code,f'phase_{phase}/models/props/streetlight_{code}')

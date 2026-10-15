@@ -1,269 +1,269 @@
 // Native expansion model palette.
-hood_model "assets/expansion/models/cactus.bam.pz" [
+hood_model "assets/expansion/models/cactus.bam" [
  store_node [ "prop" "cactus" "" ]
 ]
-hood_model "assets/expansion/models/clock_tower.bam.pz" [
+hood_model "assets/expansion/models/clock_tower.bam" [
  store_node [ "prop" "clock_tower" "" ]
 ]
-hood_model "assets/expansion/models/lighthouse.bam.pz" [
+hood_model "assets/expansion/models/lighthouse.bam" [
  store_node [ "prop" "lighthouse" "" ]
 ]
-hood_model "assets/expansion/models/mesa.bam.pz" [
+hood_model "assets/expansion/models/mesa.bam" [
  store_node [ "prop" "mesa" "" ]
 ]
-hood_model "assets/expansion/models/movie_camera.bam.pz" [
+hood_model "assets/expansion/models/movie_camera.bam" [
  store_node [ "prop" "movie_camera" "" ]
 ]
-hood_model "assets/expansion/models/pier_rail.bam.pz" [
+hood_model "assets/expansion/models/pier_rail.bam" [
  store_node [ "prop" "pier_rail" "" ]
 ]
-hood_model "assets/expansion/models/shop_19000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_19000_0.bam" [
  store_node [ "prop" "shop_19000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_19000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_19000_1.bam" [
  store_node [ "prop" "shop_19000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_19000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_19000_2.bam" [
  store_node [ "prop" "shop_19000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_19000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_19000_3.bam" [
  store_node [ "prop" "shop_19000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_61000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_61000_0.bam" [
  store_node [ "prop" "shop_61000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_61000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_61000_1.bam" [
  store_node [ "prop" "shop_61000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_61000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_61000_2.bam" [
  store_node [ "prop" "shop_61000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_61000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_61000_3.bam" [
  store_node [ "prop" "shop_61000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_62000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_62000_0.bam" [
  store_node [ "prop" "shop_62000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_62000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_62000_1.bam" [
  store_node [ "prop" "shop_62000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_62000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_62000_2.bam" [
  store_node [ "prop" "shop_62000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_62000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_62000_3.bam" [
  store_node [ "prop" "shop_62000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_63000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_63000_0.bam" [
  store_node [ "prop" "shop_63000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_63000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_63000_1.bam" [
  store_node [ "prop" "shop_63000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_63000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_63000_2.bam" [
  store_node [ "prop" "shop_63000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_63000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_63000_3.bam" [
  store_node [ "prop" "shop_63000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_64000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_64000_0.bam" [
  store_node [ "prop" "shop_64000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_64000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_64000_1.bam" [
  store_node [ "prop" "shop_64000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_64000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_64000_2.bam" [
  store_node [ "prop" "shop_64000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_64000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_64000_3.bam" [
  store_node [ "prop" "shop_64000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_0.bam" [
  store_node [ "prop" "shop_sign_19000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_1.bam" [
  store_node [ "prop" "shop_sign_19000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_2.bam" [
  store_node [ "prop" "shop_sign_19000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_3.bam" [
  store_node [ "prop" "shop_sign_19000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_4.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_4.bam" [
  store_node [ "prop" "shop_sign_19000_4" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_19000_5.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_19000_5.bam" [
  store_node [ "prop" "shop_sign_19000_5" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_0.bam" [
  store_node [ "prop" "shop_sign_61000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_1.bam" [
  store_node [ "prop" "shop_sign_61000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_2.bam" [
  store_node [ "prop" "shop_sign_61000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_3.bam" [
  store_node [ "prop" "shop_sign_61000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_4.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_4.bam" [
  store_node [ "prop" "shop_sign_61000_4" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_61000_5.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_61000_5.bam" [
  store_node [ "prop" "shop_sign_61000_5" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_0.bam" [
  store_node [ "prop" "shop_sign_62000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_1.bam" [
  store_node [ "prop" "shop_sign_62000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_2.bam" [
  store_node [ "prop" "shop_sign_62000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_3.bam" [
  store_node [ "prop" "shop_sign_62000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_4.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_4.bam" [
  store_node [ "prop" "shop_sign_62000_4" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_62000_5.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_62000_5.bam" [
  store_node [ "prop" "shop_sign_62000_5" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_0.bam" [
  store_node [ "prop" "shop_sign_63000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_1.bam" [
  store_node [ "prop" "shop_sign_63000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_2.bam" [
  store_node [ "prop" "shop_sign_63000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_3.bam" [
  store_node [ "prop" "shop_sign_63000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_4.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_4.bam" [
  store_node [ "prop" "shop_sign_63000_4" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_63000_5.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_63000_5.bam" [
  store_node [ "prop" "shop_sign_63000_5" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_0.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_0.bam" [
  store_node [ "prop" "shop_sign_64000_0" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_1.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_1.bam" [
  store_node [ "prop" "shop_sign_64000_1" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_2.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_2.bam" [
  store_node [ "prop" "shop_sign_64000_2" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_3.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_3.bam" [
  store_node [ "prop" "shop_sign_64000_3" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_4.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_4.bam" [
  store_node [ "prop" "shop_sign_64000_4" "" ]
 ]
-hood_model "assets/expansion/models/shop_sign_64000_5.bam.pz" [
+hood_model "assets/expansion/models/shop_sign_64000_5.bam" [
  store_node [ "prop" "shop_sign_64000_5" "" ]
 ]
-hood_model "assets/expansion/models/sign_1000.bam.pz" [
+hood_model "assets/expansion/models/sign_1000.bam" [
  store_node [ "prop" "sign_1000" "" ]
 ]
-hood_model "assets/expansion/models/sign_19000.bam.pz" [
+hood_model "assets/expansion/models/sign_19000.bam" [
  store_node [ "prop" "sign_19000" "" ]
 ]
-hood_model "assets/expansion/models/sign_19100.bam.pz" [
+hood_model "assets/expansion/models/sign_19100.bam" [
  store_node [ "prop" "sign_19100" "" ]
 ]
-hood_model "assets/expansion/models/sign_19200.bam.pz" [
+hood_model "assets/expansion/models/sign_19200.bam" [
  store_node [ "prop" "sign_19200" "" ]
 ]
-hood_model "assets/expansion/models/sign_4000.bam.pz" [
+hood_model "assets/expansion/models/sign_4000.bam" [
  store_node [ "prop" "sign_4000" "" ]
 ]
-hood_model "assets/expansion/models/sign_5000.bam.pz" [
+hood_model "assets/expansion/models/sign_5000.bam" [
  store_node [ "prop" "sign_5000" "" ]
 ]
-hood_model "assets/expansion/models/sign_61000.bam.pz" [
+hood_model "assets/expansion/models/sign_61000.bam" [
  store_node [ "prop" "sign_61000" "" ]
 ]
-hood_model "assets/expansion/models/sign_61100.bam.pz" [
+hood_model "assets/expansion/models/sign_61100.bam" [
  store_node [ "prop" "sign_61100" "" ]
 ]
-hood_model "assets/expansion/models/sign_61200.bam.pz" [
+hood_model "assets/expansion/models/sign_61200.bam" [
  store_node [ "prop" "sign_61200" "" ]
 ]
-hood_model "assets/expansion/models/sign_62000.bam.pz" [
+hood_model "assets/expansion/models/sign_62000.bam" [
  store_node [ "prop" "sign_62000" "" ]
 ]
-hood_model "assets/expansion/models/sign_62100.bam.pz" [
+hood_model "assets/expansion/models/sign_62100.bam" [
  store_node [ "prop" "sign_62100" "" ]
 ]
-hood_model "assets/expansion/models/sign_63000.bam.pz" [
+hood_model "assets/expansion/models/sign_63000.bam" [
  store_node [ "prop" "sign_63000" "" ]
 ]
-hood_model "assets/expansion/models/sign_63100.bam.pz" [
+hood_model "assets/expansion/models/sign_63100.bam" [
  store_node [ "prop" "sign_63100" "" ]
 ]
-hood_model "assets/expansion/models/sign_63200.bam.pz" [
+hood_model "assets/expansion/models/sign_63200.bam" [
  store_node [ "prop" "sign_63200" "" ]
 ]
-hood_model "assets/expansion/models/sign_64000.bam.pz" [
+hood_model "assets/expansion/models/sign_64000.bam" [
  store_node [ "prop" "sign_64000" "" ]
 ]
-hood_model "assets/expansion/models/sign_64100.bam.pz" [
+hood_model "assets/expansion/models/sign_64100.bam" [
  store_node [ "prop" "sign_64100" "" ]
 ]
-hood_model "assets/expansion/models/sign_8000.bam.pz" [
+hood_model "assets/expansion/models/sign_8000.bam" [
  store_node [ "prop" "sign_8000" "" ]
 ]
-hood_model "assets/expansion/models/sign_9000.bam.pz" [
+hood_model "assets/expansion/models/sign_9000.bam" [
  store_node [ "prop" "sign_9000" "" ]
 ]
-hood_model "assets/expansion/models/terrain_19200.bam.pz" [
+hood_model "assets/expansion/models/terrain_19200.bam" [
  store_node [ "prop" "terrain_19200" "" ]
 ]
-hood_model "assets/expansion/models/terrain_61000.bam.pz" [
+hood_model "assets/expansion/models/terrain_61000.bam" [
  store_node [ "prop" "terrain_61000" "" ]
 ]
-hood_model "assets/expansion/models/terrain_61100.bam.pz" [
+hood_model "assets/expansion/models/terrain_61100.bam" [
  store_node [ "prop" "terrain_61100" "" ]
 ]
-hood_model "assets/expansion/models/terrain_61200.bam.pz" [
+hood_model "assets/expansion/models/terrain_61200.bam" [
  store_node [ "prop" "terrain_61200" "" ]
 ]
-hood_model "assets/expansion/models/terrain_62000.bam.pz" [
+hood_model "assets/expansion/models/terrain_62000.bam" [
  store_node [ "prop" "terrain_62000" "" ]
 ]
-hood_model "assets/expansion/models/terrain_62100.bam.pz" [
+hood_model "assets/expansion/models/terrain_62100.bam" [
  store_node [ "prop" "terrain_62100" "" ]
 ]
-hood_model "assets/expansion/models/terrain_63000.bam.pz" [
+hood_model "assets/expansion/models/terrain_63000.bam" [
  store_node [ "prop" "terrain_63000" "" ]
 ]
-hood_model "assets/expansion/models/terrain_63100.bam.pz" [
+hood_model "assets/expansion/models/terrain_63100.bam" [
  store_node [ "prop" "terrain_63100" "" ]
 ]
-hood_model "assets/expansion/models/terrain_63200.bam.pz" [
+hood_model "assets/expansion/models/terrain_63200.bam" [
  store_node [ "prop" "terrain_63200" "" ]
 ]
-hood_model "assets/expansion/models/terrain_64000.bam.pz" [
+hood_model "assets/expansion/models/terrain_64000.bam" [
  store_node [ "prop" "terrain_64000" "" ]
 ]
-hood_model "assets/expansion/models/terrain_64100.bam.pz" [
+hood_model "assets/expansion/models/terrain_64100.bam" [
  store_node [ "prop" "terrain_64100" "" ]
 ]
-hood_model "assets/expansion/models/theater.bam.pz" [
+hood_model "assets/expansion/models/theater.bam" [
  store_node [ "prop" "theater" "" ]
 ]
-hood_model "assets/expansion/models/water_tower.bam.pz" [
+hood_model "assets/expansion/models/water_tower.bam" [
  store_node [ "prop" "water_tower" "" ]
 ]
-hood_model "assets/expansion/models/western_lamp.bam.pz" [
+hood_model "assets/expansion/models/western_lamp.bam" [
  store_node [ "prop" "western_lamp" "" ]
 ]
-hood_model "assets/acorn/models/woodland_bench.bam.pz" [
+hood_model "assets/acorn/models/woodland_bench.bam" [
  store_node [ "prop" "bench" "" ]
 ]
 hood_model "phase_6/models/modules/safe_zone_tunnel_DD" [

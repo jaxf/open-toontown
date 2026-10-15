@@ -1,53 +1,53 @@
 // Acorn Acreside art kit. Mount both the game root and resources in the editor.
-hood_model "assets/acorn/models/acorn_terrain.bam.pz" [
+hood_model "assets/acorn/models/acorn_terrain.bam" [
  store_node [ "prop" "acorn_terrain" "" ]
 ]
-hood_model "assets/acorn/models/root_route_terrain.bam.pz" [
+hood_model "assets/acorn/models/root_route_terrain.bam" [
  store_node [ "prop" "root_route_terrain" "" ]
 ]
-hood_model "assets/acorn/models/great_oak.bam.pz" [
+hood_model "assets/acorn/models/great_oak.bam" [
  store_node [ "prop" "great_oak" "" ]
 ]
-hood_model "assets/acorn/models/woodland_bench.bam.pz" [
+hood_model "assets/acorn/models/woodland_bench.bam" [
  store_node [ "prop" "woodland_bench" "" ]
 ]
-hood_model "assets/acorn/models/shop_barrier.bam.pz" [
+hood_model "assets/acorn/models/shop_barrier.bam" [
  store_node [ "prop" "shop_barrier" "" ]
 ]
-hood_model "assets/acorn/models/root_sign.bam.pz" [
+hood_model "assets/acorn/models/root_sign.bam" [
  store_node [ "prop" "root_sign" "" ]
 ]
-hood_model "assets/acorn/models/bramble_sign.bam.pz" [
+hood_model "assets/acorn/models/bramble_sign.bam" [
  store_node [ "prop" "bramble_sign" "" ]
 ]
-hood_model "assets/acorn/models/daisy_sign.bam.pz" [
+hood_model "assets/acorn/models/daisy_sign.bam" [
  store_node [ "prop" "daisy_sign" "" ]
 ]
-hood_model "assets/acorn/models/acorn_sign.bam.pz" [
+hood_model "assets/acorn/models/acorn_sign.bam" [
  store_node [ "prop" "acorn_sign" "" ]
 ]
-hood_model "assets/acorn/models/knot_sign.bam.pz" [
+hood_model "assets/acorn/models/knot_sign.bam" [
  store_node [ "prop" "knot_sign" "" ]
 ]
-hood_model "assets/acorn/models/leaf_sign.bam.pz" [
+hood_model "assets/acorn/models/leaf_sign.bam" [
  store_node [ "prop" "leaf_sign" "" ]
 ]
-hood_model "assets/acorn/models/branch_sign.bam.pz" [
+hood_model "assets/acorn/models/branch_sign.bam" [
  store_node [ "prop" "branch_sign" "" ]
 ]
-hood_model "assets/acorn/models/acorny_sign.bam.pz" [
+hood_model "assets/acorn/models/acorny_sign.bam" [
  store_node [ "prop" "acorny_sign" "" ]
 ]
-hood_model "assets/acorn/models/book_sign.bam.pz" [
+hood_model "assets/acorn/models/book_sign.bam" [
  store_node [ "prop" "book_sign" "" ]
 ]
-hood_model "assets/acorn/models/seed_sign.bam.pz" [
+hood_model "assets/acorn/models/seed_sign.bam" [
  store_node [ "prop" "seed_sign" "" ]
 ]
-hood_model "assets/acorn/models/tea_sign.bam.pz" [
+hood_model "assets/acorn/models/tea_sign.bam" [
  store_node [ "prop" "tea_sign" "" ]
 ]
-hood_model "assets/acorn/models/root_shop_sign.bam.pz" [
+hood_model "assets/acorn/models/root_shop_sign.bam" [
  store_node [ "prop" "root_shop_sign" "" ]
 ]
 hood_model "phase_8/models/modules/DG_A1" [
@@ -95,21 +95,21 @@ hood_model "phase_8/models/modules/safe_zone_tunnel_DG" [
 hood_model "phase_8/models/props/tt_m_ara_dga_fountain" [
  store_node [ "prop" "fountain" "" ]
 ]
-hood_model "assets/acorn/models/garden_fence.bam.pz" [
+hood_model "assets/acorn/models/garden_fence.bam" [
  store_node [ "prop" "garden_fence" "" ]
 ]
-hood_model "assets/acorn/models/shop_shell_DG_A1.bam.pz" [
+hood_model "assets/acorn/models/shop_shell_DG_A1.bam" [
  store_node [ "prop" "shop_shell_DG_A1" "" ]
 ]
-hood_model "assets/acorn/models/shop_shell_DG_A2.bam.pz" [
+hood_model "assets/acorn/models/shop_shell_DG_A2.bam" [
  store_node [ "prop" "shop_shell_DG_A2" "" ]
 ]
-hood_model "assets/acorn/models/shop_shell_DG_B1.bam.pz" [
+hood_model "assets/acorn/models/shop_shell_DG_B1.bam" [
  store_node [ "prop" "shop_shell_DG_B1" "" ]
 ]
-hood_model "assets/acorn/models/shop_shell_DG_C1.bam.pz" [
+hood_model "assets/acorn/models/shop_shell_DG_C1.bam" [
  store_node [ "prop" "shop_shell_DG_C1" "" ]
 ]
-hood_model "assets/acorn/models/shop_shell_DG_D1.bam.pz" [
+hood_model "assets/acorn/models/shop_shell_DG_D1.bam" [
  store_node [ "prop" "shop_shell_DG_D1" "" ]
 ]
