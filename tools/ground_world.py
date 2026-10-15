@@ -5,6 +5,7 @@ from toontown.expansion import AcornDNA, ExpansionGlobals as E
 from tools import build_acorn_models as A
 from tools.world_dressing import planter, enclosure
 from panda3d.core import NodePath
+from toontown.expansion.WorldLayout import terrain_height, road_paths, distance_to_path, ROAD_PROFILES
 ROOT=Path(__file__).resolve().parents[1]
 
 
@@ -28,8 +29,9 @@ def main():
         (ROOT/storage).write_text(text)
     for path in (ROOT/'assets/expansion/dna').glob('*.dna'):
         if path.name=='storage_world.dna':continue
+        zone=next(z for z in E.ALL_ZONES if E.zone_name(z).lower().replace(' ','_')==path.stem)
         source=path.read_text();cursor=0;out=[]
-        pattern=re.compile(r'(?:prop|node) "([^"\n]+)" \[')
+        pattern=re.compile(r'(?:prop|node|landmark_building) "([^"\n]+)" \[')
         while True:
             m=pattern.search(source,cursor)
             if not m:out.append(source[cursor:]);break
@@ -37,12 +39,19 @@ def main():
             while depth:depth+=(source[end]=='[')-(source[end]==']');end+=1
             block=source[m.start():end]
             if not any(k in m[1] for k in ('terrain','ground','linktunnel')):
-                block=re.sub(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]',r'pos [ \1 \2 0.12 ]',block,count=1)
+                pos=re.search(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]',block)
+                if pos:
+                    x,y=map(float,pos.groups())
+                    if zone in ROAD_PROFILES and block.startswith('prop'):
+                        if abs(x)>185 or min(distance_to_path(x,y,r) for r in road_paths(zone))<ROAD_PROFILES[zone]['road']+3:
+                            cursor=end;continue
+                    z=.12+terrain_height(zone,x,y)
+                    block=block[:pos.start()]+f'pos [ {x:.4f} {y:.4f} {z:.4f} ]'+block[pos.end():]
             out.append(block);cursor=end
         path.write_text(''.join(out))
     # Acorn's original shop groups get closed courtyard backs as well.
     path=ROOT/'assets/acorn/dna/acorn_acreside.dna'
-    s=path.read_text();pattern=re.compile(r'(?:prop|node) "([^"\n]+)" \[')
+    s=path.read_text();pattern=re.compile(r'(?:prop|node|landmark_building) "([^"\n]+)" \[')
     cursor=0;out=[]
     while True:
         m=pattern.search(s,cursor)
@@ -50,10 +59,21 @@ def main():
         out.append(s[cursor:m.start()]);depth=1;end=m.end()
         while depth:depth+=(s[end]=='[')-(s[end]==']');end+=1
         block=s[m.start():end]
-        if 'shop_shell_' in block and 'screened-shop-yard' not in block:
-            block=block[:-1]+'prop "screened-shop-yard" [ code [ "acorn_shop_fence" ] ]\n]'
+        if 'shop_shell_' in block:
+            # Replace the old independent door/backing with the same complete,
+            # origin-aligned native shop kit used by the other playgrounds.
+            style=re.search(r'shop_shell_DG_([A-D])',block)[1]
+            index='ABCD'.index(style)
+            sign=re.search(r'code \[ "([^"]+_sign)" \]',block)
+            prefix=block[:block.index('prop "')]
+            block=prefix+f'prop "complete-acorn-shop" [ code [ "shop_19000_{index}" ] ]\n'
+            if sign:block+=f'prop "shop-sign" [ code [ "{sign[1]}" ] pos [ 0 -.8 14 ] ]\n'
+            block+=']'
         if not any(k in m[1] for k in ('terrain','ground','linktunnel')):
-            block=re.sub(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]',r'pos [ \1 \2 0.12 ]',block,count=1)
+            pos=re.search(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]',block)
+            if pos:
+                x,y=map(float,pos.groups());z=.12+terrain_height(19000,x,y)
+                block=block[:pos.start()]+f'pos [ {x:.4f} {y:.4f} {z:.4f} ]'+block[pos.end():]
         out.append(block);cursor=end
     source=''.join(out)
     if 'acorn-flower-cluster' not in source:
@@ -65,6 +85,9 @@ def main():
     path.write_text(source)
     root=NodePath('acorn-shop-fence');enclosure(root,19000,A,(-18,-3,18,30),-1);A.save(root,'acorn_shop_fence')
     path=ROOT/'assets/acorn/dna/storage_acorn.dna';s=path.read_text()
+    for index in range(4):
+        alias=f'shop_19000_{index}'
+        if f'"{alias}"' not in s:s+=f'\nhood_model "assets/expansion/models/{alias}.bam" [ store_node [ "prop" "{alias}" "" ] ]\n'
     if '"acorn_shop_fence"' not in s:s+='\nhood_model "assets/expansion/models/acorn_shop_fence.bam" [ store_node [ "prop" "acorn_shop_fence" "" ] ]\n'
     path.write_text(s)
     A.app.destroy()

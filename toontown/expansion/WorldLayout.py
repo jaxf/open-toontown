@@ -3,7 +3,7 @@
 Coordinates are game feet. These winding streets deliberately extend far beyond
 one view, with straight approach sections at both native tunnel mouths.
 """
-from math import hypot
+from math import hypot, sin, cos
 
 ROADS = {
     19100: [(0,-360),(0,-305),(35,-230),(64,-150),(35,-65),(-28,15),
@@ -24,7 +24,7 @@ ROADS = {
             (-65,75),(-43,160),(12,240),(12,305),(0,365),(0,405)],
 }
 # More distance between bends; each route keeps its own silhouette.
-ROADS = {zone:[(round(x*1.18,2), round(y*1.55,2)) for x,y in points]
+ROADS = {zone:[(round(x*1.48,2), round(y*1.55,2)) for x,y in points]
          for zone,points in ROADS.items()}
 
 PLAZA_GATES = {
@@ -92,3 +92,37 @@ def along(points, spacing=32, margin=48):
         yield (a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,
                (b[0]-a[0])/length,(b[1]-a[1])/length)
         target+=spacing
+
+
+def road_paths(zone):
+    """Main winding street plus a curving loop with two actual T junctions."""
+    control=ROADS[zone]
+    first,last=control[3],control[6]
+    # Alternate the side and bend rhythm, retaining clear tunnel approaches.
+    side=-1 if zone in (19100,61200,63100,64100) else 1
+    edge=side*157
+    dy=last[1]-first[1]
+    branch=[first,(first[0]+side*42,first[1]+14),
+            (edge-side*12,first[1]+dy*.23),(edge,first[1]+dy*.50),
+            (edge-side*23,first[1]+dy*.80),(last[0]+side*43,last[1]-12),last]
+    return [curve(control),curve(branch)]
+
+
+def distance_to_path(x,y,path):
+    best=float('inf')
+    for (ax,ay),(bx,by) in zip(path,path[1:]):
+        dx,dy=bx-ax,by-ay
+        t=max(0,min(1,((x-ax)*dx+(y-ay)*dy)/max(.001,dx*dx+dy*dy)))
+        best=min(best,hypot(x-ax-t*dx,y-ay-t*dy))
+    return best
+
+
+def terrain_height(zone,x,y):
+    # Keep all authored footprints and routes level. Low, smoothly blended banks
+    # at the perimeter create terrain without burying doors or floating props.
+    if zone in ROADS:
+        edge=max(0,min(1,(abs(x)-183)/25))
+    else:
+        rx,ry=(141,128) if zone==19000 else (170,151)
+        edge=max(0,min(1,(max(abs(x)/rx,abs(y)/ry)-1)*8))
+    return edge*edge*(3-2*edge)*(2.3+1.2*sin(x*.055)*cos(y*.045))

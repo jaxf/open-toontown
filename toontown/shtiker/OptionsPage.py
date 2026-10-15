@@ -50,7 +50,7 @@ speedChatStyles = ((2000,
   (170 / 255.0, 120 / 255.0, 20 / 255.0),
   (165 / 255.0, 120 / 255.0, 50 / 255.0),
   (210 / 255.0, 200 / 255.0, 180 / 255.0)))
-PageMode = IntEnum('PageMode', ('Options', 'Codes'), start=0)
+PageMode = IntEnum('PageMode', ('Options', 'Codes', 'Controls'), start=0)
 
 class OptionsPage(ShtikerPage.ShtikerPage):
     notify = DirectNotifyGlobal.directNotify.newCategory('OptionsPage')
@@ -64,6 +64,11 @@ class OptionsPage(ShtikerPage.ShtikerPage):
         self.optionsTabPage.hide()
         self.codesTabPage = CodesTabPage(self)
         self.codesTabPage.hide()
+        from .ControlsTabPage import ControlsTabPage
+        self.controlsTabPage=ControlsTabPage(self)
+        self.controlsTabPage.hide()
+        self.controlsTab=DirectButton(parent=self,text='Controls',text_scale=.045,
+            pos=(.65,0,.77),command=self.setMode,extraArgs=[PageMode.Controls])
         titleHeight = 0.61
         self.title = DirectLabel(parent=self, relief=None, text=TTLocalizer.OptionsPageTitle, text_scale=0.12, pos=(0, 0, titleHeight))
         normalColor = (1, 1, 1, 1)
@@ -82,9 +87,11 @@ class OptionsPage(ShtikerPage.ShtikerPage):
     def exit(self):
         self.optionsTabPage.exit()
         self.codesTabPage.exit()
+        self.controlsTabPage.exit()
         ShtikerPage.ShtikerPage.exit(self)
 
     def unload(self):
+        self.controlsTabPage.destroy()
         self.optionsTabPage.unload()
         del self.title
         ShtikerPage.ShtikerPage.unload(self)
@@ -96,7 +103,16 @@ class OptionsPage(ShtikerPage.ShtikerPage):
                 return
             else:
                 self.mode = mode
-        if mode == PageMode.Options:
+        self.controlsTabPage.exit()
+        self.controlsTab['state']=DGG.NORMAL
+        if mode == PageMode.Controls:
+            self.mode=mode
+            self.title['text']='Controls & Camera'
+            self.optionsTabPage.exit();self.codesTabPage.exit()
+            self.optionsTab['state']=DGG.NORMAL;self.codesTab['state']=DGG.NORMAL
+            self.controlsTab['state']=DGG.DISABLED
+            self.controlsTabPage.enter()
+        elif mode == PageMode.Options:
             self.mode = PageMode.Options
             self.title['text'] = TTLocalizer.OptionsPageTitle
             self.optionsTab['state'] = DGG.DISABLED

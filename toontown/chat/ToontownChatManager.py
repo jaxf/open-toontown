@@ -51,7 +51,7 @@ class ToontownChatManager(ChatManager.ChatManager):
         self.whisperCancelButton = DirectButton(parent=self.whisperFrame, image=(gui.find('**/CloseBtn_UP'), gui.find('**/CloseBtn_DN'), gui.find('**/CloseBtn_Rllvr')), pos=(0.125, 0, -0.1), scale=1.179, relief=None, text=('', OTPLocalizer.ChatManagerCancel, OTPLocalizer.ChatManagerCancel), text_scale=0.05, text_fg=(0, 0, 0, 1), text_pos=(0, -0.09), textMayChange=0, command=self.__whisperCancelPressed)
         gui.removeNode()
         ChatManager.ChatManager.__init__(self, cr, localAvatar)
-        self.defaultToWhiteList = base.config.GetBool('white-list-is-default', 1)
+        self.defaultToWhiteList = False
         self.chatInputSpeedChat = TTChatInputSpeedChat(self)
         self.normalPos = Vec3(-1.083, 0, 0.804)
         self.whisperPos = Vec3(0.0, 0, 0.71)
@@ -364,47 +364,8 @@ class ToontownChatManager(ChatManager.ChatManager):
         self.problemActivatingChat.hide()
 
     def __normalButtonPressed(self):
-        if base.config.GetBool('want-qa-regression', 0):
-            self.notify.info('QA-REGRESSION: CHAT: Speedchat Plus')
         messenger.send('wakeup')
-        if base.cr.productName in ['DisneyOnline-US', 'ES']:
-            if base.cr.whiteListChatEnabled:
-                self.fsm.request('normalChat')
-            elif not base.cr.isParentPasswordSet():
-                self.paidNoParentPassword = 1
-                self.fsm.request('unpaidChatWarning')
-            elif not base.cr.allowSecretChat():
-                self.fsm.request('noSecretChatAtAllAndNoWhitelist')
-            elif not base.localAvatar.canChat():
-                self.fsm.request('openChatWarning')
-            else:
-                self.fsm.request('normalChat')
-        elif base.cr.productName == 'Terra-DMC':
-            if not base.cr.allowSecretChat():
-                self.fsm.request('noSecretChatWarning')
-            elif not base.localAvatar.canChat():
-                self.fsm.request('openChatWarning')
-            else:
-                self.fsm.request('normalChat')
-        elif base.cr.productName in ['DisneyOnline-UK',
-         'DisneyOnline-AP',
-         'JP',
-         'BR',
-         'FR']:
-            if base.cr.whiteListChatEnabled:
-                self.fsm.request('normalChat')
-            elif not base.cr.isParentPasswordSet():
-                self.paidNoParentPassword = 1
-                self.fsm.request('unpaidChatWarning')
-            elif not base.cr.allowSecretChat():
-                self.paidNoParentPassword = 1
-                self.fsm.request('unpaidChatWarning')
-            elif not base.localAvatar.canChat():
-                self.fsm.request('openChatWarning')
-            else:
-                self.fsm.request('normalChat')
-        else:
-            print('ChatManager: productName: %s not recognized' % base.cr.productName)
+        self.fsm.request('normalChat')
 
     def __scButtonPressed(self):
         if base.config.GetBool('want-qa-regression', 0):

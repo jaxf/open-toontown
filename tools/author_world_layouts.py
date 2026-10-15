@@ -8,7 +8,7 @@ from math import sin,cos,pi,degrees,atan2
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from toontown.expansion import ExpansionGlobals as E
-from toontown.expansion.WorldLayout import ROADS,PLAZA_GATES,PALETTES,ROAD_PROFILES,curve,along
+from toontown.expansion.WorldLayout import ROADS,PLAZA_GATES,PALETTES,ROAD_PROFILES,curve,along,road_paths,distance_to_path
 OUT=ROOT/'assets/expansion/dna'
 
 
@@ -37,7 +37,14 @@ NAMES={
  64000:['DRY HUMOR','HIGH NOON NOODLES','CACTUS PRACTICE','WELL I NEVER','SPUR OF THE MOMENT','DUST BUSTERS']}
 
 
-def shop(hood,i,pos,h,scale=1):
+def shop(hood,i,pos,h,scale=1,block=None):
+    if block is not None:
+        name=f'tb{block}:toon_landmark_shop_DNARoot'
+        return (f'landmark_building "{name}" [ code [ "building_{hood}_{i%4}" ] '
+            f'title [ "{NAMES[hood][i%6]}" ] pos [ {pos[0]:.4f} {pos[1]:.4f} .12 ] '
+            f'nhpr [ {h:.4f} 0 0 ] scale [ {scale} {scale} {scale} ]\n'
+            'door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]\n'+
+            prop('shop-name',f'shop_sign_{hood}_{i%6}',(0,-.8,14),scale=.95)+']\n')
     # Sign models are generated once per theme, outside the native modules.
     return prop('storefront-%s-%s'%(hood,i),'DCS',pos,h,scale,children=
         prop('painted-native-shop',f'shop_{hood}_{i%4}')+
@@ -58,12 +65,21 @@ def street(zone):
     path=curve(ROADS[zone]);parts=[prop('winding-terrain','terrain_'+str(zone))]
     for target,tr in zip(E.connections(zone),((0,path[0][1],0,0),(0,path[-1][1],0,180))):parts.append(gate(target,tr,hood))
     profile=ROAD_PROFILES[zone]
-    placements=list(along(path,profile['spacing'],62))
-    for i,(x,y,tx,ty) in enumerate(placements):
+    routes=road_paths(zone)
+    placements=[]
+    for route_index,route in enumerate(routes):
+        placements.extend((route_index,)+point for point in along(route,profile['spacing']+5,65))
+    from toontown.expansion.Services import keep_scenery
+    building_rows=[];block=0
+    for i,(route_index,x,y,tx,ty) in enumerate(placements):
         # Cross-neighborhood streets introduce the destination's storefronts.
         theme=end if end in PALETTES and i>len(placements)*.65 else hood
         nx,ny=-ty,tx
         for side in (-1,1):
+            sx,sy=x+nx*side*profile['frontage'],y+ny*side*profile['frontage']
+            # Junction sightlines and the far side of each loop remain open.
+            if abs(sx)>175 or any(distance_to_path(sx,sy,other)<profile['sidewalk']+19
+                for j,other in enumerate(routes) if j!=route_index):continue
             h=degrees(atan2(ty,tx))+(180 if side==-1 else 0)
             idx=i*2+(side==1)
             # Small pocket squares punctuate long continuous shop frontages.
@@ -72,14 +88,23 @@ def street(zone):
                 parts.append(prop('rest-bench-'+str(idx),'bench',(x+nx*side*29,y+ny*side*29,0),h,1.2))
                 if theme==63000:parts.append(prop('camera-'+str(idx),'movie_camera',(x+nx*side*45,y+ny*side*45,0),h))
             else:
-                parts.append(shop(theme,idx,(x+nx*side*profile['frontage'],y+ny*side*profile['frontage'],0),h,.94+(i%3)*.03))
-            if i%2==0:
-                parts.append(prop('streetlight-'+str(idx),('western_lamp' if theme==64000 else 'lamp_'+PALETTES[theme]['code']),
+                if keep_scenery(zone,sx,sy):
+                    block+=1
+                    if block>99:raise ValueError("Too many buildings in street %s"%zone)
+                    if block==19:block=21  # native service block IDs
+                    scale=.94+(i%3)*.03
+                    parts.append(shop(theme,idx,(sx,sy,0),h,scale,block=block))
+                    building_rows.append(dict(block=block,x=round(sx,4),y=round(sy,4),h=round(h,4),scale=scale))
+            if i%3==0:
+                parts.append(prop('streetlight-'+str(idx),('western_lamp' if theme==64000 else ('lamp_alt_' if i%2 else 'lamp_')+PALETTES[theme]['code']),
                     (x+nx*side*(profile['sidewalk']-3),y+ny*side*(profile['sidewalk']-3),0),h,1.15))
             if i%3==0:
                 parts.append(scenery(theme,idx+200,(x+nx*side*71,y+ny*side*71,0),h))
             if theme==64000 and i%4==0:
                 parts.append(prop('sandstone-'+str(idx),'mesa',(x+nx*side*103,y+ny*side*103,0),h,1.3))
+    import json
+    directory=ROOT/'assets/expansion/patrols';directory.mkdir(parents=True,exist_ok=True)
+    (directory/f'buildings_{zone}.json').write_text(json.dumps(building_rows,indent=2)+'\n')
     return ''.join(parts)
 
 
@@ -145,12 +170,14 @@ def playground(zone):
     # Deterministic scattered clusters: retain clear doors, paths and landmark views.
     import random,re
     from toontown.expansion.Services import keep_scenery
+    from toontown.expansion.Treasures import SPAWNS
     rng=random.Random(zone)
     occupied=[tuple(map(float,m)) for m in re.findall(r'pos \[ ([^ ]+) ([^ ]+) [^ ]+ \]', ''.join(parts))]
     added=0
     for attempt in range(250):
         x,y=rng.uniform(-130,130),rng.uniform(-118,125)
         if not keep_scenery(zone,x,y):continue
+        if any((x-a)**2+(y-b)**2<12**2 for a,b in SPAWNS[zone]):continue
         if any((x-a)**2+(y-b)**2<21**2 for a,b in occupied):continue
         if abs(x)<20 or (zone==61000 and x>0 and y>30):continue
         kit={61000:['planter_61000','barrel','palm'],62000:['planter_62000','garden_table','dream_tree'],
@@ -171,11 +198,15 @@ def main():
     for p in sorted((ROOT/'assets/expansion/models').glob('*.bam.pz')):
         # Native DNA replaces the final extension with bam. Let Panda resolve
         # the compressed .bam.pz file from its logical .bam filename.
-        alias(p.name[:-7],p.relative_to(ROOT).as_posix()[:-3])
+        if not p.name.startswith('building_'):
+            alias(p.name[:-7],p.relative_to(ROOT).as_posix()[:-3])
     alias('bench','assets/acorn/models/woodland_bench.bam')
     for code,phase in [('DD',6),('DL',8),('MM',6),('DG',8)]:
         alias('tunnel_'+code,f'phase_{phase}/models/modules/safe_zone_tunnel_{code}','prop_safe_zone_tunnel')
-        alias('lamp_'+code,f'phase_{phase}/models/props/streetlight_{code}')
+        alias('lamp_'+code,f'phase_{phase}/models/props/streetlight_{code}',
+            dict(DD='streetlight_DD_left',DL='prop_post_one_light',MM='MM_flute_lamp',DG='prop_DG_flower_lamp1')[code])
+        alias('lamp_alt_'+code,f'phase_{phase}/models/props/streetlight_{code}',
+            dict(DD='streetlight_DD_right',DL='prop_post_three_light',MM='MM_trumpets_lamp',DG='prop_DG_flower_lamp2')[code])
     for code,path,node in [
       ('forest_tree','phase_3.5/models/props/trees','prop_tree_large_no_box_ul'),
       ('palm','phase_6/models/props/palm_tree_topflat',''),
@@ -185,11 +216,16 @@ def main():
       ('anchor','phase_6/models/props/anchor',''),
       ('music_planter','phase_6/models/props/minnie_planter',''),
       ('garden_table','phase_8/models/props/daisy_park_table','')]:alias(code,path,node)
+    for hood in PALETTES:
+        for i in range(4):alias(f'building_{hood}_{i}',f'assets/expansion/models/building_{hood}_{i}.bam')
+    alias('door_double_round_ur','phase_3.5/models/modules/doors_practical','door_double_round_ur')
+    for track,model in [('c','corp'),('s','sales'),('l','legal'),('m','money')]:
+        for level in range(1,6):alias(f'suit_landmark_{track}{level}',f'phase_4/models/modules/suit_landmark_{model}')
     (OUT/'storage_world.dna').write_text('// Native expansion model palette.\n'+''.join(entries))
     for zone in sorted(set(ROADS)|set(PLAZA_GATES)):
         name=E.zone_name(zone).lower().replace(' ','_')
         body=street(zone) if zone in ROADS else playground(zone)
-        (OUT/(name+'.dna')).write_text('// Authored, editable scene; scenery storefronts have no interiors.\n'+
+        (OUT/(name+'.dna')).write_text('// Authored scene; street landmarks support native interiors and Cog takeovers.\n'+
             f'group "{name}" [\n visgroup "{zone}:world" [\n vis [ "{zone}:world" ]\n'+body+']\n]\n')
     (ROOT/'assets/expansion/editor/WX.json').write_text(json.dumps({'name_longhand':'expanded_toontown',
         'storage_files':['assets/expansion/dna/storage_world.dna','assets/expansion/services/storage_services.dna']},indent=2)+'\n')

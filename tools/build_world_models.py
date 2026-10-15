@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from tools import build_acorn_models as A
 from toontown.expansion import ExpansionGlobals as E
-from toontown.expansion.WorldLayout import ROADS, PLAZA_GATES, PALETTES, ROAD_PROFILES, curve
+from toontown.expansion.WorldLayout import ROADS, PLAZA_GATES, PALETTES, ROAD_PROFILES, curve, road_paths, terrain_height
 from panda3d.core import NodePath, Point3, CollisionBox, CollisionSphere, TransparencyAttrib, TextureStage
 OUT=ROOT/'assets/expansion/models'
 GOLD=(1,.78,.30,1); CREAM=(1,.94,.75,1); TEAL=(.28,.70,.64,1)
@@ -242,7 +242,9 @@ def western_shop(index):
         A.board(root,'shaped-parapet',(x,0,height+crown/2),(2.1,1.5,crown),color,WOOD)
         A.board(root,'parapet-cap',(x,-.15,height+crown),(2.2,1.9,.5),CREAM,WOOD)
     door=A.app.loader.loadModel('phase_4/models/modules/doors').find('**/door_single_round_ur').copyTo(root)
-    door.setPos(0,-.6,0);door.setColorScale(.74,.86,.72,1)
+    door.setPos(0,-.035,0);door.setColorScale(.74,.86,.72,1);door.setName('scenery-door')
+    root.attachNewNode('western_door_origin')
+    suit=root.attachNewNode('suit_building_origin');suit.setPos(-13,0,0);suit.setScale(.87,1,1)
     for x in (-8,8):
         for z in (5.5,height-6):
             A.board(root,'window-frame',(x,-.5,z),(5.6,.8,6.4),CREAM,WOOD)
@@ -269,20 +271,31 @@ def shop(hood,index):
     style=code+'_'+('A1','B1','C1','D1')[index]
     root=NodePath('complete-'+str(hood)+'-shop-'+str(index))
     m=A.app.loader.loadModel(f'phase_{phase}/models/modules/{style}')
-    lo,hi=m.getTightBounds();cx=(lo.x+hi.x)/2
-    width=hi.x-lo.x
-    scale=27/width
-    m.reparentTo(root);m.setPos(-cx*scale,-lo.y*scale,0);m.setScale(scale)
-    # Textured, closed volume behind the original painted frontage.
-    depth=max(13,(hi.y-lo.y)*scale*.82);height=hi.z*scale*.34
-    front=-lo.y*scale+1.5
+    lo,hi=m.getTightBounds()
+    scale=27/(hi.x-lo.x)
+    origin=m.find('**/*door_origin')
+    doorpos=origin.getPos(m)
+    # Align the ACTUAL entrance to our placement origin. Stock modules have
+    # asymmetric trim/awnings; their bounding-box front is not their door plane.
+    m.reparentTo(root);m.setScale(scale)
+    m.setPos(-doorpos.x*scale,-doorpos.y*scale,-lo.z*scale)
     color={19000:(.70,.72,.48,1),61000:(.93,.36,.28,1),62000:(.51,.57,.68,1),
-           63000:(1,.85,.47,1),64000:(.89,.67,.41,1)}[hood]
-    A.board(root,'closed-storefront-back',(0,front+depth/2,height/2),(24,depth,height),color,WOOD)
-    A.board(root,'tower-backing',(0,front+depth/2,hi.z*scale*.35),((18,11,12,14)[index],depth,hi.z*scale*.70),color,WOOD)
-    A.collider(root,'shop-walls',1).addSolid(CollisionBox(Point3(0,front+depth/2,height/2),13,depth/2,height/2))
-    door=A.app.loader.loadModel('phase_4/models/modules/doors').find('**/door_single_round_ur')
-    door=door.copyTo(root);door.setPos(0,-.2,0);door.setColorScale(*color)
+           63000:(1,.85,.47,1)}[hood]
+    door=A.app.loader.loadModel('phase_4/models/modules/doors').find('**/door_single_round_ur').copyTo(origin)
+    door.setPos(0,-.035,0);door.setColorScale(*color)
+    door.wrtReparentTo(root);door.setName('scenery-door')
+    # Keep native side walls and roof silhouettes; close only the rear opening.
+    body=m.find('**/*building_sides')
+    blo,bhi=(body.getTightBounds(m) if not body.isEmpty() else (lo,hi))
+    x0=(blo.x-doorpos.x)*scale;x1=(bhi.x-doorpos.x)*scale
+    back=(bhi.y-doorpos.y)*scale
+    height=(bhi.z-lo.z)*scale
+    A.board(root,'rear-wall',((x0+x1)/2,back-.18,height/2),
+            (x1-x0,.4,height),color,WOOD)
+    # Prevent entering the scenery through either side, its rear, or the door.
+    depth=max(3,back)
+    A.collider(root,'shop-walls',1).addSolid(CollisionBox(Point3((x0+x1)/2,depth/2,height/2),
+        (x1-x0)/2,depth/2,height/2))
     # Deep striped canvas adds the characteristic playful street rhythm.
     if hood!=62000:
         for i in range(8):
@@ -291,13 +304,8 @@ def shop(hood,index):
             awning.setP(-12)
             A.board(root,'scalloped-valance',(-11.2+i*3.2,-4.8,10.4),(3.1,.3,1),
                 CREAM if i%2 else color,WOOD)
-    if hood==64000:
-        A.board(root,'porch',(0,-3,.06),(29,7,.1),CREAM,WOOD)
-        for x in (-12,12):
-            A.board(root,'porch-post',(x,-4,5),(.6,.6,10),color,WOOD)
-        A.board(root,'false-front',(0,1,height),(28,2,5),color,WOOD)
     from tools.world_dressing import enclosure
-    enclosure(root,hood,A,(-15,-2,15,front+depth+2),front_open=-1)
+    enclosure(root,hood,A,(x0-1,-1,x1+1,back+1),front_open=-1)
     return root
 
 
@@ -315,14 +323,24 @@ def terrain(zone):
             floor=patches.setdefault(key,None)
             if floor is None:floor=patches[key]=A.collider(root,'terrain-patch-%s-%s'%key,2)
             def height(xx,yy):
-                return 0.0
+                return terrain_height(zone,xx,yy)
             pts=[(xx,yy,height(xx,yy)) for xx,yy in ((x,y),(x+10,y),(x+10,y+10),(x,y+10))]
-            mesh.face(pts,color=spec['tint']);A.collision_face(floor,pts)
+            variation=.96+.04*sin(x*.043)*cos(y*.037)
+            tint=tuple(c*variation for c in spec['tint'][:3])+(1,)
+            mesh.face(pts,color=tint);A.collision_face(floor,pts)
     mesh.attach(root,ground_layer=0)
     if street:
         profile=ROAD_PROFILES[zone]
-        A.ribbon(root,'curved-sidewalk',path,profile['sidewalk'],spec['paving'],.055,edges=True)
-        A.ribbon(root,'winding-street',path,profile['road'],spec['road'],.09)
+        for lane,route in enumerate(road_paths(zone)):
+            A.ribbon(root,'curved-sidewalk-'+str(lane),route,profile['sidewalk'],spec['paving'],.055,spec['tint'])
+            A.ribbon(root,'winding-street-'+str(lane),route,profile['road'],spec['road'],.09,spec['tint'])
+            A.feathered_shoulder(root,route,profile['sidewalk'],spec['paving'],spec['tint'])
+        # Rounded intersection aprons connect the looping side streets cleanly.
+        for route in road_paths(zone)[1:]:
+            for x,y in (route[0],route[-1]):
+                A.disk(root,'junction-apron',(x,y),profile['sidewalk'],profile['sidewalk'],spec['paving'],.06)
+                A.disk(root,'junction-road',(x,y),profile['road'],profile['road'],spec['road'],.095)
+
         # Woodland clearings, dock overlooks, garden courts, studio forecourts
         # and desert trading stops break up the individual street silhouettes.
         from toontown.expansion.WorldLayout import along
@@ -397,7 +415,11 @@ def main():
         ('water_tower',water_tower),('cactus',cactus),('mesa',mesa),('pier_rail',seaside_rail),('movie_camera',movie_camera),('western_lamp',western_lamp)]:
         A.save(fn(),name)
     for hood in PALETTES:
-        for index in range(4):A.save(shop(hood,index),f'shop_{hood}_{index}')
+        for index in range(4):
+            model=shop(hood,index)
+            A.save(model.copyTo(NodePath('export')),f'shop_{hood}_{index}')
+            model.find('**/scenery-door').removeNode()
+            A.save(model,f'building_{hood}_{index}')
     for zone in list(ROADS)+list(PLAZA_GATES):A.save(terrain(zone),'terrain_'+str(zone))
     for zone in sorted(E.ALL_ZONES | set(E.SOURCE_GATES)):
         A.save(A.sign_model(E.zone_name(zone).upper()),'sign_'+str(zone))

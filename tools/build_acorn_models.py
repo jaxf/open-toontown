@@ -300,6 +300,25 @@ def ribbon(root, name, points, halfwidth, texture, z=.06, color=(1,1,1,1), edges
                  (.85,.79,.62,1),sides=5)
 
 
+def feathered_shoulder(root,points,width,texture,color):
+    """A transparent painted shoulder blends paving into the neighborhood soil."""
+    mesh=Mesh('soft-paving-shoulder',texture)
+    for side in (-1,1):
+        previous=None
+        for i,(x,y) in enumerate(points):
+            before=Vec3(*points[max(0,i-1)],0);after=Vec3(*points[min(len(points)-1,i+1)],0)
+            tangent=(after-before).normalized();nx,ny=-tangent.y*side,tangent.x*side
+            row=((x+nx*(width-.1),y+ny*(width-.1),.045),(x+nx*(width+3),y+ny*(width+3),.045))
+            if previous:
+                mesh.face([previous[0],previous[1],row[1],row[0]],color=color,shade=False)
+                # Vertex opacity, in the same order as the quad above.
+                for offset,alpha in enumerate((1,0,0,1)):
+                    mesh.c.setRow(mesh.count-4+offset);mesh.c.setData4(*color[:3],alpha)
+                mesh.c.setRow(mesh.count)
+            previous=row
+    node=mesh.attach(root,ground_layer=45);node.setTransparency(TransparencyAttrib.MAlpha)
+
+
 def disk(root,name,center,rx,ry,texture,z=.07):
     mesh=Mesh(name,texture);floor=collider(root,name+'-floor',2)
     cx,cy=center
@@ -311,7 +330,9 @@ def disk(root,name,center,rx,ry,texture,z=.07):
 
 
 def height(x,y,street):
-    return 0.0
+    if street:return 0.0
+    from toontown.expansion.WorldLayout import terrain_height
+    return terrain_height(19000,x,y)
 
 
 def terrain(street=False):

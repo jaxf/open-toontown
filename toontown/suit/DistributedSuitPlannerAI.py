@@ -1025,11 +1025,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         pos = self.battlePosDict[canonicalZoneId]
         from toontown.expansion import ExpansionGlobals as E
         if canonicalZoneId in E.STREETS:
-            from toontown.expansion.WorldLayout import ROADS, curve
+            from toontown.expansion.WorldLayout import road_paths
             leg=suit.legList.getLeg(suit.currentLeg)
             elapsed=globalClock.getFrameTime()-suit.pathStartTime-leg.getStartTime()
             location=leg.getPosAtTime(max(0,elapsed))
-            x,y=min(curve(ROADS[canonicalZoneId]),
+            x,y=min((p for route in road_paths(canonicalZoneId) for p in route),
                     key=lambda p:(p[0]-location.x)**2+(p[1]-location.y)**2)
             pos=Point3(x,y,.12)
         interactivePropTrackBonus = -1

@@ -107,3 +107,11 @@ hood_model "assets/expansion/models/planter_63000.bam" [ store_node [ "prop" "pl
 hood_model "assets/expansion/models/planter_64000.bam" [ store_node [ "prop" "planter_64000" "" ] ]
 
 hood_model "assets/expansion/models/acorn_shop_fence.bam" [ store_node [ "prop" "acorn_shop_fence" "" ] ]
+
+hood_model "assets/expansion/models/shop_19000_0.bam" [ store_node [ "prop" "shop_19000_0" "" ] ]
+
+hood_model "assets/expansion/models/shop_19000_1.bam" [ store_node [ "prop" "shop_19000_1" "" ] ]
+
+hood_model "assets/expansion/models/shop_19000_2.bam" [ store_node [ "prop" "shop_19000_2" "" ] ]
+
+hood_model "assets/expansion/models/shop_19000_3.bam" [ store_node [ "prop" "shop_19000_3" "" ] ]

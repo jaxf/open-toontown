@@ -123,7 +123,7 @@ def preview_scene(zone, loader, storage=STORAGE, layouts=LAYOUTS):
                 children=entries[i+1]
                 code=children[children.index('code')+1][0]
                 door=models[code].copyTo(parent)
-                origin=parent.find('**/door_origin')
+                origin=parent.find('**/*door_origin')
                 if not origin.isEmpty():
                     door.setMat(origin.getMat(parent))
                 i += 2

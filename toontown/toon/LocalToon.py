@@ -386,10 +386,8 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             guiButton = loader.loadModel('phase_3/models/gui/quit_button')
             self.purchaseButton = DirectButton(parent=aspect2d, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=0.9, text=TTLocalizer.OptionsPagePurchase, text_scale=0.05, text_pos=(0, -0.01), textMayChange=0, pos=(0.885, 0, -0.94), sortOrder=100, command=self.__handlePurchase)
             base.setCellsAvailable([base.bottomCells[4]], 0)
-        self.accept('time-insert', self.__beginTossPie)
-        self.accept('time-insert-up', self.__endTossPie)
-        self.accept('time-delete', self.__beginTossPie)
-        self.accept('time-delete-up', self.__endTossPie)
+        self.accept('toon-pie', self.__beginTossPie)
+        self.accept('toon-pie-up', self.__endTossPie)
         self.accept('pieHit', self.__pieHit)
         self.accept('interrupt-pie', self.interruptPie)
         self.accept('InputState-jump', self.__toonMoved)
@@ -528,17 +526,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         return 1
 
     def canChat(self):
-        if not self.cr.allowAnyTypedChat():
-            return 0
-        if self.commonChatFlags & (ToontownGlobals.CommonChat | ToontownGlobals.SuperChat):
-            return 1
-        if base.cr.whiteListChatEnabled:
-            return 1
-        for friendId, flags in self.friendsList:
-            if flags & ToontownGlobals.FriendChat:
-                return 1
-
-        return 0
+        return True
 
     def startChat(self):
         if self.tutorialAck:

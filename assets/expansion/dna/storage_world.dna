@@ -26,6 +26,12 @@ hood_model "assets/expansion/models/grounded_flowerbox.bam" [
 hood_model "assets/expansion/models/grounded_forest_tree.bam" [
  store_node [ "prop" "grounded_forest_tree" "" ]
 ]
+hood_model "assets/expansion/models/grounded_forest_tree_b.bam" [
+ store_node [ "prop" "grounded_forest_tree_b" "" ]
+]
+hood_model "assets/expansion/models/grounded_fountain.bam" [
+ store_node [ "prop" "grounded_fountain" "" ]
+]
 hood_model "assets/expansion/models/grounded_garden_lamp.bam" [
  store_node [ "prop" "grounded_garden_lamp" "" ]
 ]
@@ -47,6 +53,18 @@ hood_model "assets/expansion/models/grounded_lamp_DL.bam" [
 hood_model "assets/expansion/models/grounded_lamp_MM.bam" [
  store_node [ "prop" "grounded_lamp_MM" "" ]
 ]
+hood_model "assets/expansion/models/grounded_lamp_alt_DD.bam" [
+ store_node [ "prop" "grounded_lamp_alt_DD" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_alt_DG.bam" [
+ store_node [ "prop" "grounded_lamp_alt_DG" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_alt_DL.bam" [
+ store_node [ "prop" "grounded_lamp_alt_DL" "" ]
+]
+hood_model "assets/expansion/models/grounded_lamp_alt_MM.bam" [
+ store_node [ "prop" "grounded_lamp_alt_MM" "" ]
+]
 hood_model "assets/expansion/models/grounded_music_planter.bam" [
  store_node [ "prop" "grounded_music_planter" "" ]
 ]
@@ -56,8 +74,26 @@ hood_model "assets/expansion/models/grounded_music_tree.bam" [
 hood_model "assets/expansion/models/grounded_palm.bam" [
  store_node [ "prop" "grounded_palm" "" ]
 ]
+hood_model "assets/expansion/models/grounded_pink_flowers.bam" [
+ store_node [ "prop" "grounded_pink_flowers" "" ]
+]
 hood_model "assets/expansion/models/grounded_woodland_bench.bam" [
  store_node [ "prop" "grounded_woodland_bench" "" ]
+]
+hood_model "assets/expansion/models/laff_19000.bam" [
+ store_node [ "prop" "laff_19000" "" ]
+]
+hood_model "assets/expansion/models/laff_61000.bam" [
+ store_node [ "prop" "laff_61000" "" ]
+]
+hood_model "assets/expansion/models/laff_62000.bam" [
+ store_node [ "prop" "laff_62000" "" ]
+]
+hood_model "assets/expansion/models/laff_63000.bam" [
+ store_node [ "prop" "laff_63000" "" ]
+]
+hood_model "assets/expansion/models/laff_64000.bam" [
+ store_node [ "prop" "laff_64000" "" ]
 ]
 hood_model "assets/expansion/models/lighthouse.bam" [
  store_node [ "prop" "lighthouse" "" ]
@@ -340,18 +376,22 @@ hood_model "phase_6/models/modules/safe_zone_tunnel_DD" [
  store_node [ "prop" "tunnel_DD" "prop_safe_zone_tunnel" ]
 ]
 hood_model "assets/expansion/models/grounded_lamp_DD.bam" [ store_node [ "prop" "lamp_DD" "" ] ]
+hood_model "assets/expansion/models/grounded_lamp_alt_DD.bam" [ store_node [ "prop" "lamp_alt_DD" "" ] ]
 hood_model "phase_8/models/modules/safe_zone_tunnel_DL" [
  store_node [ "prop" "tunnel_DL" "prop_safe_zone_tunnel" ]
 ]
 hood_model "assets/expansion/models/grounded_lamp_DL.bam" [ store_node [ "prop" "lamp_DL" "" ] ]
+hood_model "assets/expansion/models/grounded_lamp_alt_DL.bam" [ store_node [ "prop" "lamp_alt_DL" "" ] ]
 hood_model "phase_6/models/modules/safe_zone_tunnel_MM" [
  store_node [ "prop" "tunnel_MM" "prop_safe_zone_tunnel" ]
 ]
 hood_model "assets/expansion/models/grounded_lamp_MM.bam" [ store_node [ "prop" "lamp_MM" "" ] ]
+hood_model "assets/expansion/models/grounded_lamp_alt_MM.bam" [ store_node [ "prop" "lamp_alt_MM" "" ] ]
 hood_model "phase_8/models/modules/safe_zone_tunnel_DG" [
  store_node [ "prop" "tunnel_DG" "prop_safe_zone_tunnel" ]
 ]
 hood_model "assets/expansion/models/grounded_lamp_DG.bam" [ store_node [ "prop" "lamp_DG" "" ] ]
+hood_model "assets/expansion/models/grounded_lamp_alt_DG.bam" [ store_node [ "prop" "lamp_alt_DG" "" ] ]
 hood_model "assets/expansion/models/grounded_forest_tree.bam" [ store_node [ "prop" "forest_tree" "" ] ]
 hood_model "assets/expansion/models/grounded_palm.bam" [ store_node [ "prop" "palm" "" ] ]
 hood_model "assets/expansion/models/grounded_dream_tree.bam" [ store_node [ "prop" "dream_tree" "" ] ]
@@ -360,3 +400,126 @@ hood_model "assets/expansion/models/grounded_barrel.bam" [ store_node [ "prop" "
 hood_model "assets/expansion/models/grounded_anchor.bam" [ store_node [ "prop" "anchor" "" ] ]
 hood_model "assets/expansion/models/grounded_music_planter.bam" [ store_node [ "prop" "music_planter" "" ] ]
 hood_model "assets/expansion/models/grounded_garden_table.bam" [ store_node [ "prop" "garden_table" "" ] ]
+hood_model "assets/expansion/models/building_19000_0.bam" [
+ store_node [ "prop" "building_19000_0" "" ]
+]
+hood_model "assets/expansion/models/building_19000_1.bam" [
+ store_node [ "prop" "building_19000_1" "" ]
+]
+hood_model "assets/expansion/models/building_19000_2.bam" [
+ store_node [ "prop" "building_19000_2" "" ]
+]
+hood_model "assets/expansion/models/building_19000_3.bam" [
+ store_node [ "prop" "building_19000_3" "" ]
+]
+hood_model "assets/expansion/models/building_61000_0.bam" [
+ store_node [ "prop" "building_61000_0" "" ]
+]
+hood_model "assets/expansion/models/building_61000_1.bam" [
+ store_node [ "prop" "building_61000_1" "" ]
+]
+hood_model "assets/expansion/models/building_61000_2.bam" [
+ store_node [ "prop" "building_61000_2" "" ]
+]
+hood_model "assets/expansion/models/building_61000_3.bam" [
+ store_node [ "prop" "building_61000_3" "" ]
+]
+hood_model "assets/expansion/models/building_62000_0.bam" [
+ store_node [ "prop" "building_62000_0" "" ]
+]
+hood_model "assets/expansion/models/building_62000_1.bam" [
+ store_node [ "prop" "building_62000_1" "" ]
+]
+hood_model "assets/expansion/models/building_62000_2.bam" [
+ store_node [ "prop" "building_62000_2" "" ]
+]
+hood_model "assets/expansion/models/building_62000_3.bam" [
+ store_node [ "prop" "building_62000_3" "" ]
+]
+hood_model "assets/expansion/models/building_63000_0.bam" [
+ store_node [ "prop" "building_63000_0" "" ]
+]
+hood_model "assets/expansion/models/building_63000_1.bam" [
+ store_node [ "prop" "building_63000_1" "" ]
+]
+hood_model "assets/expansion/models/building_63000_2.bam" [
+ store_node [ "prop" "building_63000_2" "" ]
+]
+hood_model "assets/expansion/models/building_63000_3.bam" [
+ store_node [ "prop" "building_63000_3" "" ]
+]
+hood_model "assets/expansion/models/building_64000_0.bam" [
+ store_node [ "prop" "building_64000_0" "" ]
+]
+hood_model "assets/expansion/models/building_64000_1.bam" [
+ store_node [ "prop" "building_64000_1" "" ]
+]
+hood_model "assets/expansion/models/building_64000_2.bam" [
+ store_node [ "prop" "building_64000_2" "" ]
+]
+hood_model "assets/expansion/models/building_64000_3.bam" [
+ store_node [ "prop" "building_64000_3" "" ]
+]
+hood_model "phase_3.5/models/modules/doors_practical" [
+ store_node [ "prop" "door_double_round_ur" "door_double_round_ur" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_corp" [
+ store_node [ "prop" "suit_landmark_c1" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_corp" [
+ store_node [ "prop" "suit_landmark_c2" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_corp" [
+ store_node [ "prop" "suit_landmark_c3" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_corp" [
+ store_node [ "prop" "suit_landmark_c4" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_corp" [
+ store_node [ "prop" "suit_landmark_c5" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_sales" [
+ store_node [ "prop" "suit_landmark_s1" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_sales" [
+ store_node [ "prop" "suit_landmark_s2" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_sales" [
+ store_node [ "prop" "suit_landmark_s3" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_sales" [
+ store_node [ "prop" "suit_landmark_s4" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_sales" [
+ store_node [ "prop" "suit_landmark_s5" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_legal" [
+ store_node [ "prop" "suit_landmark_l1" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_legal" [
+ store_node [ "prop" "suit_landmark_l2" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_legal" [
+ store_node [ "prop" "suit_landmark_l3" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_legal" [
+ store_node [ "prop" "suit_landmark_l4" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_legal" [
+ store_node [ "prop" "suit_landmark_l5" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_money" [
+ store_node [ "prop" "suit_landmark_m1" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_money" [
+ store_node [ "prop" "suit_landmark_m2" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_money" [
+ store_node [ "prop" "suit_landmark_m3" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_money" [
+ store_node [ "prop" "suit_landmark_m4" "" ]
+]
+hood_model "phase_4/models/modules/suit_landmark_money" [
+ store_node [ "prop" "suit_landmark_m5" "" ]
+]

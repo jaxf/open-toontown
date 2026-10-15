@@ -11,7 +11,7 @@ class AdminPanel:
         self.button = DirectButton(parent=base.a2dTopRight, text='Admin',
             text_scale=.044, relief=DGG.FLAT, frameSize=(-.14,.14,-.045,.045),
             frameColor=(.18,.24,.31,1), text_fg=(1,.90,.65,1),
-            pos=(-.18,0,-.13), command=self.toggle)
+            pos=(-.53,0,-.13), command=self.toggle)
         self.button.hide()
         self.panel = DirectFrame(parent=base.aspect2d, frameSize=(-.58,.58,-.77,.77),
             frameColor=(.10,.14,.19,.98), sortOrder=100)
@@ -39,9 +39,17 @@ class AdminPanel:
                 text_fg=(1,1,1,1), frameColor=(.21,.29,.35,1),
                 relief=DGG.FLAT,frameSize=(-.47,.47,-.036,.036), pos=(-.015,0,-.05-index*.09),
                 command=self.teleport, extraArgs=[zone])
+        self.panel.setX(-.20)
+        self.panel.accept('wheel_up',self.scroll_by,[-.065])
+        self.panel.accept('wheel_down',self.scroll_by,[.065])
         self.panel.hide()
         self.taskName='admin-panel-%s' % id(self)
         taskMgr.doMethodLater(.25,self.update,self.taskName)
+
+    def scroll_by(self, amount):
+        if not self.panel.isHidden():
+            bar=self.scroll.verticalScroll
+            bar['value']=max(0,min(1,bar['value']+amount))
 
     def available(self):
         avatar=getattr(base,'localAvatar',None)

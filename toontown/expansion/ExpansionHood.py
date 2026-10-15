@@ -2,6 +2,8 @@ from direct.showbase.MessengerGlobal import messenger
 from toontown.hood.ToonHood import ToonHood
 from toontown.hood.Place import Place
 from toontown.battle.BattlePlace import BattlePlace
+from toontown.town.Street import Street
+from toontown.town.TownLoader import TownLoader
 from direct.fsm.State import State
 from toontown.safezone.SafeZoneLoader import SafeZoneLoader
 from toontown.safezone.Playground import Playground
@@ -33,8 +35,24 @@ class ExpansionPlayground(Playground):
 
 
 class ExpansionStreet(BattlePlace, ExpansionPlayground):
+    # Native elevator flow, including returning after winning a Cog building.
+    enterElevator=Street.enterElevator
+    exitElevator=Street.exitElevator
+    detectedElevatorCollision=Street.detectedElevatorCollision
+    handleElevatorDone=Street.handleElevatorDone
+    enterElevatorIn=Street.enterElevatorIn
+    exitElevatorIn=Street.exitElevatorIn
+    _elevInWaitBldgTask=Street._elevInWaitBldgTask
+    _enterElevatorGotElevator=Street._enterElevatorGotElevator
+
     def __init__(self, loader, parentFSM, doneEvent):
         ExpansionPlayground.__init__(self, loader, parentFSM, doneEvent)
+        self.elevatorDoneEvent='expansion-elevator-done'
+        self.fsm.addState(State('elevator',self.enterElevator,self.exitElevator,['walk']))
+        self.fsm.addState(State('elevatorIn',self.enterElevatorIn,self.exitElevatorIn,['walk']))
+        self.fsm.getStateNamed('start').addTransition('elevatorIn')
+        for name in ('walk','stickerBook'):
+            self.fsm.getStateNamed(name).addTransition('elevator')
         self.fsm.addState(State('WaitForBattle',self.enterWaitForBattle,self.exitWaitForBattle,['battle','walk']))
         self.fsm.addState(State('battle',self.enterBattle,self.exitBattle,['walk','teleportOut','died']))
         for name in ('walk','stickerBook','teleportIn'):
@@ -89,6 +107,9 @@ class ExpansionLoader(SafeZoneLoader):
             self.townBattle.cleanup()
             self.battleMusic.stop()
             del self.townBattle,self.battleMusic
+        if hasattr(self,'landmarkBlocks'):
+            self.landmarkBlocks.removeNode()
+            del self.landmarkBlocks
         SafeZoneLoader.unload(self)
 
     def createSafeZone(self, dnaFile):
@@ -98,6 +119,11 @@ class ExpansionLoader(SafeZoneLoader):
         if self.zoneId in E.ALL_ZONES:
             print('[Expansion DNA] Building visibility dictionaries', flush=True)
             self.makeDictionaries(self.hood.dnaStore)
+            if self.zoneId in E.STREETS:
+                # DistributedBuilding uses the same exterior dictionaries and
+                # hidden Cog origins as the original TownLoader.
+                self.zoneDict={self.zoneId:self.geom.find('**/%s:world'%self.zoneId)}
+                TownLoader.reparentLandmarkBlockNodes(self)
             print('[Expansion DNA] Exterior ready', flush=True)
         else:
             self.nodeList = [self.geom]
@@ -108,7 +134,8 @@ class ExpansionLoader(SafeZoneLoader):
         status=self.place.doneStatus
         if status.get('loader') == 'minigame':
             self.hood.trolleyReturnZone = self.zoneId
-        if E.exterior_zone(status['zoneId'])==self.zoneId and status.get('shardId') is None:
+        if (status.get('where') not in ('suitInterior','cogdoInterior') and
+                E.exterior_zone(status['zoneId'])==self.zoneId and status.get('shardId') is None):
             self.fsm.request('quietZone',[status])
         else:
             self.doneStatus=status
@@ -126,6 +153,12 @@ class ExpansionHood(ToonHood):
         self.storageDNAFile = None
         self.skyFile = 'phase_3.5/models/props/TT_sky'
         self.titleColor = E.NEIGHBORHOODS[hoodId]['colors'][2]
+
+    def startSky(self):
+        ToonHood.startSky(self)
+        color=E.NEIGHBORHOODS[self.id]['sky']
+        self.sky.setColorScale(*color)
+        base.setBackgroundColor(*color)
 
     def getHoodText(self, zoneId):
         name = E.NEIGHBORHOODS[self.id]['name']

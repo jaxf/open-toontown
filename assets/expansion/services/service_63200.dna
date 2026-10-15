@@ -3,7 +3,7 @@ landmark_building "sz20:toon_landmark_service_hq_DNARoot" [
  code [ "service_hq_MM" ]
  building_type [ "hq" ]
  title [ "Toon HQ" ]
- pos [ -41.10030671296296 18.132740162037045 0 ]
+ pos [ -34.00716435185184 18.132740162037045 0 ]
  nhpr [ 180 0 0 ]
 ]
 ] ]

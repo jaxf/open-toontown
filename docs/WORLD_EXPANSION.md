@@ -1,3 +1,23 @@
+# October 15: street and gameplay update
+
+- All eight streets have wider bends and looping side streets with two intersections each. Patrol graphs follow both routes and connect to shop doors.
+- Street shops now use native distributed buildings: Toon interiors, Cog takeovers, elevators, building battles and victory returns. Service HQs are excluded from takeovers.
+- Stock facade door sockets determine door placement. Acorn's older separate doors/backings have been replaced with the same completed storefront kit.
+- Lamp palettes select one variant per placement; both variants alternate down streets. Props outside boundaries or in junction roadways are removed. Paving has blended shoulders, subtle color variation and low edge banks.
+- Trolley stations have solid themed side/rear walls and collisions. Boarding remains at the open front. Playground skies receive their theme tint whenever they start.
+- Each new playground has four respawning, server-owned Laff pickups, healing 10: acorns, saltwater taffy, crescent moons, movie stars or canteens.
+- World-map destinations use invisible clickable areas over the artwork and names on hover. No yellow buttons or connecting lines.
+- Admin controls sit farther left and support wheel/trackpad scrolling plus the scrollbar.
+- **Escape → Controls** opens saved keyboard bindings and a **50–100° FOV** slider. Gameplay shortcuts, camera controls, sprint, movement, friends, map, gag/task overlays and screenshot keys are configurable. Activity-specific controls remain in each activity's instructions.
+- Press **Enter** or the chat button for unrestricted typed chat. Opening chat pauses movement so remapped letter keys do not move the Toon while typing.
+- **~maxgags** gives 999 of every gag; **~resetgags** clears every quantity, including level-seven gags, without resetting training. **~name Your New Name** renames only your own Toon. These commands do not require admin access.
+- Inventory quantities over 255 use a versioned 16-bit blob; ordinary saved inventories remain readable. Extended inventories survive login repair. Restart all clients and servers together.
+- The battle **Fast forward turn >>** button plays the current attack movie at 6× speed. Outcomes stay server-owned; other players must finish their movies before the server advances.
+
+Models and layouts were rebuilt. Python 3.9 syntax and diffs were reviewed. No test suites or screenshots were run/rendered for this update. Full client/server behavior on the custom Mac Panda3D engine has not been verified on this host.
+
+## Earlier update notes
+
 ## Street and playground finishing pass
 
 - Streets have only Toon HQs; gag-shop interiors, clerks and trolleys are playground-only.
@@ -131,8 +151,8 @@ an in-game pass using the custom engine. Keep the PR in draft until that pass.
 
 Every new area has a Toon HQ. Gag shops and trolleys are playground-only, with
 quest officers, clerks, door wiring and stock minigame flow.
-Other decorative shop fronts remain scenery. New bespoke NPC task chains, Cog
-buildings, fishing gameplay, ambient animations, custom music and further
+Playground decorative shops remain scenery. New bespoke NPC task chains,
+fishing gameplay, ambient animations, custom music and further
 art/terrain polish remain future work. The
 lagoon and creek are visual scenery. Existing game content is unchanged.
 

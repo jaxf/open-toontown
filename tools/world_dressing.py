@@ -83,10 +83,19 @@ def perimeter(root,zone,A):
     for kind,(x,y,z,h) in Services.placements(zone).items():
         yard=root.attachNewNode(kind+'-screened-yard');yard.setPos(x,y,.12);yard.setH(h)
         if kind=='trolley':
-            # Keep the trolley's horizontal track clear at both ends.
-            fence(yard,hood,A,[(-38,32),(48,32)],9)
-            fence(yard,hood,A,[(-38,-28),(-38,-8)],7)
-            fence(yard,hood,A,[(48,-28),(48,-8)],7)
+            from panda3d.core import CollisionBox
+            dark,light=COLORS[hood]
+            # The native station is a stage facade. Add an enclosed station yard
+            # around its sides/back, with the player approach entirely open.
+            for name,pos,size in [
+                ('station-back',(15,32,11.5),(48,2,23)),
+                ('station-left',(-8,14,11.5),(2,36,23)),
+                ('station-right',(38,14,11.5),(2,36,23))]:
+                A.board(yard,name,pos,size,dark,WOOD)
+                A.board(yard,name+'-cap',(pos[0],pos[1],23.6),(size[0]+.8,size[1]+.8,1.2),light,WOOD)
+                A.collider(yard,name+'-wall',1).addSolid(CollisionBox(Point3(*pos),size[0]/2,size[1]/2,size[2]/2))
+            fence(yard,hood,A,[(-8,-4),(1,-4)],8)
+            fence(yard,hood,A,[(30,-4),(38,-4)],8)
         else:
             path=('phase_3.5/models/modules/hqTT' if code in ('TT','DD') else f'phase_{phase}/models/modules/hq{code}') if kind=='hq' else f'phase_{phase}/models/modules/gagShop_{code}'
             model=A.app.loader.loadModel(path);lo,hi=model.getTightBounds()

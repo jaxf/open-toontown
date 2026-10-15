@@ -17,7 +17,7 @@ NEIGHBORHOODS = {
                 landmark='The Great Oak', source=5000),
     BRINY: dict(name='Briny Boardwalk', short='briny', theme='seaside',
                 colors=((.27, .65, .68, 1), (.89, .41, .35, 1), (1, .88, .60, 1)),
-                sky=(1, .94, .85, 1), music='phase_6/audio/bgm/DD_nbrhood.ogg',
+                sky=(.68, 1, .95, 1), music='phase_6/audio/bgm/DD_nbrhood.ogg',
                 landmark='Loopy Lighthouse', source=1000),
     HUSH: dict(name='Hush Hollow', short='hush', theme='spooky',
                colors=((.32, .24, .43, 1), (.22, .49, .48, 1), (1, .68, .30, 1)),
@@ -29,7 +29,7 @@ NEIGHBORHOODS = {
                      landmark='The Reel Big Theater', source=4000),
     TUMBLEWEED: dict(name='Tumbleweed Terrace', short='tumbleweed', theme='desert',
                      colors=((.72, .39, .26, 1), (.39, .70, .61, 1), (.98, .80, .49, 1)),
-                     sky=(.76, .85, .95, 1), music='phase_6/audio/bgm/GS_SZ.ogg',
+                     sky=(1, .74, .48, 1), music='phase_6/audio/bgm/GS_SZ.ogg',
                      landmark='Ten Gallon Water Tower', source=8000),
 }
 # Each street is a real, separate zone with a tunnel at both ends. These are
@@ -125,6 +125,8 @@ INTERIOR_EXTERIORS = {zone+500+block: zone for zone in ALL_ZONES
                       for kind,block in SERVICE_BLOCKS.items()
                       if kind=='hq' or zone in NEIGHBORHOODS}
 SERVICE_INTERIORS = frozenset(INTERIOR_EXTERIORS)
+BUILDING_INTERIORS = frozenset(zone+500+block for zone in STREETS for block in range(1,100) if block not in (19,20))
+INTERIOR_EXTERIORS.update({zone+500+block:zone for zone in STREETS for block in range(1,100) if block not in (19,20)})
 
 
 def exterior_zone(zone):

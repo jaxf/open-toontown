@@ -540,7 +540,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         emptyInv = InventoryBase.InventoryBase(self)
         emptyString = emptyInv.makeNetString()
         lengthMatch = len(inventoryNetString) - len(emptyString)
-        if lengthMatch != 0:
+        extended = inventoryNetString[:4] == b'GAG2' and len(inventoryNetString) == 4+2*len(emptyString)
+        if lengthMatch != 0 and not extended:
             if len(inventoryNetString) == 42:
                 oldTracks = 7
                 oldLevels = 6
@@ -1991,41 +1992,42 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             anyChanged = 1
         inventoryChanged = 0
         carry = self.maxCarry
-        for track in range(len(ToontownBattleGlobals.Tracks)):
-            if not self.hasTrackAccess(track):
-                for level in range(len(ToontownBattleGlobals.Levels[track])):
-                    count = self.inventory.inventory[track][level]
-                    if count != 0:
-                        self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; no access to track.' % (self.doId,
-                         count,
-                         track,
-                         level))
-                        self.inventory.inventory[track][level] = 0
-                        inventoryChanged = 1
-
-            else:
-                curSkill = self.experience.getExp(track)
-                for level in range(len(ToontownBattleGlobals.Levels[track])):
-                    count = self.inventory.inventory[track][level]
-                    if curSkill < ToontownBattleGlobals.Levels[track][level]:
+        if not self.inventory.extendedCapacity:
+            for track in range(len(ToontownBattleGlobals.Tracks)):
+                if not self.hasTrackAccess(track):
+                    for level in range(len(ToontownBattleGlobals.Levels[track])):
+                        count = self.inventory.inventory[track][level]
                         if count != 0:
-                            self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; no access to level.' % (self.doId,
+                            self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; no access to track.' % (self.doId,
                              count,
                              track,
                              level))
                             self.inventory.inventory[track][level] = 0
                             inventoryChanged = 1
-                    else:
-                        newCount = min(count, carry)
-                        newCount = min(count, self.inventory.getMax(track, level))
-                        if count != newCount:
-                            self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; too many gags.' % (self.doId,
-                             count - newCount,
-                             track,
-                             level))
-                            self.inventory.inventory[track][level] = newCount
-                            inventoryChanged = 1
-                        carry -= newCount
+
+                else:
+                    curSkill = self.experience.getExp(track)
+                    for level in range(len(ToontownBattleGlobals.Levels[track])):
+                        count = self.inventory.inventory[track][level]
+                        if curSkill < ToontownBattleGlobals.Levels[track][level]:
+                            if count != 0:
+                                self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; no access to level.' % (self.doId,
+                                 count,
+                                 track,
+                                 level))
+                                self.inventory.inventory[track][level] = 0
+                                inventoryChanged = 1
+                        else:
+                            newCount = min(count, carry)
+                            newCount = min(count, self.inventory.getMax(track, level))
+                            if count != newCount:
+                                self.notify.info('Changed avatar %d to throw away %d items in track %d level %d; too many gags.' % (self.doId,
+                                 count - newCount,
+                                 track,
+                                 level))
+                                self.inventory.inventory[track][level] = newCount
+                                inventoryChanged = 1
+                            carry -= newCount
 
         self.inventory.calcTotalProps()
         if inventoryChanged:

@@ -16,8 +16,6 @@ class ExpansionMap(DirectFrame):
         self.buttons={}
         self.available=set(PINS)
         font=base.loader.loadFont('phase_3/models/fonts/MickeyFont')
-        button_model=base.loader.loadModel('phase_3/models/gui/quit_button')
-        button_images=tuple(button_model.find('**/'+n) for n in ('QuitBtn_UP','QuitBtn_DN','QuitBtn_RLVR','QuitBtn_UP'))
         texture=base.loader.loadTexture(Filename.fromOsSpecific(str(
             Path(__file__).resolve().parents[2]/'assets/expansion/maps/toontown_world.png')))
         texture.setMinfilter(Texture.FTLinearMipmapLinear)
@@ -30,17 +28,14 @@ class ExpansionMap(DirectFrame):
             x,z=map_point(point)
             name=NAMES[zone]
             lines=name.replace(' ', '\n',1) if len(name)>15 else name
-            button=DirectButton(parent=self,text=lines,text_font=font,text_scale=.026,
-                image=button_images,image_scale=(.73,1,.65),image_pos=(0,0,-.01),
-                text_align=TextNode.ACenter,text_fg=(.16,.25,.24,1),
-                text_pos=(0,-.006),text_shadow=(1,1,.90,1),text_shadowOffset=(.04,.04),
-                frameColor=((1,.96,.78,.93),(1,.84,.41,1),(1,.99,.91,1),(.83,.82,.75,.95)),
-                frameSize=(-.115,.115,-.042,.025),relief=None,
-                pos=(x,0,z),command=self.choose,extraArgs=[zone],pressEffect=True,sortOrder=5)
+            button=DirectButton(parent=self,text='',text_font=font,text_scale=.033,
+                text_wordwrap=14,text_align=TextNode.ACenter,text_fg=(.13,.25,.23,1),
+                text_shadow=(1,1,.9,1),text_shadowOffset=(.04,.04),
+                frameColor=(0,0,0,0),frameSize=(-.11,.11,-.04,.12),relief=None,
+                pos=(x,0,z),command=self.choose,extraArgs=[zone],pressEffect=False,sortOrder=5)
             button.bind(DGG.ENTER,self.describe,extraArgs=[zone])
             button.bind(DGG.EXIT,self.restore_caption)
             self.buttons[zone]=button
-        button_model.removeNode()
         self.caption=DirectLabel(parent=self,text='',text_scale=.029,
             text_fg=(.20,.30,.29,1),text_wordwrap=69,relief=DGG.FLAT,
             frameColor=(1,.97,.86,.94),frameSize=(-1.05,1.05,-.055,.035),
@@ -58,6 +53,7 @@ class ExpansionMap(DirectFrame):
         current=E.hood_id(self.place) if self.place in E.ALL_ZONES else self.place
         self.current.hide()
         for zone,button in self.buttons.items():
+            button['text']=''
             # Every district stays visible; unavailable/locked travel is explained
             # on hover and click instead of hiding the new world behind clouds.
             enabled=zone in self.available and zone in self.access and not safeMode
@@ -71,6 +67,8 @@ class ExpansionMap(DirectFrame):
         self.show()
 
     def describe(self,zone,event=None):
+        for key,button in self.buttons.items():
+            button['text']=NAMES[key] if key==zone else ''
         roads=', '.join(E.zone_name(z) for z in E.connections(zone)) if zone in E.ALL_ZONES or zone in E.SOURCE_GATES else ''
         if self.safeMode:status='Travel is unavailable right now.'
         elif zone not in self.available:status='Unavailable in this district.'
@@ -79,6 +77,7 @@ class ExpansionMap(DirectFrame):
         self.caption['text']=NAMES[zone]+' — '+status+('\nTunnels: '+roads if roads else '')
 
     def restore_caption(self,event=None):
+        for button in self.buttons.values():button['text']=''
         self.caption['text']=getattr(self,'default_caption','Select a neighborhood.')
 
     def choose(self,zone):
