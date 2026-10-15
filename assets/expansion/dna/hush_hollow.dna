@@ -8,8 +8,7 @@ prop "playground-terrain" [
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-prop "linktunnel_hush_62100" [
- code [ "DCS" ]
+node "linktunnel_hush_62100" [
  pos [ 25.0000 -135.0000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -26,8 +25,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-prop "linktunnel_acorn_19200" [
- code [ "DCS" ]
+node "linktunnel_acorn_19200" [
  pos [ -150.0000 55.0000 0.0000 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -50,8 +48,7 @@ prop "neighborhood-landmark" [
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-prop "storefront-62000-0" [
- code [ "DCS" ]
+node "storefront-62000-0" [
  pos [ -84.0000 -9.0000 0.0000 ]
  nhpr [ 100.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
@@ -68,8 +65,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-1" [
- code [ "DCS" ]
+node "storefront-62000-1" [
  pos [ -94.0000 30.0000 0.0000 ]
  nhpr [ 75.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
@@ -86,8 +82,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-2" [
- code [ "DCS" ]
+node "storefront-62000-2" [
  pos [ -80.0000 87.0000 0.0000 ]
  nhpr [ 30.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
@@ -104,8 +99,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-3" [
- code [ "DCS" ]
+node "storefront-62000-3" [
  pos [ -36.0000 112.0000 0.0000 ]
  nhpr [ 5.0000 0 0 ]
  scale [ 1.0400 1.0400 1.0400 ]
@@ -123,8 +117,7 @@ prop "shop-name" [
 ]
 ]
 
-prop "storefront-62000-5" [
- code [ "DCS" ]
+node "storefront-62000-5" [
  pos [ 63.0000 111.0000 0.0000 ]
  nhpr [ -35.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]
@@ -141,8 +134,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-6" [
- code [ "DCS" ]
+node "storefront-62000-6" [
  pos [ 109.0000 65.0000 0.0000 ]
  nhpr [ -85.0000 0 0 ]
  scale [ 0.9600 0.9600 0.9600 ]
@@ -160,8 +152,7 @@ prop "shop-name" [
 ]
 ]
 
-prop "storefront-62000-8" [
- code [ "DCS" ]
+node "storefront-62000-8" [
  pos [ 79.0000 -84.0000 0.0000 ]
  nhpr [ -150.0000 0 0 ]
  scale [ 0.8800 0.8800 0.8800 ]
@@ -178,8 +169,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-9" [
- code [ "DCS" ]
+node "storefront-62000-9" [
  pos [ -21.0000 -88.0000 0.0000 ]
  nhpr [ 140.0000 0 0 ]
  scale [ 1.1200 1.1200 1.1200 ]

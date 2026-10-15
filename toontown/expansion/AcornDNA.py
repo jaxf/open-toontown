@@ -87,7 +87,7 @@ def preview_scene(zone, loader, storage=STORAGE, layouts=LAYOUTS):
         i = 0
         while i < len(entries):
             kind = entries[i]
-            if kind in ('group', 'visgroup', 'prop', 'landmark_building'):
+            if kind in ('group', 'visgroup', 'node', 'prop', 'landmark_building'):
                 name, children = entries[i+1:i+3]
                 if kind in ('prop','landmark_building'):
                     code = children[children.index('code')+1][0]

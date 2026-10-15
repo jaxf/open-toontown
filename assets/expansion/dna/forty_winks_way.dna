@@ -8,8 +8,7 @@ prop "winding-terrain" [
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-prop "linktunnel_dl_9000" [
- code [ "DCS" ]
+node "linktunnel_dl_9000" [
  pos [ 0.0000 -340.0000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -26,8 +25,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-prop "linktunnel_hush_62000" [
- code [ "DCS" ]
+node "linktunnel_hush_62000" [
  pos [ 0.0000 380.0000 0.0000 ]
  nhpr [ 180.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -44,8 +42,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-prop "storefront-62000-0" [
- code [ "DCS" ]
+node "storefront-62000-0" [
  pos [ 21.9263 -265.9560 0.0000 ]
  nhpr [ 297.0172 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -74,8 +71,7 @@ prop "tree-200" [
  nhpr [ 297.0172 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-1" [
- code [ "DCS" ]
+node "storefront-62000-1" [
  pos [ -31.5259 -293.2115 0.0000 ]
  nhpr [ 117.0172 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -104,8 +100,7 @@ prop "tree-201" [
  nhpr [ 117.0172 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-2" [
- code [ "DCS" ]
+node "storefront-62000-2" [
  pos [ 0.6955 -233.2540 0.0000 ]
  nhpr [ 304.6756 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -122,8 +117,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-3" [
- code [ "DCS" ]
+node "storefront-62000-3" [
  pos [ -48.6477 -267.3897 0.0000 ]
  nhpr [ 124.6756 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -140,8 +134,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-4" [
- code [ "DCS" ]
+node "storefront-62000-4" [
  pos [ -14.7479 -207.4529 0.0000 ]
  nhpr [ 295.3469 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -164,8 +157,7 @@ prop "streetlight-4" [
  nhpr [ 295.3469 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-5" [
- code [ "DCS" ]
+node "storefront-62000-5" [
  pos [ -68.9718 -233.1388 0.0000 ]
  nhpr [ 115.3469 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -224,8 +216,7 @@ prop "tree-207" [
  nhpr [ 108.9870 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-8" [
- code [ "DCS" ]
+node "storefront-62000-8" [
  pos [ -30.5178 -156.6361 0.0000 ]
  nhpr [ 264.2307 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -248,8 +239,7 @@ prop "streetlight-8" [
  nhpr [ 264.2307 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-9" [
- code [ "DCS" ]
+node "storefront-62000-9" [
  pos [ -90.2138 -150.6047 0.0000 ]
  nhpr [ 84.2307 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -272,8 +262,7 @@ prop "streetlight-9" [
  nhpr [ 84.2307 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-10" [
- code [ "DCS" ]
+node "storefront-62000-10" [
  pos [ -22.6070 -134.6049 0.0000 ]
  nhpr [ 242.4186 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -290,8 +279,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-11" [
- code [ "DCS" ]
+node "storefront-62000-11" [
  pos [ -75.7882 -106.8244 0.0000 ]
  nhpr [ 62.4186 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -308,8 +296,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-12" [
- code [ "DCS" ]
+node "storefront-62000-12" [
  pos [ -5.8171 -107.7646 0.0000 ]
  nhpr [ 236.0644 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -341,8 +328,7 @@ prop "tree-212" [
 
 
 
-prop "storefront-62000-14" [
- code [ "DCS" ]
+node "storefront-62000-14" [
  pos [ 12.5623 -81.1542 0.0000 ]
  nhpr [ 231.0022 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -360,8 +346,7 @@ prop "shop-name" [
 ]
 ]
 
-prop "storefront-62000-16" [
- code [ "DCS" ]
+node "storefront-62000-16" [
  pos [ 34.6584 -55.1466 0.0000 ]
  nhpr [ 229.3403 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -407,8 +392,7 @@ prop "tree-218" [
 
 
 
-prop "storefront-62000-20" [
- code [ "DCS" ]
+node "storefront-62000-20" [
  pos [ 76.7309 11.4680 0.0000 ]
  nhpr [ 246.9165 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -438,8 +422,7 @@ prop "streetlight-21" [
  nhpr [ 66.9165 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-22" [
- code [ "DCS" ]
+node "storefront-62000-22" [
  pos [ 89.2728 50.6348 0.0000 ]
  nhpr [ 258.7613 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -456,8 +439,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-23" [
- code [ "DCS" ]
+node "storefront-62000-23" [
  pos [ 30.4233 62.3286 0.0000 ]
  nhpr [ 78.7613 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -474,8 +456,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-24" [
- code [ "DCS" ]
+node "storefront-62000-24" [
  pos [ 90.3107 96.0461 0.0000 ]
  nhpr [ 279.2129 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -504,8 +485,7 @@ prop "tree-224" [
  nhpr [ 279.2129 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-25" [
- code [ "DCS" ]
+node "storefront-62000-25" [
  pos [ 31.0847 86.4399 0.0000 ]
  nhpr [ 99.2129 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -534,8 +514,7 @@ prop "tree-225" [
  nhpr [ 99.2129 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-26" [
- code [ "DCS" ]
+node "storefront-62000-26" [
  pos [ 76.4032 136.8961 0.0000 ]
  nhpr [ 295.0584 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -552,8 +531,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-27" [
- code [ "DCS" ]
+node "storefront-62000-27" [
  pos [ 22.0506 111.4836 0.0000 ]
  nhpr [ 115.0584 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -570,8 +548,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-28" [
- code [ "DCS" ]
+node "storefront-62000-28" [
  pos [ 57.9179 170.1115 0.0000 ]
  nhpr [ 300.8368 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -594,8 +571,7 @@ prop "streetlight-28" [
  nhpr [ 300.8368 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-29" [
- code [ "DCS" ]
+node "storefront-62000-29" [
  pos [ 6.4001 139.3558 0.0000 ]
  nhpr [ 120.8368 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -654,8 +630,7 @@ prop "tree-231" [
  nhpr [ 134.3188 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-32" [
- code [ "DCS" ]
+node "storefront-62000-32" [
  pos [ 8.7974 226.4920 0.0000 ]
  nhpr [ 310.2521 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -678,8 +653,7 @@ prop "streetlight-32" [
  nhpr [ 310.2521 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-33" [
- code [ "DCS" ]
+node "storefront-62000-33" [
  pos [ -36.9951 187.7228 0.0000 ]
  nhpr [ 130.2521 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -702,8 +676,7 @@ prop "streetlight-33" [
  nhpr [ 130.2521 0 0 ]
  scale [ 1.1500 1.1500 1.1500 ]
 ]
-prop "storefront-62000-34" [
- code [ "DCS" ]
+node "storefront-62000-34" [
  pos [ 2.7036 239.0186 0.0000 ]
  nhpr [ 270.6101 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -720,8 +693,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-35" [
- code [ "DCS" ]
+node "storefront-62000-35" [
  pos [ -57.2930 238.3797 0.0000 ]
  nhpr [ 90.6101 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -738,8 +710,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-36" [
- code [ "DCS" ]
+node "storefront-62000-36" [
  pos [ 8.4439 263.2921 0.0000 ]
  nhpr [ 251.6334 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -768,8 +739,7 @@ prop "tree-236" [
  nhpr [ 251.6334 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-37" [
- code [ "DCS" ]
+node "storefront-62000-37" [
  pos [ -48.4997 282.1978 0.0000 ]
  nhpr [ 71.6334 0 0 ]
  scale [ 0.9400 0.9400 0.9400 ]
@@ -798,8 +768,7 @@ prop "tree-237" [
  nhpr [ 71.6334 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-prop "storefront-62000-38" [
- code [ "DCS" ]
+node "storefront-62000-38" [
  pos [ 17.9958 298.0415 0.0000 ]
  nhpr [ 253.6527 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]
@@ -816,8 +785,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-prop "storefront-62000-39" [
- code [ "DCS" ]
+node "storefront-62000-39" [
  pos [ -39.5786 314.9290 0.0000 ]
  nhpr [ 73.6527 0 0 ]
  scale [ 0.9700 0.9700 0.9700 ]

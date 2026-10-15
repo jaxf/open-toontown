@@ -14,7 +14,9 @@ OUT=ROOT/'assets/expansion/dna'
 
 def prop(name,code,pos=(0,0,0),h=0,scale=1,children='',color=None):
     if isinstance(scale,(int,float)):scale=(scale,)*3
-    s=f'prop "{name}" [\n code [ "{code}" ]\n pos [ {pos[0]:.4f} {pos[1]:.4f} {pos[2]:.4f} ]\n nhpr [ {h:.4f} 0 0 ]\n scale [ {scale[0]:.4f} {scale[1]:.4f} {scale[2]:.4f} ]\n'
+    kind='node' if code=='DCS' else 'prop'
+    code_line='' if code=='DCS' else f' code [ "{code}" ]\n'
+    s=f'{kind} "{name}" [\n{code_line} pos [ {pos[0]:.4f} {pos[1]:.4f} {pos[2]:.4f} ]\n nhpr [ {h:.4f} 0 0 ]\n scale [ {scale[0]:.4f} {scale[1]:.4f} {scale[2]:.4f} ]\n'
     if color:s+=' color [ '+' '.join(map(str,color))+' ]\n'
     return s+children+']\n'
 

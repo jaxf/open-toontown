@@ -9,8 +9,7 @@ prop "sculpted-road-ground" [
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-prop "linktunnel_dg_5000" [
- code [ "DCS" ]
+node "linktunnel_dg_5000" [
  pos [ 0.0000 -155.0000 0.0000 ]
  nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -27,8 +26,7 @@ prop "destination-plaque" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-prop "linktunnel_acorn_19000" [
- code [ "DCS" ]
+node "linktunnel_acorn_19000" [
  pos [ 0.0000 165.0000 0.0000 ]
  nhpr [ 180.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
@@ -45,8 +43,7 @@ prop "destination-plaque" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-prop "seed-money" [
- code [ "DCS" ]
+node "seed-money" [
  pos [ -32.0000 -113.0000 0.0000 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 0.8200 0.8200 0.8200 ]
@@ -88,8 +85,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "books-and-branches" [
- code [ "DCS" ]
+node "books-and-branches" [
  pos [ 38.0000 -112.0000 0.0000 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 0.8500 0.8500 0.8500 ]
@@ -132,8 +128,7 @@ prop "window-garden" [
 ]
 ]
 
-prop "root-of-the-joke" [
- code [ "DCS" ]
+node "root-of-the-joke" [
  pos [ 73.0000 -69.0000 0.0000 ]
  nhpr [ -100.0000 0 0 ]
  scale [ 0.7600 0.7600 0.7600 ]
@@ -175,8 +170,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "knot-a-problem" [
- code [ "DCS" ]
+node "knot-a-problem" [
  pos [ 4.0000 -22.0000 0.0000 ]
  nhpr [ 85.0000 0 0 ]
  scale [ 0.8200 0.8200 0.8200 ]
@@ -218,8 +212,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "leaf-it-to-me" [
- code [ "DCS" ]
+node "leaf-it-to-me" [
  pos [ 77.0000 -20.0000 0.0000 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 0.8200 0.8200 0.8200 ]
@@ -261,8 +254,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "branch-office" [
- code [ "DCS" ]
+node "branch-office" [
  pos [ 63.0000 27.0000 0.0000 ]
  nhpr [ -45.0000 0 0 ]
  scale [ 0.7400 0.7400 0.7400 ]
@@ -305,8 +297,7 @@ prop "window-garden" [
 ]
 ]
 
-prop "seed-library" [
- code [ "DCS" ]
+node "seed-library" [
  pos [ -63.0000 81.0000 0.0000 ]
  nhpr [ 90.0000 0 0 ]
  scale [ 0.8500 0.8500 0.8500 ]
@@ -348,8 +339,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "tea-courtyard" [
- code [ "DCS" ]
+node "tea-courtyard" [
  pos [ 14.0000 81.0000 0.0000 ]
  nhpr [ -85.0000 0 0 ]
  scale [ 0.7800 0.7800 0.7800 ]
@@ -391,8 +381,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "branch-out" [
- code [ "DCS" ]
+node "branch-out" [
  pos [ -58.0000 123.0000 0.0000 ]
  nhpr [ 100.0000 0 0 ]
  scale [ 0.8200 0.8200 0.8200 ]
@@ -434,8 +423,7 @@ prop "window-garden" [
  scale [ 0.5500 0.5500 0.5500 ]
 ]
 ]
-prop "root-market" [
- code [ "DCS" ]
+node "root-market" [
  pos [ 27.0000 127.0000 0.0000 ]
  nhpr [ -90.0000 0 0 ]
  scale [ 0.7800 0.7800 0.7800 ]

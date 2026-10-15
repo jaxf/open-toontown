@@ -10,7 +10,7 @@ OUT=ROOT/'assets/expansion/services'
 def reserve_footprints(path, zone):
     # Preserve the authored DNA verbatim except for scenery in service bays.
     source=path.read_text()
-    pattern=re.compile(r'prop "([^"\n]+)" \[')
+    pattern=re.compile(r'(?:prop|node) "([^"\n]+)" \[')
     cursor=0; result=[]
     while True:
         match=pattern.search(source,cursor)
