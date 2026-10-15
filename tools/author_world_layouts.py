@@ -198,7 +198,8 @@ def main():
     for p in sorted((ROOT/'assets/expansion/models').glob('*.bam.pz')):
         # Native DNA replaces the final extension with bam. Let Panda resolve
         # the compressed .bam.pz file from its logical .bam filename.
-        if not p.name.startswith('building_'):
+        # Distributed pickups own their models; they are not DNA scenery.
+        if not p.name.startswith(('building_', 'laff_')):
             alias(p.name[:-7],p.relative_to(ROOT).as_posix()[:-3])
     alias('bench','assets/acorn/models/woodland_bench.bam')
     for code,phase in [('DD',6),('DL',8),('MM',6),('DG',8)]:

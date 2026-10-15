@@ -54,7 +54,7 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
                 self.makeNodePath()
             else:
                 self.treasure.getChildren().detach()
-            model = loader.loadModel(newModelPath)
+            model = self.loadTreasureModel(newModelPath)
             model.instanceTo(self.treasure)
             return
 

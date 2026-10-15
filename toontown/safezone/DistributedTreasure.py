@@ -65,11 +65,14 @@ class DistributedTreasure(DistributedObject.DistributedObject):
             self.makeNodePath()
         else:
             self.treasure.getChildren().detach()
-        model = loader.loadModel(modelPath)
+        model = self.loadTreasureModel(modelPath)
         if modelFindString != None:
             model = model.find('**/' + modelFindString)
         model.instanceTo(self.treasure)
         return
+
+    def loadTreasureModel(self, modelPath):
+        return loader.loadModel(modelPath)
 
     def makeNodePath(self):
         self.nodePath = NodePath(self.uniqueName('treasure'))

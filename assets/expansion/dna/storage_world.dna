@@ -80,21 +80,6 @@ hood_model "assets/expansion/models/grounded_pink_flowers.bam" [
 hood_model "assets/expansion/models/grounded_woodland_bench.bam" [
  store_node [ "prop" "grounded_woodland_bench" "" ]
 ]
-hood_model "assets/expansion/models/laff_19000.bam" [
- store_node [ "prop" "laff_19000" "" ]
-]
-hood_model "assets/expansion/models/laff_61000.bam" [
- store_node [ "prop" "laff_61000" "" ]
-]
-hood_model "assets/expansion/models/laff_62000.bam" [
- store_node [ "prop" "laff_62000" "" ]
-]
-hood_model "assets/expansion/models/laff_63000.bam" [
- store_node [ "prop" "laff_63000" "" ]
-]
-hood_model "assets/expansion/models/laff_64000.bam" [
- store_node [ "prop" "laff_64000" "" ]
-]
 hood_model "assets/expansion/models/lighthouse.bam" [
  store_node [ "prop" "lighthouse" "" ]
 ]

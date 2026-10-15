@@ -1,5 +1,19 @@
 # October 15: street and gameplay update
 
+## Mac healing-pickup load fix (October 15)
+
+The reported crash reaches `Exterior ready`, then faults in the native model
+loader while `DistributedDGTreasure` generates. The same pickup assets load
+successfully with `noCache=True` during palette loading. Expansion pickups now
+use that uncached path and retain five small Python-owned model prototypes for
+respawns and holiday replacements. They are excluded from the DNA scenery
+catalog, including future catalog regeneration. Stock and holiday treasure
+models retain their existing loading behavior.
+
+This is a targeted workaround based on the supplied stack trace; the native
+cache fault has not been reproduced on the custom Mac engine here. No game
+tests or screenshots were run for this change.
+
 - All eight streets have wider bends and looping side streets with two intersections each. Patrol graphs follow both routes and connect to shop doors.
 - Street shops now use native distributed buildings: Toon interiors, Cog takeovers, elevators, building battles and victory returns. Service HQs are excluded from takeovers.
 - Stock facade door sockets determine door placement. Acorn's older separate doors/backings have been replaced with the same completed storefront kit.

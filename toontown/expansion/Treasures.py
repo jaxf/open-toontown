@@ -10,3 +10,29 @@ SPAWNS={
 
 def model_path(zone):
     return 'assets/expansion/models/laff_%s.bam'%zone
+
+
+_MODEL_PATHS = frozenset(model_path(zone) for zone in SPAWNS)
+_models = {}
+
+
+def is_expansion_model(path):
+    return path in _MODEL_PATHS
+
+
+def load_model(loader, path):
+    """Own the five pickup prototypes separately from DNA and Panda's caches."""
+    if path not in _MODEL_PATHS:
+        raise ValueError('Unknown expansion treasure model: '+path)
+    if path not in _models:
+        # These generated BAMs load successfully as uncached hood models on
+        # the Mac engine, but the normal cached treasure load has segfaulted.
+        # Bypass both disk and RAM model caches, retaining a Python reference
+        # so subsequent pickups and holiday replacements reuse the prototype.
+        print('[Expansion treasure] Loading uncached model: '+path, flush=True)
+        model = loader.loadModel(path, noCache=True)
+        if model is None or model.isEmpty():
+            raise ValueError('Missing expansion treasure model: '+path)
+        _models[path] = model
+        print('[Expansion treasure] Model ready: '+path, flush=True)
+    return _models[path]
