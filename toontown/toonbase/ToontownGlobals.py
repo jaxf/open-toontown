@@ -3,9 +3,9 @@ from otp.otpbase.OTPGlobals import *
 from direct.showbase.PythonUtil import invertDict
 from panda3d.core import BitMask32, Vec4
 from enum import IntEnum
-MapHotkeyOn = 'alt'
-MapHotkeyOff = 'alt-up'
-MapHotkey = 'alt'
+MapHotkeyOn = 'toon-map'
+MapHotkeyOff = 'toon-map-up'
+MapHotkey = 'toon-map'
 AccountDatabaseChannelId = 4008
 ToonDatabaseChannelId = 4021
 DoodleDatabaseChannelId = 4023
@@ -207,7 +207,7 @@ PartyHood = 18000
 HoodsAlwaysVisited = [17000, 18000]
 WelcomeValleyBegin = 22000
 WelcomeValleyEnd = 61000
-DynamicZonesBegin = 61000
+DynamicZonesBegin = 65000  # 61000-64999 reserved for expansion neighborhoods
 DynamicZonesEnd = 1 << 20
 cogDept2index = {'c': 0,
  'l': 1,
@@ -1671,3 +1671,21 @@ AV_TOUCH_CHECK_DIST_Z = 5.0
 AV_TOUCH_CHECK_TIMELIMIT_CL = 0.002
 AV_TOUCH_COUNT_LIMIT = 5
 AV_TOUCH_COUNT_TIME = 300
+
+
+# The expansion manifest is shared by map, server, geometry, and admin tools.
+from toontown.expansion import ExpansionGlobals as ExpansionGlobals
+for _hood, _spec in ExpansionGlobals.NEIGHBORHOODS.items():
+    hoodNameMap[_hood] = ('to', 'in', _spec['name'])
+    phaseMap[_hood] = 8
+    streetPhaseMap[_hood] = 8
+    safeZoneCountMap[_hood] = 1
+    townCountMap[_hood] = 1
+    hoodCountMap[_hood] = 1
+    HoodHierarchy[_hood] = tuple(z for z, s in ExpansionGlobals.STREETS.items() if s[1] == _hood)
+for _street, _spec in ExpansionGlobals.STREETS.items():
+    StreetNames[_street] = ('to', 'on', _spec[0])
+Hoods += tuple(ExpansionGlobals.NEIGHBORHOODS)
+HoodsForTeleportAll += tuple(ExpansionGlobals.NEIGHBORHOODS)
+StreetBranchZones = list(StreetNames)
+del _hood, _street, _spec

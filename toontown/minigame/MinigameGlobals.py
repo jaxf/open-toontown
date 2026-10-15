@@ -26,7 +26,8 @@ def getDifficulty(trolleyZone):
 
 
 def getSafezoneId(trolleyZone):
-    return ZoneUtil.getCanonicalHoodId(trolleyZone)
+    from toontown.expansion import ExpansionGlobals
+    return ExpansionGlobals.minigame_theme(ZoneUtil.getCanonicalHoodId(trolleyZone))
 
 
 def getScoreMult(trolleyZone):

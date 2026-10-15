@@ -12,6 +12,7 @@ class InventoryBase(DirectObject.DirectObject):
     def __init__(self, toon, invStr = None):
         self._createStack = str(StackTrace().compact())
         self.toon = toon
+        self.extendedCapacity = False
         if invStr == None:
             self.inventory = []
             for track in range(0, len(Tracks)):
@@ -48,22 +49,28 @@ class InventoryBase(DirectObject.DirectObject):
     def makeNetString(self):
         dataList = self.inventory
         datagram = PyDatagram()
-        for track in range(0, len(Tracks)):
-            for level in range(0, len(Levels[track])):
-                datagram.addUint8(dataList[track][level])
+        extended = self.extendedCapacity or any(value > 255 for row in dataList for value in row)
+        if extended:datagram.appendData(b'GAG2')
+        write = datagram.addUint16 if extended else datagram.addUint8
+        for track in range(len(Tracks)):
+            for level in range(len(Levels[track])):
+                write(max(0,min(999,int(dataList[track][level]))))
 
         dgi = PyDatagramIterator(datagram)
         return dgi.getRemainingBytes()
 
     def makeFromNetString(self, netString):
         dataList = []
-        dg = PyDatagram(netString)
+        extended = netString[:4] == b'GAG2'
+        self.extendedCapacity = extended
+        dg = PyDatagram(netString[4:] if extended else netString)
         dgi = PyDatagramIterator(dg)
+        read = dgi.getUint16 if extended else dgi.getUint8
         for track in range(0, len(Tracks)):
             subList = []
             for level in range(0, len(Levels[track])):
-                if dgi.getRemainingSize() > 0:
-                    value = dgi.getUint8()
+                if dgi.getRemainingSize() >= (2 if extended else 1):
+                    value = min(999,read())
                 else:
                     value = 0
                 subList.append(value)
@@ -74,13 +81,15 @@ class InventoryBase(DirectObject.DirectObject):
 
     def makeFromNetStringForceSize(self, netString, numTracks, numLevels):
         dataList = []
-        dg = PyDatagram(netString)
+        extended = netString[:4] == b'GAG2'
+        dg = PyDatagram(netString[4:] if extended else netString)
         dgi = PyDatagramIterator(dg)
+        read = dgi.getUint16 if extended else dgi.getUint8
         for track in range(0, numTracks):
             subList = []
             for level in range(0, numLevels):
-                if dgi.getRemainingSize() > 0:
-                    value = dgi.getUint8()
+                if dgi.getRemainingSize() >= (2 if extended else 1):
+                    value = min(999,read())
                 else:
                     value = 0
                 subList.append(value)

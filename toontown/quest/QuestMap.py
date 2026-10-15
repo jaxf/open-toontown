@@ -187,6 +187,9 @@ class QuestMap(DirectFrame):
         if self.av:
             try:
                 hoodId = ZoneUtil.getCanonicalHoodId(self.av.getLocation()[1])
+                if hoodId in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS:
+                    self.stop()
+                    return
                 zoneId = ZoneUtil.getCanonicalBranchZone(self.av.getLocation()[1])
                 mapsGeom = loader.loadModel('phase_4/models/questmap/%s_maps' % ToontownGlobals.dnaMap[hoodId])
                 mapImage = mapsGeom.find('**/%s_%s_english' % (ToontownGlobals.dnaMap[hoodId], zoneId))

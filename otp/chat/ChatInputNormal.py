@@ -49,6 +49,9 @@ class ChatInputNormal(DirectObject.DirectObject):
         else:
             self.chatFrame.setPos(self.normalPos)
             self.whisperLabel.hide()
+        avatar=base.localAvatar
+        self.resumeAvatarControls=bool(avatar.avatarControlsEnabled)
+        if self.resumeAvatarControls:avatar.disableAvatarControls()
         self.chatEntry['focus'] = 1
         self.chatFrame.show()
         if self.wantHistory:
@@ -58,6 +61,12 @@ class ChatInputNormal(DirectObject.DirectObject):
     def deactivate(self):
         self.chatEntry.set('')
         self.chatEntry['focus'] = 0
+        if getattr(self,'resumeAvatarControls',False):
+            self.resumeAvatarControls=False
+            place=base.cr.playGame.getPlace()
+            state=place.fsm.getCurrentState().getName() if place and hasattr(place,'fsm') else ''
+            if state in ('walk','swimming') and not base.localAvatar.getTransitioning():
+                base.localAvatar.enableAvatarControls()
         self.chatFrame.hide()
         self.whisperLabel.hide()
         base.win.closeIme()

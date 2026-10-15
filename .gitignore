@@ -12,6 +12,7 @@ whitelist/
 .idea
 venv/
 *.json
+!assets/acorn/editor/AC.json
 !win32/.vscode/tasks.json
 !linux/.vscode/tasks.json
 !darwin/.vscode/tasks.json
@@ -20,3 +21,5 @@ venv/
 PPYTHON_PATH
 local/
 errorCode
+
+!assets/expansion/editor/WX.json

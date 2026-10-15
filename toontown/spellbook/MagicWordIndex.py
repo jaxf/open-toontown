@@ -283,6 +283,47 @@ class MaxToon(MagicWord):
 
         return f"Successfully maxed {toon.getName()}!"
     
+class MaxGags(MagicWord):
+    desc = 'Give yourself 999 of every gag.'
+    accessLevel = 'NO_ACCESS'
+    affectRange = [MagicWordConfig.AFFECT_SELF]
+    execLocation = MagicWordConfig.EXEC_LOC_SERVER
+
+    def handleWord(self, invoker, avId, toon, *args):
+        toon.inventory.extendedCapacity=True
+        toon.inventory.updateInventory([[999 for value in row] for row in toon.inventory.inventory])
+        toon.d_setInventory(toon.inventory.makeNetString())
+        return 'You now carry 999 of every gag. Training progress is unchanged.'
+
+
+class ResetGags(MagicWord):
+    desc = 'Empty your gag pouch without changing training progress.'
+    accessLevel = 'NO_ACCESS'
+    affectRange = [MagicWordConfig.AFFECT_SELF]
+    execLocation = MagicWordConfig.EXEC_LOC_SERVER
+
+    def handleWord(self, invoker, avId, toon, *args):
+        toon.inventory.extendedCapacity=False
+        toon.inventory.zeroInv(killUber=1)
+        toon.d_setInventory(toon.inventory.makeNetString())
+        return 'All gag quantities are zero. Training progress is unchanged.'
+
+
+class Name(MagicWord):
+    desc = 'Change your own Toon name: ~name Professor Purple Horse'
+    accessLevel = 'NO_ACCESS'
+    affectRange = [MagicWordConfig.AFFECT_SELF]
+    execLocation = MagicWordConfig.EXEC_LOC_SERVER
+    arguments = [('name', str, True)]
+
+    def handleWord(self, invoker, avId, toon, *args):
+        name = ' '.join(args[0].split())
+        if not 2 <= len(name) <= 32 or not all(c.isalpha() or c in " '-." for c in name):
+            return 'Use 2–32 letters, spaces, apostrophes, periods or hyphens.'
+        toon.b_setName(name)
+        return 'Your Toon is now named '+name+'.'
+
+
 class Inventory(MagicWord):
     # by default restock the inventory
     aliases = ['gags', 'inv']

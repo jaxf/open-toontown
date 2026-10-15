@@ -200,6 +200,7 @@ class DistributedBattleBase(DistributedNode, BattleBase):
 
     def delete(self):
         self.notify.debug('delete(%s)' % self.doId)
+        self.clearFastTurnButton()
         self.__cleanupIntervals()
         self._removeMembersKeep()
         self.movie.cleanup()
@@ -1257,6 +1258,13 @@ class DistributedBattleBase(DistributedNode, BattleBase):
 
     def enterPlayMovie(self, ts):
         self.notify.debug('enterPlayMovie()')
+        self.clearFastTurnButton()
+        if self.localToonActive():
+            from direct.gui.DirectGui import DirectButton
+            self.fastTurnButton=DirectButton(parent=base.a2dBottomRight,
+                text='Fast forward turn >>',text_scale=.04,pos=(-.32,0,.16),
+                frameSize=(-.27,.27,-.045,.045),frameColor=(1,.85,.4,1),
+                command=self.fastForwardTurn)
         self.delayDeleteMembers()
         if self.hasLocalToon():
             NametagGlobals.setMasterArrowsOn(0)
@@ -1267,8 +1275,21 @@ class DistributedBattleBase(DistributedNode, BattleBase):
         else:
             self.movie.play(ts, self.__handleMovieDone)
 
+    def fastForwardTurn(self):
+        if self.localToonActive() and self.movie.track is not None:
+            self.movie.track.setPlayRate(6.0)
+            self.fastTurnButton['text']='Fast forwarding...'
+            self.fastTurnButton['state']='disabled'
+
+    def clearFastTurnButton(self):
+        button=getattr(self,'fastTurnButton',None)
+        if button is not None:
+            button.destroy()
+            self.fastTurnButton=None
+
     def __handleMovieDone(self):
         self.notify.debug('__handleMovieDone()')
+        self.clearFastTurnButton()
         if self.hasLocalToon():
             self.d_movieDone(base.localAvatar.doId)
 
@@ -1276,6 +1297,7 @@ class DistributedBattleBase(DistributedNode, BattleBase):
 
     def exitPlayMovie(self):
         self.notify.debug('exitPlayMovie()')
+        self.clearFastTurnButton()
         self.movie.reset(finish=1)
         self._removeMembersKeep()
         self.townBattleAttacks = ([-1,

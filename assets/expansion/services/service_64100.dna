@@ -1,0 +1,9 @@
+group "services-64100" [ visgroup "64100:services" [ vis [ "64100:services" ]
+landmark_building "sz20:toon_landmark_service_hq_DNARoot" [
+ code [ "service_hq_TT" ]
+ building_type [ "hq" ]
+ title [ "Toon HQ" ]
+ pos [ -180.50152141441737 -66.36431444291573 0 ]
+ nhpr [ -44.714513151810486 0 0 ]
+]
+] ]

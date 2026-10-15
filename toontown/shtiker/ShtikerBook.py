@@ -383,6 +383,7 @@ class ShtikerBook(DirectFrame, StateData.StateData):
                 messenger.send(self.doneEvent)
 
     def __pageChange(self, offset):
+        if getattr(base,'capturingControl',False):return
         messenger.send('wakeup')
         base.playSfx(self.pageSound)
         self.pages[self.currPageIndex].exit()

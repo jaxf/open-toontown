@@ -73,6 +73,9 @@ class DistributedGagshopInterior(DistributedObject.DistributedObject):
         self.interior = loader.loadModel('phase_4/models/modules/gagShop_interior')
         self.interior.reparentTo(render)
         hoodId = ZoneUtil.getCanonicalHoodId(self.zoneId)
+        from toontown.expansion import ExpansionGlobals
+        if hoodId in ExpansionGlobals.NEIGHBORHOODS:
+            hoodId = ExpansionGlobals.minigame_theme(hoodId)
         self.colors = ToonInteriorColors.colors[hoodId]
         self.replaceRandomInModel(self.interior)
         door = self.chooseDoor()

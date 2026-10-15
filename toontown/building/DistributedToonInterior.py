@@ -85,6 +85,8 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
         interior = self.randomDNAItem('TI_room', self.dnaStore.findNode)
         self.interior = interior.copyTo(render)
         hoodId = ZoneUtil.getCanonicalHoodId(self.zoneId)
+        from toontown.expansion import ExpansionGlobals as E
+        if hoodId in E.NEIGHBORHOODS:hoodId=E.minigame_theme(hoodId)
         self.colors = ToonInteriorColors.colors[hoodId]
         self.replaceRandomInModel(self.interior)
         doorModelName = 'door_double_round_ul'

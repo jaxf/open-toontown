@@ -334,6 +334,16 @@ class ToontownAIRepository(ToontownInternalRepository):
         )
         self.generateHood(GZHoodDataAI, ToontownGlobals.GolfZone)
 
+        # Expansion exteriors use authored DNA; services use native AI classes.
+        from toontown.expansion import ExpansionGlobals
+        from toontown.expansion.ExpansionHoodDataAI import ExpansionHoodDataAI
+        for hoodId in ExpansionGlobals.NEIGHBORHOODS:
+            zones = (hoodId,) + ToontownGlobals.HoodHierarchy[hoodId]
+            self.zoneTable[hoodId] = tuple((zone, 0, 0) for zone in zones)
+            hood = ExpansionHoodDataAI(self, hoodId)
+            hood.startup()
+            self.hoods.append(hood)
+
         # Welcome Valley zones
         self.welcomeValleyManager.createWelcomeValleyZones()
 

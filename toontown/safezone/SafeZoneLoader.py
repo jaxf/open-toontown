@@ -39,6 +39,14 @@ class SafeZoneLoader(StateData.StateData):
         self.music = base.loader.loadMusic(self.musicFile)
         self.activityMusic = base.loader.loadMusic(self.activityMusicFile)
         self.createSafeZone(self.dnaFile)
+        # Add a new physical tunnel pavilion without changing the external
+        # resource repository or replacing any existing street exits.
+        from toontown.expansion import ExpansionGlobals
+        if self.hood.id in ExpansionGlobals.SOURCE_GATES:
+            from toontown.expansion.ExpansionScene import add_tunnels
+            gateway = self.geom.attachNewNode('expansion-gateway')
+            add_tunnels(gateway, self.hood.id)
+            self.nodeList.append(gateway)
         self.parentFSMState.addChild(self.fsm)
 
     def unload(self):

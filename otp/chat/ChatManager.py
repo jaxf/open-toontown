@@ -214,7 +214,7 @@ class ChatManager(DirectObject.DirectObject):
         self.checkObscurred()
         if self.localAvatar.canChat() or self.cr.wantMagicWords:
             if self.wantBackgroundFocus:
-                self.chatInputNormal.chatEntry['backgroundFocus'] = 1
+                self.chatInputNormal.chatEntry['backgroundFocus'] = 0
             self.acceptOnce('enterNormalChat', self.fsm.request, ['normalChat'])
 
     def checkObscurred(self):
@@ -315,11 +315,11 @@ class ChatManager(DirectObject.DirectObject):
         if avatarUnderstandable or playerUnderstandable:
             if playerId and not chatToToon:
                 if self.wantBackgroundFocus:
-                    self.chatInputNormal.chatEntry['backgroundFocus'] = 1
+                    self.chatInputNormal.chatEntry['backgroundFocus'] = 0
                 self.acceptOnce('enterNormalChat', self.fsm.request, ['whisperChatPlayer', [avatarName, playerId]])
             elif online and chatToToon:
                 if self.wantBackgroundFocus:
-                    self.chatInputNormal.chatEntry['backgroundFocus'] = 1
+                    self.chatInputNormal.chatEntry['backgroundFocus'] = 0
                 self.acceptOnce('enterNormalChat', self.fsm.request, ['whisperChat', [avatarName, avatarId]])
         if ConfigVariableBool('force-typed-whisper-enabled', 0).value:
             self.whisperButton['state'] = 'normal'

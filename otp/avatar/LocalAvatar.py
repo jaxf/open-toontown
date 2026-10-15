@@ -4,7 +4,7 @@ from direct.gui.DirectGui import *
 from direct.showbase.PythonUtil import *
 from direct.interval.IntervalGlobal import *
 from direct.showbase.InputStateGlobal import inputState
-from direct.controls import ControlManager
+from . import ToonControlManager as ControlManager
 from . import DistributedAvatar
 from direct.task import Task
 from otp.otpbase import OTPGlobals
@@ -14,7 +14,7 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import DistributedSmoothNode
 from otp.otpbase import OTPLocalizer
 from direct.controls.GhostWalker import GhostWalker
-from direct.controls.GravityWalker import GravityWalker
+from .ToonWalker import ToonWalker
 from direct.controls.ObserverWalker import ObserverWalker
 from direct.controls.SwimWalker import SwimWalker
 from direct.controls.TwoDWalker import TwoDWalker
@@ -74,7 +74,9 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.sleepCallback = None
         self.accept('wakeup', self.wakeUp)
         self.jumpLandAnimFixTask = None
-        self.fov = OTPGlobals.DefaultCameraFov
+        from toontown.expansion.ControlSettings import Shortcuts, field_of_view
+        self.controlShortcuts=Shortcuts()
+        self.fov = field_of_view()
         self.accept('avatarMoving', self.clearPageUpDown)
         self.nametag2dNormalContents = Nametag.CSpeech
         self.showNametag2d()
@@ -140,6 +142,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.stopUpdateSmartCamera()
         self.shutdownSmartCamera()
         self.deleteCollisions()
+        self.controlShortcuts.destroy()
         self.controlManager.delete()
         self.physControls = None
         del self.controlManager
@@ -164,7 +167,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         return False
 
     def setupControls(self, avatarRadius = 1.4, floorOffset = OTPGlobals.FloorOffset, reach = 4.0, wallBitmask = OTPGlobals.WallBitmask, floorBitmask = OTPGlobals.FloorBitmask, ghostBitmask = OTPGlobals.GhostBitmask):
-        walkControls = GravityWalker(legacyLifter=self.wantLegacyLifter())
+        walkControls = ToonWalker(legacyLifter=self.wantLegacyLifter())
         walkControls.setWallBitMask(wallBitmask)
         walkControls.setFloorBitMask(floorBitmask)
         walkControls.initializeCollisions(self.cTrav, self, avatarRadius, floorOffset, reach)
@@ -397,16 +400,18 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         return not self.sleepFlag and self.hp > 0
 
     def enableSmartCameraViews(self):
-        self.accept('tab', self.nextCameraPos, [1])
-        self.accept('shift-tab', self.nextCameraPos, [0])
-        self.accept('page_up', self.pageUp)
-        self.accept('page_down', self.pageDown)
+        from toontown.expansion.ControlSettings import field_of_view
+        self.setCameraFov(field_of_view())
+        self.accept('toon-camera-next', self.nextCameraPos, [1])
+        self.accept('toon-camera-previous', self.nextCameraPos, [0])
+        self.accept('toon-camera-up', self.pageUp)
+        self.accept('toon-camera-down', self.pageDown)
 
     def disableSmartCameraViews(self):
-        self.ignore('tab')
-        self.ignore('shift-tab')
-        self.ignore('page_up')
-        self.ignore('page_down')
+        self.ignore('toon-camera-next')
+        self.ignore('toon-camera-previous')
+        self.ignore('toon-camera-up')
+        self.ignore('toon-camera-down')
         self.ignore('page_down-up')
 
     def enableAvatarControls(self):
@@ -847,6 +852,9 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
             self.camLerpInterval.start()
 
     def setCameraFov(self, fov):
+        if fov == OTPGlobals.DefaultCameraFov:
+            from toontown.expansion.ControlSettings import field_of_view
+            fov=field_of_view()
         self.fov = fov
         if not (self.isPageDown or self.isPageUp):
             base.camLens.setFov(self.fov)

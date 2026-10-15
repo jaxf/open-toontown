@@ -275,6 +275,13 @@ class ToontownMagicWordManager(DistributedObject.DistributedObject):
             hoodId = place.loader.hood.id
         if avId == 0:
             avId = -1
+        extra = {}
+        if how == 'adminStreet':
+            # Enter at the street's real playground tunnel instead of reusing
+            # coordinates from the previous zone (which can be underground).
+            how = 'tunnelIn'
+            base.localAvatar.tunnelX = 0
+            extra['tunnelName'] = base.cr.hoodMgr.makeLinkTunnelName(hoodId, hoodId)
         try:
             place.fsm.forceTransition('teleportOut',
                                     [{"loader": loaderId,
@@ -283,6 +290,6 @@ class ToontownMagicWordManager(DistributedObject.DistributedObject):
                                         "hoodId": hoodId, 
                                         "zoneId": zoneId, 
                                         "shardId": None,
-                                        "avId": avId}])
+                                        "avId": avId, **extra}])
         except Exception: # Most likely cause is the place the avatar is in has no teleportOut state, for example, boss lobbies.
             place.fsm.request('DFAReject') # We have to do this, or the avatar will be stuck.

@@ -28,6 +28,8 @@ def getStreetName(branchId):
 
 
 def getLoaderName(zoneId):
+    if zoneId in ExpansionGlobals.ALL_ZONES or zoneId in ExpansionGlobals.INTERIOR_EXTERIORS:
+        return 'safeZoneLoader'
     if tutorialDict:
         if zoneId == ToontownCentral:
             loaderName = 'safeZoneLoader'
@@ -75,6 +77,8 @@ def isPetshop(zoneId):
 
 
 def getWhereName(zoneId, isToon):
+    if zoneId in ExpansionGlobals.ALL_ZONES:
+        return 'playground'
     if tutorialDict:
         if zoneId in tutorialDict['interiors']:
             where = 'toonInterior'

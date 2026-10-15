@@ -11528,6 +11528,8 @@ else:
      NPC_REGULAR)
 del lnames
 BlockerPositions = {TTLocalizer.Flippy: (Point3(207.4, 18.81, -0.475), 90.0)}
+from toontown.expansion.Services import register_npcs
+register_npcs(NPCToonDict)
 zone2NpcDict = {}
 
 def generateZone2NpcDict():
