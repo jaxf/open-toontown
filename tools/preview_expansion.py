@@ -1,4 +1,4 @@
-"""Render the actual procedural scenes using standard Panda3D (no OTP needed).
+"""Render the actual expansion scenes using standard Panda3D (no OTP needed).
 
 Run from the repository root: python tools/preview_expansion.py
 The full game still requires the project's Panda3D fork with OTP/Toontown.
@@ -14,6 +14,7 @@ from toontown.expansion.ExpansionScene import build_scene
 
 app=ShowBase()
 CullBinManager.getGlobalPtr().addBin('ground', CullBinManager.BTFixed, 14)
+CullBinManager.getGlobalPtr().addBin('shadow', CullBinManager.BTFixed, 15)
 app.disableMouse()
 app.camLens.setFov(52)
 app.camLens.setNearFar(1,1000)
@@ -23,7 +24,7 @@ for zone in E.NEIGHBORHOODS:
     scene=build_scene(zone)
     scene.reparentTo(app.render)
     app.setBackgroundColor(*E.NEIGHBORHOODS[zone]['sky'])
-    app.camera.setPos(125,-190,155)
+    app.camera.setPos(*((195,-275,215) if zone==E.ACORN else (125,-190,155)))
     app.camera.lookAt(0,5,0)
     for _ in range(3):
         app.graphicsEngine.renderFrame()

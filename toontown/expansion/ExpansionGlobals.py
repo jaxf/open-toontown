@@ -13,7 +13,7 @@ DYNAMIC_ZONE_BEGIN = 65000
 NEIGHBORHOODS = {
     ACORN: dict(name='Acorn Acreside', short='acorn', theme='woodland',
                 colors=((.35, .48, .30, 1), (.80, .43, .18, 1), (.96, .85, .59, 1)),
-                sky=(.91, .79, .57, 1), music='phase_8/audio/bgm/DG_nbrhood.ogg',
+                sky=(1, .97, .87, 1), music='phase_8/audio/bgm/DG_nbrhood.ogg',
                 landmark='The Great Oak', source=5000),
     BRINY: dict(name='Briny Boardwalk', short='briny', theme='seaside',
                 colors=((.27, .65, .68, 1), (.89, .41, .35, 1), (1, .88, .60, 1)),
@@ -90,6 +90,11 @@ def connections(zone):
 
 
 def gate_transforms(zone):
+    # Keep this travel manifest aligned with the editable Acorn DNA layouts.
+    if zone == ACORN:
+        return ((0, -110, 0, 0), (-118, 20, 0, -90))
+    if zone == 19100:
+        return ((0, -155, 0, 0), (0, 165, 0, 180))
     if zone in SOURCE_GATES:
         return (SOURCE_GATES[zone],)
     if zone in STREETS:
@@ -102,3 +107,10 @@ def destinations():
     """Allowlist shared by the admin UI and server; never accept arbitrary IDs."""
     return dict(list(SOURCE_NAMES.items()) + list(STOCK_STREETS.items()) +
                 [(z, zone_name(z)) for z in sorted(ALL_ZONES)])
+
+
+def spawn_point(zone):
+    # Root Route bends east here; the original center spawn is inside a shop.
+    if zone == 19100:
+        return (39, -18, .3, 0, 0, 0)
+    return (0, -18, .3, 0, 0, 0)

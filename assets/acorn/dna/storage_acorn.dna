@@ -1,0 +1,115 @@
+// Acorn Acreside art kit. Mount both the game root and resources in the editor.
+hood_model "assets/acorn/models/acorn_terrain.bam.pz" [
+ store_node [ "prop" "acorn_terrain" "" ]
+]
+hood_model "assets/acorn/models/root_route_terrain.bam.pz" [
+ store_node [ "prop" "root_route_terrain" "" ]
+]
+hood_model "assets/acorn/models/great_oak.bam.pz" [
+ store_node [ "prop" "great_oak" "" ]
+]
+hood_model "assets/acorn/models/woodland_bench.bam.pz" [
+ store_node [ "prop" "woodland_bench" "" ]
+]
+hood_model "assets/acorn/models/shop_barrier.bam.pz" [
+ store_node [ "prop" "shop_barrier" "" ]
+]
+hood_model "assets/acorn/models/root_sign.bam.pz" [
+ store_node [ "prop" "root_sign" "" ]
+]
+hood_model "assets/acorn/models/bramble_sign.bam.pz" [
+ store_node [ "prop" "bramble_sign" "" ]
+]
+hood_model "assets/acorn/models/daisy_sign.bam.pz" [
+ store_node [ "prop" "daisy_sign" "" ]
+]
+hood_model "assets/acorn/models/acorn_sign.bam.pz" [
+ store_node [ "prop" "acorn_sign" "" ]
+]
+hood_model "assets/acorn/models/knot_sign.bam.pz" [
+ store_node [ "prop" "knot_sign" "" ]
+]
+hood_model "assets/acorn/models/leaf_sign.bam.pz" [
+ store_node [ "prop" "leaf_sign" "" ]
+]
+hood_model "assets/acorn/models/branch_sign.bam.pz" [
+ store_node [ "prop" "branch_sign" "" ]
+]
+hood_model "assets/acorn/models/acorny_sign.bam.pz" [
+ store_node [ "prop" "acorny_sign" "" ]
+]
+hood_model "assets/acorn/models/book_sign.bam.pz" [
+ store_node [ "prop" "book_sign" "" ]
+]
+hood_model "assets/acorn/models/seed_sign.bam.pz" [
+ store_node [ "prop" "seed_sign" "" ]
+]
+hood_model "assets/acorn/models/tea_sign.bam.pz" [
+ store_node [ "prop" "tea_sign" "" ]
+]
+hood_model "assets/acorn/models/root_shop_sign.bam.pz" [
+ store_node [ "prop" "root_shop_sign" "" ]
+]
+hood_model "phase_8/models/modules/DG_A1" [
+ store_node [ "prop" "DG_A1" "DG_A1" ]
+]
+hood_model "phase_8/models/modules/DG_A2" [
+ store_node [ "prop" "DG_A2" "DG_A2" ]
+]
+hood_model "phase_8/models/modules/DG_B1" [
+ store_node [ "prop" "DG_B1" "DG_B1" ]
+]
+hood_model "phase_8/models/modules/DG_C1" [
+ store_node [ "prop" "DG_C1" "DG_C1" ]
+]
+hood_model "phase_8/models/modules/DG_D1" [
+ store_node [ "prop" "DG_D1" "DG_D1" ]
+]
+hood_model "phase_4/models/modules/doors" [
+ store_node [ "prop" "round_door" "door_single_round_ur" ]
+]
+hood_model "phase_8/models/props/streetlight_DG" [
+ store_node [ "prop" "garden_lamp" "prop_DG_flower_lamp1" ]
+]
+hood_model "phase_8/models/props/trees_DG" [
+ store_node [ "prop" "garden_tree" "prop_tree_DG_ul" ]
+]
+hood_model "phase_3.5/models/props/trees" [
+ store_node [ "prop" "forest_tree" "prop_tree_large_no_box_ul" ]
+]
+hood_model "phase_3.5/models/props/trees" [
+ store_node [ "prop" "forest_tree_b" "prop_tree_fat_no_box_ur" ]
+]
+hood_model "phase_8/models/props/daisys_flowerbox_yellow" [
+ store_node [ "prop" "flowerbox" "" ]
+]
+hood_model "phase_8/models/props/daisys_flowerbox_pink" [
+ store_node [ "prop" "pink_flowers" "" ]
+]
+hood_model "phase_8/models/props/daisy_park_table" [
+ store_node [ "prop" "garden_table" "" ]
+]
+hood_model "phase_8/models/modules/safe_zone_tunnel_DG" [
+ store_node [ "prop" "tunnel" "prop_safe_zone_tunnel" ]
+]
+hood_model "phase_8/models/props/tt_m_ara_dga_fountain" [
+ store_node [ "prop" "fountain" "" ]
+]
+hood_model "assets/acorn/models/garden_fence.bam.pz" [
+ store_node [ "prop" "garden_fence" "" ]
+]
+hood_model "assets/acorn/models/shop_shell_DG_A1.bam.pz" [
+ store_node [ "prop" "shop_shell_DG_A1" "" ]
+]
+hood_model "assets/acorn/models/shop_shell_DG_A2.bam.pz" [
+ store_node [ "prop" "shop_shell_DG_A2" "" ]
+]
+hood_model "assets/acorn/models/shop_shell_DG_B1.bam.pz" [
+ store_node [ "prop" "shop_shell_DG_B1" "" ]
+]
+hood_model "assets/acorn/models/shop_shell_DG_C1.bam.pz" [
+ store_node [ "prop" "shop_shell_DG_C1" "" ]
+]
+hood_model "assets/acorn/models/shop_shell_DG_D1.bam.pz" [
+ store_node [ "prop" "shop_shell_DG_D1" "" ]
+]

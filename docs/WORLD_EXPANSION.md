@@ -5,6 +5,15 @@ world. This is a first playable implementation for layout testing, not a finishe
 quest/content expansion. New areas are peaceful zones with procedural scenery,
 landmarks, collisions, music, and two-way native tunnel travel.
 
+**Art rebuild:** Acorn Acreside and Root Route now load editable native DNA,
+textured Toontown storefronts and props, and custom modeled terrain and a hollow
+Great Oak. Root Route has a curved road, sidewalks and pocket courtyards. The
+other four neighborhoods and remaining streets still use the prototype art.
+See [the Acorn art kit and editor instructions](../assets/acorn/README.md).
+
+![Acorn Acreside rebuilt](previews/acorn-walk.png)
+![Root Route rebuilt](previews/root-route-walk.png)
+
 ![Expansion route map](previews/expansion-map.png)
 
 ## Locations and routes
@@ -59,7 +68,8 @@ through the main game is needed.
 ## Running this branch
 
 1. Keep the resources checkout described in the main README. No separate resource
-   repository edits or generated binary assets are needed for these areas.
+   repository edits are needed. The Acorn models are included under `assets/acorn`;
+   keep that directory with the game checkout.
 2. Stop the game client, AI, UberDOG, and Astron. Update all of them to this branch.
 3. Restart in the normal order: Astron → UberDOG → AI → client.
 4. Open **Admin**, max the test Toon, and select **Acorn Acreside** (or any other
@@ -77,13 +87,17 @@ run geometry tests, but cannot run the complete legacy client/server.
 
 ## Validation
 
-- `python -m unittest discover -s tests -v` — 14 checks covering all reciprocal
+- `python -m unittest discover -s tests -v` — 17 checks covering all reciprocal
   routes, reachability, static/dynamic boundaries, the actual routing functions,
   permission denial, the actual admin RPC with fake transport, rate limiting,
-  scene construction, tunnel origins, and floor/wall collision probes.
+  scene construction, tunnel origins, authored walking routes, the hollow oak
+  passage, floor/wall collision probes, and portable model texture references.
 - Both `etc/otp.dc` and `etc/toon.dc` parse with Panda3D's DCFile parser.
 - All 17 original street arrival visgroups were checked against resource DNA.
 - `python tools/preview_expansion.py` renders the actual five neighborhood scenes.
+- `python tools/preview_acorn.py` renders Acorn and Root Route from overview and
+  walking-height cameras. Their storage and layouts also passed the Python DNA
+  parser bundled with OpenLevelEditor; native-loader/editor-GUI testing remains.
 - `python tools/preview_expansion_ui.py` renders actual UI widgets with mock avatar
   state; it is not a multiplayer session.
 - Source entrance floor/wall probes use the original neighborhood terrain models.

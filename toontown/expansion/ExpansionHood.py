@@ -23,9 +23,9 @@ class ExpansionPlayground(Playground):
         messenger.send(self.doneEvent)
 
     def enterTeleportIn(self, requestStatus):
-        # Both plazas and connecting promenades have a clear central spawn.
+        # Authored streets may curve away from the old central spawn.
         base.localAvatar.detachNode()
-        base.localAvatar.setPosHpr(base.render, 0, -18, .1, 0, 0, 0)
+        base.localAvatar.setPosHpr(base.render, *E.spawn_point(requestStatus['zoneId']))
         requestStatus['nextState'] = 'walk'
         Place.enterTeleportIn(self, requestStatus)
 
@@ -41,9 +41,12 @@ class ExpansionLoader(SafeZoneLoader):
         self.dnaFile = None
 
     def createSafeZone(self, dnaFile):
-        self.geom = build_scene(self.zoneId)
+        self.geom = build_scene(self.zoneId, self.hood.dnaStore)
         self.geom.reparentTo(base.hidden)
-        self.nodeList = [self.geom]
+        if self.zoneId in (E.ACORN, 19100):
+            self.makeDictionaries(self.hood.dnaStore)
+        else:
+            self.nodeList = [self.geom]
         self.holidayPropTransforms = {}
         self.animPropDict = {}
 

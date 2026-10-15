@@ -164,7 +164,10 @@ def add_tunnels(parent, zone):
         tunnel(parent,target,transform,colors)
 
 
-def build_scene(zone):
+def build_scene(zone, dna_store=None):
+    if zone in (E.ACORN, 19100):
+        from .AcornDNA import load_scene
+        return load_scene(zone, dna_store)
     hood = E.hood_id(zone)
     spec = E.NEIGHBORHOODS[hood]
     a,b,c = spec['colors']
