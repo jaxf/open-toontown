@@ -11,7 +11,7 @@ def main():
     for zone in ROADS:
         points=[];edges=set();junctions=[]
         def link(a,b):
-            if a!=b:edges.update(((a,b),(b,a)))
+            if a!=b:edges.add((a,b))
         for route_index,path in enumerate(road_paths(zone)):
             samples=list(along(path,12,80 if route_index==0 else 0))
             lanes=[[(x-ty*side*4,y+tx*side*4) for x,y,tx,ty in samples] for side in (-1,1)]
@@ -23,7 +23,13 @@ def main():
                 for local_index in (0,len(lanes[0])-1,len(lanes[0]),len(loop)-1):
                     index=start+local_index;x,y=points[index]
                     nearest=min(range(main_count),key=lambda j:hypot(points[j][0]-x,points[j][1]-y))
-                    link(index,nearest)
+                    # Terminal pocket courts turn around on their own lanes;
+                    # never draw an off-road shortcut to a distant main block.
+                    if hypot(points[nearest][0]-x,points[nearest][1]-y)>24:continue
+                    # Each lane has its own direction. Reverse edges on the
+                    # same lane cause native pathfinding backtrack warnings.
+                    if local_index in (0,len(lanes[0])):link(nearest,index)
+                    else:link(index,nearest)
         parts=[f'store_suit_point [ {i}, STREET_POINT, {x:.4f} {y:.4f} .12 ]\n' for i,(x,y) in enumerate(points)]
         buildings=json.loads((ROOT/f'assets/expansion/patrols/buildings_{zone}.json').read_text())
         index=len(points)
@@ -34,7 +40,7 @@ def main():
             for kind,pos in [('FRONT_DOOR_POINT',front),('SIDE_DOOR_POINT',side)]:
                 parts.append(f'store_suit_point [ {index}, {kind}, {pos[0]:.4f} {pos[1]:.4f} .12, {block} ]\n')
                 nearest=min(range(len(points)),key=lambda j:hypot(points[j][0]-pos[0],points[j][1]-pos[1]))
-                link(index,nearest);index+=1
+                link(index,nearest);link(nearest,index);index+=1
         parts.append(f'group "patrols" [ visgroup "{zone}" [ vis [ "{zone}" ]\n')
         for a,b in sorted(edges):parts.append(f'suit_edge [ {a} {b} ]\n')
         x,y=min(points,key=lambda p:abs(p[1]))

@@ -284,14 +284,21 @@ def shop(hood,index):
     door=A.app.loader.loadModel('phase_4/models/modules/doors').find('**/door_single_round_ur').copyTo(origin)
     door.setPos(0,-.035,0);door.setColorScale(*color)
     door.wrtReparentTo(root);door.setName('scenery-door')
-    # Keep native side walls and roof silhouettes; close only the rear opening.
-    body=m.find('**/*building_sides')
-    blo,bhi=(body.getTightBounds(m) if not body.isEmpty() else (lo,hi))
+    # The stock modules use *_sideL / *_sideR, not *building_sides. Using
+    # the entire roof bounds here produced tall rectangular walls above roofs.
+    sides=[part for part in m.findAllMatches('**/+GeomNode') if 'side' in part.getName().lower()]
+    bounds=[part.getTightBounds(m) for part in sides]
+    blo=Point3(*(min(b[0][j] for b in bounds) for j in range(3))) if bounds else lo
+    bhi=Point3(*(max(b[1][j] for b in bounds) for j in range(3))) if bounds else hi
     x0=(blo.x-doorpos.x)*scale;x1=(bhi.x-doorpos.x)*scale
     back=(bhi.y-doorpos.y)*scale
     height=(bhi.z-lo.z)*scale
     A.board(root,'rear-wall',((x0+x1)/2,back-.18,height/2),
             (x1-x0,.4,height),color,WOOD)
+    # Closed, textured side panels sit inside the native ornament and roof.
+    # They remain opaque from either direction at corners and wide FOV.
+    for x in (x0+.3,x1-.3):
+        A.board(root,'closed-side',(x,back/2,height/2),(.55,back,height),color,WOOD)
     # Prevent entering the scenery through either side, its rear, or the door.
     depth=max(3,back)
     A.collider(root,'shop-walls',1).addSolid(CollisionBox(Point3((x0+x1)/2,depth/2,height/2),
@@ -310,6 +317,9 @@ def shop(hood,index):
 
 
 def terrain(zone):
+    if zone in ROADS:
+        from tools.street_geometry import build
+        return build(zone,A)
     from toontown.expansion import Services
     hood=E.hood_id(zone);spec=PALETTES[hood];street=zone in ROADS
     root=NodePath('terrain-'+str(zone))

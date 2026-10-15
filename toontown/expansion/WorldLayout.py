@@ -5,27 +5,43 @@ one view, with straight approach sections at both native tunnel mouths.
 """
 from math import hypot, sin, cos
 
+# Each route is a sequence of city blocks, not a stretched sine wave. Rounded
+# corners preserve distinct turns while keeping tunnel approaches straight.
 ROADS = {
-    19100: [(0,-360),(0,-305),(35,-230),(64,-150),(35,-65),(-28,15),
-            (-62,100),(-24,190),(25,275),(0,355),(0,405)],
-    19200: [(0,-310),(0,-265),(-36,-210),(-68,-145),(-42,-80),(18,-25),
-            (50,45),(36,115),(-20,185),(-18,255),(0,310),(0,345)],
-    61100: [(0,-320),(0,-270),(45,-215),(70,-145),(48,-65),(-15,5),
-            (-62,80),(-55,150),(-12,220),(0,280),(0,330)],
-    61200: [(0,-300),(0,-250),(-45,-195),(-62,-115),(-24,-45),(38,25),
-            (60,100),(30,180),(0,240),(0,300)],
-    62100: [(0,-340),(0,-290),(-42,-220),(-60,-150),(-20,-75),(38,0),
-            (62,80),(32,155),(-25,225),(-15,290),(0,345),(0,380)],
-    63100: [(0,-330),(0,-280),(42,-210),(58,-130),(15,-50),(-42,30),
-            (-62,105),(-35,180),(0,255),(0,325)],
-    63200: [(0,-325),(0,-275),(-38,-205),(-58,-125),(-15,-45),(48,35),
-            (70,110),(42,185),(0,255),(0,325)],
-    64100: [(0,-355),(0,-300),(48,-230),(73,-155),(38,-80),(-28,-5),
-            (-65,75),(-43,160),(12,240),(12,305),(0,365),(0,405)],
+    19100: [(0,-558),(0,-430),(-180,-430),(-180,-220),(40,-220),
+            (40,-60),(210,-60),(210,160),(-90,160),(-90,390),(0,390),(0,627.75)],
+    19200: [(0,-480.5),(0,-370),(210,-370),(210,-150),(-130,-150),
+            (-130,80),(130,80),(130,330),(0,330),(0,534.75)],
+    61100: [(0,-496),(0,-390),(-220,-390),(-220,-170),(40,-170),
+            (40,40),(240,40),(240,270),(0,270),(0,511.5)],
+    61200: [(0,-465),(0,-330),(190,-330),(190,-100),(-190,-100),
+            (-190,170),(85,170),(85,340),(0,340),(0,465)],
+    62100: [(0,-527),(0,-410),(-190,-410),(-260,-190),(-40,-190),
+            (-40,40),(195,40),(250,250),(-90,250),(-90,440),(0,440),(0,589)],
+    63100: [(0,-511.5),(0,-400),(240,-400),(240,-170),(0,-170),
+            (0,60),(-240,60),(-240,310),(0,310),(0,503.75)],
+    63200: [(0,-503.75),(0,-380),(-220,-380),(-220,-130),(120,-130),
+            (220,60),(60,230),(-140,230),(-140,370),(0,370),(0,503.75)],
+    64100: [(0,-550.25),(0,-420),(210,-420),(280,-170),(30,-170),
+            (-170,20),(-240,250),(0,250),(0,627.75)],
 }
-# More distance between bends; each route keeps its own silhouette.
-ROADS = {zone:[(round(x*1.48,2), round(y*1.55,2)) for x,y in points]
-         for zone,points in ROADS.items()}
+SIDE_ROADS = {
+    19100: [[(-180,-320),(-355,-320),(-355,280),(-90,280)]],
+    19200: [[(210,-260),(390,-260),(390,210),(130,210)],
+            [(-130,-40),(-290,-40),(-290,150)]],
+    61100: [[(-220,-280),(-400,-280),(-400,155),(240,155)]],
+    61200: [[(190,-220),(390,-220),(390,265),(85,265)],
+            [(-190,40),(-340,40),(-340,240)]],
+    62100: [[(-40,-70),(-410,-70),(-410,345),(-90,345)]],
+    63100: [[(240,-290),(420,-290),(420,180),(0,180),(0,410)]],
+    63200: [[(-220,-250),(-410,-250),(-410,120),(-140,120),(-140,315)]],
+    64100: [[(30,-170),(30,-20),(220,120),(220,430),(0,430)]],
+}
+# Small terminal courts give selected side lanes a destination of their own.
+POCKETS = {19200:[(-290,150,32)],61200:[(-340,240,34)],
+           19100:[(-355,80,30)],61100:[(-400,40,34)],
+           62100:[(-410,190,30)],63100:[(420,40,38)],
+           63200:[(-410,-50,32)],64100:[(220,300,38)]}
 
 PLAZA_GATES = {
     61000: ((0,-140,0,0),(-155,25,0,-90)),
@@ -94,18 +110,30 @@ def along(points, spacing=32, margin=48):
         target+=spacing
 
 
+def rounded_blocks(points, radius=60, steps=12):
+    """Straight block fronts with quadratic corner fillets; no spline overshoot."""
+    result=[tuple(points[0])]
+    for a,b,c in zip(points,points[1:],points[2:]):
+        ab=hypot(b[0]-a[0],b[1]-a[1]);bc=hypot(c[0]-b[0],c[1]-b[1])
+        trim=min(radius,ab*.42,bc*.42)
+        entry=tuple(b[j]+(a[j]-b[j])*trim/ab for j in (0,1))
+        leave=tuple(b[j]+(c[j]-b[j])*trim/bc for j in (0,1))
+        result.append(entry)
+        for k in range(1,steps+1):
+            t=k/steps
+            result.append(tuple((1-t)**2*entry[j]+2*t*(1-t)*b[j]+t*t*leave[j] for j in (0,1)))
+    result.append(tuple(points[-1]))
+    return result
+
+
 def road_paths(zone):
-    """Main winding street plus a curving loop with two actual T junctions."""
-    control=ROADS[zone]
-    first,last=control[3],control[6]
-    # Alternate the side and bend rhythm, retaining clear tunnel approaches.
-    side=-1 if zone in (19100,61200,63100,64100) else 1
-    edge=side*157
-    dy=last[1]-first[1]
-    branch=[first,(first[0]+side*42,first[1]+14),
-            (edge-side*12,first[1]+dy*.23),(edge,first[1]+dy*.50),
-            (edge-side*23,first[1]+dy*.80),(last[0]+side*43,last[1]-12),last]
-    return [curve(control),curve(branch)]
+    return [rounded_blocks(ROADS[zone])]+[rounded_blocks(p) for p in SIDE_ROADS[zone]]
+
+
+def street_bounds(zone, margin=95):
+    points=[p for route in road_paths(zone) for p in route]
+    return (min(p[0] for p in points)-margin,min(p[1] for p in points)-margin,
+            max(p[0] for p in points)+margin,max(p[1] for p in points)+margin)
 
 
 def distance_to_path(x,y,path):
@@ -121,7 +149,7 @@ def terrain_height(zone,x,y):
     # Keep all authored footprints and routes level. Low, smoothly blended banks
     # at the perimeter create terrain without burying doors or floating props.
     if zone in ROADS:
-        edge=max(0,min(1,(abs(x)-183)/25))
+        return 0.0  # Street buildings, courtyards and their approaches stay level.
     else:
         rx,ry=(141,128) if zone==19000 else (170,151)
         edge=max(0,min(1,(max(abs(x)/rx,abs(y)/ry)-1)*8))

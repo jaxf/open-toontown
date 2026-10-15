@@ -7,4 +7,9 @@ LAYOUTS={zone:'assets/expansion/dna/'+E.zone_name(zone).lower().replace(' ','_')
          for zone in set(ROADS)|set(PLAZA_GATES)}
 
 def load_scene(zone,dna_store=None):
+    if zone in ROADS and dna_store is not None:
+        from direct.showbase.ShowBaseGlobal import base
+        # Expansion streets use the original building/elevator/field-office
+        # state machines, so they need the complete native town model catalog.
+        AcornDNA.storage_models(base.loader,'assets/expansion/dna/storage_cogs.dna',dna_store)
     return AcornDNA.load_scene(zone,dna_store,STORAGE,LAYOUTS)

@@ -1,7 +1,8 @@
 """Shared service placements and native service DNA loading for all 13 zones."""
-from math import hypot
+from math import hypot, atan2, degrees
+from functools import lru_cache
 from . import ExpansionGlobals as E
-from .WorldLayout import ROADS,curve
+from .WorldLayout import ROADS,curve,road_paths,along,distance_to_path
 STORAGE='assets/expansion/services/storage_services.dna'
 LAYOUTS={z:'assets/expansion/services/service_%s.dna'%z for z in E.ALL_ZONES}
 PLAYGROUND_SERVICES={
@@ -13,21 +14,28 @@ PLAYGROUND_SERVICES={
 }
 
 
+@lru_cache(maxsize=8)
 def street_court(zone):
-    points=curve(ROADS[zone])
-    i=min(range(len(points)),key=lambda i:abs(points[i][1]))
-    x,y=points[i]
-    # Place the bay on the inside of the world footprint, away from the banks.
-    side=-1 if x>0 else 1
-    return (x+side*69,y),(x,y)
+    routes=road_paths(zone)
+    candidates=[]
+    for x,y,tx,ty in along(routes[0],55,120):
+        for side in (-1,1):
+            center=(x-ty*side*70,y+tx*side*70)
+            clearance=min(distance_to_path(*center,p) for p in routes)
+            if clearance>=65:
+                candidates.append((abs(y),center,(x,y)))
+    _,center,road=min(candidates)
+    return center,road
 
 
 def placements(zone):
     if zone in PLAYGROUND_SERVICES:
         result=PLAYGROUND_SERVICES[zone]
     else:
-        (x,y),_=street_court(zone)
-        result=dict(hq=(x,y+15,0,0))
+        (x,y),(rx,ry)=street_court(zone)
+        # Native HQ fronts face +Y. Aim that face directly toward its approach.
+        h=degrees(atan2(x-rx,ry-y))
+        return dict(hq=(x,y,0,h))
     # Stock service facades face +Y; trolley platforms face -Y.
     return {kind:(x,y,z,h if kind=='trolley' else h+180)
             for kind,(x,y,z,h) in result.items()}

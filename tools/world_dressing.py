@@ -59,8 +59,8 @@ def perimeter(root,zone,A):
     hood=E.hood_id(zone)
     gates=E.gate_transforms(zone)
     if zone in ROADS:
-        lo,hi=ROADS[zone][0][1]-22,ROADS[zone][-1][1]+22
-        outline=[(-203,lo),(203,lo),(203,hi),(-203,hi),(-203,lo)]
+        # The street builder follows the actual joined block/courtyard outline.
+        outline=[]
     else:
         # Rounded, irregular outlines give the neighborhoods different silhouettes.
         rx,ry={19000:(151,139),61000:(181,159),62000:(179,160),63000:(184,164),64000:(184,160)}[zone]

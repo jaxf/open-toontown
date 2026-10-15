@@ -5,7 +5,7 @@ from toontown.expansion import AcornDNA, ExpansionGlobals as E
 from tools import build_acorn_models as A
 from tools.world_dressing import planter, enclosure
 from panda3d.core import NodePath
-from toontown.expansion.WorldLayout import terrain_height, road_paths, distance_to_path, ROAD_PROFILES
+from toontown.expansion.WorldLayout import terrain_height, road_paths, distance_to_path, ROAD_PROFILES, street_bounds
 ROOT=Path(__file__).resolve().parents[1]
 
 
@@ -28,7 +28,7 @@ def main():
             if f'"planter_{hood}"' not in text:text+=f'\nhood_model "assets/expansion/models/planter_{hood}.bam" [ store_node [ "prop" "planter_{hood}" "" ] ]\n'
         (ROOT/storage).write_text(text)
     for path in (ROOT/'assets/expansion/dna').glob('*.dna'):
-        if path.name=='storage_world.dna':continue
+        if path.name.startswith('storage_'):continue
         zone=next(z for z in E.ALL_ZONES if E.zone_name(z).lower().replace(' ','_')==path.stem)
         source=path.read_text();cursor=0;out=[]
         pattern=re.compile(r'(?:prop|node|landmark_building) "([^"\n]+)" \[')
@@ -43,7 +43,8 @@ def main():
                 if pos:
                     x,y=map(float,pos.groups())
                     if zone in ROAD_PROFILES and block.startswith('prop'):
-                        if abs(x)>185 or min(distance_to_path(x,y,r) for r in road_paths(zone))<ROAD_PROFILES[zone]['road']+3:
+                        x0,y0,x1,y1=street_bounds(zone)
+                        if not (x0<x<x1 and y0<y<y1) or min(distance_to_path(x,y,r) for r in road_paths(zone))<ROAD_PROFILES[zone]['road']+3:
                             cursor=end;continue
                     z=.12+terrain_height(zone,x,y)
                     block=block[:pos.start()]+f'pos [ {x:.4f} {y:.4f} {z:.4f} ]'+block[pos.end():]

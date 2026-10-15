@@ -61,49 +61,55 @@ def scenery(hood,index,pos,h=0):
 
 
 def street(zone):
+    from shapely.geometry import box, Point
+    from shapely.affinity import rotate, translate
+    from tools.street_geometry import corridor
+    from toontown.expansion.Services import placements as service_placements
+    from toontown.expansion.WorldLayout import POCKETS
     hood=E.hood_id(zone);end=E.STREETS[zone][3]
-    path=curve(ROADS[zone]);parts=[prop('winding-terrain','terrain_'+str(zone))]
-    for target,tr in zip(E.connections(zone),((0,path[0][1],0,0),(0,path[-1][1],0,180))):parts.append(gate(target,tr,hood))
-    profile=ROAD_PROFILES[zone]
-    routes=road_paths(zone)
-    placements=[]
+    parts=[prop('winding-terrain','terrain_'+str(zone))]
+    for target,tr in zip(E.connections(zone),E.gate_transforms(zone)):
+        parts.append(gate(target,tr,hood))
+    profile=ROAD_PROFILES[zone];routes=road_paths(zone)
+    pedestrian=corridor(zone,profile['sidewalk']+2)
+    occupied=[Point(x,y).buffer(43) for x,y,z,h in service_placements(zone).values()]
+    occupied += [Point(x,y).buffer(r+6) for x,y,r in POCKETS.get(zone,[])]
+    building_rows=[];block=0;ordinal=0
     for route_index,route in enumerate(routes):
-        placements.extend((route_index,)+point for point in along(route,profile['spacing']+5,65))
-    from toontown.expansion.Services import keep_scenery
-    building_rows=[];block=0
-    for i,(route_index,x,y,tx,ty) in enumerate(placements):
-        # Cross-neighborhood streets introduce the destination's storefronts.
-        theme=end if end in PALETTES and i>len(placements)*.65 else hood
-        nx,ny=-ty,tx
-        for side in (-1,1):
-            sx,sy=x+nx*side*profile['frontage'],y+ny*side*profile['frontage']
-            # Junction sightlines and the far side of each loop remain open.
-            if abs(sx)>175 or any(distance_to_path(sx,sy,other)<profile['sidewalk']+19
-                for j,other in enumerate(routes) if j!=route_index):continue
-            h=degrees(atan2(ty,tx))+(180 if side==-1 else 0)
-            idx=i*2+(side==1)
-            # Small pocket squares punctuate long continuous shop frontages.
-            if i%profile['court']==profile['court']//2:
-                parts.append(scenery(theme,idx,(x+nx*side*37,y+ny*side*37,0),h))
-                parts.append(prop('rest-bench-'+str(idx),'bench',(x+nx*side*29,y+ny*side*29,0),h,1.2))
-                if theme==63000:parts.append(prop('camera-'+str(idx),'movie_camera',(x+nx*side*45,y+ny*side*45,0),h))
-            else:
-                if keep_scenery(zone,sx,sy):
+        # Dense shop blocks, with corners and junction mouths left open. Larger
+        # native modules occupy their own measured frontage without overlap.
+        for i,(x,y,tx,ty) in enumerate(along(route,35+(zone%3)*2,70 if route_index==0 else 25)):
+            nx,ny=-ty,tx
+            for side in (-1,1):
+                sx,sy=x+nx*side*profile['frontage'],y+ny*side*profile['frontage']
+                h=degrees(atan2(ty,tx))+(180 if side==-1 else 0)
+                footprint=translate(rotate(box(-16,-5,16,27),h,origin=(0,0)),sx,sy)
+                if footprint.intersects(pedestrian) or any(footprint.intersects(p) for p in occupied):continue
+                theme=end if end in PALETTES and sy>ROADS[zone][-1][1]*.55 else hood
+                ordinal+=1
+                if block<99:
                     block+=1
-                    if block>99:raise ValueError("Too many buildings in street %s"%zone)
-                    if block==19:block=21  # native service block IDs
-                    # Native landmark_building grammar has no scale field.
-                    # Keep the model, practical door and Cog origin at 1:1.
-                    scale=1
-                    parts.append(shop(theme,idx,(sx,sy,0),h,scale,block=block))
-                    building_rows.append(dict(block=block,x=round(sx,4),y=round(sy,4),h=round(h,4),scale=scale))
+                    if block==19:block=21
+                    parts.append(shop(theme,ordinal,(sx,sy,.12),h,block=block))
+                    building_rows.append(dict(block=block,x=round(sx,4),y=round(sy,4),h=round(h,4),scale=1))
+                else:
+                    parts.append(shop(theme,ordinal,(sx,sy,.12),h))
+                occupied.append(footprint.buffer(1))
+            # A separate placement cadence avoids repeated/clipped prop piles.
             if i%3==0:
-                parts.append(prop('streetlight-'+str(idx),('western_lamp' if theme==64000 else ('lamp_alt_' if i%2 else 'lamp_')+PALETTES[theme]['code']),
-                    (x+nx*side*(profile['sidewalk']-3),y+ny*side*(profile['sidewalk']-3),0),h,1.15))
-            if i%3==0:
-                parts.append(scenery(theme,idx+200,(x+nx*side*71,y+ny*side*71,0),h))
-            if theme==64000 and i%4==0:
-                parts.append(prop('sandstone-'+str(idx),'mesa',(x+nx*side*103,y+ny*side*103,0),h,1.3))
+                side=-1 if (i//3+route_index)%2 else 1
+                px,py=x+nx*side*(profile['sidewalk']-3),y+ny*side*(profile['sidewalk']-3)
+                if min(distance_to_path(px,py,r) for r in routes)>profile['road']+4:
+                    alias='western_lamp' if hood==64000 else ('lamp_alt_' if i%2 else 'lamp_')+PALETTES[hood]['code']
+                    parts.append(prop('block-lamp-%s-%s'%(route_index,i),alias,(px,py,.12),degrees(atan2(ty,tx)),1.05))
+    # Theme-specific small squares give side lanes somewhere to lead.
+    for court,(x,y,radius) in enumerate(POCKETS.get(zone,[])):
+        for index,(dx,dy) in enumerate(((radius-5,0),(-radius+5,0),(0,radius-5),(0,-radius+5))):
+            px,py=x+dx,y+dy
+            if min(distance_to_path(px,py,r) for r in routes)<profile['road']+7:continue
+            parts.append(prop('court-planter-%s-%s'%(court,index),'planter_'+str(hood),(px,py,.12),index*90))
+            if index%2:parts.append(scenery(hood,court*10+index,(px+dx*.25,py+dy*.25,.12),index*83))
+            else:parts.append(prop('court-bench-%s-%s'%(court,index),'bench',(px+dy*.18,py-dx*.18,.12),index*90))
     import json
     directory=ROOT/'assets/expansion/patrols';directory.mkdir(parents=True,exist_ok=True)
     (directory/f'buildings_{zone}.json').write_text(json.dumps(building_rows,indent=2)+'\n')

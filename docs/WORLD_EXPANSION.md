@@ -1,5 +1,36 @@
 # October 15: street and gameplay update
 
+## Street block redesign and Cog takeover fix (October 15)
+
+All eight expansion streets now use individually authored block routes with
+rounded right-angle bends, offset intersections, side loops and pocket courts.
+Root Route has a western garden loop; Bramble Bend and Limelight Lane have
+terminal side courts; Taffy Terrace has a long quay crossing; Forty Winks Way
+mixes angled blocks and a garden loop; Encore Avenue wraps a studio block;
+Stagecoach Street has diagonal turns; Detour Drive follows an angled canyon loop.
+
+Street paving is exported from joined polygons instead of overlapping ribbons.
+One continuous ground foundation covers the wider footprint. Opaque themed
+boundaries follow the actual road/courtyard perimeter, including inner block
+edges, with tunnel openings and collision. HQ bays face their road approaches.
+Storefronts use non-overlapping footprints and the shared shop models now have
+closed side panels and rear-wall heights derived from actual native side walls,
+preventing the oversized panels previously created from roof bounds.
+
+The crash log reaches `DistributedBuilding.setupCogdo`: its field-office lookup
+returned an empty NodePath. Expansion streets now load the complete native town
+catalog (field office, Cog walls, doors and elevator) through the existing Python
+palette loader before their exterior DNA. Cog lanes are directed loops with
+separate return lanes, eliminating immediate reverse street edges flagged by
+the native path search. Terminal courts do not connect through scenery to a
+distant road.
+
+Author with `python -m tools.rebuild_expansion_streets` from the repository root.
+This requires Panda3D, the stock resource checkout, and `shapely>=2.1` on the build
+machine only. The game reads committed BAM/DNA files and needs no Shapely install.
+The asset rebuild completed for all eight streets. No game tests or screenshot
+renders were run; the custom Mac engine still needs gameplay confirmation.
+
 ## Controls styling and tunnel entry fix (October 15)
 
 Controls uses the existing fishing-book tab and yellow Options button models.
