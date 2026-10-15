@@ -42,7 +42,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 31.2654 -489.3567 0.1200 ] nhpr [ 263.9966 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 31.2654 -489.3567 0.1200 ] nhpr [ 263.9966 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -69,7 +69,7 @@ prop "sandstone-0" [
  nhpr [ 263.9966 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -40.3397 -481.8264 0.1200 ] nhpr [ 83.9966 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -40.3397 -481.8264 0.1200 ] nhpr [ 83.9966 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -96,7 +96,7 @@ prop "sandstone-1" [
  nhpr [ 83.9966 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 40.3724 -464.6911 0.1200 ] nhpr [ 237.8656 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 40.3724 -464.6911 0.1200 ] nhpr [ 237.8656 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -105,7 +105,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -20.5973 -426.3938 0.1200 ] nhpr [ 57.8656 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -20.5973 -426.3938 0.1200 ] nhpr [ 57.8656 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -138,7 +138,7 @@ prop "rest-bench-5" [
  nhpr [ 52.7003 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 89.9187 -395.8393 0.1200 ] nhpr [ 236.0440 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 89.9187 -395.8393 0.1200 ] nhpr [ 236.0440 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -159,7 +159,7 @@ prop "cactus-206" [
  nhpr [ 236.0440 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 30.1970 -355.6233 0.1200 ] nhpr [ 56.0440 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 30.1970 -355.6233 0.1200 ] nhpr [ 56.0440 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -180,7 +180,7 @@ prop "cactus-207" [
  nhpr [ 56.0440 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 112.5224 -353.4347 0.1200 ] nhpr [ 244.1556 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 112.5224 -353.4347 0.1200 ] nhpr [ 244.1556 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -195,7 +195,7 @@ prop "sandstone-8" [
  nhpr [ 244.1556 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 47.7238 -322.0478 0.1200 ] nhpr [ 64.1556 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 47.7238 -322.0478 0.1200 ] nhpr [ 64.1556 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -210,7 +210,7 @@ prop "sandstone-9" [
  nhpr [ 64.1556 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 131.3638 -310.2741 0.1200 ] nhpr [ 250.7004 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 131.3638 -310.2741 0.1200 ] nhpr [ 250.7004 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -219,7 +219,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ 63.4099 -286.4775 0.1200 ] nhpr [ 70.7004 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ 63.4099 -286.4775 0.1200 ] nhpr [ 70.7004 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -240,7 +240,7 @@ prop "rest-bench-14" [
  nhpr [ 285.3952 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ 118.7245 -158.1841 0.1200 ] nhpr [ 297.2302 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ 118.7245 -158.1841 0.1200 ] nhpr [ 297.2302 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -255,7 +255,7 @@ prop "sandstone-16" [
  nhpr [ 297.2302 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 95.3656 -118.3992 0.1200 ] nhpr [ 302.2424 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 95.3656 -118.3992 0.1200 ] nhpr [ 302.2424 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -276,7 +276,7 @@ prop "cactus-218" [
  nhpr [ 302.2424 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 34.4681 -156.8114 0.1200 ] nhpr [ 122.2424 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 34.4681 -156.8114 0.1200 ] nhpr [ 122.2424 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -297,7 +297,7 @@ prop "cactus-219" [
  nhpr [ 122.2424 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 67.7573 -79.2715 0.1200 ] nhpr [ 310.0934 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 67.7573 -79.2715 0.1200 ] nhpr [ 310.0934 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -306,7 +306,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 12.6776 -125.6421 0.1200 ] nhpr [ 130.0934 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 12.6776 -125.6421 0.1200 ] nhpr [ 130.0934 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -315,7 +315,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 37.6834 -45.8108 0.1200 ] nhpr [ 313.2740 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 37.6834 -45.8108 0.1200 ] nhpr [ 313.2740 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -324,7 +324,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -14.7387 -95.1659 0.1200 ] nhpr [ 133.2740 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -14.7387 -95.1659 0.1200 ] nhpr [ 133.2740 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -383,7 +383,7 @@ prop "sandstone-25" [
  nhpr [ 131.5196 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -73.9049 -23.7662 0.1200 ] nhpr [ 122.2944 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -73.9049 -23.7662 0.1200 ] nhpr [ 122.2944 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -392,7 +392,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -34.6629 50.2621 0.1200 ] nhpr [ 300.1011 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -34.6629 50.2621 0.1200 ] nhpr [ 300.1011 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -401,7 +401,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ -51.3536 84.4303 0.1200 ] nhpr [ 292.2362 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ -51.3536 84.4303 0.1200 ] nhpr [ 292.2362 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -446,7 +446,7 @@ prop "rest-bench-35" [
  nhpr [ 81.1534 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -49.8120 185.2160 0.1200 ] nhpr [ 251.3689 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -49.8120 185.2160 0.1200 ] nhpr [ 251.3689 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -467,7 +467,7 @@ prop "cactus-236" [
  nhpr [ 251.3689 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -118.0388 208.2182 0.1200 ] nhpr [ 71.3689 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -118.0388 208.2182 0.1200 ] nhpr [ 71.3689 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -488,7 +488,7 @@ prop "cactus-237" [
  nhpr [ 71.3689 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ -35.3246 222.9109 0.1200 ] nhpr [ 247.2251 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ -35.3246 222.9109 0.1200 ] nhpr [ 247.2251 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -497,7 +497,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -101.7110 250.7829 0.1200 ] nhpr [ 67.2251 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -101.7110 250.7829 0.1200 ] nhpr [ 67.2251 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -506,7 +506,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -18.4335 254.7672 0.1200 ] nhpr [ 236.2941 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -18.4335 254.7672 0.1200 ] nhpr [ 236.2941 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -521,7 +521,7 @@ prop "sandstone-40" [
  nhpr [ 236.2941 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -78.3301 294.7222 0.1200 ] nhpr [ 56.2941 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -78.3301 294.7222 0.1200 ] nhpr [ 56.2941 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -536,7 +536,7 @@ prop "sandstone-41" [
  nhpr [ 56.2941 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 5.5754 287.3331 0.1200 ] nhpr [ 232.2680 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 5.5754 287.3331 0.1200 ] nhpr [ 232.2680 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -557,7 +557,7 @@ prop "cactus-242" [
  nhpr [ 232.2680 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ -51.3681 331.3949 0.1200 ] nhpr [ 52.2680 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ -51.3681 331.3949 0.1200 ] nhpr [ 52.2680 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -602,7 +602,7 @@ prop "rest-bench-45" [
  nhpr [ 57.4601 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 56.0995 374.7237 0.1200 ] nhpr [ 257.4018 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 56.0995 374.7237 0.1200 ] nhpr [ 257.4018 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -611,7 +611,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -14.1670 390.4279 0.1200 ] nhpr [ 77.4018 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -14.1670 390.4279 0.1200 ] nhpr [ 77.4018 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -620,7 +620,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 59.6845 428.8407 0.1200 ] nhpr [ 275.6978 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 59.6845 428.8407 0.1200 ] nhpr [ 275.6978 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -647,7 +647,7 @@ prop "sandstone-48" [
  nhpr [ 275.6978 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -11.9598 421.6924 0.1200 ] nhpr [ 95.6978 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -11.9598 421.6924 0.1200 ] nhpr [ 95.6978 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -674,7 +674,7 @@ prop "sandstone-49" [
  nhpr [ 95.6978 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 54.0773 471.8136 0.1200 ] nhpr [ 276.2445 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 54.0773 471.8136 0.1200 ] nhpr [ 276.2445 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -683,7 +683,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -17.4955 463.9820 0.1200 ] nhpr [ 96.2445 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -17.4955 463.9820 0.1200 ] nhpr [ 96.2445 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -692,7 +692,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ 46.6125 517.9931 0.1200 ] nhpr [ 282.3117 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ 46.6125 517.9931 0.1200 ] nhpr [ 282.3117 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -701,7 +701,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -23.7316 502.6406 0.1200 ] nhpr [ 102.3117 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -23.7316 502.6406 0.1200 ] nhpr [ 102.3117 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -758,7 +758,7 @@ prop "cactus-255" [
  nhpr [ 99.9437 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 36.6661 -255.2245 0.1200 ] nhpr [ 164.7559 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 36.6661 -255.2245 0.1200 ] nhpr [ 164.7559 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -773,7 +773,7 @@ prop "sandstone-57" [
  nhpr [ 164.7559 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 13.5433 -174.7305 0.1200 ] nhpr [ 345.5137 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 13.5433 -174.7305 0.1200 ] nhpr [ 345.5137 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -782,7 +782,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -4.4674 -244.4414 0.1200 ] nhpr [ 165.5137 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ -4.4674 -244.4414 0.1200 ] nhpr [ 165.5137 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -791,7 +791,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -27.6185 -163.8163 0.1200 ] nhpr [ 344.8526 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -27.6185 -163.8163 0.1200 ] nhpr [ 344.8526 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -812,7 +812,7 @@ prop "cactus-260" [
  nhpr [ 344.8526 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -46.4323 -233.3147 0.1200 ] nhpr [ 164.8526 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ -46.4323 -233.3147 0.1200 ] nhpr [ 164.8526 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -833,7 +833,7 @@ prop "cactus-261" [
  nhpr [ 164.8526 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ -67.7129 -152.0925 0.1200 ] nhpr [ 342.9048 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ -67.7129 -152.0925 0.1200 ] nhpr [ 342.9048 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -842,7 +842,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -88.8780 -220.9114 0.1200 ] nhpr [ 162.9048 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -88.8780 -220.9114 0.1200 ] nhpr [ 162.9048 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -887,7 +887,7 @@ prop "sandstone-65" [
  nhpr [ 158.7426 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ -126.6420 -126.6820 0.1200 ] nhpr [ 308.7321 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ -126.6420 -126.6820 0.1200 ] nhpr [ 308.7321 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -908,7 +908,7 @@ prop "cactus-266" [
  nhpr [ 308.7321 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ -129.4662 -113.6281 0.1200 ] nhpr [ 262.6413 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ -129.4662 -113.6281 0.1200 ] nhpr [ 262.6413 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -917,7 +917,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ -121.6626 -70.3637 0.1200 ] nhpr [ 264.2202 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ -121.6626 -70.3637 0.1200 ] nhpr [ 264.2202 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -926,7 +926,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -115.7089 -33.1241 0.1200 ] nhpr [ 255.8911 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ -115.7089 -33.1241 0.1200 ] nhpr [ 255.8911 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -977,7 +977,7 @@ prop "rest-bench-75" [
  nhpr [ 75.5582 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -169.7450 55.7688 0.1200 ] nhpr [ 96.1264 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ -169.7450 55.7688 0.1200 ] nhpr [ 96.1264 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]

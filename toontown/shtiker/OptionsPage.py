@@ -67,8 +67,6 @@ class OptionsPage(ShtikerPage.ShtikerPage):
         from .ControlsTabPage import ControlsTabPage
         self.controlsTabPage=ControlsTabPage(self)
         self.controlsTabPage.hide()
-        self.controlsTab=DirectButton(parent=self,text='Controls',text_scale=.045,
-            pos=(.65,0,.77),command=self.setMode,extraArgs=[PageMode.Controls])
         titleHeight = 0.61
         self.title = DirectLabel(parent=self, relief=None, text=TTLocalizer.OptionsPageTitle, text_scale=0.12, pos=(0, 0, titleHeight))
         normalColor = (1, 1, 1, 1)
@@ -78,6 +76,15 @@ class OptionsPage(ShtikerPage.ShtikerPage):
         gui = loader.loadModel('phase_3.5/models/gui/fishingBook')
         self.optionsTab = DirectButton(parent=self, relief=None, text=TTLocalizer.OptionsPageTitle, text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft, text_pos=(0.01, 0.0, 0.0), image=gui.find('**/tabs/polySurface1'), image_pos=(0.55, 1, -0.91), image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035), image_color=normalColor, image1_color=clickColor, image2_color=rolloverColor, image3_color=diabledColor, text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode, extraArgs=[PageMode.Options], pos=(-0.36, 0, 0.77))
         self.codesTab = DirectButton(parent=self, relief=None, text=TTLocalizer.OptionsPageCodesTab, text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft, text_pos=(-0.035, 0.0, 0.0), image=gui.find('**/tabs/polySurface2'), image_pos=(0.12, 1, -0.91), image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035), image_color=normalColor, image1_color=clickColor, image2_color=rolloverColor, image3_color=diabledColor, text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode, extraArgs=[PageMode.Codes], pos=(0.11, 0, 0.77))
+        self.controlsTab = DirectButton(parent=self, relief=None, text='Controls',
+            text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft,
+            text_pos=(-0.035, 0.0, 0.0), image=gui.find('**/tabs/polySurface2'),
+            image_pos=(0.12, 1, -0.91), image_hpr=(0, 0, -90),
+            image_scale=(0.033, 0.033, 0.035), image_color=normalColor,
+            image1_color=clickColor, image2_color=rolloverColor, image3_color=diabledColor,
+            text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode,
+            extraArgs=[PageMode.Controls], pos=(0.58, 0, 0.77))
+        gui.removeNode()
         return
 
     def enter(self):

@@ -42,7 +42,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 30.3261 -407.7279 0.1200 ] nhpr [ 285.8344 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 30.3261 -407.7279 0.1200 ] nhpr [ 285.8344 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_0" ]
@@ -63,7 +63,7 @@ prop "tree-200" [
  nhpr [ 285.8344 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "FERN AND GAMES" ] pos [ -27.3971 -424.0993 0.1200 ] nhpr [ 105.8344 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "FERN AND GAMES" ] pos [ -27.3971 -424.0993 0.1200 ] nhpr [ 105.8344 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_1" ]
@@ -84,7 +84,7 @@ prop "tree-201" [
  nhpr [ 105.8344 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 8.9215 -364.4420 0.1200 ] nhpr [ 304.0407 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 8.9215 -364.4420 0.1200 ] nhpr [ 304.0407 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -93,7 +93,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -40.7969 -398.0289 0.1200 ] nhpr [ 124.0407 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -40.7969 -398.0289 0.1200 ] nhpr [ 124.0407 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -102,7 +102,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ -13.7715 -332.1788 0.1200 ] nhpr [ 304.8930 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ -13.7715 -332.1788 0.1200 ] nhpr [ 304.8930 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_4" ]
@@ -111,7 +111,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -62.9848 -366.5015 0.1200 ] nhpr [ 124.8930 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -62.9848 -366.5015 0.1200 ] nhpr [ 124.8930 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -168,7 +168,7 @@ prop "tree-207" [
  nhpr [ 120.8451 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ -52.8928 -267.7222 0.1200 ] nhpr [ 299.9643 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ -52.8928 -267.7222 0.1200 ] nhpr [ 299.9643 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -177,7 +177,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ -104.8730 -297.6898 0.1200 ] nhpr [ 119.9643 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ -104.8730 -297.6898 0.1200 ] nhpr [ 119.9643 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -186,7 +186,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -124.3495 -256.9949 0.1200 ] nhpr [ 108.1248 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -124.3495 -256.9949 0.1200 ] nhpr [ 108.1248 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -195,7 +195,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -116.6373 -159.6818 0.1200 ] nhpr [ 65.9619 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -116.6373 -159.6818 0.1200 ] nhpr [ 65.9619 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -204,7 +204,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ -45.5964 -153.5105 0.1200 ] nhpr [ 237.7327 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ -45.5964 -153.5105 0.1200 ] nhpr [ 237.7327 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_4" ]
@@ -213,7 +213,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -96.3304 -121.4783 0.1200 ] nhpr [ 57.7327 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -96.3304 -121.4783 0.1200 ] nhpr [ 57.7327 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -222,7 +222,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BRANCH OFFICE" ] pos [ -26.3897 -128.2672 0.1200 ] nhpr [ 224.0202 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BRANCH OFFICE" ] pos [ -26.3897 -128.2672 0.1200 ] nhpr [ 224.0202 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_0" ]
@@ -243,7 +243,7 @@ prop "tree-218" [
  nhpr [ 224.0202 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "FERN AND GAMES" ] pos [ -68.0844 -85.1215 0.1200 ] nhpr [ 44.0202 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "FERN AND GAMES" ] pos [ -68.0844 -85.1215 0.1200 ] nhpr [ 44.0202 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_1" ]
@@ -288,7 +288,7 @@ prop "rest-bench-21" [
  nhpr [ 38.8662 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BARKING MAD" ] pos [ 32.6807 -77.4535 0.1200 ] nhpr [ 223.9401 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BARKING MAD" ] pos [ 32.6807 -77.4535 0.1200 ] nhpr [ 223.9401 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_4" ]
@@ -297,7 +297,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -8.9537 -34.2496 0.1200 ] nhpr [ 43.9401 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -8.9537 -34.2496 0.1200 ] nhpr [ 43.9401 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -306,7 +306,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 60.9609 -41.3397 0.1200 ] nhpr [ 237.2916 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 60.9609 -41.3397 0.1200 ] nhpr [ 237.2916 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_0" ]
@@ -334,7 +334,7 @@ prop "streetlight-25" [
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 
-landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 81.7878 -4.0139 0.1200 ] nhpr [ 244.4955 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 81.7878 -4.0139 0.1200 ] nhpr [ 244.4955 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -343,7 +343,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ 27.6347 21.8210 0.1200 ] nhpr [ 64.4955 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ 27.6347 21.8210 0.1200 ] nhpr [ 64.4955 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -352,7 +352,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ 101.6192 127.5014 0.1200 ] nhpr [ 279.7923 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ 101.6192 127.5014 0.1200 ] nhpr [ 279.7923 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -361,7 +361,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ 42.4934 117.2968 0.1200 ] nhpr [ 99.7923 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ 42.4934 117.2968 0.1200 ] nhpr [ 99.7923 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -394,7 +394,7 @@ prop "rest-bench-35" [
  nhpr [ 110.0941 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 68.1561 211.3413 0.1200 ] nhpr [ 304.4651 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BRANCH OFFICE" ] pos [ 68.1561 211.3413 0.1200 ] nhpr [ 304.4651 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_0" ]
@@ -415,7 +415,7 @@ prop "tree-236" [
  nhpr [ 304.4651 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "FERN AND GAMES" ] pos [ 18.6878 177.3871 0.1200 ] nhpr [ 124.4651 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "FERN AND GAMES" ] pos [ 18.6878 177.3871 0.1200 ] nhpr [ 124.4651 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_1" ]
@@ -436,7 +436,7 @@ prop "tree-237" [
  nhpr [ 124.4651 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 40.1409 244.5674 0.1200 ] nhpr [ 313.0512 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "THE NUT HOUSE" ] pos [ 40.1409 244.5674 0.1200 ] nhpr [ 313.0512 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -445,7 +445,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -3.7037 203.6082 0.1200 ] nhpr [ 133.0512 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "LEAF IT TO ME" ] pos [ -3.7037 203.6082 0.1200 ] nhpr [ 133.0512 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -454,7 +454,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ 15.1934 272.0094 0.1200 ] nhpr [ 309.4084 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "BARKING MAD" ] pos [ 15.1934 272.0094 0.1200 ] nhpr [ 309.4084 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_4" ]
@@ -463,7 +463,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -31.1651 233.9188 0.1200 ] nhpr [ 129.4084 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "ROOT BEER" ] pos [ -31.1651 233.9188 0.1200 ] nhpr [ 129.4084 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -472,7 +472,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BRANCH OFFICE" ] pos [ -1.7425 297.9586 0.1200 ] nhpr [ 294.3876 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BRANCH OFFICE" ] pos [ -1.7425 297.9586 0.1200 ] nhpr [ 294.3876 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_0" ]
@@ -493,7 +493,7 @@ prop "tree-242" [
  nhpr [ 294.3876 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "FERN AND GAMES" ] pos [ -56.3889 273.1842 0.1200 ] nhpr [ 114.3876 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "FERN AND GAMES" ] pos [ -56.3889 273.1842 0.1200 ] nhpr [ 114.3876 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_1" ]
@@ -514,7 +514,7 @@ prop "tree-243" [
  nhpr [ 114.3876 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ -5.8751 325.0315 0.1200 ] nhpr [ 272.4370 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_19000_0" ] title [ "THE NUT HOUSE" ] pos [ -5.8751 325.0315 0.1200 ] nhpr [ 272.4370 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_2" ]
@@ -523,7 +523,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ -65.8208 322.4802 0.1200 ] nhpr [ 92.4370 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_19000_1" ] title [ "LEAF IT TO ME" ] pos [ -65.8208 322.4802 0.1200 ] nhpr [ 92.4370 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_3" ]
@@ -532,7 +532,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BARKING MAD" ] pos [ -2.6820 357.5785 0.1200 ] nhpr [ 260.4707 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_19000_2" ] title [ "BARKING MAD" ] pos [ -2.6820 357.5785 0.1200 ] nhpr [ 260.4707 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_4" ]
@@ -541,7 +541,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -61.8540 367.5116 0.1200 ] nhpr [ 80.4707 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_19000_3" ] title [ "ROOT BEER" ] pos [ -61.8540 367.5116 0.1200 ] nhpr [ 80.4707 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_19000_5" ]
@@ -598,7 +598,7 @@ prop "tree-249" [
  nhpr [ 79.5699 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
 ]
-landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "FRIGHT AND EARLY" ] pos [ 13.8096 427.6845 0.1200 ] nhpr [ 249.4030 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "FRIGHT AND EARLY" ] pos [ 13.8096 427.6845 0.1200 ] nhpr [ 249.4030 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_2" ]
@@ -607,7 +607,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "THE CREAK EASY" ] pos [ -42.3551 448.7920 0.1200 ] nhpr [ 69.4030 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "THE CREAK EASY" ] pos [ -42.3551 448.7920 0.1200 ] nhpr [ 69.4030 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_3" ]
@@ -616,7 +616,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "NIGHT OWL BOOKS" ] pos [ -31.9637 -235.1728 0.1200 ] nhpr [ 192.6972 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "NIGHT OWL BOOKS" ] pos [ -31.9637 -235.1728 0.1200 ] nhpr [ 192.6972 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_4" ]
@@ -625,7 +625,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "SNOOZE NEWS" ] pos [ -45.1516 -176.6401 0.1200 ] nhpr [ 12.6972 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "SNOOZE NEWS" ] pos [ -45.1516 -176.6401 0.1200 ] nhpr [ 12.6972 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_5" ]
@@ -634,7 +634,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "THE BOO-TIQUE" ] pos [ 5.7347 -227.1017 0.1200 ] nhpr [ 191.8440 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "THE BOO-TIQUE" ] pos [ 5.7347 -227.1017 0.1200 ] nhpr [ 191.8440 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_0" ]
@@ -655,7 +655,7 @@ prop "tree-254" [
  nhpr [ 191.8440 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "REST IN PIECES" ] pos [ -6.5801 -168.3791 0.1200 ] nhpr [ 11.8440 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "REST IN PIECES" ] pos [ -6.5801 -168.3791 0.1200 ] nhpr [ 11.8440 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_1" ]
@@ -676,7 +676,7 @@ prop "tree-255" [
  nhpr [ 11.8440 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "FRIGHT AND EARLY" ] pos [ 44.1243 -218.8899 0.1200 ] nhpr [ 192.3372 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "FRIGHT AND EARLY" ] pos [ 44.1243 -218.8899 0.1200 ] nhpr [ 192.3372 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_2" ]
@@ -685,7 +685,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "THE CREAK EASY" ] pos [ 31.3044 -160.2755 0.1200 ] nhpr [ 12.3372 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "THE CREAK EASY" ] pos [ 31.3044 -160.2755 0.1200 ] nhpr [ 12.3372 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_3" ]
@@ -694,7 +694,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "NIGHT OWL BOOKS" ] pos [ 82.9550 -209.8207 0.1200 ] nhpr [ 194.0136 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "NIGHT OWL BOOKS" ] pos [ 82.9550 -209.8207 0.1200 ] nhpr [ 194.0136 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_4" ]
@@ -703,7 +703,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "SNOOZE NEWS" ] pos [ 68.4258 -151.6064 0.1200 ] nhpr [ 14.0136 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "SNOOZE NEWS" ] pos [ 68.4258 -151.6064 0.1200 ] nhpr [ 14.0136 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_5" ]
@@ -712,7 +712,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "THE BOO-TIQUE" ] pos [ 122.3545 -198.7525 0.1200 ] nhpr [ 197.7102 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "THE BOO-TIQUE" ] pos [ 122.3545 -198.7525 0.1200 ] nhpr [ 197.7102 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_0" ]
@@ -733,7 +733,7 @@ prop "tree-260" [
  nhpr [ 197.7102 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "REST IN PIECES" ] pos [ 104.1024 -141.5960 0.1200 ] nhpr [ 17.7102 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "REST IN PIECES" ] pos [ 104.1024 -141.5960 0.1200 ] nhpr [ 17.7102 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_1" ]
@@ -778,7 +778,7 @@ prop "rest-bench-63" [
  nhpr [ 36.0634 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "SNOOZE NEWS" ] pos [ 135.2287 -122.0750 0.1200 ] nhpr [ 91.6397 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "SNOOZE NEWS" ] pos [ 135.2287 -122.0750 0.1200 ] nhpr [ 91.6397 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_5" ]
@@ -787,7 +787,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "REST IN PIECES" ] pos [ 127.8665 -86.5587 0.1200 ] nhpr [ 96.7885 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "REST IN PIECES" ] pos [ 127.8665 -86.5587 0.1200 ] nhpr [ 96.7885 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_1" ]
@@ -808,7 +808,7 @@ prop "tree-267" [
  nhpr [ 96.7885 0 0 ]
  scale [ 1.7000 1.7000 1.7000 ]
 ]
-landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "THE CREAK EASY" ] pos [ 122.0344 -52.3268 0.1200 ] nhpr [ 104.8541 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_62000_1" ] title [ "THE CREAK EASY" ] pos [ 122.0344 -52.3268 0.1200 ] nhpr [ 104.8541 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_3" ]
@@ -817,7 +817,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb51:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "NIGHT OWL BOOKS" ] pos [ 168.2856 1.9555 0.1200 ] nhpr [ 287.9890 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb51:toon_landmark_shop_DNARoot" [ code [ "building_62000_2" ] title [ "NIGHT OWL BOOKS" ] pos [ 168.2856 1.9555 0.1200 ] nhpr [ 287.9890 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_4" ]
@@ -826,7 +826,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb52:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "SNOOZE NEWS" ] pos [ 111.2186 -16.5746 0.1200 ] nhpr [ 107.9890 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb52:toon_landmark_shop_DNARoot" [ code [ "building_62000_3" ] title [ "SNOOZE NEWS" ] pos [ 111.2186 -16.5746 0.1200 ] nhpr [ 107.9890 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_5" ]
@@ -835,7 +835,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb53:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "THE BOO-TIQUE" ] pos [ 158.1917 37.1441 0.1200 ] nhpr [ 283.4518 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb53:toon_landmark_shop_DNARoot" [ code [ "building_62000_0" ] title [ "THE BOO-TIQUE" ] pos [ 158.1917 37.1441 0.1200 ] nhpr [ 283.4518 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_62000_0" ]

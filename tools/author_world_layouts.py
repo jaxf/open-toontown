@@ -42,7 +42,7 @@ def shop(hood,i,pos,h,scale=1,block=None):
         name=f'tb{block}:toon_landmark_shop_DNARoot'
         return (f'landmark_building "{name}" [ code [ "building_{hood}_{i%4}" ] '
             f'title [ "{NAMES[hood][i%6]}" ] pos [ {pos[0]:.4f} {pos[1]:.4f} .12 ] '
-            f'nhpr [ {h:.4f} 0 0 ] scale [ {scale} {scale} {scale} ]\n'
+            f'nhpr [ {h:.4f} 0 0 ]\n'
             'door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]\n'+
             prop('shop-name',f'shop_sign_{hood}_{i%6}',(0,-.8,14),scale=.95)+']\n')
     # Sign models are generated once per theme, outside the native modules.
@@ -92,7 +92,9 @@ def street(zone):
                     block+=1
                     if block>99:raise ValueError("Too many buildings in street %s"%zone)
                     if block==19:block=21  # native service block IDs
-                    scale=.94+(i%3)*.03
+                    # Native landmark_building grammar has no scale field.
+                    # Keep the model, practical door and Cog origin at 1:1.
+                    scale=1
                     parts.append(shop(theme,idx,(sx,sy,0),h,scale,block=block))
                     building_rows.append(dict(block=block,x=round(sx,4),y=round(sy,4),h=round(h,4),scale=scale))
             if i%3==0:

@@ -42,7 +42,7 @@ prop "destination-sign" [
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 ]
-landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "TAKE TWO" ] pos [ 37.3278 -433.3631 0.1200 ] nhpr [ 279.3389 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb1:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "TAKE TWO" ] pos [ 37.3278 -433.3631 0.1200 ] nhpr [ 279.3389 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_0" ]
@@ -63,7 +63,7 @@ prop "tree-200" [
  nhpr [ 279.3389 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "REEL DEALS" ] pos [ -31.7444 -444.7223 0.1200 ] nhpr [ 99.3389 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb2:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "REEL DEALS" ] pos [ -31.7444 -444.7223 0.1200 ] nhpr [ 99.3389 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_1" ]
@@ -84,7 +84,7 @@ prop "tree-201" [
  nhpr [ 99.3389 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 20.9123 -386.6782 0.1200 ] nhpr [ 296.9260 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb3:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 20.9123 -386.6782 0.1200 ] nhpr [ 296.9260 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_2" ]
@@ -93,7 +93,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ -41.4991 -418.3769 0.1200 ] nhpr [ 116.9260 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb4:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ -41.4991 -418.3769 0.1200 ] nhpr [ 116.9260 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -102,7 +102,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 0.0776 -350.8019 0.1200 ] nhpr [ 301.0082 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb5:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 0.0776 -350.8019 0.1200 ] nhpr [ 301.0082 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -111,7 +111,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ -59.9189 -386.8631 0.1200 ] nhpr [ 121.0082 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb6:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ -59.9189 -386.8631 0.1200 ] nhpr [ 121.0082 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -180,7 +180,7 @@ prop "tree-207" [
  nhpr [ 115.2282 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "PROPS TO YOU" ] pos [ -30.8931 -286.0210 0.1200 ] nhpr [ 291.1372 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb7:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "PROPS TO YOU" ] pos [ -30.8931 -286.0210 0.1200 ] nhpr [ 291.1372 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_2" ]
@@ -189,7 +189,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ -96.1835 -311.2632 0.1200 ] nhpr [ 111.1372 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb8:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ -96.1835 -311.2632 0.1200 ] nhpr [ 111.1372 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -198,7 +198,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ -43.5112 -251.3202 0.1200 ] nhpr [ 287.7496 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb9:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ -43.5112 -251.3202 0.1200 ] nhpr [ 287.7496 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -207,7 +207,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -110.1791 -272.6602 0.1200 ] nhpr [ 107.7496 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb10:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -110.1791 -272.6602 0.1200 ] nhpr [ 107.7496 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -216,7 +216,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "REEL DEALS" ] pos [ -120.5640 -227.3561 0.1200 ] nhpr [ 95.3803 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb11:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "REEL DEALS" ] pos [ -120.5640 -227.3561 0.1200 ] nhpr [ 95.3803 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_1" ]
@@ -237,7 +237,7 @@ prop "tree-213" [
  nhpr [ 95.3803 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ -102.0799 -133.0766 0.1200 ] nhpr [ 63.2981 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb12:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ -102.0799 -133.0766 0.1200 ] nhpr [ 63.2981 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -246,7 +246,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ -81.1404 -96.3641 0.1200 ] nhpr [ 57.9197 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb13:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ -81.1404 -96.3641 0.1200 ] nhpr [ 57.9197 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_1" ]
@@ -303,7 +303,7 @@ prop "camera-21" [
  nhpr [ 56.7984 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ 19.8733 -70.6218 0.1200 ] nhpr [ 233.8283 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb14:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ 19.8733 -70.6218 0.1200 ] nhpr [ 233.8283 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -312,7 +312,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -36.6344 -29.3074 0.1200 ] nhpr [ 53.8283 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb15:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -36.6344 -29.3074 0.1200 ] nhpr [ 53.8283 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -321,7 +321,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "TAKE TWO" ] pos [ 42.9555 -41.9672 0.1200 ] nhpr [ 230.2252 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb16:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "TAKE TWO" ] pos [ 42.9555 -41.9672 0.1200 ] nhpr [ 230.2252 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_0" ]
@@ -349,7 +349,7 @@ prop "streetlight-25" [
  scale [ 1.1500 1.1500 1.1500 ]
 ]
 
-landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 68.1475 -11.5208 0.1200 ] nhpr [ 231.0738 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb17:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 68.1475 -11.5208 0.1200 ] nhpr [ 231.0738 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_2" ]
@@ -358,7 +358,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ 13.6906 32.4615 0.1200 ] nhpr [ 51.0738 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb18:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ 13.6906 32.4615 0.1200 ] nhpr [ 51.0738 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -367,7 +367,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 93.1661 22.8470 0.1200 ] nhpr [ 236.8581 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb21:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 93.1661 22.8470 0.1200 ] nhpr [ 236.8581 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -376,7 +376,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ 34.5537 61.1169 0.1200 ] nhpr [ 56.8581 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb22:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ 34.5537 61.1169 0.1200 ] nhpr [ 56.8581 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -385,7 +385,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ 49.9320 90.7210 0.1200 ] nhpr [ 66.0483 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb23:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ 49.9320 90.7210 0.1200 ] nhpr [ 66.0483 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_1" ]
@@ -406,7 +406,7 @@ prop "tree-231" [
  nhpr [ 66.0483 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ 61.9906 122.1414 0.1200 ] nhpr [ 74.7591 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb24:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ 61.9906 122.1414 0.1200 ] nhpr [ 74.7591 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -415,7 +415,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 122.1562 239.9150 0.1200 ] nhpr [ 291.3794 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb25:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "PROPS TO YOU" ] pos [ 122.1562 239.9150 0.1200 ] nhpr [ 291.3794 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_2" ]
@@ -424,7 +424,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ 56.9732 214.3970 0.1200 ] nhpr [ 111.3794 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb26:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "STAR TREATMENT" ] pos [ 56.9732 214.3970 0.1200 ] nhpr [ 111.3794 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -433,7 +433,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 105.1385 277.8216 0.1200 ] nhpr [ 295.5697 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb27:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "THE CASTING CALL" ] pos [ 105.1385 277.8216 0.1200 ] nhpr [ 295.5697 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -442,7 +442,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ 41.9942 247.6091 0.1200 ] nhpr [ 115.5697 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb28:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "FRAME OF MIND" ] pos [ 41.9942 247.6091 0.1200 ] nhpr [ 115.5697 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -451,7 +451,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "TAKE TWO" ] pos [ 86.9733 315.0554 0.1200 ] nhpr [ 299.5574 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb29:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "TAKE TWO" ] pos [ 86.9733 315.0554 0.1200 ] nhpr [ 299.5574 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_0" ]
@@ -472,7 +472,7 @@ prop "tree-242" [
  nhpr [ 299.5574 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ 26.0830 280.5247 0.1200 ] nhpr [ 119.5574 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb30:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "REEL DEALS" ] pos [ 26.0830 280.5247 0.1200 ] nhpr [ 119.5574 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_1" ]
@@ -493,7 +493,7 @@ prop "tree-243" [
  nhpr [ 119.5574 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "PROPS TO YOU" ] pos [ 64.7536 350.3683 0.1200 ] nhpr [ 304.0404 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb31:toon_landmark_shop_DNARoot" [ code [ "building_63000_0" ] title [ "PROPS TO YOU" ] pos [ 64.7536 350.3683 0.1200 ] nhpr [ 304.0404 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_2" ]
@@ -502,7 +502,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ 6.7486 311.1839 0.1200 ] nhpr [ 124.0404 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb32:toon_landmark_shop_DNARoot" [ code [ "building_63000_1" ] title [ "STAR TREATMENT" ] pos [ 6.7486 311.1839 0.1200 ] nhpr [ 124.0404 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_3" ]
@@ -511,7 +511,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ 44.7001 381.1342 0.1200 ] nhpr [ 300.3288 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb33:toon_landmark_shop_DNARoot" [ code [ "building_63000_2" ] title [ "THE CASTING CALL" ] pos [ 44.7001 381.1342 0.1200 ] nhpr [ 300.3288 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_4" ]
@@ -520,7 +520,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -15.7199 345.7869 0.1200 ] nhpr [ 120.3288 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb34:toon_landmark_shop_DNARoot" [ code [ "building_63000_3" ] title [ "FRAME OF MIND" ] pos [ -15.7199 345.7869 0.1200 ] nhpr [ 120.3288 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_63000_5" ]
@@ -589,7 +589,7 @@ prop "tree-249" [
  nhpr [ 103.0531 0 0 ]
  scale [ 1.5000 1.5000 1.5000 ]
 ]
-landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 30.4346 437.1830 0.1200 ] nhpr [ 268.9223 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb35:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 30.4346 437.1830 0.1200 ] nhpr [ 268.9223 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -598,7 +598,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -39.5530 438.4996 0.1200 ] nhpr [ 88.9223 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb36:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "WELL I NEVER" ] pos [ -39.5530 438.4996 0.1200 ] nhpr [ 88.9223 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -607,7 +607,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -13.7799 -206.7613 0.1200 ] nhpr [ 197.2318 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb37:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "SPUR OF THE MOMENT" ] pos [ -13.7799 -206.7613 0.1200 ] nhpr [ 197.2318 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -616,7 +616,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 23.1641 -195.7007 0.1200 ] nhpr [ 196.5188 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb38:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "DRY HUMOR" ] pos [ 23.1641 -195.7007 0.1200 ] nhpr [ 196.5188 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -637,7 +637,7 @@ prop "cactus-254" [
  nhpr [ 196.5188 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 3.2610 -128.5899 0.1200 ] nhpr [ 16.5188 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb39:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 3.2610 -128.5899 0.1200 ] nhpr [ 16.5188 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -658,7 +658,7 @@ prop "cactus-255" [
  nhpr [ 16.5188 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 60.9236 -184.1542 0.1200 ] nhpr [ 197.3144 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb40:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "CACTUS PRACTICE" ] pos [ 60.9236 -184.1542 0.1200 ] nhpr [ 197.3144 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]
@@ -673,7 +673,7 @@ prop "sandstone-56" [
  nhpr [ 197.3144 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 40.0906 -117.3262 0.1200 ] nhpr [ 17.3144 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb41:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 40.0906 -117.3262 0.1200 ] nhpr [ 17.3144 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -688,7 +688,7 @@ prop "sandstone-57" [
  nhpr [ 17.3144 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 99.1280 -171.2103 0.1200 ] nhpr [ 199.5091 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb42:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "SPUR OF THE MOMENT" ] pos [ 99.1280 -171.2103 0.1200 ] nhpr [ 199.5091 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_4" ]
@@ -697,7 +697,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ 75.7510 -105.2291 0.1200 ] nhpr [ 19.5091 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb43:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "DUST BUSTERS" ] pos [ 75.7510 -105.2291 0.1200 ] nhpr [ 19.5091 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -706,7 +706,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 139.9495 -154.0227 0.1200 ] nhpr [ 208.2165 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb44:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 139.9495 -154.0227 0.1200 ] nhpr [ 208.2165 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -727,7 +727,7 @@ prop "cactus-260" [
  nhpr [ 208.2165 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ 106.8532 -92.3409 0.1200 ] nhpr [ 28.2165 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb45:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "HIGH NOON NOODLES" ] pos [ 106.8532 -92.3409 0.1200 ] nhpr [ 28.2165 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -760,7 +760,7 @@ prop "rest-bench-63" [
  nhpr [ 54.3911 0 0 ]
  scale [ 1.2000 1.2000 1.2000 ]
 ]
-landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ 129.3966 -66.5741 0.1200 ] nhpr [ 95.4414 0 0 ] scale [ 1.0 1.0 1.0 ]
+landmark_building "tb46:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "DUST BUSTERS" ] pos [ 129.3966 -66.5741 0.1200 ] nhpr [ 95.4414 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_5" ]
@@ -775,7 +775,7 @@ prop "sandstone-65" [
  nhpr [ 95.4414 0 0 ]
  scale [ 1.3000 1.3000 1.3000 ]
 ]
-landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 123.8170 -29.8259 0.1200 ] nhpr [ 98.4093 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb47:toon_landmark_shop_DNARoot" [ code [ "building_64000_3" ] title [ "HIGH NOON NOODLES" ] pos [ 123.8170 -29.8259 0.1200 ] nhpr [ 98.4093 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_1" ]
@@ -796,7 +796,7 @@ prop "cactus-267" [
  nhpr [ 98.4093 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
-landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 118.9795 7.0739 0.1200 ] nhpr [ 101.2786 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb48:toon_landmark_shop_DNARoot" [ code [ "building_64000_1" ] title [ "WELL I NEVER" ] pos [ 118.9795 7.0739 0.1200 ] nhpr [ 101.2786 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_3" ]
@@ -805,7 +805,7 @@ prop "shop-name" [
  scale [ 0.9500 0.9500 0.9500 ]
 ]
 ]
-landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 169.3626 95.6304 0.1200 ] nhpr [ 279.7933 0 0 ] scale [ 0.94 0.94 0.94 ]
+landmark_building "tb49:toon_landmark_shop_DNARoot" [ code [ "building_64000_0" ] title [ "DRY HUMOR" ] pos [ 169.3626 95.6304 0.1200 ] nhpr [ 279.7933 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_0" ]
@@ -822,7 +822,7 @@ prop "streetlight-72" [
 ]
 
 
-landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 172.3139 116.5828 0.1200 ] nhpr [ 251.0208 0 0 ] scale [ 0.97 0.97 0.97 ]
+landmark_building "tb50:toon_landmark_shop_DNARoot" [ code [ "building_64000_2" ] title [ "CACTUS PRACTICE" ] pos [ 172.3139 116.5828 0.1200 ] nhpr [ 251.0208 0 0 ]
 door [ code [ "door_double_round_ur" ] color [ .82 .88 .68 1 ] ]
 prop "shop-name" [
  code [ "shop_sign_64000_2" ]

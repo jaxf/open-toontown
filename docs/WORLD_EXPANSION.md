@@ -1,5 +1,18 @@
 # October 15: street and gameplay update
 
+## Controls styling and tunnel entry fix (October 15)
+
+Controls uses the existing fishing-book tab and yellow Options button models.
+The FOV slider has a larger handle and supports immediate click-and-drag across
+its track, with continuous camera updates and drag cleanup when leaving the page.
+
+The supplied tunnel log identifies a native DNA syntax error at `scale` in a
+`landmark_building`. That grammar accepts position and heading but no scale.
+Removed the unsupported field from all 404 street landmarks across eight streets
+and corrected the authoring generator. Buildings and their native doors now use
+the model's original scale. No tests or screenshot renders were run; gameplay on
+the custom Mac runtime still needs confirmation.
+
 ## Mac healing-pickup load fix (October 15)
 
 The reported crash reaches `Exterior ready`, then faults in the native model
