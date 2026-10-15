@@ -20,11 +20,16 @@ def load_scene(zone, dna_store=None, storage=STORAGE, layouts=LAYOUTS):
     from direct.showbase import ShowBaseGlobal
     loader = ShowBaseGlobal.base.loader
     if dna_store is not None:
+        # Flush before entering C++ so a native fault leaves its exact stage.
+        print('[Expansion DNA] Loading storage: '+storage, flush=True)
         loader.loadDNAFile(dna_store, storage)
+        print('[Expansion DNA] Storage loaded; loading scene: '+layouts[zone], flush=True)
         node = loader.loadDNAFile(dna_store, layouts[zone])
         if node is None:
             raise RuntimeError('Failed to load DNA: '+layouts[zone])
-        return NodePath(node)
+        scene = NodePath(node)
+        print('[Expansion DNA] Scene loaded: '+layouts[zone], flush=True)
+        return scene
     return preview_scene(zone, loader, storage, layouts)
 
 

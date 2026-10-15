@@ -38,7 +38,7 @@ def main():
     logs.mkdir(parents=True, exist_ok=True)
     print('Starting Open Toontown. Ctrl+C stops everything started here.\n'
           'Logs: ' + str(logs), flush=True)
-    env = dict(os.environ, PYTHONUNBUFFERED='1')
+    env = dict(os.environ, PYTHONUNBUFFERED='1', PYTHONFAULTHANDLER='1')
     # Make the existing shell launchers use this same Python installation.
     env['PATH'] = str(Path(sys.executable).parent) + os.pathsep + env.get('PATH', '')
     children = []
@@ -95,7 +95,19 @@ def main():
                     raise RuntimeError(name + ' stopped. See ' + str(path))
             time.sleep(0.25)
         if game.returncode:
-            print('\n'.join(game_log.read_text(errors='replace').splitlines()[-30:]))
+            lines = game_log.read_text(errors='replace').splitlines()
+            print('\nGame exited with code %s. Full log: %s' %
+                  (game.returncode, game_log), flush=True)
+            stages = [line for line in lines if '[Expansion DNA]' in line]
+            if stages:
+                print('\n'.join(stages), flush=True)
+            fatal = next((i for i, line in enumerate(lines)
+                          if 'Fatal Python error:' in line), None)
+            # Keep the faulting Python frame instead of cutting it off the tail.
+            if fatal is not None:
+                print('\n'.join(lines[fatal:fatal + 160]), flush=True)
+            else:
+                print('\n'.join(lines[-100:]), flush=True)
         return game.returncode
     except KeyboardInterrupt:
         print('\nStopping Open Toontown...', flush=True)

@@ -42,9 +42,12 @@ class ExpansionLoader(SafeZoneLoader):
 
     def createSafeZone(self, dnaFile):
         self.geom = build_scene(self.zoneId, self.hood.dnaStore)
+        print('[Expansion DNA] Attaching exterior %s' % self.zoneId, flush=True)
         self.geom.reparentTo(base.hidden)
         if self.zoneId in E.ALL_ZONES:
+            print('[Expansion DNA] Building visibility dictionaries', flush=True)
             self.makeDictionaries(self.hood.dnaStore)
+            print('[Expansion DNA] Exterior ready', flush=True)
         else:
             self.nodeList = [self.geom]
         self.holidayPropTransforms = {}
