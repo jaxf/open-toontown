@@ -46,3 +46,23 @@ if(TARGET p3gles2gsg)
 else()
   message(FATAL_ERROR "The device compilation gate requires the ES2 renderer target")
 endif()
+
+# Generate the actual game Python APIs with the host interrogate tool, then
+# compile its wrappers against the device Python ABI. No module stubs.
+if(INTERROGATE_PYTHON_INTERFACE)
+  target_sources(tt_otp PRIVATE "${TT_SRC}/navigation/navigation_composite1.cxx")
+  target_include_directories(tt_otp PUBLIC "${TT_SRC}/navigation")
+  target_link_libraries(tt_otp PUBLIC PKG::PYTHON)
+  file(GLOB TT_OTP_HEADERS CONFIGURE_DEPENDS
+    "${TT_SRC}/nametag/*.h" "${TT_SRC}/movement/*.h" "${TT_SRC}/navigation/*.h")
+  file(GLOB TT_TOONTOWN_HEADERS CONFIGURE_DEPENDS
+    "${TT_SRC}/dna/*.h" "${TT_SRC}/suit/*.h" "${TT_SRC}/pets/*.h")
+  # The generated parser header is private implementation, not a Python API.
+  list(FILTER TT_TOONTOWN_HEADERS EXCLUDE REGEX "dnaParser\\.h$")
+  target_interrogate(tt_otp ${TT_OTP_HEADERS})
+  target_interrogate(tt_toontown ${TT_TOONTOWN_HEADERS})
+  add_python_module(panda3d.otp tt_otp IMPORT panda3d.core IMPORT panda3d.direct)
+  add_python_module(panda3d.toontown tt_toontown IMPORT panda3d.otp)
+  add_custom_target(tt_python_compile DEPENDS
+    panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown)
+endif()

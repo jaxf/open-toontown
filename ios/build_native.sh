@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Reproducible first native device compilation; never presents it as an IPA.
 set -Eeuo pipefail
-[[ $# == 2 && $1 =~ ^(python|panda|controls)$ ]] || { echo 'Usage: bash ios/build_native.sh python|panda|controls /absolute/build-folder' >&2; exit 2; }
+[[ $# == 2 && $1 =~ ^(python|panda|controls|bindings)$ ]] || { echo 'Usage: bash ios/build_native.sh python|panda|controls|bindings /absolute/build-folder' >&2; exit 2; }
 [[ $(uname -s) == Darwin ]] || { echo 'A Mac with full Xcode is required (the cloud workflow supplies it).' >&2; exit 2; }
 TT_COMPONENT=$1
 TT_WORK=$2
@@ -65,6 +65,19 @@ elif [[ $TT_COMPONENT == python ]]; then
   grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-platform.txt"
   printf '%s\n' 'PYTHON DEVICE FRAMEWORK COMPILED. Third-party modules and game integration still required.'
 else
+  TT_BINDINGS=OFF
+  TT_BUILD_DIR="$TT_WORK/panda-device"
+  TT_EXTRA=()
+  if [[ $TT_COMPONENT == bindings ]]; then
+    # The build interpreter runs on macOS; only the framework is linked on iOS.
+    bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
+    TT_HOST_PY="$TT_WORK/python-host/python.exe"
+    [[ -x $TT_HOST_PY ]] || TT_HOST_PY="$TT_WORK/python-host/python"
+    TT_BINDINGS=ON
+    TT_BUILD_DIR="$TT_WORK/panda-bindings"
+    TT_EXTRA+=("-DTT_IOS_PYTHON_FRAMEWORK=$TT_WORK/python-install/Python.framework"
+               "-DTT_HOST_PYTHON=$TT_HOST_PY")
+  fi
   TT_SOURCE="$TT_WORK/panda"
   fetch_source https://github.com/open-toontown/panda3d.git "$TT_ENGINE" "$TT_SOURCE"
   python3 "$TT_ROOT/ios/prepare_engine.py" "$TT_SOURCE"
@@ -73,10 +86,10 @@ else
   TT_OPTIONS=()
   # No desktop dependencies may satisfy an iPhone build. Add target-built
   # dependencies and Python bindings in the next runtime integration stage.
-  for package in PYTHON OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET ODE SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
+  for package in OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET ODE SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
     TT_OPTIONS+=("-DHAVE_${package}=OFF")
   done
-  "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_WORK/panda-device" -G 'Unix Makefiles' \
+  "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_BUILD_DIR" -G 'Unix Makefiles' \
     -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT="$TT_SDK" \
     -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
@@ -85,15 +98,20 @@ else
     -DCMAKE_IGNORE_PREFIX_PATH='/opt/homebrew;/usr/local' \
     -DBUILD_SHARED_LIBS=OFF -DBUILD_IPHONE=iPhoneOS \
     -DBUILD_PANDATOOL=OFF -DBUILD_CONTRIB=OFF -DBUILD_MODELS=OFF \
-    -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DBUILD_INTERROGATE=OFF \
-    -DINTERROGATE_PYTHON_INTERFACE=OFF -DINTERROGATE_C_INTERFACE=OFF \
+    -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DBUILD_INTERROGATE="$TT_BINDINGS" \
+    -DHAVE_PYTHON="$TT_BINDINGS" -DINTERROGATE_PYTHON_INTERFACE="$TT_BINDINGS" -DINTERROGATE_C_INTERFACE=OFF \
     -DHAVE_AUDIO=ON -DHAVE_OPENAL=ON -DHAVE_COCOA=OFF -DHAVE_GLES2=ON \
     -DOPENAL_INCLUDE_DIR="$TT_SDK/System/Library/Frameworks/OpenAL.framework/Headers" \
     -DOPENAL_LIBRARY="$TT_SDK/System/Library/Frameworks/OpenAL.framework" \
     -DOPENGLES2_FOUND=ON -DOPENGLES2_INCLUDE_DIR="$TT_SDK/System/Library/Frameworks/OpenGLES.framework/Headers" \
     -DOPENGLES2_LIBRARY="$TT_SDK/System/Library/Frameworks/OpenGLES.framework" \
-    "${TT_OPTIONS[@]}"
-  "$TT_CMAKE" --build "$TT_WORK/panda-device" --parallel "$TT_JOBS" \
+    "${TT_OPTIONS[@]}" "${TT_EXTRA[@]}"
+  "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" \
     --target tt_native_compile
-  printf '%s\n' 'PANDA DEVICE C++ COMPILED. No Python bindings, UIKit window or playable IPA yet.'
+  if [[ $TT_BINDINGS == ON ]]; then
+    "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" --target tt_python_compile
+    printf '%s\n' 'PANDA DEVICE PYTHON BINDINGS COMPILED. App linking, UIKit window and gameplay still required.'
+  else
+    printf '%s\n' 'PANDA DEVICE C++ COMPILED. No Python bindings, UIKit window or playable IPA yet.'
+  fi
 fi

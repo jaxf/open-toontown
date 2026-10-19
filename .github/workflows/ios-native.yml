@@ -18,11 +18,11 @@ jobs:
     # Standard public-repository runner; no larger runner or paid storage.
     if: github.event.repository.private == false
     runs-on: macos-15
-    timeout-minutes: 45
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        component: [python, panda, controls]
+        component: [bindings, panda, controls]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -37,7 +37,7 @@ jobs:
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'TEXT'
           This job compiles device-native components, not a playable app or IPA.
-          Python bindings, UIKit graphics integration, audio/dependencies and
+          UIKit graphics integration, remaining audio/dependencies and
           real-device gameplay remain separate release gates. No simulator runs.
           Build logs are retained; binaries are not uploaded or cached.
           TEXT

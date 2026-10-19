@@ -63,6 +63,21 @@ def prepare(root):
                  '    find_library(APPKIT_LIBRARY AppKit)\n'
                  '    target_link_libraries(p3dtoolutil ${APPKIT_LIBRARY})\n'
                  '  endif()')
+    # The external binding generator runs on the build Mac, never the phone.
+    replace_once(root, 'dtool/Config.cmake',
+                 '      -DHAVE_PYTHON=OFF\n',
+                 '      -DHAVE_PYTHON=OFF\n      -DCMAKE_POLICY_VERSION_MINIMUM=3.5\n')
+    # Cross builds must never use macOS Python headers/libraries. Keep the host
+    # executable separate; static modules link the device framework explicitly.
+    replace_once(root, 'dtool/Package.cmake',
+                 'find_package(Python ${WANT_PYTHON_VERSION} QUIET COMPONENTS Interpreter Development)',
+                 'if(TT_IOS_PYTHON_FRAMEWORK)\n'
+                 '  include("${PROJECT_SOURCE_DIR}/toontown-python.cmake")\n'
+                 'else()\n'
+                 '  find_package(Python ${WANT_PYTHON_VERSION} QUIET COMPONENTS Interpreter Development)\n'
+                 'endif()')
+    (root / 'toontown-python.cmake').write_text(
+        Path(__file__).with_name('device-python.cmake').read_text())
     overlay = Path(__file__).with_name('native-components.cmake').read_text()
     target = root / 'CMakeLists.txt'
     text = target.read_text()
