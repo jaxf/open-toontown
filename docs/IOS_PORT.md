@@ -72,7 +72,7 @@ enough. Native modules must be packaged/signed for iOS, not copied from Mac.
 - `toontown.mobile.Client`: remote-only launch of the existing full game.
   An embedded entry point can step the native task manager without starting
   its blocking desktop loop and preserves the host's frame-pacing configuration.
-  It **requires** a future native host and its
+  It **requires** the native host and its
   graphics/audio configuration; it is not an iOS renderer.
 - `TouchInput`: independent contact ownership, simultaneous keys, dead zone,
   timestamped game events and release-on-cancel/background. Tests drive the
@@ -143,7 +143,9 @@ Python-dependent navigation. The exact pinned host `interrogate` generator runs
 on macOS; generated wrappers use the iOS Python framework headers/libraries.
 `TTRegisterBuiltinModules` supplies their pre-interpreter registration table.
 A link-only iPhone executable references every module initializer to detect
-unresolved engine symbols; it is not an installable app or a runtime test.
+unresolved engine symbols. The same build now links the actual `UIApplication`
+host as `bin/OpenToontown.app`; neither result is a distributable IPA or a
+runtime test.
 The workflow runs `bindings`, `panda` and `controls`; the standalone `python`
 command remains available for diagnosing the runtime separately.
 
@@ -163,7 +165,7 @@ through Panda's state cache. Host-backed texture buffers share that context.
 Unsupported framebuffer requests are subject to Panda's normal property checks;
 this first surface does not provide MSAA or sRGB.
 
-The eventual app host must:
+`TTGameViewController` implements this host sequence (device validation pending):
 
 1. Load PRC with empty `load-display`/`aux-display`/`threading-model`,
    `window-type onscreen` and `sync-video false` before registering the pipe:
@@ -181,14 +183,45 @@ The eventual app host must:
    Python, on the main thread while still in the foreground. Then call
    `TTClearGraphicsHost()`. Suspension retains the window instead of destroying it.
 
-These sources still need the application lifecycle host, runtime validation,
-asset dependencies and device gameplay. Compile/link checks do not demonstrate
+The native host implements the lifecycle sequence below; runtime validation,
+asset dependencies and device gameplay are still required. Compile/link checks do not demonstrate
 that a frame or a DirectGUI click has worked on an iPhone.
 
 References: Apple's [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext)
 and [drawable storage](https://developer.apple.com/documentation/opengles/eaglcontext/renderbufferstorage(_:from:))
 contracts. OpenGL ES is deprecated by Apple; this stage uses the existing pinned
 engine's ES2 renderer. A Metal migration is separate work.
+
+### Native application host
+
+`TTApplication` creates the landscape iPhone/iPad window. `TTGameViewController`
+collects a private IPv4 address and an issued player token, loads the embedded
+runtime, configures the graphics host and drives `Client.step()` from a 60 Hz
+`CADisplayLink`. The address may be remembered; the token stays in memory and is
+cleared from the text field. Keychain persistence and the in-game native text
+keyboard are not implemented yet.
+
+`TTEmbeddedRuntime` initializes isolated CPython with UTF-8, explicit bundle-only
+module paths and bytecode writes disabled. It sets the game working directory
+before importing Panda. The Python `EmbeddedRuntime` loads platform PRC before
+pipe registration and requires all six game modules (including ODE) and `pytz`.
+Missing modules stop startup; they are not replaced with stubs. The joystick is
+shown only when avatar controls are enabled in supported walking modes and no
+Panda GUI item has keyboard focus. Activity-specific controls still need work.
+
+Pause stops display-link delivery, releases contacts and sends `PandaPaused`;
+resume sends `PandaRestarted` and rechecks input permission on the next frame.
+Errors invalidate the display link and input bridge and destroy Panda windows.
+Any background teardown waits for foreground activation. Python is not finalized
+and restarted in-process because Panda has process-wide native state.
+
+The compilation target creates an **unsigned development app bundle only**.
+It does not yet copy/embed/sign Python.framework, the target standard library,
+third-party modules or the full game assets, and is not uploaded as an IPA.
+The intended payload layout is `Game/`, `python/lib/python3.13/` (including
+processed `lib-dynload` modules), `python/site-packages/` and `Frameworks/`.
+`Device.prc` is included now. Native dependencies, full payload assembly, signing,
+launch-time performance, audio/session handling and device testing remain gates.
 
 ### Release checklist
 

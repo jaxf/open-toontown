@@ -81,7 +81,11 @@ def prepare(root):
     native = Path(__file__).with_name('native')
     for name in ('TTBuiltinModules.h', 'TTBuiltinModules.cxx', 'TTLinkCheck.cxx',
                  'TTPandaInputView.h', 'TTPandaInputView.mm', 'TTGraphicsHost.h',
-                 'TTGLESView.h', 'TTGLESView.mm', 'TTGraphicsPipe.mm', 'TTGraphicsLinkCheck.mm'):
+                 'TTGLESView.h', 'TTGLESView.mm', 'TTGraphicsPipe.mm', 'TTGraphicsLinkCheck.mm',
+                 'TTEmbeddedRuntime.h', 'TTEmbeddedRuntime.mm', 'TTGameViewController.h',
+                 'TTGameViewController.mm', 'TTApplication.mm', 'TTControlsView.h',
+                 'TTControlsView.mm', 'TTGameInputBridge.h', 'TTGameInputBridge.mm',
+                 'Device.prc', 'Info.plist.in'):
         (root / name).write_text((native / name).read_text())
     overlay = Path(__file__).with_name('native-components.cmake').read_text()
     target = root / 'CMakeLists.txt'

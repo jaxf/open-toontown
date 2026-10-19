@@ -125,7 +125,13 @@ else
     xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_python_linkcheck" \
       | tee "$TT_WORK/bindings-platform.txt"
     grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/bindings-platform.txt"
-    printf '%s\n' 'PANDA DEVICE MODULES AND UIKIT PIPE LINKED. App host, packaging and gameplay still required.'
+    TT_APP="$TT_BUILD_DIR/bin/OpenToontown.app"
+    xcrun lipo "$TT_APP/OpenToontown" -verify_arch arm64
+    xcrun vtool -show-build "$TT_APP/OpenToontown" | tee "$TT_WORK/app-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/app-platform.txt"
+    plutil -lint "$TT_APP/Info.plist"
+    [[ -f "$TT_APP/Device.prc" ]] || { echo 'App platform config was not bundled.' >&2; exit 2; }
+    printf '%s\n' 'NATIVE APP HOST LINKED. Unsigned development bundle only; runtime/content packaging, dependencies and device gameplay are still required. No IPA produced.'
   else
     printf '%s\n' 'PANDA DEVICE C++ AND UIKIT PIPE LINKED. No runtime rendering test or playable IPA yet.'
   fi

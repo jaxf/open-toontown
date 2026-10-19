@@ -96,7 +96,27 @@ if(INTERROGATE_PYTHON_INTERFACE)
   set_target_properties(tt_python_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
   target_link_libraries(tt_python_linkcheck PRIVATE
     panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown tt_uikit_display)
-  add_custom_target(tt_python_compile DEPENDS tt_python_linkcheck)
+  # Real UIApplication entry point and controller, still without a distributable
+  # runtime/content payload. This target proves native app-host compilation/link.
+  add_executable(tt_ios_app MACOSX_BUNDLE EXCLUDE_FROM_ALL
+    "${PROJECT_SOURCE_DIR}/TTApplication.mm"
+    "${PROJECT_SOURCE_DIR}/TTGameViewController.mm"
+    "${PROJECT_SOURCE_DIR}/TTEmbeddedRuntime.mm"
+    "${PROJECT_SOURCE_DIR}/TTControlsView.mm"
+    "${PROJECT_SOURCE_DIR}/TTGameInputBridge.mm"
+    "${PROJECT_SOURCE_DIR}/TTBuiltinModules.cxx"
+    "${PROJECT_SOURCE_DIR}/Device.prc")
+  set_source_files_properties("${PROJECT_SOURCE_DIR}/Device.prc" PROPERTIES
+    MACOSX_PACKAGE_LOCATION Resources)
+  set_target_properties(tt_ios_app PROPERTIES UNITY_BUILD OFF OUTPUT_NAME OpenToontown
+    MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Info.plist.in"
+    BUILD_RPATH "@executable_path/Frameworks" XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO)
+  target_compile_options(tt_ios_app PRIVATE "$<$<COMPILE_LANGUAGE:OBJCXX>:-fobjc-arc>"
+    -fno-fast-math -Wall -Werror)
+  target_link_libraries(tt_ios_app PRIVATE tt_uikit_display
+    panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown
+    "-framework UIKit" "-framework QuartzCore" "-framework CoreGraphics")
+  add_custom_target(tt_python_compile DEPENDS tt_python_linkcheck tt_ios_app)
 endif()
 
 # add_python_module participates in Panda's CMake export sets. Its custom

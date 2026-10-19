@@ -1,15 +1,19 @@
 """Launch the actual game against a remote private district, without servers.
 
-`embedded=True` is the Python-side entry point for a future UIKit host, which
+`embedded=True` is the Python-side entry point for the UIKit host, which
 must configure a working iOS graphics pipe BEFORE calling start(), and call
-step() on its display link. This module does not supply that missing renderer.
+step() on its display link. Graphics are supplied by the native iOS target.
 """
 import os
 from pathlib import Path
 
 
-def start(session, bundle_root, user_data, embedded=False, platform_config=None):
-    from panda3d.core import Filename, loadPrcFile, loadPrcFileData
+def prepare(session, bundle_root, user_data, embedded=False, platform_config=None):
+    """Load platform configuration before native pipe registration/ShowBase.
+
+    Resolve the content directory before importing core: Panda derives MAIN_DIR
+    during its first import. The native host also sets cwd before Python starts.
+    """
     bundle_root = Path(bundle_root).resolve()
     user_data = Path(user_data).resolve()
     if platform_config is not None:
@@ -25,10 +29,15 @@ def start(session, bundle_root, user_data, embedded=False, platform_config=None)
     os.environ['TOONTOWN_USER_DATA'] = str(user_data)
     # Relative DNA, models and Python file references still resolve in the bundle.
     os.chdir(str(bundle_root))
+    from panda3d.core import Filename, loadPrcFile, loadPrcFileData
     loadPrcFile(Filename.fromOsSpecific(str(bundle_root / 'etc/Configrc.prc')))
     if platform_config is not None:
         loadPrcFile(Filename.fromOsSpecific(str(Path(platform_config).resolve())))
     loadPrcFileData('private-client', session.prc(embedded))
+
+
+def start(session, bundle_root, user_data, embedded=False, platform_config=None):
+    prepare(session, bundle_root, user_data, embedded, platform_config)
     from toontown.launcher.QuickLauncher import QuickLauncher
 
     class RemoteLauncher(QuickLauncher):
