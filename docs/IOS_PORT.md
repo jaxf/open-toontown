@@ -105,15 +105,16 @@ public repositories; it uses no larger runners, cache or artifact uploads.
 `bash ios/build_native.sh python /absolute/build-folder` builds a host
 interpreter and an arm64 **iPhoneOS** Python framework from the same pinned
 CPython 3.13.9 commit. It checks the binary's architecture and Mach-O platform.
-Third-party native standard-library dependencies are not yet supplied; this
-is not the final Python runtime bundle.
+The device build supplies pinned OpenSSL and checks the `_ssl` / `_hashlib`
+extensions too. This is not the final packaged Python runtime bundle.
 
 `bash ios/build_native.sh panda /absolute/build-folder` cross-compiles the
 pinned custom engine's C++ core, physics, nametags, movement, DNA, suits, pets
-and ES2 state guardian, plus the UIKit/EAGL pipe and SDK OpenAL backend. Its CMake overlay follows the existing makepanda
-source lists and excludes macOS-only AppKit/IOKit paths on iOS. It does not
-include Python bindings, Python-dependent navigation, third-party codecs,
-ODE or tested audio playback yet. A link-only graphics executable forces the new
+and ES2 state guardian, plus the UIKit/EAGL pipe and SDK OpenAL backend. It also
+builds ODE, image/font/audio decoding libraries and HTTP support. Its CMake
+overlay follows the existing makepanda source lists and excludes macOS-only
+AppKit/IOKit paths on iOS. This C++ gate does not include Python bindings or
+Python-dependent navigation. A link-only graphics executable forces the new
 pipe and rendering backend into a device binary. A green compile check establishes
 only compilation of those named components, not game compatibility.
 
@@ -138,7 +139,7 @@ release requirements. Compiling the overlay does not establish working input.
 
 `bash ios/build_native.sh bindings /absolute/build-folder` builds the pinned
 host/device Python pair, compiles the UIKit-to-Python adapter, and builds static
-`panda3d.core`, `.direct`, `.physics`, `.otp` and `.toontown` modules. This includes
+`panda3d.core`, `.direct`, `.ode`, `.physics`, `.otp` and `.toontown` modules. This includes
 Python-dependent navigation. The exact pinned host `interrogate` generator runs
 on macOS; generated wrappers use the iOS Python framework headers/libraries.
 `TTRegisterBuiltinModules` supplies their pre-interpreter registration table.
@@ -237,7 +238,8 @@ keyboard are not implemented yet.
 `TTEmbeddedRuntime` initializes isolated CPython with UTF-8, explicit bundle-only
 module paths and bytecode writes disabled. It sets the game working directory
 before importing Panda. The Python `EmbeddedRuntime` loads platform PRC before
-pipe registration and requires all six game modules (including ODE) and `pytz`.
+pipe registration and requires all six game modules (including ODE), `pytz`,
+`ssl`, and the core HTTPClient API.
 Missing modules stop startup; they are not replaced with stubs. The joystick is
 shown only when avatar controls are enabled in supported walking modes and no
 Panda GUI item has keyboard focus. Activity-specific controls still need work.
@@ -289,10 +291,12 @@ UI/session handling still needs implementation and device verification.
 
 Verified compilation/link checkpoint, 2026-10-19:
 
-- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39315438501)
-  at `26c4871c84d9151cfb7a1228d2a82abe19c5a895`: all three jobs passed,
-  including the explicit static renderer-selection change.
-  CPython 3.13.9 and static `panda3d.core`, `.direct`, `.physics`, `.otp` and
+- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39319625468)
+  at `6de681518da682159701cc2b098b345068527ee4`: all three jobs passed,
+  including ODE, PNG/JPEG, FreeType, Ogg/Vorbis, static OpenAL registration
+  and OpenSSL-backed HTTPClient. Device `_ssl` and `_hashlib` extensions
+  were produced and verified as arm64/iOS binaries.
+  CPython 3.13.9 and static `panda3d.core`, `.direct`, `.ode`, `.physics`, `.otp` and
   `.toontown` compiled against the iPhone SDK. Navigation is included in OTP.
   The module initializers and UIKit/ES2 pipe linked together into
   `tt_python_linkcheck` and the new `OpenToontown.app` host. `lipo` confirmed
@@ -309,11 +313,11 @@ Verified compilation/link checkpoint, 2026-10-19:
   the real ES2 renderer. SDK OpenAL compiled as before. New graphics/input code
   uses strict warnings, with upstream Panda headers treated as dependencies.
   No on-device rendering, touch interaction or audio playback was tested.
-- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39315816789):
-  all 26 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
-  eight platform/input checks, seven embedded-lifecycle checks, six world-routing
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39319625474):
+  all 27 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
+  eight platform/input checks, eight embedded-lifecycle checks, six world-routing
   checks and five access-policy checks, at
-  `08a6b54283b715461a802c4bb5a2b82b52e9a62b`. Lifecycle checks cover required
+  `6de681518da682159701cc2b098b345068527ee4`. Lifecycle checks cover required
   module loading, frame suspension, GUI/movement gating, partial-start cleanup,
   network teardown failures, rejecting repeated starts and main-thread ownership.
   Platform checks also verify that embedded sessions preserve native frame pacing.
@@ -321,11 +325,11 @@ Verified compilation/link checkpoint, 2026-10-19:
   desktop game runtime. Full desktop launch/login/gameplay is still unverified.
 - Local mobile/server suite: 29 tests passed. Local platform/input, expansion
   and administrator suites also passed (8 + 6 + 5 checks).
-  The seven embedded-lifecycle tests passed locally too.
+  The eight embedded-lifecycle tests passed locally too.
 
 No IPA, on-device rendering, packaged runtime import test or actual
-phone interaction has passed yet. Required native modules such as ODE and
-image/font/audio dependencies still need device builds. The checks above are
+phone interaction has passed yet. Native dependencies still need packaged import
+and capability tests against the full game. The checks above are
 compilation, linking and regression evidence only. No simulator was run.
 
 `python -m unittest discover -s tests -p test_mobile_server.py -v`

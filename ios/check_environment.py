@@ -31,7 +31,7 @@ def audit(root=ROOT):
                                 capture_output=True, text=True, timeout=30)
         checks['iphoneos_sdk'] = result.returncode == 0 and Path(result.stdout.strip()).is_dir()
     return {'checks': checks, 'native_imports': native_imports(root), 'ipa_ready': False,
-            'unresolved': ['remaining iOS native dependencies, including ODE and codecs',
+            'unresolved': ['packaged native API, physics, codec and font capability checks',
                            'packaged Python runtime and full-content import/startup tests',
                            'device rendering, audio-session and lifecycle validation',
                            'native in-game keyboard, saved bindings and activity controls',
