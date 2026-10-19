@@ -204,10 +204,12 @@ libraries installed on the build Mac:
 | libjpeg-turbo | 3.2.0 | JPEG textures/images |
 | FreeType | 2.15.0 | Font rendering |
 | libogg / libvorbis | 1.3.6 / 1.3.7 | Ogg/Vorbis music and sound decoding |
+| OpenSSL | 3.5.9 | Panda HTTPClient and CPython SSL/hash extensions |
 | zlib / OpenAL | iPhone SDK | Compression and audio output |
 
 The exact commit pins are in `ios/build_native.sh` and
-`ios/build_media_dependencies.sh`. ODE uses single precision and OPCODE
+`ios/build_media_dependencies.sh` / `ios/build_crypto_dependency.sh`.
+ODE uses single precision and OPCODE
 triangle-mesh support; the full `panda3d.ode` module is included in the built-in
 registration table and required by the app link. Third-party notices are retained
 under the dependency prefix for later payload assembly. No dependency tests are
@@ -217,6 +219,13 @@ still require actual-device validation.
 The host explicitly registers the linked OpenAL audio factory before starting
 the game, avoiding desktop audio-plugin discovery. Audio-session interruptions
 and route changes remain separate integration work.
+
+OpenSSL uses upstream's `ios64-xcrun` target. Both Panda and the device Python
+build link the pinned static libraries; the build checks `_ssl` and `_hashlib`
+extensions for arm64/iOS. The game preflight requires `ssl` and Panda's
+`HTTPClient` API, and the native link check references HTTPClient directly.
+Certificate trust data still needs packaging and device HTTPS verification;
+certificate validation is not disabled.
 
 `TTApplication` creates the landscape iPhone/iPad window. `TTGameViewController`
 collects a private IPv4 address and an issued player token, loads the embedded

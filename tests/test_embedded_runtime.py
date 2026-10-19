@@ -49,6 +49,14 @@ class EmbeddedRuntimeTests(unittest.TestCase):
         self.assertEqual([call.args[0] for call in messenger.send.call_args_list],
                          ['PandaPaused', 'PandaRestarted'])
 
+    def test_missing_http_api_blocks_start_even_when_core_module_imports(self):
+        with patch.object(embedded.Client, 'prepare'), \
+             patch.object(embedded.Client, 'start') as start, \
+             patch.object(embedded.importlib, 'import_module', return_value=SimpleNamespace()):
+            with self.assertRaisesRegex(ImportError, 'HTTPClient'):
+                embedded.Runtime('/bundle', '/data', '/config', '100.80.1.2', 'a' * 43)
+            start.assert_not_called()
+
     def test_overlay_disabled_without_avatar_when_controls_disabled_or_gui_focused(self):
         manager = SimpleNamespace(isEnabled=True, currentControlsName='walk')
         avatar = SimpleNamespace(avatarControlsEnabled=True, controlManager=manager)

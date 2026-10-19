@@ -36,6 +36,10 @@ if [[ $TT_COMPONENT == controls ]]; then
   grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/controls-platform.txt"
   printf '%s\n' 'UIKIT CONTROLS COMPILED. Host/input bridge and device interaction testing still required.'
 elif [[ $TT_COMPONENT == python ]]; then
+  # The standalone Python gate also needs the pinned device crypto library.
+  if [[ ! -f "$TT_WORK/dependencies/lib/libssl.a" ]]; then
+    bash "$TT_ROOT/ios/build_crypto_dependency.sh" "$TT_WORK"
+  fi
   TT_SOURCE="$TT_WORK/cpython"
   fetch_source https://github.com/python/cpython.git "$TT_CPYTHON" "$TT_SOURCE"
   mkdir -p "$TT_WORK/python-host" "$TT_WORK/python-device" "$TT_WORK/python-install"
@@ -57,6 +61,7 @@ elif [[ $TT_COMPONENT == python ]]; then
   cd "$TT_WORK/python-device"
   "$TT_SOURCE/configure" --host=arm64-apple-ios15.0 --build="$TT_BUILD" \
     --enable-framework="$TT_WORK/python-install" --with-build-python="$TT_HOST_PY" \
+    --with-openssl="$TT_WORK/dependencies" --with-openssl-rpath=no \
     --without-ensurepip --disable-test-modules
   make -j "$TT_JOBS"
   make install
@@ -64,6 +69,15 @@ elif [[ $TT_COMPONENT == python ]]; then
   xcrun lipo "$TT_BINARY" -verify_arch arm64
   xcrun vtool -show-build "$TT_BINARY" | tee "$TT_WORK/python-platform.txt"
   grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-platform.txt"
+  for TT_CRYPTO_MODULE in _ssl _hashlib; do
+    TT_MODULE_FILES=("$TT_WORK/python-install/lib/python3.13/lib-dynload/$TT_CRYPTO_MODULE".*.so)
+    [[ ${#TT_MODULE_FILES[@]} == 1 && -f ${TT_MODULE_FILES[0]} ]] || {
+      echo "Missing device Python extension: $TT_CRYPTO_MODULE" >&2; exit 2;
+    }
+    xcrun lipo "${TT_MODULE_FILES[0]}" -verify_arch arm64
+    xcrun vtool -show-build "${TT_MODULE_FILES[0]}" | tee "$TT_WORK/python-extension-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-extension-platform.txt"
+  done
   printf '%s\n' 'PYTHON DEVICE FRAMEWORK COMPILED. Third-party modules and game integration still required.'
 else
   TT_BINDINGS=OFF
@@ -89,11 +103,20 @@ else
   cmake --install "$TT_WORK/ode-device"
   xcrun lipo "$TT_ODE_PREFIX/lib/libode.a" -verify_arch arm64
   mkdir -p "$TT_ODE_PREFIX/share/licenses/ode"
-  cp "$TT_ODE_SOURCE/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/LICENSE.TXT" \
+  cp "$TT_ODE_SOURCE/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/LICENSE.TXT" "$TT_ODE_SOURCE/COPYING" \
     "$TT_ODE_PREFIX/share/licenses/ode/"
+  mkdir -p "$TT_ODE_PREFIX/share/licenses/ode/OPCODE" "$TT_ODE_PREFIX/share/licenses/ode/ou"
+  cp "$TT_ODE_SOURCE/OPCODE/COPYING" "$TT_ODE_PREFIX/share/licenses/ode/OPCODE/"
+  cp "$TT_ODE_SOURCE/ou/LICENSE.TXT" "$TT_ODE_SOURCE/ou/LICENSE-LESSER.TXT" \
+    "$TT_ODE_SOURCE/ou/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/ou/LICENSE-ZLIB.TXT" \
+    "$TT_ODE_PREFIX/share/licenses/ode/ou/"
   TT_EXTRA+=("-DODE_INCLUDE_DIR=$TT_ODE_PREFIX/include"
              "-DODE_RELEASE_LIBRARY=$TT_ODE_PREFIX/lib/libode.a" -DHAVE_ODE=ON)
   bash "$TT_ROOT/ios/build_media_dependencies.sh" "$TT_WORK"
+  bash "$TT_ROOT/ios/build_crypto_dependency.sh" "$TT_WORK"
+  TT_EXTRA+=(-DHAVE_OPENSSL=ON "-DOPENSSL_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DOPENSSL_SSL_LIBRARY=$TT_ODE_PREFIX/lib/libssl.a"
+             "-DOPENSSL_CRYPTO_LIBRARY=$TT_ODE_PREFIX/lib/libcrypto.a")
   TT_EXTRA+=(-DHAVE_ZLIB=ON -DHAVE_PNG=ON -DHAVE_JPEG=ON -DHAVE_FREETYPE=ON -DHAVE_VORBIS=ON
              "-DZLIB_INCLUDE_DIR=$TT_SDK/usr/include" "-DZLIB_LIBRARY=$TT_SDK/usr/lib/libz.tbd"
              "-DPNG_PNG_INCLUDE_DIR=$TT_ODE_PREFIX/include"
@@ -135,7 +158,7 @@ else
   TT_OPTIONS=()
   # No desktop dependencies may satisfy an iPhone build. Optional codecs and
   # physics dependencies need their own device builds in a later stage.
-  for package in OPENSSL TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE OPUS FMODEX HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
+  for package in TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE OPUS FMODEX HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
     TT_OPTIONS+=("-DHAVE_${package}=OFF")
   done
   "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_BUILD_DIR" -G 'Unix Makefiles' \

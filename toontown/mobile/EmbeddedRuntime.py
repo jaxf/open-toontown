@@ -33,9 +33,14 @@ class Runtime:
         self._session = Session(host, token)
         self._paths = (bundle_root, user_data, platform_config)
         Client.prepare(self._session, bundle_root, user_data, True, platform_config)
+        modules = {}
         for name in ('panda3d.core', 'panda3d.direct', 'panda3d.physics',
-                     'panda3d.otp', 'panda3d.toontown', 'panda3d.ode', 'pytz'):
-            importlib.import_module(name)
+                     'panda3d.otp', 'panda3d.toontown', 'panda3d.ode', 'pytz', 'ssl'):
+            modules[name] = importlib.import_module(name)
+        # The module itself can import successfully even when optional native
+        # APIs were omitted at build time. The game unconditionally uses HTTP.
+        if not hasattr(modules['panda3d.core'], 'HTTPClient'):
+            raise ImportError('The embedded engine requires the HTTPClient API')
 
     def _check_thread(self):
         if threading.get_ident() != self._owner:
