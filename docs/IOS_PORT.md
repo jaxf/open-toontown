@@ -108,10 +108,10 @@ is not the final Python runtime bundle.
 
 `bash ios/build_native.sh panda /absolute/build-folder` cross-compiles the
 pinned custom engine's C++ core, physics, nametags, movement, DNA, suits, pets
-and ES2 state guardian. Its CMake overlay follows the existing makepanda
+and ES2 state guardian, plus the SDK OpenAL backend. Its CMake overlay follows the existing makepanda
 source lists and excludes macOS-only AppKit/IOKit paths on iOS. It does not
 include Python bindings, Python-dependent navigation, third-party codecs,
-ODE, the UIKit window/context, or audio yet. A green compile check establishes
+ODE, the UIKit window/context, or tested audio playback yet. A green compile check establishes
 only compilation of those named components, not game compatibility.
 
 `bash ios/build_native.sh controls /absolute/build-folder` compiles the native
