@@ -11,7 +11,7 @@ loadPrcFileData('', 'window-type offscreen\nload-display p3headlessgl\n'
     'default-model-extension .bam')
 from direct.showbase.ShowBase import ShowBase
 from direct.gui.DirectGui import DirectLabel
-from toontown.building.BureaubotBuilding import decorate_building, add_elevator_badge
+from toontown.building.BureaubotBuilding import build_building, add_elevator_badge, MODEL_PATH
 from toontown.suit import BureaubotModels as B
 from tools.preview_bureaubots import capture
 
@@ -23,9 +23,13 @@ def main():
     app.camLens.setFov(47)
     app.camera.setPos(61,-104,51)
     app.camera.lookAt(15,-2,22)
-    building=app.loader.loadModel('phase_4/models/modules/suit_landmark_corp')
+    # Export once, then render the very same independent asset used by takeovers.
+    loadPrcFileData('', 'bam-texture-mode rawdata')
+    authored=build_building(app.loader)
+    authored.writeBamFile(MODEL_PATH)
+    authored.removeNode()
+    building=app.loader.loadModel(MODEL_PATH)
     building.reparentTo(app.render)
-    decorate_building(building)
     elevator=app.loader.loadModel('phase_4/models/modules/elevator')
     elevator.reparentTo(building.find('**/*_door_origin'))
     add_elevator_badge(elevator)

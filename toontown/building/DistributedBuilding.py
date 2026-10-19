@@ -439,15 +439,16 @@ class DistributedBuilding(DistributedObject.DistributedObject):
     def setupSuitBuilding(self, nodePath):
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        # Bureaubots reuse the classic textured landmark and its collision shell.
-        modelDept = 'c' if chr(self.track) == 'u' else chr(self.track)
-        suitNP = dnaStore.findNode('suit_landmark_' + modelDept + str(level))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
-        suitBuildingNP = suitNP.copyTo(newParentNP)
         if chr(self.track) == 'u':
-            BureaubotBuilding.decorate_building(suitBuildingNP)
+            # Independent fifth landmark, not an alias or recolor of Bossbot.
+            suitBuildingNP = loader.loadModel(BureaubotBuilding.MODEL_PATH)
+            suitBuildingNP.reparentTo(newParentNP)
+        else:
+            suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
+            suitBuildingNP = suitNP.copyTo(newParentNP)
         buildingTitle = dnaStore.getTitleFromBlockNumber(self.block)
         if not buildingTitle:
             buildingTitle = TTLocalizer.CogsInc

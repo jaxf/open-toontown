@@ -172,3 +172,17 @@ Original Cog atlas materials, elevator and shop sign remain; the department
 crest is cast into the roof clip. Camera collision is rebuilt for the new shell
 and preserves the elevator opening. Screenshots are staged engine renders, not
 connected multiplayer captures.
+
+### Independent fifth building asset
+
+The takeover loader now loads `assets/bureaubots/models/bureaubot-building.bam`
+directly for department `u`. There is no `u -> c` model alias and no Bossbot
+base mesh. The asset is authored from scratch with stepped paper shoulders,
+a raised open binder clip, a unique scowling facade, window courses and built-in
+crest. Its own collision solids use the native wall/camera mask, and its door
+and sign anchors support the shared takeover/elevator lifecycle. Textures are
+embedded in the BAM. Rebuild with `tools/preview_bureaubot_building.py`.
+
+The test harness executes the production takeover setup across all ten
+difficulty values and rejects any legacy-model lookup. Seventeen tests pass;
+the five-department comparison is in `docs/previews/five-cog-buildings.png`.

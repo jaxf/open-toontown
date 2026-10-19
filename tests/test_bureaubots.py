@@ -125,13 +125,45 @@ class LiveSuitMethodsTest(unittest.TestCase):
                         finally:suit.cleanup();suit.removeNode()
         finally:config.setValue(original)
 
-    def test_building_keeps_collision_door_sign_and_elevator(self):
-        from toontown.building.BureaubotBuilding import decorate_building,add_elevator_badge
-        building=self.app.loader.loadModel('phase_4/models/modules/suit_landmark_corp')
+    def test_takeovers_load_standalone_building_for_every_floor_count(self):
+        import ast
+        from pathlib import Path
+        from types import SimpleNamespace as NS
+        from panda3d.core import TextNode,DepthOffsetAttrib,DecalEffect,NodePath
+        from toontown.building import BureaubotBuilding
+        source=Path('toontown/building/DistributedBuilding.py').read_text()
+        cls=next(n for n in ast.parse(source).body if isinstance(n,ast.ClassDef))
+        method=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='setupSuitBuilding')
+        parent=NodePath('street-zone');original=parent.attachNewNode('toon-shop')
+        # A Bureaubot takeover must never request any legacy department model.
+        def forbidden_model(name):raise AssertionError('Legacy landmark requested: '+name)
+        store=NS(findNode=forbidden_model,getZoneFromBlockNumber=lambda b:2100,
+                 getTitleFromBlockNumber=lambda b:'Pending Approval')
+        cr=NS(playGame=NS(dnaStore=store,hood=NS(loader=NS(zoneDict={2100:parent}))))
+        scope=dict(BureaubotBuilding=BureaubotBuilding,loader=self.app.loader,base=NS(cr=cr),
+            ZoneUtil=NS(getTrueZoneId=lambda z,i:z),TextNode=TextNode,
+            DepthOffsetAttrib=DepthOffsetAttrib,DecalEffect=DecalEffect,
+            TTLocalizer=NS(CogsInc='Cogs, Inc.',CogsIncExt=', Inc.'),
+            SuitDNA=NS(getDeptFullname=lambda t:'Bureaubots'),
+            ToontownGlobals=NS(getSuitFont=lambda:self.app.loader.loadFont('phase_3/models/fonts/vtRemingtonPortable.ttf')))
+        exec(compile(ast.Module(body=[method],type_ignores=[]),'takeover-test','exec'),scope)
         try:
-            before=building.findAllMatches('**/+CollisionNode').getNumPaths()
-            decorate_building(building)
-            self.assertEqual(before,building.findAllMatches('**/+CollisionNode').getNumPaths())
+            for difficulty in range(10):
+                obj=NS(cr=cr,track=ord('u'),difficulty=difficulty,block=1,interiorZoneId=2101,
+                       loadElevator=lambda n:None)
+                model=scope['setupSuitBuilding'](obj,original)
+                self.assertEqual(model.getTag('department'),'u')
+                self.assertFalse(model.find('**/*_door_origin').isEmpty())
+                self.assertTrue(model.find('**/*corp*').isEmpty())
+                model.removeNode()
+        finally:parent.removeNode()
+
+    def test_building_keeps_collision_door_sign_and_elevator(self):
+        from toontown.building.BureaubotBuilding import MODEL_PATH,add_elevator_badge
+        building=self.app.loader.loadModel(MODEL_PATH)
+        try:
+            self.assertEqual(1,building.findAllMatches('**/+CollisionNode').getNumPaths())
+            self.assertTrue(building.find('**/*corp*').isEmpty())
             self.assertFalse(building.find('**/*_door_origin').isEmpty())
             self.assertFalse(building.find('**/sign_origin').isEmpty())
             self.assertEqual(building.getTag('department'),'u')
@@ -140,7 +172,8 @@ class LiveSuitMethodsTest(unittest.TestCase):
             self.assertTrue(building.find('**/suit_landmark_new_corp_building').isEmpty())
             self.assertFalse(building.find('**/clip-crown').isEmpty())
             self.assertEqual(building.findAllMatches('**/clip-upright').getNumPaths(),2)
-            self.assertEqual(building.find('**/+CollisionNode').node().getNumSolids(),6)
+            self.assertEqual(building.find('**/+CollisionNode').node().getNumSolids(),7)
+            self.assertEqual(building.find('**/+CollisionNode').node().getIntoCollideMask().getWord(),5)
             self.assertGreater(building.find('**/*_building').findAllTextures().getNumTextures(),0)
             elevator=self.app.loader.loadModel('phase_4/models/modules/elevator')
             elevator.reparentTo(building.find('**/*_door_origin'))

@@ -22,6 +22,7 @@ From the repository root, with Panda3D and the resources checkout:
 python tools/preview_bureaubots.py --export assets/bureaubots/models
 python tools/preview_cog_gallery.py
 python tools/preview_bureaubot_building.py
+python tools/preview_cog_buildings.py
 python -m unittest discover -s tests -p 'test_bureaubot*.py' -v
 ```
 
@@ -31,3 +32,10 @@ tools; it no longer replaces the fifth row's game controls.
 
 See [integration notes](../../docs/BUREAUBOTS_CONCEPT.md) for save compatibility,
 server behavior, validation and deployment requirements.
+
+`models/bureaubot-building.bam` is a standalone, embedded-texture landmark.
+Its source is `toontown/building/BureaubotBuilding.py::build_building`; the
+building preview script exports it before rendering the same asset the game
+loads. It does not load or modify a Bossbot/Cashbot/Sellbot/Lawbot building.
+The original elevator and sign remain shared game components. The comparison
+preview shows all five actual landmark assets at a common model scale.
