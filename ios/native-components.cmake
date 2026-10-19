@@ -72,6 +72,9 @@ if(INTERROGATE_PYTHON_INTERFACE)
   list(FILTER TT_TOONTOWN_HEADERS EXCLUDE REGEX "dnaParser\\.h$")
   target_interrogate(tt_otp ${TT_OTP_HEADERS})
   target_interrogate(tt_toontown ${TT_TOONTOWN_HEADERS})
+  # Upstream add_python_module appends /<target>.in to a relative directory.
+  # Root-level targets otherwise yield an empty directory and /tt_otp.in.
+  set_target_properties(tt_otp tt_toontown PROPERTIES TARGET_BINDIR "${TT_GENERATED}")
   add_python_module(panda3d.otp tt_otp IMPORT panda3d.core IMPORT panda3d.direct)
   add_python_module(panda3d.toontown tt_toontown IMPORT panda3d.otp)
   add_executable(tt_python_linkcheck EXCLUDE_FROM_ALL
