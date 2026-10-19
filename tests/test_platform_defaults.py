@@ -85,8 +85,10 @@ class PlatformDefaultsTests(unittest.TestCase):
 
     def test_mobile_preserves_native_window_but_keeps_audio_preferences(self):
         self.save_options()
+        self.page('native-frame-pacing', 'sync-video #f')
         self.page('native-host', Session('100.80.1.2', 'a' * 43).prc(embedded=True))
         pages = self.configure_actual_toonbase()
+        self.assertFalse(ConfigVariableBool('sync-video', True).value)
         self.assertFalse(any(value.startswith(('win-size ', 'fullscreen ')) for value in pages.values()))
         self.assertIn('audio-music-active False', pages.values())
         self.assertIn('audio-sfx-active True', pages.values())

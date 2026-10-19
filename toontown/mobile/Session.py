@@ -35,6 +35,8 @@ class Session:
             'log-private-info #f', 'want-dev #f', 'exec-chat #f',
         ]
         if embedded:
+            # The native display host owns presentation/frame pacing. Preserve
+            # its sync-video setting instead of overriding it after platform PRC.
             settings += ['toontown-auto-run #f', 'mobile-client #t',
-                         'aspect-ratio 0', 'sync-video #t']
+                         'aspect-ratio 0']
         return '\n'.join(settings) + '\n'
