@@ -64,8 +64,8 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.GolfZone: 'GZHood',
      ToontownGlobals.PartyHood: 'PartyHood'}
 
-    Hood2ClassDict.update({h: ExpansionHood for h in ExpansionGlobals.NEIGHBORHOODS})
-    Hood2StateDict.update({h: 'ExpansionHood' for h in ExpansionGlobals.NEIGHBORHOODS})
+    Hood2ClassDict.update({h: ExpansionHood for h in ExpansionGlobals.HOOD_SPECS})
+    Hood2StateDict.update({h: 'ExpansionHood' for h in ExpansionGlobals.HOOD_SPECS})
 
     def __init__(self, parentFSM, doneEvent):
         StateData.StateData.__init__(self, doneEvent)

@@ -104,7 +104,7 @@ class BossCog(Avatar.Avatar):
          self.statement,
          self.statement]
         dna = self.style
-        filePrefix = ModelDict[dna.dept]
+        filePrefix = ModelDict['m' if dna.dept == 'u' else dna.dept]
         self.loadModel(GenericModel + '-legs-zero', 'legs')
         self.loadModel(filePrefix + '-torso-zero', 'torso')
         self.loadModel(filePrefix + '-head-zero', 'head')
@@ -144,6 +144,11 @@ class BossCog(Avatar.Avatar):
         self.treadsRight = treadsModel.find('**/left_tread')
         self.doorA.request('Closed')
         self.doorB.request('Closed')
+        if dna.dept == 'u':
+            from .BureauBossModel import dress
+            self.pose('Ff_neutral',0)
+            self.update(force=True)
+            dress(self, loader)
 
     def initializeBodyCollisions(self, collIdStr):
         Avatar.Avatar.initializeBodyCollisions(self, collIdStr)

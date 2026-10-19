@@ -502,7 +502,7 @@ class SuitPlannerBase:
 
     def genDNAFileName(self):
         from toontown.expansion import ExpansionGlobals as E
-        if self.getZoneId() in E.STREETS:
+        if self.getZoneId() in E.BATTLE_ZONES:
             from toontown.expansion.CogPatrols import dna_path
             return dna_path(self.getZoneId())
         try:

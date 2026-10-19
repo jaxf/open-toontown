@@ -73,8 +73,8 @@ prop "shop-sign" [ code [ "branch_sign" ] pos [ 0 -.8 14 ] ]
 ]
 
 node "seed-money" [
- pos [ 88.0000 5.0000 0.1200 ]
- nhpr [ -85.0000 0 0 ]
+ pos [ -3.0000 105.0000 0.1200 ]
+ nhpr [ 0.0000 0 0 ]
  scale [ 0.8200 0.8200 0.8200 ]
 prop "complete-acorn-shop" [ code [ "shop_19000_1" ] ]
 prop "shop-sign" [ code [ "seed_sign" ] pos [ 0 -.8 14 ] ]
@@ -210,19 +210,35 @@ prop "picnic-table-1" [
  nhpr [ 70.0000 0 0 ]
  scale [ 0.7500 0.7500 0.7500 ]
 ]
+// Keep the eastern Cog gateway and its complete native tunnel footprint clear.
+// The forest continues behind the native tunnel, outside its geometry.
 prop "forest-edge-00" [
  code [ "forest_tree_b" ]
- pos [ 134.0000 9.0000 0.1200 ]
+ pos [ 196.0000 -35.0000 0.1200 ]
  nhpr [ 0.0000 0 0 ]
- scale [ 1.6000 1.6000 1.6000 ]
+ scale [ 2.2000 2.2000 2.2000 ]
  color [ 1 1 0.8 1 ]
 ]
 prop "forest-edge-01" [
  code [ "forest_tree" ]
- pos [ 132.6959 27.7884 0.1200 ]
+ pos [ 198.0000 8.0000 0.1200 ]
  nhpr [ 47.0000 0 0 ]
- scale [ 1.9000 1.9000 1.9000 ]
+ scale [ 2.2000 2.2000 2.2000 ]
  color [ 1 0.89 0.6 1 ]
+]
+prop "forest-edge-43" [
+ code [ "forest_tree" ]
+ pos [ 198.0000 51.0000 0.1200 ]
+ nhpr [ 47.0000 0 0 ]
+ scale [ 2.2000 2.2000 2.2000 ]
+ color [ 1 0.89 0.6 1 ]
+]
+prop "forest-edge-44" [
+ code [ "forest_tree_b" ]
+ pos [ 196.0000 94.0000 0.1200 ]
+ nhpr [ 0.0000 0 0 ]
+ scale [ 2.2000 2.2000 2.2000 ]
+ color [ 1 1 0.8 1 ]
 ]
 
 
@@ -427,31 +443,17 @@ prop "forest-edge-40" [
 ]
 prop "forest-edge-41" [
  code [ "forest_tree" ]
- pos [ 113.6384 -62.5391 0.1200 ]
+ pos [ 113.6384 -73.0000 0.1200 ]
  nhpr [ 1927.0000 0 0 ]
  scale [ 2.2000 2.2000 2.2000 ]
  color [ 1 0.89 0.6 1 ]
 ]
 prop "forest-edge-42" [
  code [ "forest_tree_b" ]
- pos [ 122.4151 -45.9094 0.1200 ]
+ pos [ 139.0000 -66.0000 0.1200 ]
  nhpr [ 1974.0000 0 0 ]
  scale [ 1.6000 1.6000 1.6000 ]
  color [ 1 1 0.8 1 ]
-]
-prop "forest-edge-43" [
- code [ "forest_tree" ]
- pos [ 128.8091 -28.2110 0.1200 ]
- nhpr [ 2021.0000 0 0 ]
- scale [ 1.9000 1.9000 1.9000 ]
- color [ 1 0.89 0.6 1 ]
-]
-prop "forest-edge-44" [
- code [ "forest_tree_b" ]
- pos [ 132.6959 -9.7884 0.1200 ]
- nhpr [ 2068.0000 0 0 ]
- scale [ 2.2000 2.2000 2.2000 ]
- color [ 1 0.89 0.6 1 ]
 ]
 
 prop "inner-grove-1" [
@@ -538,14 +540,14 @@ prop "garden-fence-9" [
 
 prop "garden-fence-13" [
  code [ "garden_fence" ]
- pos [ 110.0000 10.0000 0.1200 ]
- nhpr [ 90.0000 0 0 ]
+ pos [ 121.0000 78.0000 0.1200 ]
+ nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 prop "garden-fence-14" [
  code [ "garden_fence" ]
- pos [ 105.0000 -18.0000 0.1200 ]
- nhpr [ 90.0000 0 0 ]
+ pos [ 121.0000 -44.0000 0.1200 ]
+ nhpr [ 0.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
 
@@ -559,7 +561,7 @@ prop "acorn-flower-cluster-2" [
 ]
 prop "acorn-flower-cluster-3" [
  code [ "planter_19000" ]
- pos [ 45.0000 30.0000 0.1200 ]
+ pos [ 53.0000 39.0000 0.1200 ]
  nhpr [ 70.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]
@@ -583,7 +585,7 @@ prop "acorn-flower-cluster-6" [
 ]
 prop "acorn-flower-cluster-7" [
  code [ "planter_19000" ]
- pos [ 115.0000 -23.0000 0.1200 ]
+ pos [ 96.0000 -44.0000 0.1200 ]
  nhpr [ 80.0000 0 0 ]
  scale [ 1.0000 1.0000 1.0000 ]
 ]

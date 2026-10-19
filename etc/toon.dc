@@ -144,6 +144,9 @@ from toontown.estate import DistributedPhone/AI
 from toontown.effects import DistributedFireworkShow/AI
 from toontown.estate import DistributedFireworksCannon/AI
 from toontown.coghq import LobbyManager/AI
+from toontown.expansion import BureauBossLobby/AI
+from toontown.suit import DistributedBureauBoss/AI
+from toontown.building import DistributedBureauBossElevator/AI
 from otp.level import DistributedLevel/AI
 from otp.level import DistributedEntity/AI
 from otp.level import DistributedInteractiveEntity/AI
@@ -3274,4 +3277,20 @@ dclass DistributedTrashcanZeroMgr : DistributedPhaseEventMgr {
 };
 
 dclass DistributedSillyMeterMgr : DistributedPhaseEventMgr {
+};
+
+// Append new classes so existing distributed class numbers remain stable.
+dclass BureauBossLobby : LobbyManager {
+};
+
+dclass DistributedBureauBossElevator : DistributedBossElevator {
+};
+
+dclass DistributedBureauBoss : DistributedBossCog {
+  setState(string) broadcast ram;
+  setPaperwork(uint8, uint8, uint8, uint16, uint32[]) broadcast ram;
+  requestUseStation(uint8(0-4)) airecv clsend;
+  stationUsed(uint32, uint8) broadcast;
+  setStamp(uint8, int16, int16) broadcast;
+  returnToPlaza() broadcast;
 };

@@ -73,10 +73,15 @@ def perimeter(root,zone,A):
             p=tuple(a[j]+(b[j]-a[j])*i/n for j in (0,1))
             q=tuple(a[j]+(b[j]-a[j])*(i+1)/n for j in (0,1))
             x,y=(p[0]+q[0])/2,(p[1]+q[1])/2
+            # Acorn's gray Cog gateway has much wider wings than Toon tunnels.
+            # Reserve its complete footprint in the baked boundary as well.
+            cog_opening=(zone==E.BureauHQ.ENTRY and
+                         x>E.BureauHQ.ENTRY_GATE[0]-25 and
+                         abs(y-E.BureauHQ.ENTRY_GATE[1])<58)
             opening=any((abs(x-gx)<28 and ((h==0 and y<gy+25) or (abs(h)==180 and y>gy-25))) or
                         (abs(y-gy)<28 and ((h==-90 and x<gx+25) or (h==90 and x>gx-25)))
                         for gx,gy,gz,h in gates)
-            if not opening:fence(root,hood,A,[p,q],10 if zone not in ROADS else 8)
+            if not (opening or cog_opening):fence(root,hood,A,[p,q],10 if zone not in ROADS else 8)
     # Native services keep their stock transforms. Screens wrap only sides/back,
     # leaving doors, trolley boarding and departure tracks unobstructed.
     code,phase=Services.theme(zone)

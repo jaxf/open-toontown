@@ -126,15 +126,21 @@ def landmark(parent, hood):
     label(root,spec['landmark'],(0,-15,2),1.3)
 
 
-def tunnel(parent, target, transform, colors):
+def tunnel(parent, target, transform, colors, cog=False, sign_text=None):
     """Uses the existing tunnel movies, collision events, and return naming."""
     target_hood = E.hood_id(target)
-    short = E.NEIGHBORHOODS[target_hood]['short'] if target_hood in E.NEIGHBORHOODS else E.SOURCE_CODES[target_hood]
+    short = E.HOOD_SPECS[target_hood]['short'] if target_hood in E.HOOD_SPECS else E.SOURCE_CODES[target_hood]
     # Reuse the original curved tunnel and its collision/origin nodes: its
     # bend is authored to match DistributedToon's existing tunnel movies.
     from direct.showbase import ShowBaseGlobal
     root = parent.attachNewNode('linktunnel_%s_%s' % (short,target))
-    model = ShowBaseGlobal.base.loader.loadModel('phase_4/models/modules/safe_zone_tunnel_TT')
+    model_path='phase_6/models/cogHQ/Cog_Tunnel' if cog else 'phase_4/models/modules/safe_zone_tunnel_TT'
+    model = ShowBaseGlobal.base.loader.loadModel(model_path)
+    root.setTag('source-model',model_path)
+    if cog:
+        # The native Cog trigger has a different name; the same tunnel hooks
+        # and movies use its own authored position and rebased origin.
+        model.find('**/tunnel_sphere').setName('tunnel_trigger')
     # Stock DNA places this model in world coordinates. Rebase its authored
     # tunnel origin before positioning it in our local scene.
     origin = model.find('**/tunnel_origin')
@@ -144,11 +150,15 @@ def tunnel(parent, target, transform, colors):
     root.setPos(*transform[:3])
     root.setH(transform[3])
     a,b,c = colors
-    root.setColorScale(*c)
-    floor(root,'tunnel-apron',0,8,25,20,0,b)
-    plaque=box(root,'destination-sign',(0,2,17),(21,1,3.8),b)
+    root.setColorScale(*((.72,.77,.80,1) if cog else c))
+    floor(root,'tunnel-apron',0,8,25,20,0,(.28,.31,.34,1) if cog else b)
+    sign_height=21 if cog else 17
+    sign_y=3.3 if cog else 2
+    plaque=box(root,'destination-sign',(0,sign_y,sign_height),(27 if cog else 21,1,3.8),
+               (.26,.30,.33,1) if cog else b)
     plaque.setColorScaleOff()
-    text=label(root,E.zone_name(target),(0,2.7,16),1.15)
+    text=label(root,sign_text or E.zone_name(target),(0,sign_y+.7,sign_height-1),1.15)
+    if cog:text.node().setFont(ShowBaseGlobal.base.loader.loadFont('phase_3/models/fonts/CourierBold'))
     text.setColorScaleOff()
     text.setH(180)
 
@@ -165,6 +175,9 @@ def add_tunnels(parent, zone):
 
 
 def build_scene(zone, dna_store=None):
+    if zone in E.HQ_ZONES:
+        from .BureauHQScene import build_scene as build_hq
+        return build_hq(zone)
     if zone == E.ACORN:
         from .AcornDNA import load_scene
     else:
@@ -172,4 +185,8 @@ def build_scene(zone, dna_store=None):
     root=load_scene(zone,dna_store)
     from .Services import attach_services
     attach_services(root,zone,dna_store)
+    if zone==E.BureauHQ.ENTRY:
+        # Keep the added gate inside the native visgroup used by tunnel hooks.
+        tunnel(root.find('**/19000:woodland'),E.BureauHQ.MINISTRY,E.BureauHQ.ENTRY_GATE,
+               E.BureauHQ.SPEC['colors'],cog=True,sign_text='Bureaubot HQ')
     return root

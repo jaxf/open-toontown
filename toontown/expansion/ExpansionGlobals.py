@@ -9,6 +9,8 @@ HUSH = 62000
 DOODLEWOOD = 63000
 TUMBLEWEED = 64000
 DYNAMIC_ZONE_BEGIN = 65000
+from . import BureauHQGlobals as BureauHQ
+HQ_ZONES=BureauHQ.ZONES
 
 NEIGHBORHOODS = {
     ACORN: dict(name='Acorn Acreside', short='acorn', theme='woodland',
@@ -44,7 +46,11 @@ STREETS = {
     61200: ('Limelight Lane', BRINY, BRINY, DOODLEWOOD),
     63200: ('Stagecoach Street', DOODLEWOOD, DOODLEWOOD, TUMBLEWEED),
 }
-ALL_ZONES = frozenset(NEIGHBORHOODS) | frozenset(STREETS)
+SERVICE_ZONES = frozenset(NEIGHBORHOODS) | frozenset(STREETS)
+ALL_ZONES = SERVICE_ZONES | HQ_ZONES
+BATTLE_ZONES = frozenset(STREETS) | HQ_ZONES
+HOOD_SPECS = dict(NEIGHBORHOODS)
+HOOD_SPECS[BureauHQ.MINISTRY]=BureauHQ.SPEC
 SOURCE_NAMES = {1000: "Donald's Dock", 2000: 'Toontown Central', 3000: 'The Brrrgh',
                 4000: "Minnie's Melodyland", 5000: 'Daisy Gardens', 6000: 'Acorn Acres',
                 8000: 'Goofy Speedway', 9000: "Donald's Dreamland", 10000: 'Bossbot HQ',
@@ -76,6 +82,7 @@ def hood_id(zone):
 
 
 def zone_name(zone):
+    if zone in HQ_ZONES:return BureauHQ.NAMES[zone]
     if zone in STREETS:
         return STREETS[zone][0]
     if zone in NEIGHBORHOODS:
@@ -84,15 +91,18 @@ def zone_name(zone):
 
 
 def connections(zone):
+    if zone in HQ_ZONES:return BureauHQ.LINKS[zone]
     if zone in STREETS:
         return STREETS[zone][2:4]
-    return tuple(street for street, data in STREETS.items() if zone in data[2:4])
+    result=tuple(street for street, data in STREETS.items() if zone in data[2:4])
+    return result+(BureauHQ.MINISTRY,) if zone==BureauHQ.ENTRY else result
 
 
 def gate_transforms(zone):
+    if zone in HQ_ZONES:return BureauHQ.GATES[zone]
     # Keep this travel manifest aligned with the editable Acorn DNA layouts.
     if zone == ACORN:
-        return ((0, -110, 0, 0), (-118, 20, 0, -90))
+        return ((0, -110, 0, 0), (-118, 20, 0, -90), BureauHQ.ENTRY_GATE)
     from .WorldLayout import ROADS, PLAZA_GATES
     if zone in ROADS:
         return ((0, ROADS[zone][0][1], 0, 0), (0, ROADS[zone][-1][1], 0, 180))
@@ -113,6 +123,7 @@ def destinations():
 
 
 def spawn_point(zone):
+    if zone in HQ_ZONES:return BureauHQ.SPAWNS[zone]
     # Root Route bends east here; the original center spawn is inside a shop.
     from .WorldLayout import ROADS
     if zone in ROADS:
@@ -121,7 +132,7 @@ def spawn_point(zone):
 
 # Native service interiors keep the stock branch + 500 + block convention.
 SERVICE_BLOCKS = {'gagshop': 19, 'hq': 20}
-INTERIOR_EXTERIORS = {zone+500+block: zone for zone in ALL_ZONES
+INTERIOR_EXTERIORS = {zone+500+block: zone for zone in SERVICE_ZONES
                       for kind,block in SERVICE_BLOCKS.items()
                       if kind=='hq' or zone in NEIGHBORHOODS}
 SERVICE_INTERIORS = frozenset(INTERIOR_EXTERIORS)

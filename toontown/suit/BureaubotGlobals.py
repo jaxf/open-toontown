@@ -61,7 +61,8 @@ def install_battle_catalog(attributes):
 
 
 def street_weights(weights):
-    """20% Bureaubots; retain each street's relative classic department mix."""
+    """Add 20% Bureau to classic mixes; preserve explicit five-department mixes."""
+    if len(weights)==5:return tuple(weights)
     scaled = [value * 80 // 100 for value in weights]
     # Largest remainder, with stable ordering, keeps the existing 0..99 RNG.
     remainder = 80 - sum(scaled)

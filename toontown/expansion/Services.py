@@ -4,7 +4,7 @@ from functools import lru_cache
 from . import ExpansionGlobals as E
 from .WorldLayout import ROADS,curve,road_paths,along,distance_to_path
 STORAGE='assets/expansion/services/storage_services.dna'
-LAYOUTS={z:'assets/expansion/services/service_%s.dna'%z for z in E.ALL_ZONES}
+LAYOUTS={z:'assets/expansion/services/service_%s.dna'%z for z in E.SERVICE_ZONES}
 PLAYGROUND_SERVICES={
     19000:dict(hq=(-65,-58,0,130),gagshop=(62,-60,0,-130),trolley=(88,65,0,90)),
     61000:dict(hq=(-115,-85,0,100),gagshop=(62,-80,0,-155),trolley=(-100,85,0,0)),
@@ -65,7 +65,7 @@ def register_npcs(npc_dict):
     # Clone native clerk/HQ roles, preserving stock dialogue, quests and shopping.
     # Stable NPC IDs are shared by client and AI; no saved Toon data is rewritten.
     templates=[('gagshop',2006),('gagshop',2011),('hq',2007),('hq',2008),('hq',2009),('hq',2010)]
-    for index,zone in enumerate(sorted(E.ALL_ZONES)):
+    for index,zone in enumerate(sorted(E.SERVICE_ZONES)):
         for offset,(kind,source) in enumerate(templates):
             if kind not in placements(zone):continue
             npc_id=50000+index*10+offset

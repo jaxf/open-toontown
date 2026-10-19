@@ -98,11 +98,12 @@ class DataAndBattleTests(unittest.TestCase):
         rows=ast.literal_eval(next(n.value for n in cls.body if isinstance(n,ast.Assign)
             and isinstance(n.targets[0],ast.Name) and n.targets[0].id=='SuitHoodInfo'))
         from toontown.expansion.CogPatrols import hood_rows
+        from toontown.expansion.BureauHQGlobals import ZONES as bureauZones
         rows+=hood_rows()
         for row in rows:
             weights=BG.street_weights(row[8])
             self.assertEqual(sum(weights),100)
-            self.assertEqual(weights[4],20)
+            self.assertEqual(weights[4],100 if row[0] in bureauZones else 20)
             for old,new in zip(row[8],weights):
                 if old==0:self.assertEqual(new,0)
 
@@ -129,6 +130,14 @@ class DataAndBattleTests(unittest.TestCase):
         sp.hoodInfoIdx=0
         ranks={sp.pickLevelTypeAndTrack(10,track='u')[1] for _ in range(200)}
         self.assertEqual(ranks,{6,7,8})
+        from toontown.expansion.BureauHQGlobals import ZONES as bureauZones
+        for zone in bureauZones:
+            sp.hoodInfoIdx=next(i for i,row in enumerate(sp.SuitHoodInfo) if row[0]==zone)
+            for _ in range(100):
+                level,rank,dept=sp.pickLevelTypeAndTrack()
+                self.assertIn(level,(8,9,10));self.assertEqual(dept,'u')
+                self.assertGreaterEqual(rank,level-4);self.assertLessEqual(rank,8)
+        sp.hoodInfoIdx=0
         row=list(plannerClass.SuitHoodInfo[0])
         row[8]=(0,0,0,0,100)
         sp.SuitHoodInfo=[row]

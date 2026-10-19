@@ -344,6 +344,14 @@ class ToontownAIRepository(ToontownInternalRepository):
             hood.startup()
             self.hoods.append(hood)
 
+        # Three connected Bureaubot HQ exteriors share a native hood.
+        from toontown.expansion.BureauHQDataAI import BureauHQDataAI
+        from toontown.expansion import BureauHQGlobals as BureauHQ
+        self.zoneTable[BureauHQ.MINISTRY]=tuple((zone,0,0) for zone in sorted(BureauHQ.ZONES))
+        bureau=BureauHQDataAI(self,BureauHQ.MINISTRY)
+        bureau.startup()
+        self.hoods.append(bureau)
+
         # Welcome Valley zones
         self.welcomeValleyManager.createWelcomeValleyZones()
 
@@ -352,6 +360,8 @@ class ToontownAIRepository(ToontownInternalRepository):
             suitPlanner.assignInitialSuitBuildings()
 
     def genDNAFileName(self, zoneId):
+        from toontown.expansion import BureauHQGlobals as BureauHQ
+        if zoneId in BureauHQ.ZONES:return BureauHQ.dna_path(zoneId)
         canonicalZoneId = ZoneUtil.getCanonicalZoneId(zoneId)
         canonicalHoodId = ZoneUtil.getCanonicalHoodId(canonicalZoneId)
         hood = ToontownGlobals.dnaMap[canonicalHoodId]

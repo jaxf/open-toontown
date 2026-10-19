@@ -115,6 +115,10 @@ class BattlePlace(Place.Place):
 
     if __astron__:
         def genDNAFileName(self, zoneId):
+            from toontown.expansion import ExpansionGlobals as E
+            if zoneId in E.BATTLE_ZONES:
+                from toontown.expansion.CogPatrols import dna_path
+                return dna_path(zoneId)
             zoneId = ZoneUtil.getCanonicalZoneId(zoneId)
             hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
             hood = ToontownGlobals.dnaMap[hoodId]

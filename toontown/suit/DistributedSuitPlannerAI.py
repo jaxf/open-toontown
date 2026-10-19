@@ -305,6 +305,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         return pointList
 
     def createNewSuit(self, blockNumbers, streetPoints, toonBlockTakeover=None, cogdoTakeover=None, minPathLen=None, maxPathLen=None, buildingHeight=None, suitLevel=None, suitType=None, suitTrack=None, suitName=None, skelecog=None, revives=None):
+        from toontown.expansion.BureauHQGlobals import ZONES as bureauZones
+        bureauPatrol=self.zoneId in bureauZones
         startPoint = None
         blockNumber = None
         if self.notify.getDebug():
@@ -378,9 +380,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                 if cogdoTakeover and suitTrack == None:
                     suitTrack = random.choice(['s'])
         if suitName == None:
-            if not cogdoTakeover:
+            if not cogdoTakeover and not bureauPatrol:
                 suitName, skelecog = self.air.suitInvasionManager.getInvadingCog()
-            if suitName == None:
+            if suitName == None and not bureauPatrol:
                 suitName = self.defaultSuitName
         if suitType == None and suitName != None:
             suitType = SuitDNA.getSuitType(suitName)
@@ -1020,7 +1022,14 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                 toon.b_setBattleId(toonId)
         pos = self.battlePosDict[canonicalZoneId]
         from toontown.expansion import ExpansionGlobals as E
-        if canonicalZoneId in E.STREETS:
+        if canonicalZoneId in E.HQ_ZONES:
+            from toontown.expansion.BureauHQGlobals import BATTLE_PADS
+            leg=suit.legList.getLeg(suit.currentLeg)
+            elapsed=globalClock.getFrameTime()-suit.pathStartTime-leg.getStartTime()
+            location=leg.getPosAtTime(max(0,elapsed))
+            x,y=min(BATTLE_PADS[canonicalZoneId],key=lambda p:(p[0]-location.x)**2+(p[1]-location.y)**2)
+            pos=Point3(x,y,.12)
+        elif canonicalZoneId in E.STREETS:
             from toontown.expansion.WorldLayout import road_paths
             leg=suit.legList.getLeg(suit.currentLeg)
             elapsed=globalClock.getFrameTime()-suit.pathStartTime-leg.getStartTime()

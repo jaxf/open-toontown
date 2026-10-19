@@ -1675,7 +1675,7 @@ AV_TOUCH_COUNT_TIME = 300
 
 # The expansion manifest is shared by map, server, geometry, and admin tools.
 from toontown.expansion import ExpansionGlobals as ExpansionGlobals
-for _hood, _spec in ExpansionGlobals.NEIGHBORHOODS.items():
+for _hood, _spec in ExpansionGlobals.HOOD_SPECS.items():
     hoodNameMap[_hood] = ('to', 'in', _spec['name'])
     phaseMap[_hood] = 8
     streetPhaseMap[_hood] = 8
@@ -1685,7 +1685,11 @@ for _hood, _spec in ExpansionGlobals.NEIGHBORHOODS.items():
     HoodHierarchy[_hood] = tuple(z for z, s in ExpansionGlobals.STREETS.items() if s[1] == _hood)
 for _street, _spec in ExpansionGlobals.STREETS.items():
     StreetNames[_street] = ('to', 'on', _spec[0])
-Hoods += tuple(ExpansionGlobals.NEIGHBORHOODS)
-HoodsForTeleportAll += tuple(ExpansionGlobals.NEIGHBORHOODS)
+HoodHierarchy[ExpansionGlobals.BureauHQ.MINISTRY]=(ExpansionGlobals.BureauHQ.ARCHIVES,ExpansionGlobals.BureauHQ.WORKS)
+HQToSafezone[ExpansionGlobals.BureauHQ.MINISTRY]=ExpansionGlobals.BureauHQ.ENTRY
+for _zone,_name in ExpansionGlobals.BureauHQ.NAMES.items():
+    StreetNames[_zone]=('to','in',_name)
+Hoods += tuple(ExpansionGlobals.HOOD_SPECS)
+HoodsForTeleportAll += tuple(ExpansionGlobals.HOOD_SPECS)
 StreetBranchZones = list(StreetNames)
 del _hood, _street, _spec
