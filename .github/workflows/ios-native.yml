@@ -36,8 +36,9 @@ jobs:
         if: always()
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'TEXT'
-          This job compiles device-native components, not a playable app or IPA.
-          UIKit graphics integration, remaining audio/dependencies and
-          real-device gameplay remain separate release gates. No simulator runs.
+          This job compiles device-native components and an unsigned app host.
+          Runtime/content packaging, remaining audio/dependencies and
+          real-device gameplay remain separate release gates. No playable IPA
+          is produced and no simulator runs.
           Build logs are retained; binaries are not uploaded or cached.
           TEXT

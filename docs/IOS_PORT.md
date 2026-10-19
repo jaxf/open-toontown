@@ -209,6 +209,10 @@ Missing modules stop startup; they are not replaced with stubs. The joystick is
 shown only when avatar controls are enabled in supported walking modes and no
 Panda GUI item has keyboard focus. Activity-specific controls still need work.
 
+`Device.prc` selects `static TTGraphicsPipe`. The iOS-only engine overlay skips
+dynamic renderer discovery in this mode: an empty `aux-display` declaration
+would retain desktop renderer entries because that variable is a list.
+
 Pause stops display-link delivery, releases contacts and sends `PandaPaused`;
 resume sends `PandaRestarted` and rechecks input permission on the next frame.
 Errors invalidate the display link and input bridge and destroy Panda windows.
@@ -251,30 +255,38 @@ UI/session handling still needs implementation and device verification.
 
 Verified compilation/link checkpoint, 2026-10-19:
 
-- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39311133636)
-  at `a532385889a0558ef174dc29d0868858bb9dd271`: all three jobs passed.
+- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39313939909)
+  at `29c4a25bf56ec3e3a0491670b95ea47ead0096e0`: all three jobs passed.
   CPython 3.13.9 and static `panda3d.core`, `.direct`, `.physics`, `.otp` and
   `.toontown` compiled against the iPhone SDK. Navigation is included in OTP.
-  The module initializers and new UIKit/ES2 pipe linked together into
-  `tt_python_linkcheck`; `lipo` confirmed
+  The module initializers and UIKit/ES2 pipe linked together into
+  `tt_python_linkcheck` and the new `OpenToontown.app` host. `lipo` confirmed
   arm64 and Mach-O reports iOS 15.0 minimum / SDK 18.5. This verifies native
   symbol resolution, not Python imports or gameplay on a device.
+- The native application, view controller, embedded runtime and input bridge
+  compiled with strict warnings. The app's Info.plist passed `plutil` and its
+  platform PRC was included. This unsigned bundle is deliberately incomplete:
+  the Python framework/stdlib, third-party modules and game assets are not yet
+  embedded, and no IPA or device installation was produced.
 - The same run compiled the UIKit joystick/Jump view, the UIKit-to-Python
   callback adapter, Panda tap/drag input view, `TTGLESView` and `TTGraphicsPipe`.
   The C++-only build also linked `tt_graphics_linkcheck` for arm64 iOS, including
   the real ES2 renderer. SDK OpenAL compiled as before. New graphics/input code
   uses strict warnings, with upstream Panda headers treated as dependencies.
   No on-device rendering, touch interaction or audio playback was tested.
-- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39311753311):
-  all 19 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
-  eight platform/input checks, six world-routing checks and five access-policy
-  checks, at `1b41f29acce8cc2a9db922f910987e38228e4d24`. The platform checks
-  now also verify that an embedded session preserves native frame pacing.
-  That regression failed before the session fix and passed afterward.
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39313939882):
+  all 25 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
+  eight platform/input checks, six embedded-lifecycle checks, six world-routing
+  checks and five access-policy checks, at
+  `29c4a25bf56ec3e3a0491670b95ea47ead0096e0`. Lifecycle checks cover required
+  module loading, frame suspension, GUI/movement gating, partial-start cleanup,
+  rejecting repeated starts and main-thread ownership. Platform checks also
+  verify that embedded sessions preserve native frame pacing.
   This uses stock Panda only for those tested APIs, not the custom
   desktop game runtime. Full desktop launch/login/gameplay is still unverified.
 - Local mobile/server suite: 29 tests passed. Local platform/input, expansion
   and administrator suites also passed (8 + 6 + 5 checks).
+  The six embedded-lifecycle tests passed locally too.
 
 No IPA, on-device rendering, packaged runtime import test or actual
 phone interaction has passed yet. Required native modules such as ODE and

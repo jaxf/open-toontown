@@ -34,6 +34,19 @@ def prepare(root):
     replace_once(root, 'panda/src/glstuff/CMakeLists.txt',
                  'if(NOT HAVE_GL)\n',
                  'if(NOT HAVE_GL AND NOT HAVE_GLES1 AND NOT HAVE_GLES2)\n')
+    # aux-display is a list: an empty platform declaration does not erase the
+    # desktop entries. The embedded app registers its pipe statically, so give
+    # it an explicit mode that never dlopens those desktop renderer libraries.
+    replace_once(root, 'panda/src/display/graphicsPipeSelection.cxx',
+                 '  _default_module_loaded = false;\n',
+                 '  _default_module_loaded = false;\n'
+                 '#ifdef BUILD_IPHONE\n'
+                 '  if (_default_display_module == "static") {\n'
+                 '    _default_display_module.clear();\n'
+                 '    _display_modules.clear();\n'
+                 '    _default_module_loaded = true;\n'
+                 '  }\n'
+                 '#endif\n')
     # iOS exposes the same BSD socket API without enabling desktop Mac APIs.
     replace_once(root, 'panda/src/nativenet/socket_portable.h',
                  '#elif defined(IS_LINUX) || defined(IS_OSX) || defined(IS_FREEBSD) || defined(__EMSCRIPTEN__)',

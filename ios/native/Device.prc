@@ -1,6 +1,6 @@
 # Loaded before native pipe registration, then again after game defaults.
-load-display
-aux-display
+# The iOS engine overlay supports registered pipes without dynamic plugins.
+load-display static TTGraphicsPipe
 window-type onscreen
 threading-model
 sync-video false
