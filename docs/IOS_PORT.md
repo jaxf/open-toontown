@@ -95,7 +95,7 @@ python -m ios.stage_game --output /tmp/open-toontown-game-content.zip
 
 ### Cloud device compilation
 
-`.github/workflows/ios-native.yml` runs two compilation jobs on GitHub's
+`.github/workflows/ios-native.yml` runs three compilation jobs on GitHub's
 standard `macos-15` runner when this branch's iOS build sources change. No
 local Xcode installation is needed to run that workflow. It is restricted to
 public repositories; it uses no larger runners, cache or artifact uploads.
@@ -114,7 +114,17 @@ include Python bindings, Python-dependent navigation, third-party codecs,
 ODE, the UIKit window/context, or audio yet. A green compile check establishes
 only compilation of those named components, not game compatibility.
 
-Both scripts leave detailed compiler output in the Actions logs. Neither
+`bash ios/build_native.sh controls /absolute/build-folder` compiles the native
+UIKit joystick/jump overlay with the device SDK and verifies its Mach-O target.
+`TTControlsView` places a left movement stick and right Jump button inside the
+safe area, accepts simultaneous touches, passes touches outside the controls
+through to the game view, and releases held input on cancellation/background.
+Its delegate still needs to be connected to the Panda host. Tap interaction
+also requires the host's DirectGUI/world pointer bridge. Battle/minigame
+controls, keyboard entry, accessibility and actual device interaction remain
+release requirements. Compiling the overlay does not establish working input.
+
+All build commands leave detailed compiler output in the Actions logs. None
 produces an IPA or runs a simulator. The Python ABI is a build candidate;
 the full game still needs to be tested against it. Do not use a macOS wheel
 to fill any missing iOS modules.

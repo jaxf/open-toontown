@@ -11,6 +11,7 @@ from panda3d.core import ConfigVariableBool, ConfigVariableInt, loadPrcFileData,
 from otp.otpbase.ClientPaths import client_path
 from otp.settings.Settings import Settings
 from toontown.mobile.Session import Session
+from toontown.mobile.TouchInput import TouchInput, stick_keys
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -104,6 +105,29 @@ class PlatformDefaultsTests(unittest.TestCase):
         config = Session('100.80.1.2', 'a' * 43).prc(embedded=False)
         self.assertNotIn('mobile-client', config)
         self.assertNotIn('toontown-auto-run', config)
+
+    def test_movement_and_jump_can_be_held_and_released_independently(self):
+        import builtins
+        from direct.showbase.InputStateGlobal import inputState
+        from direct.showbase.MessengerGlobal import messenger
+        with patch.object(builtins, 'messenger', messenger, create=True):
+            walk = inputState.watch('platform-walk', 'arrow_up', 'arrow_up-up')
+            jump = inputState.watch('platform-jump', 'control', 'control-up')
+            router = TouchInput(messenger.send, lambda: 0)
+            try:
+                router.update('stick', stick_keys(0, 1))
+                router.update('jump', {'control'})
+                self.assertTrue(inputState.isSet('platform-walk'))
+                self.assertTrue(inputState.isSet('platform-jump'))
+                router.end('jump')
+                self.assertTrue(inputState.isSet('platform-walk'))
+                self.assertFalse(inputState.isSet('platform-jump'))
+                router.set_enabled(False)
+                self.assertFalse(inputState.isSet('platform-walk'))
+            finally:
+                router.cancel_all()
+                walk.release()
+                jump.release()
 
 
 if __name__ == '__main__':

@@ -38,6 +38,11 @@ def prepare(root):
     replace_once(root, 'panda/src/nativenet/socket_portable.h',
                  '#elif defined(IS_LINUX) || defined(IS_OSX) || defined(IS_FREEBSD) || defined(__EMSCRIPTEN__)',
                  '#elif defined(IS_LINUX) || defined(IS_OSX) || defined(BUILD_IPHONE) || defined(IS_FREEBSD) || defined(__EMSCRIPTEN__)')
+    # This platform include precedes Panda's generated configuration header.
+    replace_once(root, 'direct/src/showbase/showBase.cxx',
+                 '#ifdef __APPLE__\n// We have to include this',
+                 '#ifdef __APPLE__\n#include <TargetConditionals.h>\n#endif\n'
+                 '#if defined(__APPLE__) && TARGET_OS_OSX\n// We have to include this')
     # Apple is not synonymous with macOS. iOS has neither AppKit nor the
     # public desktop IOKit HID API. Keep the original paths for macOS.
     replace_once(root, 'panda/src/device/CMakeLists.txt',

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Reproducible first native device compilation; never presents it as an IPA.
 set -Eeuo pipefail
-[[ $# == 2 && $1 =~ ^(python|panda)$ ]] || { echo 'Usage: bash ios/build_native.sh python|panda /absolute/build-folder' >&2; exit 2; }
+[[ $# == 2 && $1 =~ ^(python|panda|controls)$ ]] || { echo 'Usage: bash ios/build_native.sh python|panda|controls /absolute/build-folder' >&2; exit 2; }
 [[ $(uname -s) == Darwin ]] || { echo 'A Mac with full Xcode is required (the cloud workflow supplies it).' >&2; exit 2; }
 TT_COMPONENT=$1
 TT_WORK=$2
@@ -25,7 +25,16 @@ fetch_source() {
 }
 xcodebuild -version
 printf 'Device SDK: %s\nComponent: %s\n' "$TT_SDK" "$TT_COMPONENT"
-if [[ $TT_COMPONENT == python ]]; then
+if [[ $TT_COMPONENT == controls ]]; then
+  # UIKit can be checked independently while the custom engine is ported.
+  xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
+    -fobjc-arc -std=c++17 -Wall -Werror -c "$TT_ROOT/ios/native/TTControlsView.mm" \
+    -o "$TT_WORK/TTControlsView.o"
+  xcrun lipo "$TT_WORK/TTControlsView.o" -verify_arch arm64
+  xcrun vtool -show-build "$TT_WORK/TTControlsView.o" | tee "$TT_WORK/controls-platform.txt"
+  grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/controls-platform.txt"
+  printf '%s\n' 'UIKIT CONTROLS COMPILED. Host/input bridge and device interaction testing still required.'
+elif [[ $TT_COMPONENT == python ]]; then
   TT_SOURCE="$TT_WORK/cpython"
   fetch_source https://github.com/python/cpython.git "$TT_CPYTHON" "$TT_SOURCE"
   mkdir -p "$TT_WORK/python-host" "$TT_WORK/python-device" "$TT_WORK/python-install"
