@@ -26,6 +26,10 @@ def prepare(root):
     revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != PIN:
         raise ValueError('Only the audited engine revision may be patched')
+    # Upstream's set() stores its help text as a truthy value, ignoring OFF.
+    # Make this a real boolean option so the C++-only gate needs no bindings.
+    replace_once(root, 'dtool/Config.cmake',
+                 'set(INTERROGATE_C_INTERFACE\n', 'option(INTERROGATE_C_INTERFACE\n')
     # Apple is not synonymous with macOS. iOS has neither AppKit nor the
     # public desktop IOKit HID API. Keep the original paths for macOS.
     replace_once(root, 'panda/src/device/CMakeLists.txt',

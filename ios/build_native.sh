@@ -51,7 +51,7 @@ if [[ $TT_COMPONENT == python ]]; then
   make -j "$TT_JOBS"
   make install
   TT_BINARY="$TT_WORK/python-install/Python.framework/Python"
-  xcrun lipo -verify_arch arm64 "$TT_BINARY"
+  xcrun lipo "$TT_BINARY" -verify_arch arm64
   xcrun vtool -show-build "$TT_BINARY" | tee "$TT_WORK/python-platform.txt"
   grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-platform.txt"
   printf '%s\n' 'PYTHON DEVICE FRAMEWORK COMPILED. Third-party modules and game integration still required.'
@@ -78,7 +78,7 @@ else
     -DBUILD_SHARED_LIBS=OFF -DBUILD_IPHONE=iPhoneOS \
     -DBUILD_PANDATOOL=OFF -DBUILD_CONTRIB=OFF -DBUILD_MODELS=OFF \
     -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DBUILD_INTERROGATE=OFF \
-    -DINTERROGATE_PYTHON_INTERFACE=OFF -DHAVE_GLES2=ON \
+    -DINTERROGATE_PYTHON_INTERFACE=OFF -DINTERROGATE_C_INTERFACE=OFF -DHAVE_GLES2=ON \
     -DOPENGLES2_FOUND=ON -DOPENGLES2_INCLUDE_DIR="$TT_SDK/System/Library/Frameworks/OpenGLES.framework/Headers" \
     -DOPENGLES2_LIBRARY="$TT_SDK/System/Library/Frameworks/OpenGLES.framework" \
     "${TT_OPTIONS[@]}"
