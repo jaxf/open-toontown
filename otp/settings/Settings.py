@@ -1,12 +1,13 @@
 import json
 import os
+from otp.otpbase.ClientPaths import client_path
 
 
 class Settings:
 
     def __init__(self):
         self.__settings = {}
-        self.__filename = 'useropt.json'
+        self.__filename = client_path('useropt.json')
 
     def doSavedSettingsExist(self):
         return os.path.exists(self.__filename)
