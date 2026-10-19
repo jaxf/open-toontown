@@ -67,12 +67,19 @@ elif [[ $TT_COMPONENT == python ]]; then
 else
   TT_BINDINGS=OFF
   TT_BUILD_DIR="$TT_WORK/panda-device"
-  TT_EXTRA=()
+  TT_EXTRA=(-DTT_IOS_PYTHON_FRAMEWORK=)
   if [[ $TT_COMPONENT == bindings ]]; then
     # The build interpreter runs on macOS; only the framework is linked on iOS.
     bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
     TT_HOST_PY="$TT_WORK/python-host/python.exe"
     [[ -x $TT_HOST_PY ]] || TT_HOST_PY="$TT_WORK/python-host/python"
+    # Compile the UIKit-to-Python adapter with device headers, never host ones.
+    xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
+      -fobjc-arc -std=c++17 -Wall -Werror \
+      -I "$TT_WORK/python-install/Python.framework/Headers" \
+      -c "$TT_ROOT/ios/native/TTGameInputBridge.mm" -o "$TT_WORK/TTGameInputBridge.o"
+    xcrun lipo "$TT_WORK/TTGameInputBridge.o" -verify_arch arm64
+    xcrun vtool -show-build "$TT_WORK/TTGameInputBridge.o"
     TT_BINDINGS=ON
     TT_BUILD_DIR="$TT_WORK/panda-bindings"
     TT_EXTRA+=("-DTT_IOS_PYTHON_FRAMEWORK=$TT_WORK/python-install/Python.framework"
@@ -84,8 +91,8 @@ else
   TT_CMAKE=$(command -v cmake)
   [[ -n $TT_CMAKE ]] || { echo 'cmake is required.' >&2; exit 2; }
   TT_OPTIONS=()
-  # No desktop dependencies may satisfy an iPhone build. Add target-built
-  # dependencies and Python bindings in the next runtime integration stage.
+  # No desktop dependencies may satisfy an iPhone build. Optional codecs and
+  # physics dependencies need their own device builds in a later stage.
   for package in OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET ODE SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
     TT_OPTIONS+=("-DHAVE_${package}=OFF")
   done

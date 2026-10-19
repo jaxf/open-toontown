@@ -11,7 +11,8 @@ from panda3d.core import ConfigVariableBool, ConfigVariableInt, loadPrcFileData,
 from otp.otpbase.ClientPaths import client_path
 from otp.settings.Settings import Settings
 from toontown.mobile.Session import Session
-from toontown.mobile.TouchInput import TouchInput, stick_keys
+from toontown.mobile.TouchInput import TouchInput
+from toontown.mobile.NativeControls import NativeControls, create
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -115,19 +116,60 @@ class PlatformDefaultsTests(unittest.TestCase):
             jump = inputState.watch('platform-jump', 'control', 'control-up')
             router = TouchInput(messenger.send, lambda: 0)
             try:
-                router.update('stick', stick_keys(0, 1))
-                router.update('jump', {'control'})
+                native = NativeControls(router)
+                native.set_enabled(True)
+                native.move_stick(0, 1)
+                native.jump(True)
                 self.assertTrue(inputState.isSet('platform-walk'))
                 self.assertTrue(inputState.isSet('platform-jump'))
-                router.end('jump')
+                native.jump(False)
                 self.assertTrue(inputState.isSet('platform-walk'))
                 self.assertFalse(inputState.isSet('platform-jump'))
-                router.set_enabled(False)
+                native.close()
                 self.assertFalse(inputState.isSet('platform-walk'))
             finally:
                 router.cancel_all()
                 walk.release()
                 jump.release()
+
+    def test_native_adapter_starts_disabled_and_requires_fresh_touch_after_pause(self):
+        events = []
+        native = NativeControls(TouchInput(lambda key, args: events.append((key, args)), lambda: 7))
+        native.move_stick(0, 1)
+        native.jump(True)
+        self.assertEqual(events, [])
+        native.set_enabled(True)
+        native.move_stick(-1, 1)
+        native.jump(True)
+        native.set_enabled(False)
+        downs = [key for key, args in events if not key.startswith('time-') and not key.endswith('-up')]
+        ups = [key[:-3] for key, args in events if not key.startswith('time-') and key.endswith('-up')]
+        self.assertEqual(set(downs), {'arrow_left', 'arrow_up', 'control'})
+        self.assertCountEqual(downs, ups)
+        count = len(events)
+        native.jump(True)
+        native.set_enabled(True)
+        self.assertEqual(len(events), count)
+        native.close()
+        native.close()
+        self.assertEqual(len(events), count)
+
+    def test_native_adapter_rejects_nonfinite_stick_without_changing_held_input(self):
+        router = TouchInput(lambda *args: None, lambda: 0)
+        native = NativeControls(router)
+        native.set_enabled(True)
+        native.move_stick(0, 1)
+        for bad in (float('nan'), float('inf'), -float('inf')):
+            with self.assertRaises(ValueError):
+                native.move_stick(bad, 0)
+        self.assertEqual(router.contacts, {'uikit-stick': frozenset({'arrow_up'})})
+        native.close()
+        self.assertEqual(router.contacts, {})
+
+    def test_native_factory_cannot_attach_to_desktop_client(self):
+        self.page('desktop-test', 'mobile-client #f')
+        with self.assertRaisesRegex(RuntimeError, 'embedded mobile client'):
+            create()
 
 
 if __name__ == '__main__':
