@@ -7,10 +7,18 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.suit import SuitDNA
 from toontown.suit import Suit
+from toontown.suit import BureaubotModels
+from .BureaubotViewer import BureaubotViewer
 from toontown.battle import SuitBattleGlobals
 from .CogPageGlobals import *
 SCALE_FACTOR = 1.5
 RADAR_DELAY = 0.2
+# Five equally sized rows fit inside the existing book, without stretching heads.
+GALLERY_ROW_TOP = -0.17
+GALLERY_ROW_STEP = 0.227
+GALLERY_CARD_HEIGHT = 0.79
+GALLERY_NAME_Z = 0.132
+GALLERY_FOOTER_Z = -0.168
 BUILDING_RADAR_POS = (0.375,
  0.065,
  -0.225,
@@ -160,12 +168,13 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
+        self.bureaubotViewer = None
 
     def load(self):
         ShtikerPage.ShtikerPage.load(self)
         frameModel = loader.loadModel('phase_3.5/models/gui/suitpage_frame')
-        frameModel.setScale(0.03375, 1, 0.045)
-        frameModel.setPos(0, 10, -0.575)
+        frameModel.setScale(0.0465, 1, 0.045)
+        frameModel.setPos(0, 10, -0.59)
         self.guiTop = NodePath('guiTop')
         self.guiTop.reparentTo(self)
         self.frameNode = NodePath('frameNode')
@@ -177,12 +186,16 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.enlargedPanelNode = NodePath('enlargedPanelNode')
         self.enlargedPanelNode.reparentTo(self.guiTop)
         frame = frameModel.find('**/frame')
-        frame.wrtReparentTo(self.frameNode)
+        # Apply the model transform locally. wrtReparentTo from a detached
+        # model applies aspect2d's inverse scale and stretches the chrome.
+        frame.reparentTo(self.frameNode)
+        frame.setTransform(frameModel.getTransform())
         screws = frameModel.find('**/screws')
-        screws.wrtReparentTo(self.iconNode)
+        screws.reparentTo(self.iconNode)
+        screws.setTransform(frameModel.getTransform())
         icons = frameModel.find('**/icons')
         del frameModel
-        self.title = DirectLabel(parent=self.iconNode, relief=None, text=TTLocalizer.SuitPageTitle, text_scale=0.1, text_pos=(0.04, 0), textMayChange=0)
+        self.title = DirectLabel(parent=self.iconNode, relief=None, text=TTLocalizer.SuitPageTitle, text_scale=0.085, text_pos=(0.04, 0), textMayChange=0)
         self.radarButtons = []
         icon = icons.find('**/corp_icon')
         self.corpRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[0])
@@ -196,6 +209,20 @@ class SuitPage(ShtikerPage.ShtikerPage):
         icon = icons.find('**/sales_icon')
         self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
+        # Normalize the four embedded icons to the same column and row centers.
+        for row, button in enumerate(self.radarButtons):
+            source = icons.find('**/' + ('corp_icon', 'legal_icon', 'money_icon', 'sales_icon')[row])
+            low, high = source.getTightBounds()
+            iconScale = min(.13/(high.x-low.x), .17/(high.z-low.z))
+            button['image_scale'] = iconScale
+            button['image_pos'] = (-(low.x+high.x)*iconScale/2, 0,
+                                   -(low.z+high.z)*iconScale/2)
+            button.setPos(-.825, 0, GALLERY_ROW_TOP-row*GALLERY_ROW_STEP)
+        logo = BureaubotModels.build_logo()
+        self.bureauButton = DirectButton(parent=self.iconNode, relief=None,
+            geom=logo, geom_scale=.145, pos=(-.825,0,GALLERY_ROW_TOP-4*GALLERY_ROW_STEP),
+            command=self.showBureaubot, extraArgs=[0])
+        logo.removeNode()
         for radarButton in self.radarButtons:
             radarButton.building = 0
             radarButton.buildingRadarLabel = None
@@ -208,6 +235,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
         del gui
         self.makePanels()
+        self.makeBureaubotPanels()
         self.radarOn = [0,
          0,
          0,
@@ -226,12 +254,17 @@ class SuitPage(ShtikerPage.ShtikerPage):
         return
 
     def unload(self):
+        self.closeBureaubot()
         self.ignoreAll()
         self.title.destroy()
         self.corpRadarButton.destroy()
         self.legalRadarButton.destroy()
         self.moneyRadarButton.destroy()
         self.salesRadarButton.destroy()
+        self.bureauButton.destroy()
+        for panel in self.bureaubotPanels:
+            panel.destroy()
+        self.bureaubotPanels = []
         for panel in self.panels:
             panel.destroy()
 
@@ -240,6 +273,9 @@ class SuitPage(ShtikerPage.ShtikerPage):
             shadow.removeNode()
 
         self.panelModel.removeNode()
+        self.silverLabel.destroy()
+        self.goldLabel.destroy()
+        self.guiTop.removeNode()
         ShtikerPage.ShtikerPage.unload(self)
 
     def enter(self):
@@ -250,10 +286,12 @@ class SuitPage(ShtikerPage.ShtikerPage):
         return
 
     def exit(self):
+        self.closeBureaubot()
         taskMgr.remove('buildingListResponseTimeout-later')
         taskMgr.remove('suitListResponseTimeout-later')
         taskMgr.remove('showCogRadarLater')
         taskMgr.remove('showBuildingRadarLater')
+        taskMgr.remove('activateButtonLater')
         for index in range(0, len(self.radarOn)):
             if self.radarOn[index]:
                 self.toggleRadar(index)
@@ -335,14 +373,14 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.panels = []
         base.panels = []
         xStart = -0.66
-        yStart = -0.18
+        yStart = GALLERY_ROW_TOP
         xOffset = 0.199
-        yOffset = 0.284
+        yOffset = GALLERY_ROW_STEP
         for dept in range(0, len(SuitDNA.suitDepts)):
             row = []
             color = PANEL_COLORS[dept]
             for type in range(0, SuitDNA.suitsPerDept):
-                panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
+                panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, GALLERY_CARD_HEIGHT), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.043, text_fg=(0, 0, 0, 1), text_pos=(0, GALLERY_NAME_Z, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
                 panel.scale = 0.6
                 panel.setScale(panel.scale)
                 panel.quotaLabel = None
@@ -356,6 +394,44 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
         return
 
+    def makeBureaubotPanels(self):
+        self.bureaubotPanels = []
+        for index, (key, name, body, scale) in enumerate(BureaubotModels.CATALOG):
+            panel = DirectButton(parent=self.panelNode,
+                pos=(-.66+index*.199,0,GALLERY_ROW_TOP-4*GALLERY_ROW_STEP),
+                scale=.6, relief=None, image=self.panelModel,
+                image_scale=(1,1,GALLERY_CARD_HEIGHT),
+                image_color=(.83,.77,.68,1), text=name,
+                text_scale=.043, text_pos=(0,GALLERY_NAME_Z),
+                text_fg=(0,0,0,1), text_font=ToontownGlobals.getSuitFont(),
+                text_wordwrap=7, command=self.showBureaubot, extraArgs=[index])
+            panel.head = BureaubotModels.fit_head(panel,key)
+            self.fitGalleryHead(panel.head,panel)
+            DirectLabel(parent=panel,relief=None,text=TTLocalizer.BureaubotViewModel,
+                text_pos=(0,GALLERY_FOOTER_Z),text_scale=.039,
+                text_fg=(.22,.15,.09,1),text_font=ToontownGlobals.getSuitFont())
+            self.bureaubotPanels.append(panel)
+
+    def showBureaubot(self,index):
+        self.closeBureaubot()
+        self.guiTop.hide()
+        self.bureaubotViewer = BureaubotViewer(self,loader,index,self.closeBureaubot)
+
+    def closeBureaubot(self):
+        if self.bureaubotViewer is not None:
+            self.bureaubotViewer.destroy()
+            self.bureaubotViewer = None
+            self.guiTop.show()
+
+    @staticmethod
+    def fitGalleryHead(head,panel):
+        low,high = head.getTightBounds(panel)
+        scale = min(.255/(high.x-low.x),.205/(high.z-low.z))
+        head.setScale(head.getScale()*scale)
+        low,high = head.getTightBounds(panel)
+        head.setX(head.getX()-(low.x+high.x)/2)
+        head.setZ(head.getZ()-(low.z+high.z)/2-.018)
+
     def addQuotaLabel(self, panel):
         index = self.panels.index(panel)
         count = str(base.localAvatar.cogCounts[index])
@@ -363,7 +439,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             quota = str(COG_QUOTAS[0][index % SuitDNA.suitsPerDept])
         else:
             quota = str(COG_QUOTAS[1][index % SuitDNA.suitsPerDept])
-        quotaLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.215), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota % (count, quota), text_scale=0.045, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+        quotaLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, GALLERY_FOOTER_Z), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota % (count, quota), text_scale=0.041, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
         panel.quotaLabel = quotaLabel
         return
 
@@ -377,9 +453,13 @@ class SuitPage(ShtikerPage.ShtikerPage):
         shadow.setPos(coords[1], coords[2], coords[3])
         panel.shadow = shadow
         panel.head = Suit.attachSuitHead(panel, suitName)
+        self.fitGalleryHead(panel.head,panel)
+        # Original silhouettes are registered for the old, taller cards.
+        # Scale the silhouette uniformly with its corresponding head.
+        self.fitGalleryHead(shadow,panel)
 
     def addCogRadarLabel(self, panel):
-        cogRadarLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.215), relief=None, state=DGG.DISABLED, text='', text_scale=0.05, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+        cogRadarLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, GALLERY_FOOTER_Z), relief=None, state=DGG.DISABLED, text='', text_scale=0.041, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
         panel.cogRadarLabel = cogRadarLabel
         return
 
@@ -413,7 +493,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
     def addBuildingRadarLabel(self, button):
         gui = loader.loadModel('phase_3.5/models/gui/suit_detail_panel')
-        zPos = BUILDING_RADAR_POS[self.radarButtons.index(button)]
+        zPos = -0.075
         buildingRadarLabel = DirectLabel(parent=button, relief=None, pos=(0.225, 0.0, zPos), state=DGG.DISABLED, image=gui.find('**/avatar_panel'), image_hpr=(0, 0, 90), image_scale=(0.05, 1, 0.1), image_pos=(0, 0, 0.015), text=TTLocalizer.SuitPageBuildingRadarP % '0', text_scale=0.05, text_fg=(1, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
         gui.removeNode()
         button.buildingRadarLabel = buildingRadarLabel

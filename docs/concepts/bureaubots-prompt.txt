@@ -1,0 +1,17 @@
+Use case: stylized-concept. Create a polished character lineup/model-preview sheet for an original Toontown Cog department called "BUREAUBOTS". Use the user's visible Toontown Cog references for the visual language: primitive low-poly early-2000s 3D game models, painted simple textures, angular caricatured faces, boxy exaggerated business suits, white shirts and ties, oversized mechanical mitten hands, broad flat black shoes. These are Toontown-like corporate robot villains, not modern sci-fi robots. Match original Cog body proportions and restrained faces; no glossy Pixar style, no realistic humans, no detailed armor.
+
+Landscape character design sheet, warm ivory background, subtle height lines, eight individual FULL-BODY characters arranged in TWO ROWS OF FOUR with generous margins and no overlap. Each entire character including head, hands, and both shoes fully visible, rendered as an individual front/three-quarter neutral model preview. Name centered clearly BELOW each character. Department header "BUREAUBOTS" at top, subtitle "COG DEPARTMENT CONCEPT". Each wears coordinated muted copper-brown business suit with fine cream vertical pinstripes, ivory shirt, dark teal tie, small gear-shaped clipboard emblem. Give varied original Cog stocky / thin / broad silhouettes. Visually literal corporate wordplay in their heads, expressive scowls or smug faces, pale gray/cream metal skin.
+
+Top row left to right:
+1. "Paper Shuffler": short stocky entry-level Cog, square head made from a slightly crooked stack of ivory paper, sleepy eyes and a straight frowning mouth printed on the front, chunky small suit body.
+2. "Rubber Stamp": medium height skinny Cog, tall red-brown wooden stamp-handle shaped head over a broad rectangular chin, tiny disapproving eyes, a thin severe mouth; suit and robot hands.
+3. "Desk Jockey": medium height broad-shouldered Cog, long angular horse-like mechanical face with combed flat black mane, smug sneer, full business suit, no actual desk.
+4. "Clock Watcher": tall very skinny Cog, pale round analog-clock head with hooded eyes and clock-hand moustache, hanging bored jaw, narrow suit.
+
+Bottom row left to right:
+5. "Red Tape": medium tall heavyset Cog, pale angular frustrated face wrapped across forehead and jaw in a few flat red bureaucratic ribbon bands, eyes and mouth clearly visible, boxy double-breasted suit.
+6. "Bottleneck": very tall thin Cog, long tapered sea-green bottle-shaped metallic head with narrow top and face low on the broad bottom, tiny squinting eyes and downturned mouth; long narrow suit body, normal neck integrated into collar.
+7. "Gatekeeper": tall strong inverted-triangle Cog, rectangular steel face divided by a few vertical gate bars, glaring eyes behind bars and broad gritted teeth, imposing square shoulders, suit intact.
+8. "Head Honcho": largest broad barrel-shaped top-rank Cog, oversized angular ivory head, huge squared chin, flat black slicked hair, smug small eyes, thick raised eyebrows, commanding corporate scowl, heavy suit and hands; no crown.
+
+Every character should look plausibly buildable as an original Toontown low-poly model. Minimal surface detail, clean flat-shaded geometry, simple diffuse studio lighting, readable at small sizes. All 8 exact names spelled correctly. No extra characters, props covering bodies, crops, existing character copies, or watermarks. This is concept art, not an in-game screenshot.
