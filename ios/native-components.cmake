@@ -18,7 +18,7 @@ find_package(FLEX REQUIRED)
 BISON_TARGET(TTParser "${TT_SRC}/dna/dnaParser.yxx" "${TT_GENERATED}/dnaParser.cxx"
   DEFINES_FILE "${TT_GENERATED}/dnaParser.h" COMPILE_FLAGS "-p dnayy")
 FLEX_TARGET(TTLexer "${TT_SRC}/dna/dnaLexer.lxx" "${TT_GENERATED}/dnaLexer.cxx"
-  COMPILE_FLAGS "-i")
+  COMPILE_FLAGS "-i -Pdnayy")
 ADD_FLEX_BISON_DEPENDENCY(TTLexer TTParser)
 add_library(tt_toontown STATIC
   "${TT_SRC}/dna/dnaLoader_composite1.cxx"
@@ -31,6 +31,10 @@ target_include_directories(tt_toontown PUBLIC
   "${TT_SRC}/toontownbase" "${TT_SRC}/dna" "${TT_SRC}/suit"
   "${TT_SRC}/pets" "${TT_GENERATED}")
 target_link_libraries(tt_toontown PUBLIC tt_otp panda)
+
+# These are already makepanda composite files. Keep the generated lexer and
+# parser in separate translation units so their private yy symbols cannot mix.
+set_target_properties(tt_otp tt_toontown PROPERTIES UNITY_BUILD OFF)
 
 # The existing pandagles2 target requires EGL, which iOS does not provide.
 # Compile the existing ES2 state guardian now; a UIKit/EAGL pipe must still
