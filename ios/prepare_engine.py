@@ -30,6 +30,10 @@ def prepare(root):
     # Make this a real boolean option so the C++-only gate needs no bindings.
     replace_once(root, 'dtool/Config.cmake',
                  'set(INTERROGATE_C_INTERFACE\n', 'option(INTERROGATE_C_INTERFACE\n')
+    # ES renderers share these headers even when desktop OpenGL is disabled.
+    replace_once(root, 'panda/src/glstuff/CMakeLists.txt',
+                 'if(NOT HAVE_GL)\n',
+                 'if(NOT HAVE_GL AND NOT HAVE_GLES1 AND NOT HAVE_GLES2)\n')
     # Apple is not synonymous with macOS. iOS has neither AppKit nor the
     # public desktop IOKit HID API. Keep the original paths for macOS.
     replace_once(root, 'panda/src/device/CMakeLists.txt',
