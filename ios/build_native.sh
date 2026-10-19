@@ -73,13 +73,16 @@ else
     bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
     TT_HOST_PY="$TT_WORK/python-host/python.exe"
     [[ -x $TT_HOST_PY ]] || TT_HOST_PY="$TT_WORK/python-host/python"
-    # Compile the UIKit-to-Python adapter with device headers, never host ones.
-    xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
-      -fobjc-arc -std=c++17 -Wall -Werror \
-      -I "$TT_WORK/python-install/Python.framework/Headers" \
-      -c "$TT_ROOT/ios/native/TTGameInputBridge.mm" -o "$TT_WORK/TTGameInputBridge.o"
-    xcrun lipo "$TT_WORK/TTGameInputBridge.o" -verify_arch arm64
-    xcrun vtool -show-build "$TT_WORK/TTGameInputBridge.o"
+    # Fail early on host/API errors before compiling the full custom engine.
+    # These sources need UIKit and device Python headers, never macOS headers.
+    for TT_NATIVE_SOURCE in TTGameInputBridge TTEmbeddedRuntime TTGameViewController TTApplication; do
+      xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
+        -fobjc-arc -std=c++17 -Wall -Werror \
+        -I "$TT_WORK/python-install/Python.framework/Headers" \
+        -c "$TT_ROOT/ios/native/$TT_NATIVE_SOURCE.mm" -o "$TT_WORK/$TT_NATIVE_SOURCE.o"
+      xcrun lipo "$TT_WORK/$TT_NATIVE_SOURCE.o" -verify_arch arm64
+      xcrun vtool -show-build "$TT_WORK/$TT_NATIVE_SOURCE.o"
+    done
     TT_BINDINGS=ON
     TT_BUILD_DIR="$TT_WORK/panda-bindings"
     TT_EXTRA+=("-DTT_IOS_PYTHON_FRAMEWORK=$TT_WORK/python-install/Python.framework"

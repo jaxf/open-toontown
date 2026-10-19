@@ -72,6 +72,8 @@ class EmbeddedRuntimeTests(unittest.TestCase):
              patch.object(embedded.Client, 'start', side_effect=RuntimeError('startup failed')):
             with self.assertRaises(RuntimeError):
                 runtime.start()
+            with self.assertRaisesRegex(RuntimeError, 'cannot be restarted'):
+                runtime.start()
             runtime.close()
             runtime.close()
             base.destroy.assert_called_once_with()

@@ -26,6 +26,7 @@ class Runtime:
     def __init__(self, bundle_root, user_data, platform_config, host, token):
         self._owner = threading.get_ident()
         self._started = False
+        self._launch_attempted = False
         self._paused = False
         self._closed = False
         self._launcher = None
@@ -42,8 +43,9 @@ class Runtime:
 
     def start(self):
         self._check_thread()
-        if self._closed or self._started:
+        if self._closed or self._launch_attempted:
             raise RuntimeError('Embedded game cannot be restarted in this process')
+        self._launch_attempted = True
         bundle, data, config = self._paths
         self._launcher = Client.start(self._session, bundle, data, True, config)
         self._started = True
