@@ -2,7 +2,7 @@
 
 Eight bureaucracy-themed Cogs integrated as department `u`, below Sellbots.
 They wear burnt-orange pinstripes with silver clipboard chest badges, and
-occupy filing-cabinet-style archive buildings.
+occupy classic Cog buildings with a warm copper finish.
 
 ![Full-body models](previews/bureaubots-models.png)
 ![Completed gallery](previews/cog-gallery-bureaubots.png)
@@ -80,8 +80,10 @@ Building allocation, pending-takeover queues and building radar include the
 fifth department. Existing street population limits, protected NPC shops and
 building difficulty/floor limits still apply.
 
-The archive facade decorates a copied classic landmark, retaining its door,
-sign anchors and collision nodes. Standard elevators, floor battles, reserves,
+The Bureaubot facade reuses the classic textured landmark, with a subtle
+copper tint and its clipboard emblem above the elevator. Original windows,
+riveted trim, shop sign, door anchors and collision nodes are preserved.
+Standard elevators, floor battles, reserves,
 rewards, takeover sounds and reclamation animations remain in use. Undefined
 Bureaubot Field Office requests fall back to a standard Cog building.
 
@@ -118,6 +120,11 @@ preserved building collision, sign and elevator nodes.
 
 The gallery preview checks all 40 cards, five radar rows, eight model viewer
 choices, available summon controls, mixed progress and cleanup/re-entry.
+It also opens the real SummonCogDialog and TTDialog from the gallery for all
+eight Bureaubots and a classic Cog: 27 single/building/invasion flows check
+cancellation, confirmation, request arguments, response handling and closing.
+Network responses are simulated. Both dialog layering references use the
+qualified DGG.NO_FADE_SORT_INDEX, fixing the reported summon NameError.
 Production methods requiring native OTP bases run in narrow local harnesses.
 A full connected client/server smoke test still needs the project's custom
 OTP-enabled Panda3D runtime: test a street battle, multi-floor takeover,

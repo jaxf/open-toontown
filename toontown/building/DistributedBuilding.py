@@ -439,7 +439,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
     def setupSuitBuilding(self, nodePath):
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        # The archive facade retains the original landmark's collision shell.
+        # Bureaubots reuse the classic textured landmark and its collision shell.
         modelDept = 'c' if chr(self.track) == 'u' else chr(self.track)
         suitNP = dnaStore.findNode('suit_landmark_' + modelDept + str(level))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)

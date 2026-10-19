@@ -5,7 +5,7 @@ This exercises real game assets, not a connected client/server session.
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from panda3d.core import loadPrcFileData, TextNode
+from panda3d.core import loadPrcFileData, TextNode, DepthOffsetAttrib, DecalEffect
 loadPrcFileData('', 'window-type offscreen\nload-display p3headlessgl\n'
     'win-size 1440 1080\naudio-library-name null\nmodel-path resources\n'
     'default-model-extension .bam')
@@ -32,15 +32,23 @@ def main():
     for light in elevator.findAllMatches('**/floor_light_?;+s'):
         light.setColor(.92,.75,.24,1)
     sign=TextNode('occupied-shop-sign')
-    sign.setText('DEPARTMENT OF\nPENDING APPROVAL')
+    sign.setText('Pending Approval, Inc.\nBureaubots')
     sign.setAlign(TextNode.ACenter)
-    sign.setTextColor(.95,.91,.80,1)
+    sign.setTextColor(1,1,1,1)
+    sign.setWordwrap(17)
     sign.setFont(app.loader.loadFont('phase_3/models/fonts/vtRemingtonPortable.ttf'))
-    panel=building.attachNewNode('sign-panel')
-    B._box(panel,'sign',(15,-3.6,14.7),(21,.3,4.3),(.14,.17,.18,1))
-    text=panel.attachNewNode(sign)
-    text.setPos(15,-3.8,15.2)
-    text.setScale(1.3)
+    # Match DistributedBuilding.setupSuitBuilding's real sign geometry/layout.
+    height=sign.getHeight()
+    zscale=(height+2)/3.0
+    panel=app.loader.loadModel('phase_5/models/modules/suit_sign')
+    panel.reparentTo(building.find('**/sign_origin'))
+    panel.setPosHprScale(0,0,height*.8/zscale,0,0,0,8,8,8*zscale)
+    text=panel.attachNewNode(sign.generate())
+    text.setPosHprScale(0,0,-.21+height*.1/zscale,0,0,0,.1,.1,.1/zscale)
+    text.setAttrib(DepthOffsetAttrib.make(1))
+    front=building.find('**/*_front/+GeomNode;+s')
+    panel.wrtReparentTo(front)
+    front.node().setEffect(DecalEffect.make())
     B._box(app.render,'sidewalk',(15,-3,-.4),(72,24,.8),(.62,.61,.56,1))
     B._box(app.render,'street',(15,-26,-.65),(100,25,.8),(.25,.29,.31,1))
     for x in range(-30,70,12):
@@ -56,7 +64,7 @@ def main():
         actors.append(actor)
     DirectLabel(parent=app.aspect2d,relief=None,text='BUREAUBOT BUILDING TAKEOVER',
         text_scale=.063,text_pos=(0,.89),text_fg=(.13,.19,.22,1))
-    DirectLabel(parent=app.aspect2d,relief=None,text='Engine preview | Archive facade, standard elevator, animated Cog rigs',
+    DirectLabel(parent=app.aspect2d,relief=None,text='Engine preview | Classic Cog architecture, copper finish, Bureaubot elevator emblem',
         text_scale=.028,text_pos=(0,.82),text_fg=(.17,.23,.25,1))
     out=Path('docs/previews/bureaubot-building.png')
     capture(app,out)
