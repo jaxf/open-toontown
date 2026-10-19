@@ -17,6 +17,24 @@ The initial hosted test is invite-only over an encrypted private network.
 See [dedicated hosting](DEDICATED_SERVER.md). This is independent of iOS:
 desktop clients can test hosted gameplay before the native renderer is ready.
 
+### Platform compatibility contract
+
+Mac and Windows retain their desktop launchers, keyboard/mouse controls and
+saved window preferences. iOS is a separate native client with its own app
+bundle, touch controls and writable sandbox; it connects directly to the
+hosted server without a Mac or PC running the game. All three clients share
+game content and the server protocol. Mobile settings apply only when the
+embedded host explicitly enables `mobile-client`.
+
+Engine patches in `ios/prepare_engine.py` apply only to the disposable iOS
+build checkout. Desktop engine builds do not run that script. Changes to shared
+Python code must preserve desktop defaults and be checked on Mac and Windows.
+`.github/workflows/desktop-regression.yml` checks settings, platform isolation,
+world routing and access rules on both operating systems. These checks use
+stock Panda for the tested APIs; they do not replace custom-engine builds,
+desktop launch/login or real gameplay checks. All three platforms must pass
+their respective launch, input and multiplayer tests before release.
+
 ## Engine audit, 2026-10-19
 
 Audited `open-toontown/panda3d` at

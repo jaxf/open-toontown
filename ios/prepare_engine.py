@@ -34,6 +34,10 @@ def prepare(root):
     replace_once(root, 'panda/src/glstuff/CMakeLists.txt',
                  'if(NOT HAVE_GL)\n',
                  'if(NOT HAVE_GL AND NOT HAVE_GLES1 AND NOT HAVE_GLES2)\n')
+    # iOS exposes the same BSD socket API without enabling desktop Mac APIs.
+    replace_once(root, 'panda/src/nativenet/socket_portable.h',
+                 '#elif defined(IS_LINUX) || defined(IS_OSX) || defined(IS_FREEBSD) || defined(__EMSCRIPTEN__)',
+                 '#elif defined(IS_LINUX) || defined(IS_OSX) || defined(BUILD_IPHONE) || defined(IS_FREEBSD) || defined(__EMSCRIPTEN__)')
     # Apple is not synonymous with macOS. iOS has neither AppKit nor the
     # public desktop IOKit HID API. Keep the original paths for macOS.
     replace_once(root, 'panda/src/device/CMakeLists.txt',
