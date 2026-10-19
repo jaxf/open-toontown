@@ -5,8 +5,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Main thread only, before ShowBase creates its window. The host owns the
 /// container and places TTControlsView above it. Only one game window is allowed.
-/// Configure PRC: window-type onscreen, load-display (empty),
-/// aux-display (empty), threading-model (empty), sync-video false.
+/// Load PRC BEFORE registration: window-type onscreen, load-display (empty),
+/// aux-display (empty), threading-model (empty), sync-video false. Pipe selection
+/// caches display settings on first access; loading them afterward is too late.
 BOOL TTConfigureGraphicsHost(UIView *container);
 
 /// Resume explicitly after the app becomes active; resignation suspends itself.

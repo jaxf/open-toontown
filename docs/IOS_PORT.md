@@ -154,20 +154,22 @@ to fill any missing iOS modules.
 ### Native graphics host contract
 
 `TTGraphicsPipe` supplies one UIKit window using an EAGL ES2 context, RGBA8
-color and 16-bit depth. The actual framebuffer dimensions drive the window size
+color and packed 24-bit depth / 8-bit stencil. The actual framebuffer dimensions drive the window size
 and pointer conversion. Layout changes invalidate drawable storage without
 submitting GL commands from UIKit layout callbacks. Frame entry reallocates it
 when active, restores external bindings, and binds the nonzero iOS screen FBO
 through Panda's state cache. Host-backed texture buffers share that context.
 Unsupported framebuffer requests are subject to Panda's normal property checks;
-this first surface does not provide MSAA, stencil or sRGB.
+this first surface does not provide MSAA or sRGB.
 
 The eventual app host must:
 
-1. Create and retain a visible UIKit container, then call
+1. Load PRC with empty `load-display`/`aux-display`/`threading-model`,
+   `window-type onscreen` and `sync-video false` before registering the pipe:
+   Panda caches display settings on first pipe-selection access.
+2. Create and retain a visible UIKit container, then call
    `TTConfigureGraphicsHost(container)` before ShowBase window creation.
-2. Supply PRC with empty `load-display`/`aux-display`/`threading-model`,
-   `window-type onscreen` and `sync-video false`. The pipe rejects a draw thread.
+   The pipe rejects a draw thread.
    Call `TTSetGraphicsActive(YES)` after the application becomes active, before
    creating the Panda window. Add `TTControlsView` above the drawable.
 3. Step the embedded client on the main thread from a display link. Stop frame

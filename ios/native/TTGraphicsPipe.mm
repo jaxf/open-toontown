@@ -26,7 +26,11 @@ class TTGraphicsWindow final : public GraphicsWindow {
 public:
     TTGraphicsWindow(GraphicsEngine *engine, GraphicsPipe *pipe, const std::string &name,
                      const FrameBufferProperties &fb, const WindowProperties &wp, int flags) :
-        GraphicsWindow(engine, pipe, name, fb, wp, flags, nullptr, nullptr) {}
+        GraphicsWindow(engine, pipe, name, fb, wp, flags, nullptr, nullptr) {
+        // Keep device zero stable if Panda closes and reopens this output.
+        _input = GraphicsWindowInputDevice::pointer_and_keyboard(this, "touch");
+        add_input_device(_input);
+    }
 
     bool begin_frame(FrameMode mode, Thread *thread) override {
         if (!NSThread.isMainThread || _gsg == nullptr || ![_view prepareDrawable]) return false;
@@ -88,15 +92,14 @@ protected:
             return false;
         }
         _gsg = new TTStateGuardian(_engine, _pipe);
-        PT(GraphicsWindowInputDevice) input = GraphicsWindowInputDevice::pointer_and_keyboard(this, "touch");
-        add_input_device(input);
-        [_view attachInputDevice:input];
+        [_view attachInputDevice:_input];
         _view.inputEnabled = YES;
         tt_drawable = _view;
         _fb_properties.clear();
         _fb_properties.set_rgb_color(true);
         _fb_properties.set_rgba_bits(8, 8, 8, 8);
-        _fb_properties.set_depth_bits(16);
+        _fb_properties.set_depth_bits(24);
+        _fb_properties.set_stencil_bits(8);
         _fb_properties.set_back_buffers(1);
         _fb_properties.set_force_hardware(true);
         _properties.set_origin(0, 0);
@@ -121,6 +124,7 @@ protected:
     }
 
 private:
+    PT(GraphicsWindowInputDevice) _input;
     TTGLESView *__strong _view = nil;
 };
 

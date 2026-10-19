@@ -46,7 +46,7 @@ target_compile_options(tt_uikit_input PRIVATE -fobjc-arc -fno-fast-math -Wall -W
 # for the new input adapter itself.
 target_include_directories(tt_uikit_input SYSTEM PRIVATE
   "$<TARGET_PROPERTY:panda,INTERFACE_INCLUDE_DIRECTORIES>")
-target_link_libraries(tt_uikit_input PRIVATE panda "-framework UIKit")
+target_link_libraries(tt_uikit_input PRIVATE panda "-framework UIKit" "-framework CoreGraphics")
 
 if(TARGET p3gles2gsg)
   add_library(tt_gles2 STATIC $<TARGET_OBJECTS:p3gles2gsg>)
@@ -60,7 +60,7 @@ if(TARGET p3gles2gsg)
     "$<TARGET_PROPERTY:panda,INTERFACE_INCLUDE_DIRECTORIES>"
     "$<TARGET_PROPERTY:p3gles2gsg,INTERFACE_INCLUDE_DIRECTORIES>")
   target_link_libraries(tt_uikit_display PRIVATE tt_uikit_input tt_gles2
-    "-framework UIKit" "-framework QuartzCore" "-framework OpenGLES")
+    "-framework UIKit" "-framework QuartzCore" "-framework CoreGraphics" "-framework OpenGLES")
   add_executable(tt_graphics_linkcheck EXCLUDE_FROM_ALL
     "${PROJECT_SOURCE_DIR}/TTGraphicsLinkCheck.mm")
   set_target_properties(tt_graphics_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
