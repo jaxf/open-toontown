@@ -64,7 +64,7 @@ def main():
         actors.append(actor)
     DirectLabel(parent=app.aspect2d,relief=None,text='BUREAUBOT BUILDING TAKEOVER',
         text_scale=.063,text_pos=(0,.89),text_fg=(.13,.19,.22,1))
-    DirectLabel(parent=app.aspect2d,relief=None,text='Engine preview | Classic Cog architecture, copper finish, Bureaubot elevator emblem',
+    DirectLabel(parent=app.aspect2d,relief=None,text='Engine preview | Classic Cog architecture, copper finish, sculpted facade crest',
         text_scale=.028,text_pos=(0,.82),text_fg=(.17,.23,.25,1))
     out=Path('docs/previews/bureaubot-building.png')
     capture(app,out)

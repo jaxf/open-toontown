@@ -10,7 +10,8 @@ from toontown.coghq import CogDisguiseGlobals
 DeptColors = (Vec4(0.647, 0.608, 0.596, 1.0),
  Vec4(0.588, 0.635, 0.671, 1.0),
  Vec4(0.596, 0.714, 0.659, 1.0),
- Vec4(0.761, 0.678, 0.69, 1.0))
+ Vec4(0.761, 0.678, 0.69, 1.0),
+ Vec4(0.76, 0.60, 0.43, 1.0))
 NumParts = max(CogDisguiseGlobals.PartsPerSuit)
 PartNames = ('lUpleg', 'lLowleg', 'lShoe', 'rUpleg', 'rLowleg', 'rShoe', 'lShoulder', 'rShoulder', 'chest', 'waist', 'hip', 'lUparm', 'lLowarm', 'lHand', 'rUparm', 'rLowarm', 'rHand')
 
@@ -32,24 +33,30 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.bkgd.setTextureOff(1)
         self.tabs = []
         self.pageFrame = DirectFrame(parent=self.frame, relief=None)
-        for dept in SuitDNA.hqDepts:
-            if dept == 'c':
-                tabIndex = 1
-                textPos = (1.57, 0.75)
-            elif dept == 'l':
-                tabIndex = 2
-                textPos = (1.57, 0.12)
-            elif dept == 'm':
-                tabIndex = 3
-                textPos = (1.57, -0.47)
-            elif dept == 's':
-                tabIndex = 4
-                textPos = (1.57, -1.05)
-            pageGeom = gui.find('**/page%d' % tabIndex)
-            tabGeom = gui.find('**/tab%d' % tabIndex)
-            tab = DirectButton(parent=self.pageFrame, relief=None, geom=tabGeom, geom_color=DeptColors[tabIndex - 1], text=SuitDNA.suitDeptFullnames[dept], text_font=ToontownGlobals.getSuitFont(), text_pos=textPos, text_roll=-90, text_scale=TTLocalizer.DPtab, text_align=TextNode.ACenter, text1_fg=Vec4(1, 0, 0, 1), text2_fg=Vec4(0.5, 0.4, 0.4, 1), text3_fg=Vec4(0.4, 0.4, 0.4, 1), command=self.doTab, extraArgs=[len(self.tabs)], pressEffect=0)
+        # Normalize one native metal tab to five equal slots; the original
+        # four page silhouettes have hard-coded, unequal tab cutouts.
+        template=gui.find('**/tab2')
+        low,high=template.getTightBounds()
+        center=(low+high)*.5
+        backing=gui.find('**/page1').copyTo(self.pageFrame)
+        backing.setColor(DeptColors[0])
+        self.tabBacking=backing
+        for index,dept in enumerate(SuitDNA.suitDepts):
+            z=.85-index*.47
+            tabGeom=NodePath('department-tab')
+            plate=template.copyTo(tabGeom)
+            plate.setPos(-center.x,0,-center.z)
+            tab=DirectButton(parent=self.pageFrame,relief=None,
+                geom=tabGeom,geom_scale=(1,1,.45/(high.z-low.z)),
+                geom_color=DeptColors[index],pos=(1.61,0,z),
+                frameSize=(-.12,.12,-.225,.225),
+                text=SuitDNA.suitDeptFullnames[dept],
+                text_font=ToontownGlobals.getSuitFont(),text_pos=(-.035,0),
+                text_roll=-90,text_scale=.072,text_align=TextNode.ACenter,
+                text1_fg=(1,0,0,1),text2_fg=(.5,.4,.4,1),
+                command=self.doTab,extraArgs=[index],pressEffect=0)
             self.tabs.append(tab)
-            page = DirectFrame(parent=tab, relief=None, geom=pageGeom)
+            tabGeom.removeNode()
 
         self.deptLabel = DirectLabel(parent=self.frame, text='', text_font=ToontownGlobals.getSuitFont(), text_scale=TTLocalizer.DPdeptLabel, text_pos=(-0.1, 0.8))
         DirectFrame(parent=self.frame, relief=None, geom=gui.find('**/pipe_frame'))
@@ -64,6 +71,10 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.juryNoticeTitle.hide()
         self.stockOptionTitle = DirectLabel(parent=self.frame, relief=None, geom=gui.find('**/text_stock_option_progress'), geom_pos=(0, 0.1, 0))
         self.stockOptionTitle.hide()
+        self.paperworkTitle=DirectLabel(parent=self.frame,relief=None,
+            text='Paperwork Progress',text_font=ToontownGlobals.getSuitFont(),
+            text_scale=.105,text_fg=(.18,.20,.19,1),pos=(.45,0,.51))
+        self.paperworkTitle.hide()
         self.progressTitle = self.meritTitle
         self.promotionTitle = DirectLabel(parent=self.frame, relief=None, geom=gui.find('**/text_ready4promotion'), geom_pos=(0, 0.1, 0))
         self.cogName = DirectLabel(parent=self.frame, relief=None, text='', text_font=ToontownGlobals.getSuitFont(), text_scale=TTLocalizer.DPcogName, text_align=TextNode.ACenter, pos=(-0.948, 0, -1.15))
@@ -173,11 +184,14 @@ class DisguisePage(ShtikerPage.ShtikerPage):
                 tab['text2_fg'] = (0.5, 0.4, 0.4, 1)
 
         self.bkgd.setColor(DeptColors[index])
+        self.tabBacking.setColor(DeptColors[index])
         self.deptLabel['text'] = (SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[index]],)
         cogIndex = base.localAvatar.cogTypes[index] + SuitDNA.suitsPerDept * index
         cog = SuitDNA.suitHeadTypes[cogIndex]
         self.progressTitle.hide()
-        if SuitDNA.suitDepts[index] == 'm':
+        if SuitDNA.suitDepts[index] == 'u':
+            self.progressTitle = self.paperworkTitle
+        elif SuitDNA.suitDepts[index] == 'm':
             self.progressTitle = self.cogbuckTitle
         elif SuitDNA.suitDepts[index] == 'l':
             self.progressTitle = self.juryNoticeTitle

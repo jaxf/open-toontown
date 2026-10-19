@@ -24,16 +24,21 @@ def _solid(parent, name, vertices, faces, color):
     colors = GeomVertexWriter(data, 'color')
     tris = GeomTriangles(Geom.UHStatic)
     offset = 0
+    cx=(min(v[0] for v in vertices)+max(v[0] for v in vertices))/2
+    cz=(min(v[2] for v in vertices)+max(v[2] for v in vertices))/2
+    width=max(.01,max(v[0] for v in vertices)-min(v[0] for v in vertices))
+    height=max(.01,max(v[2] for v in vertices)-min(v[2] for v in vertices))
     for face in faces:
         points = [Point3(*vertices[i]) for i in face]
         n = (points[1] - points[0]).cross(points[2] - points[0])
         n.normalize()
         # Baked directional shading also reads correctly in the unlit book UI.
-        shade = .82 + .13 * max(0, n.z) + .13 * max(0, -n.y)
+        shade = .58 + .27 * max(0, n.z) + .30 * max(0, -n.y) + .13 * max(0, -n.x)
         for p in points:
             vertex.addData3(p)
             normal.addData3(n)
-            colors.addData4(*(min(1, c * shade) for c in color[:3]), color[3])
+            gradient = 1 + .12 * (p.z-cz)/height - .06 * (p.x-cx)/width
+            colors.addData4(*(min(1, c * shade * gradient) for c in color[:3]), color[3])
         for i in range(1, len(face) - 1):
             tris.addVertices(offset, offset + i, offset + i + 1)
         offset += len(face)
@@ -47,19 +52,27 @@ def _solid(parent, name, vertices, faces, color):
 def _prism(parent, name, outline, depth, color, y=0):
     """Extrude a counterclockwise X/Z polygon along Y."""
     n = len(outline)
-    verts = [(x, y - depth / 2, z) for x, z in outline]
-    verts += [(x, y + depth / 2, z) for x, z in outline]
-    # Ear triangulation preserves concave outlines (gear teeth, hair, ears).
-    triangulator = Triangulator()
+    cx=sum(x for x,z in outline)/n
+    cz=sum(z for x,z in outline)/n
+    # Inset front/back rings produce broad painted highlights on every edge.
+    bevel=min(.10,depth*.23)
+    inset=.90 if depth>.12 else .97
+    front=[(cx+(x-cx)*inset,y-depth/2,cz+(z-cz)*inset) for x,z in outline]
+    verts=front+[(x,y-depth/2+bevel,z) for x,z in outline]
+    verts += [(x,y+depth/2-bevel,z) for x,z in outline]
+    verts += [(cx+(x-cx)*inset,y+depth/2,cz+(z-cz)*inset) for x,z in outline]
+    triangulator=Triangulator()
     for x,z in outline:
         triangulator.addPolygonVertex(triangulator.addVertex(x,z))
     triangulator.triangulate()
-    faces = []
+    faces=[]
     for i in range(triangulator.getNumTriangles()):
-        a,b,c = (triangulator.getTriangleV0(i),triangulator.getTriangleV1(i),
-                 triangulator.getTriangleV2(i))
-        faces.extend(((a,b,c),(c+n,b+n,a+n)))
-    faces += [(i, i + n, (i + 1) % n + n, (i + 1) % n) for i in range(n)]
+        a,b,c=(triangulator.getTriangleV0(i),triangulator.getTriangleV1(i),triangulator.getTriangleV2(i))
+        faces.extend(((a,b,c),(c+3*n,b+3*n,a+3*n)))
+    for ring in range(3):
+        for i in range(n):
+            j=(i+1)%n
+            faces.append((ring*n+i,(ring+1)*n+i,(ring+1)*n+j,ring*n+j))
     return _solid(parent, name, verts, faces, color)
 
 
@@ -87,37 +100,73 @@ def _stroke(parent, name, points, y, width, color):
                .025, color, y)
 
 
+def _ellipsoid(parent,name,center,radii,color):
+    x,y,z=center;rx,ry,rz=radii
+    vertices=[]
+    for lat in range(9):
+        a=math.pi*lat/8
+        for lon in range(16):
+            b=math.tau*lon/16
+            vertices.append((x+rx*math.sin(a)*math.cos(b),
+                             y+ry*math.sin(a)*math.sin(b),z+rz*math.cos(a)))
+    faces=[]
+    for lat in range(8):
+        for lon in range(16):
+            nxt=(lon+1)%16
+            faces.append((lat*16+lon,lat*16+nxt,(lat+1)*16+nxt,(lat+1)*16+lon))
+    mesh=_solid(parent,name,vertices,faces,color)
+    geom=mesh.node().modifyGeom(0)
+    data=geom.modifyVertexData()
+    from panda3d.core import GeomVertexReader, Vec3
+    positions=GeomVertexReader(data,'vertex')
+    normals=GeomVertexWriter(data,'normal');colors=GeomVertexWriter(data,'color')
+    while not positions.isAtEnd():
+        p=positions.getData3()
+        n=Vec3((p.x-x)/rx,(p.y-y)/ry,(p.z-z)/rz);n.normalize()
+        shade=.55+.34*max(0,-n.y)+.24*max(0,n.z)+.12*max(0,-n.x)
+        normals.setData3(n)
+        colors.setData4(*(min(1,c*shade) for c in color[:3]),color[3])
+    return mesh
+
+
 def _face(root, y, z, width=.48, mouth=True, sleepy=False):
     for side in (-1, 1):
         x = side * width / 2
-        _disc(root, 'eye', x, y, z, width*.42, .19, WHITE)
-        _disc(root, 'pupil', x - side*.03, y-.05, z-.025, .065, .095, DARK)
+        _ellipsoid(root,'eye',(x,y,z),(width*.46,.105,.20),WHITE)
+        _disc(root, 'pupil', x - side*.03, y-.115, z-.025, .065, .095, DARK)
         if sleepy:
-            _box(root, 'lid', (x, y-.075, z+.14), (width*.86,.04,.16), METAL)
+            _box(root, 'lid', (x, y-.13, z+.14), (width*.86,.04,.16), METAL)
         else:
             _stroke(root, 'brow', [(x-side*.19,z+.12),(x+side*.17,z+.24)],
-                    y-.08, .115, DARK)
+                    y-.14, .09, DARK)
+    _ellipsoid(root,'nose',(0,y-.09,z-.22),(.115,.19,.16),METAL)
     if mouth:
         _stroke(root, 'frown', [(-width*.7,z-.49),(0,z-.39),(width*.7,z-.49)],
                 y-.03, .055, DARK)
 
 
 def build_logo():
-    """Embossed pewter clipboard; the same relief icon on book, chest and doors."""
-    root = NodePath('bureaubot-emblem')
-    edge = (.30,.32,.33,1)
-    silver = (.69,.72,.73,1)
-    highlight = (.88,.90,.90,1)
-    _prism(root,'clipboard-bevel',[(-.32,-.46),(.32,-.46),(.38,-.38),
-        (.38,.33),(.29,.42),(-.29,.42),(-.38,.33),(-.38,-.38)],.13,edge)
-    _box(root,'metal-face',(0,-.085,-.015),(.64,.04,.76),silver)
-    _box(root,'paper-relief',(0,-.12,-.035),(.51,.025,.60),highlight)
-    _box(root,'clip-shadow',(0,-.15,.34),(.30,.05,.15),edge)
-    _box(root,'clip',(0,-.185,.37),(.24,.025,.10),silver)
-    for z in (.13,.02,-.09):
-        _box(root,'engraved-rule',(0,-.155,z),(.33,.018,.027),edge)
-    _stroke(root,'approval',[(-.14,-.22),(-.04,-.31),(.17,-.15)],-.16,.045,edge)
-    _stroke(root,'rim-glint',[(-.35,-.39),(-.35,.33),(-.28,.39)],-.085,.025,highlight)
+    """Sculpted metal clipboard, in the same relief style as the Cog icons."""
+    root=NodePath('bureaubot-emblem')
+    metal=root.attachNewNode('cast-clipboard')
+    steel=(.48,.55,.55,1);silver=(.68,.75,.75,1);edge=(.24,.31,.32,1)
+    outline=[(-.32,-.44),(.32,-.44),(.39,-.35),(.39,.31),(.30,.40),
+             (-.30,.40),(-.39,.31),(-.39,-.35)]
+    _prism(metal,'cast-rim',outline,.24,edge)
+    _prism(metal,'raised-panel',[(x*.88,z*.88) for x,z in outline],.17,silver,y=-.105)
+    _prism(metal,'document',[(-.24,-.29),(.25,-.29),(.25,.19),(.15,.28),(-.24,.28)],.075,steel,y=-.23)
+    _prism(metal,'fold',[(.14,.16),(.25,.17),(.15,.28)],.025,(.88,.91,.88,1),y=-.285)
+    _ellipsoid(metal,'clip-crown',(0,-.22,.35),(.15,.10,.115),silver)
+    _box(metal,'clip-jaw',(0,-.28,.27),(.33,.105,.105),silver)
+    for z in (.10,-.015):
+        _box(metal,'recessed-rule',(0,-.277,z),(.31,.02,.025),edge)
+    _stroke(metal,'approval',[(-.13,-.15),(-.035,-.24),(.15,-.10)],-.28,.048,edge)
+    for x in (-.30,.30):
+        for z in (-.34,.28):
+            _ellipsoid(metal,'rivet',(x,-.20,z),(.035,.025,.035),silver)
+    metal.setH(-16)
+    metal.setR(-9)
+    root.setDepthTest(True);root.setDepthWrite(True)
     return root
 
 
@@ -267,6 +316,9 @@ def fit_head(parent, key):
     holder = parent.attachNewNode(key + '-portrait')
     head = build_head(key)
     head.reparentTo(holder)
+    head.find('**/neck').hide()
+    head.setH(-12)
+    head.setP(-3)
     low, high = head.getTightBounds()
     scale = min(.245 / (high.x-low.x), .255 / (high.z-low.z))
     head.setPos(-(low.x+high.x)/2, 0, -(low.z+high.z)/2)

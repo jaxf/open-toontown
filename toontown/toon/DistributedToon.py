@@ -94,22 +94,10 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.disguisePage = None
         self.sosPage = None
         self.gardenPage = None
-        self.cogTypes = [0,
-         0,
-         0,
-         0]
-        self.cogLevels = [0,
-         0,
-         0,
-         0]
-        self.cogParts = [0,
-         0,
-         0,
-         0]
-        self.cogMerits = [0,
-         0,
-         0,
-         0]
+        self.cogTypes = [0] * len(SuitDNA.suitDepts)
+        self.cogLevels = [0] * len(SuitDNA.suitDepts)
+        self.cogParts = [0] * len(SuitDNA.suitDepts)
+        self.cogMerits = [0] * len(SuitDNA.suitDepts)
         self.savedCheesyEffect = CENormal
         self.savedCheesyHoodId = 0
         self.savedCheesyExpireTime = 0
@@ -894,12 +882,12 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
             self.suitPage.updateBuildingRadarButtons(self.buildingRadar)
 
     def setCogTypes(self, types):
-        self.cogTypes = types
+        self.cogTypes = pad_collection(types or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
     def setCogLevels(self, levels):
-        self.cogLevels = levels
+        self.cogLevels = pad_collection(levels or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
@@ -907,7 +895,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return self.cogLevels
 
     def setCogParts(self, parts):
-        self.cogParts = parts
+        self.cogParts = pad_collection(parts or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
@@ -915,7 +903,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return self.cogParts
 
     def setCogMerits(self, merits):
-        self.cogMerits = merits
+        self.cogMerits = pad_collection(merits or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 

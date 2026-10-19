@@ -1,5 +1,5 @@
 import math
-from panda3d.core import CardMaker, TextNode
+from panda3d.core import CardMaker, TextNode, Point3
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectButton
 from direct.task import Task
 from toontown.toon import NPCToons
@@ -17,17 +17,11 @@ class QuestMap(DirectFrame):
         self.container = DirectFrame(parent=self, relief=None)
         self.marker = DirectFrame(parent=self.container, relief=None)
         self.cogInfoFrame = DirectFrame(parent=self.container, relief=None)
-        cm = CardMaker('bg')
-        cm.setFrame(-0.5, 0.5, -0.5, 0.5)
-        bg = self.cogInfoFrame.attachNewNode(cm.generate())
-        bg.setTransparency(1)
-        bg.setColor(0.5, 0.5, 0.5, 0.5)
-        bg.setBin('fixed', 0)
-        self.cogInfoFrame['geom'] = bg
-        self.cogInfoFrame['geom_pos'] = (0, 0, 0)
-        self.cogInfoFrame['geom_scale'] = (6, 1, 2)
+        self.cogInfoFrame['relief'] = 'flat'
+        self.cogInfoFrame['frameColor'] = (1,.97,.80,.94)
+        self.cogInfoFrame['frameSize'] = (-3,3,-1.55,1.55)
         self.cogInfoFrame.setScale(0.05)
-        self.cogInfoFrame.setPos(0, 0, 0.6)
+        self.cogInfoFrame.setPos(0,0,.6)
         self.buildingMarkers = []
         self.av = av
         self.wantToggle = False
@@ -39,7 +33,6 @@ class QuestMap(DirectFrame):
         self.fishingSpotInfo = None
         self.load()
         self.setScale(1.5)
-        bg.removeNode()
         self.hoodId = None
         self.zoneId = None
         self.suitPercentage = {}
@@ -65,21 +58,18 @@ class QuestMap(DirectFrame):
         self.mapCloseButton.hide()
         gui.removeNode()
         icons = loader.loadModel('phase_3/models/gui/cog_icons')
-        cIcon = icons.find('**/CorpIcon')
-        lIcon = icons.find('**/LegalIcon')
-        mIcon = icons.find('**/MoneyIcon')
-        sIcon = icons.find('**/SalesIcon')
-        cogInfoTextColor = (0.2, 0.2, 0.2, 1)
-        textPos = (1.2, -0.2)
-        textScale = 0.8
-        self.cInfo = DirectLabel(parent=self.cogInfoFrame, text='', text_fg=cogInfoTextColor, text_pos=textPos, text_scale=textScale, geom=cIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
-        self.cInfo.setPos(-2.2, 0, 0.5)
-        self.lInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=lIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
-        self.lInfo.setPos(-2.2, 0, -0.5)
-        self.mInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=mIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
-        self.mInfo.setPos(0.8, 0, 0.5)
-        self.sInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=sIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
-        self.sInfo.setPos(0.8, 0, -0.5)
+        from toontown.suit.BureaubotModels import build_logo
+        emblems=[icons.find('**/'+name) for name in ('CorpIcon','LegalIcon','MoneyIcon','SalesIcon')]
+        emblems.append(build_logo())
+        self.cogInfoLabels=[]
+        for i,emblem in enumerate(emblems):
+            x,z=((-1.65,.95),(1.35,.95),(-1.65,0),(1.35,0),(0,-.95))[i]
+            label=DirectLabel(parent=self.cogInfoFrame,text='',text_fg=(.10,.13,.16,1),
+                text_pos=(.40,-.20),text_scale=.65,text_align=TextNode.ALeft,
+                geom=emblem,geom_pos=(-.20,0,0),geom_scale=.67,relief=None,pos=(x,0,z))
+            self.cogInfoLabels.append(label)
+        self.cInfo,self.lInfo,self.mInfo,self.sInfo,self.uInfo=self.cogInfoLabels
+        emblems[-1].removeNode()
         icons.removeNode()
         return
 
@@ -87,10 +77,8 @@ class QuestMap(DirectFrame):
         currPercentage = self.suitPercentage.get(self.zoneId)
         if currPercentage is None:
             return
-        self.cInfo['text'] = '%s%%' % currPercentage[0]
-        self.lInfo['text'] = '%s%%' % currPercentage[1]
-        self.mInfo['text'] = '%s%%' % currPercentage[2]
-        self.sInfo['text'] = '%s%%' % currPercentage[3]
+        for label,percent in zip(self.cogInfoLabels,currPercentage):
+            label['text']='%s%%'%percent
         return
 
     def destroy(self):
@@ -102,6 +90,8 @@ class QuestMap(DirectFrame):
         DirectFrame.destroy(self)
 
     def putBuildingMarker(self, pos, hpr = (0, 0, 0), mapIndex = None):
+        if pos is None:
+            return
         marker = DirectLabel(parent=self.container, text='', text_pos=(-0.05, -0.15), text_fg=(1, 1, 1, 1), relief=None)
         gui = loader.loadModel('phase_4/models/parties/schtickerbookHostingGUI')
         icon = gui.find('**/startPartyButton_inactive')
@@ -187,10 +177,14 @@ class QuestMap(DirectFrame):
         if self.av:
             try:
                 hoodId = ZoneUtil.getCanonicalHoodId(self.av.getLocation()[1])
-                if hoodId in ToontownGlobals.ExpansionGlobals.NEIGHBORHOODS:
+                zoneId = ZoneUtil.getCanonicalBranchZone(self.av.getLocation()[1])
+                from toontown.expansion import ExpansionGlobals as E
+                if zoneId in E.STREETS:
+                    self.loadExpansionMap(hoodId,zoneId)
+                    return
+                if hoodId in E.NEIGHBORHOODS:
                     self.stop()
                     return
-                zoneId = ZoneUtil.getCanonicalBranchZone(self.av.getLocation()[1])
                 mapsGeom = loader.loadModel('phase_4/models/questmap/%s_maps' % ToontownGlobals.dnaMap[hoodId])
                 mapImage = mapsGeom.find('**/%s_%s_english' % (ToontownGlobals.dnaMap[hoodId], zoneId))
                 if not mapImage.isEmpty():
@@ -212,6 +206,24 @@ class QuestMap(DirectFrame):
                 mapsGeom.removeNode()
             except:
                 self.stop()
+
+    def loadExpansionMap(self,hoodId,zoneId):
+        from .ExpansionStreetMap import build_map,bounds
+        from toontown.expansion.Services import placements
+        mapImage=build_map(zoneId)
+        self.container['image']=mapImage
+        mapImage.removeNode()
+        self.resetFrameSize()
+        self.cornerPosInfo=bounds(zoneId)
+        self.hqPosInfo=Point3(*placements(zoneId)['hq'][:3])
+        self.fishingSpotInfo=None
+        self.cogInfoFrame.setPos(.40,0,-.33)
+        self.hoodId,self.zoneId=hoodId,zoneId
+        self.hide()
+        self.updateQuestInfo()
+        self.updateCogInfo()
+        taskMgr.remove('questMapUpdate')
+        taskMgr.add(self.update,'questMapUpdate')
 
     def start(self):
         self.container.show()

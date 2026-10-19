@@ -2,7 +2,9 @@
 
 Eight original heads on the classic Toontown Cog A/B/C rigs, with burnt-orange
 pinstripe suits and a pewter clipboard badge at the normal chest attachment.
-The same badge appears on the gallery, archive building and exterior elevator.
+The same badge appears on the gallery, upper building facade and exterior elevator. Heads and icons have
+beveled edges and baked shading; the book portraits use a slight three-quarter
+turn and hide the neck.
 
 `toontown/suit/BureaubotModels.py` constructs the editable meshes and material.
 `BureaubotGlobals.py` owns the shared catalog, DNA codes and attack pools.

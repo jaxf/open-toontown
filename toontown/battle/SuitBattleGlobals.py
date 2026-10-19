@@ -3029,7 +3029,9 @@ def getFaceoffTaunt(suitName, doId):
     return taunts[doId % len(taunts)]
 
 
-SuitFaceoffTaunts = OTPLocalizer.SuitFaceoffTaunts
+from toontown.suit.BureaubotDialog import FACEOFF as BureaubotFaceoffs
+SuitFaceoffTaunts = dict(OTPLocalizer.SuitFaceoffTaunts)
+SuitFaceoffTaunts.update(BureaubotFaceoffs)
 
 def getAttackTauntIndexFromIndex(suit, attackIndex):
     adict = getSuitAttack(suit.getStyleName(), suit.getLevel(), attackIndex)

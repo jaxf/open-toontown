@@ -149,17 +149,80 @@ class DataAndBattleTests(unittest.TestCase):
         self.assertEqual(sp.targetNumSuitBuildings,3)
 
 
+class DialogueAndDisguiseTests(unittest.TestCase):
+    def test_all_bureaubots_have_unique_faceoffs_and_street_lines(self):
+        from toontown.suit.BureaubotDialog import FACEOFF,BRUSH_OFF
+        from toontown.suit import SuitDialog
+        catalog=battle_catalog()
+        self.assertEqual(set(FACEOFF),set(BG.CODES))
+        self.assertEqual(set(BRUSH_OFF),set(BG.CODES))
+        allLines=[]
+        for code in BG.CODES:
+            self.assertEqual(len(FACEOFF[code]),8)
+            self.assertEqual(len(BRUSH_OFF[code]),4)
+            for i,line in enumerate(FACEOFF[code]):
+                self.assertEqual(catalog.getFaceoffTaunt(code,i),line)
+            for i,line in enumerate(BRUSH_OFF[code]):
+                self.assertEqual(SuitDialog.getBrushOffText(code,i),line)
+            allLines.extend(FACEOFF[code]+BRUSH_OFF[code])
+        self.assertEqual(len(set(allLines)),96)
+
+    def test_fifth_disguise_parts_merits_and_award_cap(self):
+        from toontown.toonbase import TTLocalizer
+        from functools import reduce
+        tree=ast.parse((ROOT/'toontown/coghq/CogDisguiseGlobals.py').read_text())
+        tree.body=[n for n in tree.body if not (isinstance(n,ast.ImportFrom) and n.module=='otp.otpbase')]
+        ns={'OTPGlobals':SimpleNamespace(AccessFull=2)}
+        exec(compile(tree,'CogDisguiseGlobals.py','exec'),ns)
+        disguise=SimpleNamespace(**ns)
+        self.assertEqual(disguise.PartsPerSuit,(17,14,12,10,17))
+        self.assertEqual(len(disguise.MeritsPerLevel),40)
+        toon=SimpleNamespace(cogTypes=[0]*5,cogLevels=[0]*5,cogMerits=[0,0,0,0,98],
+                             cogParts=list(disguise.PartsPerSuitBitmasks))
+        # Use the catalog module expected by getTotalMerits without native OTP.
+        import sys
+        catalog=battle_catalog()
+        old=sys.modules.get('toontown.battle.SuitBattleGlobals')
+        sys.modules['toontown.battle.SuitBattleGlobals']=catalog
+        try:
+            for i in range(5):
+                self.assertTrue(disguise.isSuitComplete(toon.cogParts,i))
+                self.assertGreater(disguise.getTotalMerits(toon,i),0)
+            self.assertEqual(disguise.getPartName([0,0,0,0,1]),TTLocalizer.CogPartNames[0])
+            methods=production_methods('toontown/coghq/PromotionManagerAI.py','PromotionManagerAI',
+                ['getPercentChance','recoverMerits'],dict(SuitDNA=SuitDNA,CogDisguiseGlobals=disguise,
+                MeritMultiplier=.5,random=random,reduce=reduce,getInvasionMultiplier=lambda:2))
+            manager=type('PromotionHarness',(),methods)()
+            manager.notify=SimpleNamespace(debug=lambda *args:None)
+            manager.air=SimpleNamespace(suitInvasionManager=SimpleNamespace(getInvading=lambda:False),
+                                        writeServerEvent=lambda *args:None)
+            toon.getDoId=lambda:7;toon.getCogParts=lambda:toon.cogParts
+            toon.getCogMerits=lambda:toon.cogMerits
+            toon.b_setCogMerits=lambda value:setattr(toon,'cogMerits',value)
+            record=dict(track='u',activeToons=[7],level=8,isVirtual=False,hasRevives=False)
+            earned=manager.recoverMerits(toon,[record],19100)
+            self.assertEqual(earned,[0,0,0,0,4])
+            self.assertEqual(toon.cogMerits,[0,0,0,0,100])
+            record['isVirtual']=True
+            self.assertEqual(manager.recoverMerits(toon,[record],19100),[0]*5)
+        finally:
+            if old is None:sys.modules.pop('toontown.battle.SuitBattleGlobals',None)
+            else:sys.modules['toontown.battle.SuitBattleGlobals']=old
+
+
 class GalleryTests(unittest.TestCase):
     def test_migrate_both_avatar_setters_without_resetting(self):
         fields={'CogStatus':('cogs',1,40),'CogCount':('cogCounts',0,40),
                 'CogRadar':('cogRadar',0,5),'BuildingRadar':('buildingRadar',0,5),
-                'CogSummonsEarned':('cogSummonsEarned',0,40)}
+                'CogSummonsEarned':('cogSummonsEarned',0,40),
+                'CogTypes':('cogTypes',0,5),'CogLevels':('cogLevels',0,5),
+                'CogParts':('cogParts',0,5),'CogMerits':('cogMerits',0,5)}
         for filename in ('DistributedToon','DistributedToonAI'):
             ns={'SuitDNA':SuitDNA,'pad_collection':pad_collection}
             methods=production_methods('toontown/toon/'+filename+'.py',filename,
                         ['set'+field for field in fields],ns)
             cls=type('Avatar',(),methods)
-            avatar=cls();avatar.notify=SimpleNamespace(debug=lambda *a:None)
+            avatar=cls();avatar.disguisePage=None;avatar.notify=SimpleNamespace(debug=lambda *a:None)
             for field,(member,default,size) in fields.items():
                 old=[3]*(size-8 if size==40 else 4)
                 getattr(avatar,'set'+field)(old)

@@ -22,7 +22,7 @@ ThoughtPrefix = '.'
 def isThought(message):
     if len(message) == 0:
         return 0
-    elif string.find(message, ThoughtPrefix, 0, len(ThoughtPrefix)) >= 0:
+    elif message.startswith(ThoughtPrefix):
         return 1
     else:
         return 0
@@ -214,7 +214,8 @@ class ChatManager(DirectObject.DirectObject):
         self.checkObscurred()
         if self.localAvatar.canChat() or self.cr.wantMagicWords:
             if self.wantBackgroundFocus:
-                self.chatInputNormal.chatEntry['backgroundFocus'] = 0
+                from toontown.expansion.ControlSettings import type_to_chat_enabled
+                self.chatInputNormal.chatEntry['backgroundFocus'] = int(type_to_chat_enabled())
             self.acceptOnce('enterNormalChat', self.fsm.request, ['normalChat'])
 
     def checkObscurred(self):

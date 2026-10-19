@@ -135,6 +135,7 @@ class LiveSuitMethodsTest(unittest.TestCase):
             self.assertFalse(building.find('**/*_door_origin').isEmpty())
             self.assertFalse(building.find('**/sign_origin').isEmpty())
             self.assertEqual(building.getTag('department'),'u')
+            self.assertFalse(building.find('**/bureaubot-facade-crest').isEmpty())
             self.assertTrue(building.find('**/drawer-panel').isEmpty())
             self.assertGreater(building.find('**/*_building').findAllTextures().getNumTextures(),0)
             elevator=self.app.loader.loadModel('phase_4/models/modules/elevator')

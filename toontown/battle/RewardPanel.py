@@ -56,7 +56,7 @@ class RewardPanel(DirectFrame):
         self.meritLabels = []
         self.meritIncLabels = []
         self.meritBars = []
-        for i in range(len(SuitDNA.hqDepts)):
+        for i in range(len(SuitDNA.suitDepts)):
             deptName = TextEncoder.upper(SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[i]])
             self.meritLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text=deptName, text_scale=0.05, text_align=TextNode.ARight, pos=(TTLocalizer.RPmeritLabelPosX, 0, -0.09 * i - 0.125), text_pos=(0, -0.02)))
             self.meritIncLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text='', text_scale=0.05, text_align=TextNode.ALeft, pos=(0.7, 0, -0.09 * i - 0.125), text_pos=(0, -0.02)))
@@ -180,6 +180,7 @@ class RewardPanel(DirectFrame):
                     questLabel['text'] = questString + ' :'
 
     def initGagFrame(self, toon, expList, meritList, noSkip = False):
+        meritList=list(meritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(meritList))
         self.avNameLabel['text'] = toon.getName()
         self.endTrackFrame.hide()
         self.gagExpFrame.show()
@@ -191,7 +192,7 @@ class RewardPanel(DirectFrame):
         self.missedItemFrame.hide()
         trackBarOffset = 0
         self.skipButton['state'] = choice(noSkip, DGG.DISABLED, DGG.NORMAL)
-        for i in range(len(SuitDNA.hqDepts)):
+        for i in range(len(SuitDNA.suitDepts)):
             meritBar = self.meritBars[i]
             meritLabel = self.meritLabels[i]
             totalMerits = CogDisguiseGlobals.getTotalMerits(toon, i)
@@ -696,6 +697,8 @@ class RewardPanel(DirectFrame):
         return intervalList
 
     def getExpTrack(self, toon, origExp, earnedExp, deathList, origQuestsList, itemList, missedItemList, origMeritList, meritList, partList, toonList, uberEntry, helpfulToonsList, noSkip = False):
+        origMeritList=list(origMeritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(origMeritList))
+        meritList=list(meritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(meritList))
         track = Sequence(Func(self.initGagFrame, toon, origExp, origMeritList, noSkip=noSkip), Wait(1.0))
         endTracks = [0,
          0,
@@ -713,7 +716,7 @@ class RewardPanel(DirectFrame):
                     endTracks[trackIndex] = 1
                     trackEnded = 1
 
-        for dept in range(len(SuitDNA.hqDepts)):
+        for dept in range(len(SuitDNA.suitDepts)):
             if meritList[dept]:
                 track += self.getMeritIntervalList(toon, dept, origMeritList[dept], meritList[dept])
 

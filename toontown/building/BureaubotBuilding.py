@@ -11,7 +11,13 @@ def decorate_building(building):
     if not front.isEmpty():
         front.setColorScale(1.0,.87,.73,1)
     # Keep the original textured windows, metal trim and silhouette. Department
-    # identity comes from the warm metal finish and the standard elevator badge.
+    # identity comes from the cast-metal facade crest and matching elevator badge.
+    crest=build_logo()
+    crest.setName('bureaubot-facade-crest')
+    crest.reparentTo(building)
+    crest.find('**/cast-clipboard').setHpr(0,0,0)
+    crest.setPos(15,-3.25,32.5)
+    crest.setScale(18,3,18)
     building.setTag('department', 'u')
     return building
 

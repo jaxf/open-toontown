@@ -7,7 +7,7 @@ occupy classic Cog buildings with a warm copper finish.
 ![Full-body models](previews/bureaubots-models.png)
 ![Completed gallery](previews/cog-gallery-bureaubots.png)
 ![Available summons](previews/cog-gallery-summons.png)
-![Archive takeover facade](previews/bureaubot-building.png)
+![Bureaubot takeover facade](previews/bureaubot-building.png)
 
 These are actual Panda3D assets and production gallery renders. The gallery
 uses a local avatar/service adapter; the street scene is staged with the
@@ -81,24 +81,46 @@ fifth department. Existing street population limits, protected NPC shops and
 building difficulty/floor limits still apply.
 
 The Bureaubot facade reuses the classic textured landmark, with a subtle
-copper tint and its clipboard emblem above the elevator. Original windows,
+copper tint, a large sculpted clipboard crest in the upper facade and a matching
+elevator badge. Original windows,
 riveted trim, shop sign, door anchors and collision nodes are preserved.
 Standard elevators, floor battles, reserves,
 rewards, takeover sounds and reclamation animations remain in use. Undefined
 Bureaubot Field Office requests fall back to a standard Cog building.
 
-There is no fifth headquarters, disguise promotion ladder or new boss battle
-in this change. Those four existing HQ tracks are explicitly separate from
-the five encounter/gallery departments, preventing merit/reward screens from
-indexing nonexistent HQ data. Bureaubots still give the normal battle XP and
-eligible quest/gallery credit.
+## Dialogue, street maps and disguise page
+
+Each Cog has eight battle-introduction lines and four street brush-offs (96
+unique lines), wired into the normal dialogue selectors. Existing attack
+voice/sound assets remain in use.
+
+All classic street maps include the five department percentages from the
+shared street planner. The eight expansion streets now have maps derived from
+WorldLayout road centerlines and the authored shop DNA, including side roads,
+Toon HQ, named tunnels, live player arrows and quest markers.
+
+The disguise page has five evenly spaced native metal tabs. The Bureaubot tab
+uses the standard robot parts, level/name labels and merit dial, with a copper
+page tint and Paperwork Progress title. Parts, types, levels and merit arrays
+are padded to five without resetting old saves. Bureaubot merits accrue from
+eligible battles once the disguise is complete and appear in battle rewards.
+Max Toon fills all five disguises. No new headquarters or boss is introduced;
+normal boss promotion encounters remain limited to the original four HQs.
+
+Typed chat starts directly with the default arrow controls, or with Enter/the
+chat button when using letter movement bindings. Enter opens on release so the
+opening key cannot immediately submit an empty message, and sending does not
+reopen the editor. The normal permission checks are retained. The fast-forward
+button uses native yellow game art. Map hover names use pale text, dark shadows
+and a higher-contrast caption.
 
 ## Compatibility and deployment
 
 Original DNA names/indices 0–31 and department indices 0–3 are unchanged.
 New names occupy 32–39 and department index 4. Names fit the existing three-byte
 DNA field. Client and AI setters pad old status/count/summon arrays to 40 and
-radars to five, without resetting prior values. The four HQ arrays stay four.
+radars and disguise arrays to five, without resetting prior values. HQ travel
+and boss mappings still have four entries.
 DC fields remain variable-length; only their defaults expand.
 
 Deploy the updated source and `etc/toon.dc` to client, AI and database/schema
@@ -109,14 +131,15 @@ does not need new files. Exports are review assets rather than runtime dependenc
 
 ## Validation
 
-The focused suite checks DNA round trips and stable classic indices; scaled
+The 16-test focused suite checks DNA round trips and stable classic indices; scaled
 attack pools, real movie dispatch and existing animation files; actual AI
 planner configuration, rank selection, takeover allocation and saturated
 streets; save padding on both peers; gallery eligibility, quotas, radar and
 one-time summon awards; summon dispatch/consumption and invalid indices;
 invasion start/busy/bulletin/expiry/completion; geometry and moving head joints;
 production Suit rendering/attack/defeat methods under both body settings; and
-preserved building collision, sign and elevator nodes.
+preserved building collision, sign and elevator nodes; 96 unique dialogue lines;
+five-entry disguise save migration; and capped fifth-department merit awards.
 
 The gallery preview checks all 40 cards, five radar rows, eight model viewer
 choices, available summon controls, mixed progress and cleanup/re-entry.
@@ -125,6 +148,9 @@ eight Bureaubots and a classic Cog: 27 single/building/invasion flows check
 cancellation, confirmation, request arguments, response handling and closing.
 Network responses are simulated. Both dialog layering references use the
 qualified DGG.NO_FADE_SORT_INDEX, fixing the reported summon NameError.
+The extended UI preview also checks all classic street maps and eight expansion
+maps, all five disguise tabs (empty, partial merits and maxed), and the real chat
+entry opening/sending/cancelling with keyboard events and a local transport.
 Production methods requiring native OTP bases run in narrow local harnesses.
 A full connected client/server smoke test still needs the project's custom
 OTP-enabled Panda3D runtime: test a street battle, multi-floor takeover,

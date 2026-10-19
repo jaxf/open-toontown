@@ -1,3 +1,4 @@
+from toontown.suit import SuitDNA
 from otp.ai.AIBase import *
 from direct.distributed.ClockDelta import *
 from .BattleBase import *
@@ -517,10 +518,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         if avId not in self.toonOrigMerits:
             self.toonOrigMerits[avId] = toon.cogMerits[:]
         if avId not in self.toonMerits:
-            self.toonMerits[avId] = [0,
-             0,
-             0,
-             0]
+            self.toonMerits[avId] = [0] * len(SuitDNA.suitDepts)
         if avId not in self.toonOrigQuests:
             flattenedQuests = []
             for quest in toon.quests:

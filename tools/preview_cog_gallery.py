@@ -190,6 +190,8 @@ def main():
     assert page.bureaubotViewer is None
     assert not app.taskMgr.hasTaskNamed('showCogRadarLater')
     assert not app.taskMgr.hasTaskNamed('activateButtonLater')
+    from tools.preview_bureau_updates import preview_updates
+    preview_updates(app,avatar,out)
     app.destroy()
     print('Gallery: 40 cards; 8 models; five functional radar rows; 27 real summon dialog flows; lifecycle checks passed.')
 
