@@ -155,6 +155,26 @@ UI/session handling still needs implementation and device verification.
 
 ## Validation so far
 
+Verified compilation checkpoint, 2026-10-19:
+
+- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39302783452)
+  at `5dae8827e4a32f7a142037714943bee25bb1f0f0`: the C++ core,
+  custom nametags/movement/DNA/suits/pets, physics, ES2 state guardian and
+  SDK OpenAL backend compiled successfully. The UIKit joystick/jump view
+  also compiled with warnings treated as errors, with arm64/iOS validation.
+- [Python framework verification](https://github.com/jaxf/open-toontown/actions/runs/39300101722/job/118222747743):
+  CPython 3.13.9 built as an arm64 iOS framework (deployment target 15.0,
+  SDK 18.5). This does not verify all optional modules or game compatibility.
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39301850511):
+  all 16 checks passed on Mac and Windows with Python 3.9 and 3.12:
+  five platform/input checks, six world-routing checks and five access-policy
+  checks. This uses stock Panda only for those tested APIs, not the custom
+  desktop game runtime. Full desktop launch/login/gameplay is still unverified.
+
+No IPA, UIKit/Panda display bridge, Python/native module integration or actual
+iPhone interaction has passed yet. The checks above are compilation and
+regression evidence only. No simulator was run.
+
 `python -m unittest discover -s tests -p test_mobile_server.py -v`
 tests token policy, state paths, config isolation, child failure handling,
 content staging and input ownership (including real Panda event dispatch).
