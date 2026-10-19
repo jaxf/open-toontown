@@ -78,6 +78,9 @@ def prepare(root):
                  'endif()')
     (root / 'toontown-python.cmake').write_text(
         Path(__file__).with_name('device-python.cmake').read_text())
+    native = Path(__file__).with_name('native')
+    for name in ('TTBuiltinModules.h', 'TTBuiltinModules.cxx', 'TTLinkCheck.cxx'):
+        (root / name).write_text((native / name).read_text())
     overlay = Path(__file__).with_name('native-components.cmake').read_text()
     target = root / 'CMakeLists.txt'
     text = target.read_text()

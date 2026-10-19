@@ -117,7 +117,11 @@ else
     --target tt_native_compile
   if [[ $TT_BINDINGS == ON ]]; then
     "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" --target tt_python_compile
-    printf '%s\n' 'PANDA DEVICE PYTHON BINDINGS COMPILED. App linking, UIKit window and gameplay still required.'
+    xcrun lipo "$TT_BUILD_DIR/bin/tt_python_linkcheck" -verify_arch arm64
+    xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_python_linkcheck" \
+      | tee "$TT_WORK/bindings-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/bindings-platform.txt"
+    printf '%s\n' 'PANDA DEVICE PYTHON MODULES LINKED. UIKit window, app packaging and gameplay still required.'
   else
     printf '%s\n' 'PANDA DEVICE C++ COMPILED. No Python bindings, UIKit window or playable IPA yet.'
   fi

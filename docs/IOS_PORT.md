@@ -75,7 +75,8 @@ enough. Native modules must be packaged/signed for iOS, not copied from Mac.
   graphics/audio configuration; it is not an iOS renderer.
 - `TouchInput`: independent contact ownership, simultaneous keys, dead zone,
   timestamped game events and release-on-cancel/background. Tests drive the
-  actual Panda input-state machinery. No UIKit overlay is wired up yet.
+  actual Panda input-state machinery. `NativeControls` exposes the main-thread
+  stick/jump callbacks used by the UIKit-to-Python adapter.
 - Settings, launcher logs/error files and screenshots can use an external
   writable sandbox through `TOONTOWN_USER_DATA`. Bundled assets remain read-only.
   Mobile mode no longer applies saved desktop window dimensions.
@@ -119,10 +120,25 @@ UIKit joystick/jump overlay with the device SDK and verifies its Mach-O target.
 `TTControlsView` places a left movement stick and right Jump button inside the
 safe area, accepts simultaneous touches, passes touches outside the controls
 through to the game view, and releases held input on cancellation/background.
-Its delegate still needs to be connected to the Panda host. Tap interaction
-also requires the host's DirectGUI/world pointer bridge. Battle/minigame
+`TTGameInputBridge` forwards delegate calls into the real Python router, starts
+with controls disabled, and cancels held input on app suspension or teardown.
+The eventual app host must retain it, enable controls only in appropriate game
+states, and invalidate it before Python shutdown. Its current mapping uses the
+default arrows/Control bindings; saved mobile rebinding remains a release gate.
+Tap interaction still requires the host's DirectGUI/world pointer bridge. Battle/minigame
 controls, keyboard entry, accessibility and actual device interaction remain
 release requirements. Compiling the overlay does not establish working input.
+
+`bash ios/build_native.sh bindings /absolute/build-folder` builds the pinned
+host/device Python pair, compiles the UIKit-to-Python adapter, and builds static
+`panda3d.core`, `.direct`, `.physics`, `.otp` and `.toontown` modules. This includes
+Python-dependent navigation. The exact pinned host `interrogate` generator runs
+on macOS; generated wrappers use the iOS Python framework headers/libraries.
+`TTRegisterBuiltinModules` supplies their pre-interpreter registration table.
+A link-only iPhone executable references every module initializer to detect
+unresolved engine symbols; it is not an installable app or a runtime test.
+The workflow runs `bindings`, `panda` and `controls`; the standalone `python`
+command remains available for diagnosing the runtime separately.
 
 All build commands leave detailed compiler output in the Actions logs. None
 produces an IPA or runs a simulator. The Python ABI is a build candidate;

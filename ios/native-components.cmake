@@ -63,6 +63,28 @@ if(INTERROGATE_PYTHON_INTERFACE)
   target_interrogate(tt_toontown ${TT_TOONTOWN_HEADERS})
   add_python_module(panda3d.otp tt_otp IMPORT panda3d.core IMPORT panda3d.direct)
   add_python_module(panda3d.toontown tt_toontown IMPORT panda3d.otp)
-  add_custom_target(tt_python_compile DEPENDS
+  add_executable(tt_python_linkcheck EXCLUDE_FROM_ALL
+    "${PROJECT_SOURCE_DIR}/TTBuiltinModules.cxx" "${PROJECT_SOURCE_DIR}/TTLinkCheck.cxx")
+  set_target_properties(tt_python_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
+  target_link_libraries(tt_python_linkcheck PRIVATE
     panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown)
+  add_custom_target(tt_python_compile DEPENDS tt_python_linkcheck)
 endif()
+
+# add_python_module participates in Panda's CMake export sets. Its custom
+# native dependencies must be exported too, with relocatable include paths.
+foreach(target tt_otp tt_toontown)
+  get_target_property(TT_INCLUDES ${target} INTERFACE_INCLUDE_DIRECTORIES)
+  set(TT_BUILD_INCLUDES)
+  foreach(dir IN LISTS TT_INCLUDES)
+    list(APPEND TT_BUILD_INCLUDES "$<BUILD_INTERFACE:${dir}>")
+  endforeach()
+  set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+    "${TT_BUILD_INCLUDES};$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/panda3d>")
+endforeach()
+install(TARGETS tt_otp tt_toontown EXPORT Core
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT CoreDevel)
+foreach(dir otpbase nametag movement navigation toontownbase dna suit pets)
+  install(DIRECTORY "${TT_SRC}/${dir}/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/panda3d
+    COMPONENT CoreDevel FILES_MATCHING PATTERN "*.h" PATTERN "*.I")
+endforeach()
