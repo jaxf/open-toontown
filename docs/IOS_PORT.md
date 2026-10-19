@@ -176,25 +176,32 @@ UI/session handling still needs implementation and device verification.
 
 ## Validation so far
 
-Verified compilation checkpoint, 2026-10-19:
+Verified compilation/link checkpoint, 2026-10-19:
 
-- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39302783452)
-  at `5dae8827e4a32f7a142037714943bee25bb1f0f0`: the C++ core,
-  custom nametags/movement/DNA/suits/pets, physics, ES2 state guardian and
-  SDK OpenAL backend compiled successfully. The UIKit joystick/jump view
-  also compiled with warnings treated as errors, with arm64/iOS validation.
-- [Python framework verification](https://github.com/jaxf/open-toontown/actions/runs/39300101722/job/118222747743):
-  CPython 3.13.9 built as an arm64 iOS framework (deployment target 15.0,
-  SDK 18.5). This does not verify all optional modules or game compatibility.
-- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39301850511):
-  all 16 checks passed on Mac and Windows with Python 3.9 and 3.12:
-  five platform/input checks, six world-routing checks and five access-policy
+- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39308070672)
+  at `99608a48e5fc44f70d51bfc02496944940f994b6`: all three jobs passed.
+  CPython 3.13.9 and static `panda3d.core`, `.direct`, `.physics`, `.otp` and
+  `.toontown` compiled against the iPhone SDK. Navigation is included in OTP.
+  The module initializers linked into `tt_python_linkcheck`; `lipo` confirmed
+  arm64 and Mach-O reports iOS 15.0 minimum / SDK 18.5. This verifies native
+  symbol resolution, not Python imports or gameplay on a device.
+- The same run compiled the UIKit joystick/Jump view, the UIKit-to-Python
+  callback adapter, and the Panda tap/drag input view. The C++-only build also
+  passed, including ES2 and SDK OpenAL. UIKit input code uses strict warnings;
+  upstream Panda headers are treated as dependency headers for the tap view.
+  No touch interaction, actual graphics window or audio playback was tested.
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39308079678):
+  all 19 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
+  eight platform/input checks, six world-routing checks and five access-policy
   checks. This uses stock Panda only for those tested APIs, not the custom
   desktop game runtime. Full desktop launch/login/gameplay is still unverified.
+- Local mobile/server suite: 29 tests passed. Local platform/input, expansion
+  and administrator suites also passed (8 + 6 + 5 checks).
 
-No IPA, UIKit/Panda display bridge, Python/native module integration or actual
-iPhone interaction has passed yet. The checks above are compilation and
-regression evidence only. No simulator was run.
+No IPA, UIKit/Panda display bridge, packaged runtime import test or actual
+phone interaction has passed yet. Required native modules such as ODE and
+image/font/audio dependencies still need device builds. The checks above are
+compilation, linking and regression evidence only. No simulator was run.
 
 `python -m unittest discover -s tests -p test_mobile_server.py -v`
 tests token policy, state paths, config isolation, child failure handling,
