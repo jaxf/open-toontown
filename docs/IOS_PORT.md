@@ -75,6 +75,34 @@ python -m ios.stage_game --output /tmp/open-toontown-game-content.zip
 
 ## Remaining release gates (full game, not a scene demo)
 
+### Cloud device compilation
+
+`.github/workflows/ios-native.yml` runs two compilation jobs on GitHub's
+standard `macos-15` runner when this branch's iOS build sources change. No
+local Xcode installation is needed to run that workflow. It is restricted to
+public repositories; it uses no larger runners, cache or artifact uploads.
+
+`bash ios/build_native.sh python /absolute/build-folder` builds a host
+interpreter and an arm64 **iPhoneOS** Python framework from the same pinned
+CPython 3.13.9 commit. It checks the binary's architecture and Mach-O platform.
+Third-party native standard-library dependencies are not yet supplied; this
+is not the final Python runtime bundle.
+
+`bash ios/build_native.sh panda /absolute/build-folder` cross-compiles the
+pinned custom engine's C++ core, physics, nametags, movement, DNA, suits, pets
+and ES2 state guardian. Its CMake overlay follows the existing makepanda
+source lists and excludes macOS-only AppKit/IOKit paths on iOS. It does not
+include Python bindings, Python-dependent navigation, third-party codecs,
+ODE, the UIKit window/context, or audio yet. A green compile check establishes
+only compilation of those named components, not game compatibility.
+
+Both scripts leave detailed compiler output in the Actions logs. Neither
+produces an IPA or runs a simulator. The Python ABI is a build candidate;
+the full game still needs to be tested against it. Do not use a macOS wheel
+to fill any missing iOS modules.
+
+### Release checklist
+
 | Gate | Required evidence |
 | --- | --- |
 | Native runtime | Reproducible iOS arm64 build of Python/Panda/custom modules, display/audio, no missing native imports |
