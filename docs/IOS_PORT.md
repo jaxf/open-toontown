@@ -215,7 +215,8 @@ would retain desktop renderer entries because that variable is a list.
 
 Pause stops display-link delivery, releases contacts and sends `PandaPaused`;
 resume sends `PandaRestarted` and rechecks input permission on the next frame.
-Errors invalidate the display link and input bridge and destroy Panda windows.
+Errors invalidate the display link and input bridge, shut down the game
+connection and destroy Panda windows even if connection shutdown raises.
 Any background teardown waits for foreground activation. Python is not finalized
 and restarted in-process because Panda has process-wide native state.
 
@@ -255,8 +256,9 @@ UI/session handling still needs implementation and device verification.
 
 Verified compilation/link checkpoint, 2026-10-19:
 
-- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39313939909)
-  at `29c4a25bf56ec3e3a0491670b95ea47ead0096e0`: all three jobs passed.
+- [iPhone device build](https://github.com/jaxf/open-toontown/actions/runs/39315438501)
+  at `26c4871c84d9151cfb7a1228d2a82abe19c5a895`: all three jobs passed,
+  including the explicit static renderer-selection change.
   CPython 3.13.9 and static `panda3d.core`, `.direct`, `.physics`, `.otp` and
   `.toontown` compiled against the iPhone SDK. Navigation is included in OTP.
   The module initializers and UIKit/ES2 pipe linked together into
@@ -274,19 +276,19 @@ Verified compilation/link checkpoint, 2026-10-19:
   the real ES2 renderer. SDK OpenAL compiled as before. New graphics/input code
   uses strict warnings, with upstream Panda headers treated as dependencies.
   No on-device rendering, touch interaction or audio playback was tested.
-- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39313939882):
-  all 25 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
-  eight platform/input checks, six embedded-lifecycle checks, six world-routing
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39315816789):
+  all 26 checks passed in all four Mac/Windows × Python 3.9/3.12 combinations:
+  eight platform/input checks, seven embedded-lifecycle checks, six world-routing
   checks and five access-policy checks, at
-  `29c4a25bf56ec3e3a0491670b95ea47ead0096e0`. Lifecycle checks cover required
+  `08a6b54283b715461a802c4bb5a2b82b52e9a62b`. Lifecycle checks cover required
   module loading, frame suspension, GUI/movement gating, partial-start cleanup,
-  rejecting repeated starts and main-thread ownership. Platform checks also
-  verify that embedded sessions preserve native frame pacing.
+  network teardown failures, rejecting repeated starts and main-thread ownership.
+  Platform checks also verify that embedded sessions preserve native frame pacing.
   This uses stock Panda only for those tested APIs, not the custom
   desktop game runtime. Full desktop launch/login/gameplay is still unverified.
 - Local mobile/server suite: 29 tests passed. Local platform/input, expansion
   and administrator suites also passed (8 + 6 + 5 checks).
-  The six embedded-lifecycle tests passed locally too.
+  The seven embedded-lifecycle tests passed locally too.
 
 No IPA, on-device rendering, packaged runtime import test or actual
 phone interaction has passed yet. Required native modules such as ODE and
