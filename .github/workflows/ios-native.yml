@@ -1,0 +1,42 @@
+name: iOS native compilation
+
+on:
+  push:
+    branches: [codex/ios-dedicated-server]
+    paths: ['ios/**', '.github/workflows/ios-native.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  device-runtime:
+    # Standard public-repository runner; no larger runner or paid storage.
+    if: github.event.repository.private == false
+    runs-on: macos-15
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [python, panda]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Compile iPhone arm64 component
+        env:
+          TT_COMPONENT: ${{ matrix.component }}
+        run: bash ios/build_native.sh "$TT_COMPONENT" "$RUNNER_TEMP/toontown-ios"
+      - name: Report scope
+        if: always()
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'TEXT'
+          This job compiles device-native components, not a playable app or IPA.
+          Python bindings, UIKit graphics integration, audio/dependencies and
+          real-device gameplay remain separate release gates. No simulator runs.
+          Build logs are retained; binaries are not uploaded or cached.
+          TEXT
