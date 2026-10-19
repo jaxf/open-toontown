@@ -111,7 +111,7 @@ def main():
     book = app.loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
     pageArt = book.find('**/big_book')
     if not pageArt.isEmpty():
-        DirectFrame(parent=app.aspect2d,relief=None,image=pageArt,
+        app.previewBook=DirectFrame(parent=app.aspect2d,relief=None,image=pageArt,
                     image_scale=(2,1,1.5),pos=(0,1,.1))
     page = SuitPage()
     page.reparentTo(app.aspect2d)

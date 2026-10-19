@@ -212,7 +212,9 @@ class QuestMap(DirectFrame):
         from toontown.expansion.Services import placements
         mapImage=build_map(zoneId)
         self.container['image']=mapImage
-        mapImage.removeNode()
+        # Keep the source NodePath valid: show/hide use the image option to
+        # decide whether the bottom-right map toggle should be available.
+        mapImage.detachNode()
         self.resetFrameSize()
         self.cornerPosInfo=bounds(zoneId)
         self.hqPosInfo=Point3(*placements(zoneId)['hq'][:3])

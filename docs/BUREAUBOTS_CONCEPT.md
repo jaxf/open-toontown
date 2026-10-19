@@ -156,3 +156,19 @@ A full connected client/server smoke test still needs the project's custom
 OTP-enabled Panda3D runtime: test a street battle, multi-floor takeover,
 relog with a legacy save, each summon type, skeletal invasion and building
 reclamation before merging.
+
+### Walking map and architectural correction
+
+Street routes are transparent `QuestMap` walking-HUD overlays, not book pages.
+Expansion maps use layered yellow sidewalks, shaded colorful roofs and trees,
+derived from the real DNA building positions and road centerlines. The native
+bottom-right folded-map button toggles them; keeping the source image NodePath
+valid fixes its disappearance on expansion streets. Preview checks exercise
+both button commands, arrow coordinates and all eight new street routes.
+
+The Bureaubot takeover now replaces the Bossbot mesh entirely with a clipped
+clipboard tower, open raised clip roof, sheet cornices and inset window bands.
+Original Cog atlas materials, elevator and shop sign remain; the department
+crest is cast into the roof clip. Camera collision is rebuilt for the new shell
+and preserves the elevator opening. Screenshots are staged engine renders, not
+connected multiplayer captures.

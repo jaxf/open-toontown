@@ -58,6 +58,17 @@ def preview_updates(app,avatar,out):
     avatar.getH=lambda:0
     app.cr.playGame.getPlace=lambda:SimpleNamespace(isInterior=False)
     street=QuestMap(avatar)
+    # These are walking-HUD overlays, never book pages. Stage a real street
+    # behind the actual QuestMap widget and its original bottom-right toggle.
+    from toontown.expansion.ExpansionScene import build_scene
+    from panda3d.core import CullBinManager
+    for name,order in [('ground',14),('shadow',15)]:
+        CullBinManager.getGlobalPtr().addBin(name,CullBinManager.BTFixed,order)
+    app.previewBook.hide()
+    scene=build_scene(19100);scene.reparentTo(app.render)
+    app.setBackgroundColor(.38,.67,.89,1)
+    app.camera.setPos(0,-535,8);app.camera.lookAt(0,-430,12)
+    app.camLens.setNearFar(1,2200);app.camLens.setFov(65)
     street.start();street.show()
     assert [label['text'] for label in street.cogInfoLabels]==['20%']*5
     capture(app,out/'street-map-classic.png')
@@ -66,17 +77,20 @@ def preview_updates(app,avatar,out):
         if not key.split('_')[-2].isdigit():continue
         current=int(key.split('_')[-2])
         zone[0]=current;street.start();street.show()
+        street.update(SimpleNamespace(time=0))
         assert street.zoneId==current,current
         assert street.uInfo['text']=='20%'
         assert sum(int(label['text'][:-1]) for label in street.cogInfoLabels)==100
     for current in E.STREETS:
         zone[0]=current;street.start();street.show()
+        street.update(SimpleNamespace(time=0))
         assert street.container['image'] is not None,current
         assert street.zoneId==current
         assert len(street.cogInfoLabels)==5
         assert sum(int(label['text'][:-1]) for label in street.cogInfoLabels)==100
         assert street.uInfo['text']=='20%'
         assert street.hqPosInfo is not None
+        assert not street.mapCloseButton.isHidden()
         low=street.cornerPosInfo[1];high=street.cornerPosInfo[0]
         for path in road_paths(current):
             for x,y in path:
@@ -84,7 +98,17 @@ def preview_updates(app,avatar,out):
                 assert -.5<=mx<=.5 and -.5<=my<=.5
         if current==19100:capture(app,out/'street-map-root-route.png')
         if current==63100:capture(app,out/'street-map-encore-avenue.png')
+    # Exercise the live lower-right toggle in both directions.
+    street.mapCloseButton['command']()
+    assert street.container.isHidden()
+    assert not street.mapOpenButton.isHidden()
+    capture(app,out/'street-map-toggle-closed.png')
+    street.mapOpenButton['command']()
+    assert not street.container.isHidden()
+    assert not street.mapCloseButton.isHidden()
     street.stop();street.destroy()
+    scene.removeNode();app.previewBook.show()
+    app.setBackgroundColor(.05,.13,.35,1)
 
     from toontown.expansion.ExpansionMap import ExpansionMap
     from toontown.toontowngui.CogButtons import fast_forward_button
