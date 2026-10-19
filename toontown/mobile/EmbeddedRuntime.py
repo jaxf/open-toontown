@@ -85,4 +85,11 @@ class Runtime:
         # Also clean up ShowBase if startup raised after opening its window.
         base = getattr(builtins, 'base', None)
         if base is not None:
-            base.destroy()
+            # ShowBase.destroy stops rendering/tasks but does not own the
+            # game's connection repository. Stop its socket/reader as well.
+            try:
+                repository = getattr(base, 'cr', None)
+                if repository is not None:
+                    repository.shutdown()
+            finally:
+                base.destroy()

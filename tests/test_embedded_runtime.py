@@ -76,10 +76,23 @@ class EmbeddedRuntimeTests(unittest.TestCase):
                 runtime.start()
             runtime.close()
             runtime.close()
+            base.cr.shutdown.assert_called_once_with()
             base.destroy.assert_called_once_with()
             self.assertIsNone(runtime._session)
             with self.assertRaises(RuntimeError):
                 runtime.start()
+
+    def test_network_shutdown_failure_still_destroys_window_and_closes_runtime(self):
+        runtime = self.runtime()
+        base = Mock()
+        base.cr.shutdown.side_effect = RuntimeError('network teardown failed')
+        with patch.object(builtins, 'base', base, create=True):
+            with self.assertRaisesRegex(RuntimeError, 'network teardown failed'):
+                runtime.close()
+            base.destroy.assert_called_once_with()
+            self.assertIsNone(runtime._session)
+            runtime.close()
+            base.cr.shutdown.assert_called_once_with()
 
     def test_repeated_start_is_rejected(self):
         runtime = self.runtime()
