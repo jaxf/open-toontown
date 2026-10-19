@@ -39,10 +39,15 @@ set_target_properties(tt_otp tt_toontown PROPERTIES UNITY_BUILD OFF)
 # The existing pandagles2 target requires EGL, which iOS does not provide.
 # Compile the existing ES2 state guardian now; a UIKit/EAGL pipe must still
 # supply the drawable and context before it can render the actual game.
+add_library(tt_uikit_input STATIC "${PROJECT_SOURCE_DIR}/TTPandaInputView.mm")
+set_target_properties(tt_uikit_input PROPERTIES UNITY_BUILD OFF)
+target_compile_options(tt_uikit_input PRIVATE -fobjc-arc -fno-fast-math -Wall -Werror)
+target_link_libraries(tt_uikit_input PRIVATE panda "-framework UIKit")
+
 if(TARGET p3gles2gsg)
   add_library(tt_gles2 STATIC $<TARGET_OBJECTS:p3gles2gsg>)
   target_link_libraries(tt_gles2 PUBLIC panda)
-  add_custom_target(tt_native_compile DEPENDS tt_otp tt_toontown tt_gles2 pandaphysics p3openal_audio)
+  add_custom_target(tt_native_compile DEPENDS tt_uikit_input tt_otp tt_toontown tt_gles2 pandaphysics p3openal_audio)
 else()
   message(FATAL_ERROR "The device compilation gate requires the ES2 renderer target")
 endif()
@@ -51,7 +56,8 @@ endif()
 # compile its wrappers against the device Python ABI. No module stubs.
 if(INTERROGATE_PYTHON_INTERFACE)
   target_sources(tt_otp PRIVATE "${TT_SRC}/navigation/navigation_composite1.cxx")
-  target_include_directories(tt_otp PUBLIC "${TT_SRC}/navigation")
+  target_include_directories(tt_otp PUBLIC "${TT_SRC}/navigation"
+    "${PROJECT_SOURCE_DIR}/dtool/src/interrogatedb")
   target_link_libraries(tt_otp PUBLIC PKG::PYTHON)
   file(GLOB TT_OTP_HEADERS CONFIGURE_DEPENDS
     "${TT_SRC}/nametag/*.h" "${TT_SRC}/movement/*.h" "${TT_SRC}/navigation/*.h")

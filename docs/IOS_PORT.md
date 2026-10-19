@@ -125,8 +125,13 @@ with controls disabled, and cancels held input on app suspension or teardown.
 The eventual app host must retain it, enable controls only in appropriate game
 states, and invalidate it before Python shutdown. Its current mapping uses the
 default arrows/Control bindings; saved mobile rebinding remains a release gate.
-Tap interaction still requires the host's DirectGUI/world pointer bridge. Battle/minigame
-controls, keyboard entry, accessibility and actual device interaction remain
+`TTPandaInputView` supplies the pointer bridge: one primary touch becomes a
+left-button press/drag/release on `GraphicsWindowInputDevice`, with UIKit points
+scaled to the actual framebuffer pixels. Other fingers never become right-clicks.
+Cancellation clears the pointer before release; a normal tap retains its release
+position for Panda's next frame. The future renderer must attach that same input
+device to its window, supply drawable dimensions and manage input availability.
+Battle/minigame controls, keyboard entry, accessibility and device interaction remain
 release requirements. Compiling the overlay does not establish working input.
 
 `bash ios/build_native.sh bindings /absolute/build-folder` builds the pinned
