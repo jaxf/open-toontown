@@ -180,6 +180,7 @@ class RewardPanel(DirectFrame):
                     questLabel['text'] = questString + ' :'
 
     def initGagFrame(self, toon, expList, meritList, noSkip = False):
+        meritList=list(meritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(meritList))
         self.avNameLabel['text'] = toon.getName()
         self.endTrackFrame.hide()
         self.gagExpFrame.show()
@@ -696,6 +697,8 @@ class RewardPanel(DirectFrame):
         return intervalList
 
     def getExpTrack(self, toon, origExp, earnedExp, deathList, origQuestsList, itemList, missedItemList, origMeritList, meritList, partList, toonList, uberEntry, helpfulToonsList, noSkip = False):
+        origMeritList=list(origMeritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(origMeritList))
+        meritList=list(meritList)+[0]*max(0,len(SuitDNA.suitDepts)-len(meritList))
         track = Sequence(Func(self.initGagFrame, toon, origExp, origMeritList, noSkip=noSkip), Wait(1.0))
         endTracks = [0,
          0,

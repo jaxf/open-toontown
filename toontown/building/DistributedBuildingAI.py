@@ -124,6 +124,8 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
         return
 
     def cogdoTakeOver(self, suitTrack, difficulty, buildingHeight):
+        if suitTrack == 'u':
+            return self.suitTakeOver(suitTrack, difficulty, buildingHeight)
         if not self.isToonBlock():
             return
         self.updateSavedBy([])

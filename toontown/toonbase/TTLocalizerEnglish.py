@@ -2271,7 +2271,8 @@ RewardPanelMeritsMaxed = 'Maxed'
 RewardPanelMeritBarLabels = ['Stock Options',
  'Jury Notices',
  'Cogbucks',
- 'Merits']
+ 'Merits',
+ 'Paperwork']
 RewardPanelMeritAlert = 'Ready for promotion!'
 RewardPanelCogPart = 'You gained a Cog disguise part!'
 RewardPanelPromotion = 'Ready for promotion in %s  track!'
@@ -4768,6 +4769,14 @@ ShardPageMed = 'Ideal'
 ShardPageHigh = 'Full'
 ShardPageChoiceReject = 'Sorry, that district is full. Please try another one.'
 SuitPageTitle = 'Cog Gallery'
+Bureaubot = 'Bureaubot'
+BureaubotP = 'Bureaubots'
+BureaubotViewModel = 'View model'
+BureaubotRank = 'Rank %s'
+BureaubotPrevious = 'Previous'
+BureaubotNext = 'Next'
+BureaubotTurnLeft = 'Turn left'
+BureaubotTurnRight = 'Turn right'
 SuitPageMystery = DialogQuestion + DialogQuestion + DialogQuestion
 SuitPageQuota = '%s of %s'
 SuitPageCogRadar = '%s present'
@@ -9758,3 +9767,6 @@ InteractivePropTrackBonusTerms = {0: 'Super Toon-Up!',
  5: 'Super Squirt!',
  6: ''}
 PlayingCardUnknown = 'Card Name is unknown'
+
+BureaubotSkelS = "Bureaubot Skelecog"
+BureaubotSkelP = "Bureaubot Skelecogs"

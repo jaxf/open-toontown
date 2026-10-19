@@ -183,7 +183,8 @@ class Quest:
      'c',
      'l',
      'm',
-     's']
+     's',
+     'u']
     _factoryTypes = [Any,
      FT_FullSuit,
      FT_Leg,
@@ -552,15 +553,15 @@ class CogTrackQuest(CogQuest):
     trackCodes = ['c',
      'l',
      'm',
-     's']
+     's', 'u']
     trackNamesS = [TTLocalizer.BossbotS,
      TTLocalizer.LawbotS,
      TTLocalizer.CashbotS,
-     TTLocalizer.SellbotS]
+     TTLocalizer.SellbotS, TTLocalizer.Bureaubot]
     trackNamesP = [TTLocalizer.BossbotP,
      TTLocalizer.LawbotP,
      TTLocalizer.CashbotP,
-     TTLocalizer.SellbotP]
+     TTLocalizer.SellbotP, TTLocalizer.BureaubotP]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -725,11 +726,11 @@ class SkelecogTrackQuest(CogTrackQuest, SkelecogQBase):
     trackNamesS = [TTLocalizer.BossbotSkelS,
      TTLocalizer.LawbotSkelS,
      TTLocalizer.CashbotSkelS,
-     TTLocalizer.SellbotSkelS]
+     TTLocalizer.SellbotSkelS, TTLocalizer.BureaubotSkelS]
     trackNamesP = [TTLocalizer.BossbotSkelP,
      TTLocalizer.LawbotSkelP,
      TTLocalizer.CashbotSkelP,
-     TTLocalizer.SellbotSkelP]
+     TTLocalizer.SellbotSkelP, TTLocalizer.BureaubotSkelP]
 
     def __init__(self, id, quest):
         CogTrackQuest.__init__(self, id, quest)
@@ -1004,11 +1005,11 @@ class BuildingQuest(CogQuest):
     trackCodes = ['c',
      'l',
      'm',
-     's']
+     's', 'u']
     trackNames = [TTLocalizer.Bossbot,
      TTLocalizer.Lawbot,
      TTLocalizer.Cashbot,
-     TTLocalizer.Sellbot]
+     TTLocalizer.Sellbot, TTLocalizer.Bureaubot]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -1620,6 +1621,8 @@ class RecoverItemQuest(LocationBasedQuest):
         elif holderType == 'track':
             if holder == 'c':
                 holderName = TTLocalizer.BossbotP
+            elif holder == 'u':
+                holderName = TTLocalizer.BureaubotP
             elif holder == 's':
                 holderName = TTLocalizer.SellbotP
             elif holder == 'm':
@@ -1679,6 +1682,8 @@ class RecoverItemQuest(LocationBasedQuest):
         elif holderType == 'track':
             if holder == 'c':
                 holderName = TTLocalizer.BossbotP
+            elif holder == 'u':
+                holderName = TTLocalizer.BureaubotP
             elif holder == 's':
                 holderName = TTLocalizer.SellbotP
             elif holder == 'm':

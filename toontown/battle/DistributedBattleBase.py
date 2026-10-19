@@ -1261,10 +1261,8 @@ class DistributedBattleBase(DistributedNode, BattleBase):
         self.clearFastTurnButton()
         if self.localToonActive():
             from direct.gui.DirectGui import DirectButton
-            self.fastTurnButton=DirectButton(parent=base.a2dBottomRight,
-                text='Fast forward turn >>',text_scale=.04,pos=(-.32,0,.16),
-                frameSize=(-.27,.27,-.045,.045),frameColor=(1,.85,.4,1),
-                command=self.fastForwardTurn)
+            from toontown.toontowngui.CogButtons import fast_forward_button
+            self.fastTurnButton = fast_forward_button(base.a2dBottomRight, self.fastForwardTurn)
         self.delayDeleteMembers()
         if self.hasLocalToon():
             NametagGlobals.setMasterArrowsOn(0)

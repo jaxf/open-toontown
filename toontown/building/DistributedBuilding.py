@@ -1,3 +1,4 @@
+from . import BureaubotBuilding
 from panda3d.core import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -318,7 +319,9 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             self.cab = self.elevatorModel.find('**/elevator')
             cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
             dept = chr(self.track)
-            if dept == 'c':
+            if dept == 'u':
+                corpIcon = BureaubotBuilding.add_elevator_badge(self.elevatorModel)
+            elif dept == 'c':
                 corpIcon = cogIcons.find('**/CorpIcon').copyTo(self.cab)
             elif dept == 's':
                 corpIcon = cogIcons.find('**/SalesIcon').copyTo(self.cab)
@@ -329,7 +332,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             corpIcon.setPos(0, 6.79, 6.8)
             corpIcon.setScale(3)
             from toontown.suit import Suit
-            corpIcon.setColor(Suit.Suit.medallionColors[dept])
+            if dept != 'u':
+                corpIcon.setColor(Suit.Suit.medallionColors[dept])
             cogIcons.removeNode()
         self.leftDoor = self.elevatorModel.find('**/left-door')
         if self.leftDoor.isEmpty():
@@ -435,11 +439,16 @@ class DistributedBuilding(DistributedObject.DistributedObject):
     def setupSuitBuilding(self, nodePath):
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
-        suitBuildingNP = suitNP.copyTo(newParentNP)
+        if chr(self.track) == 'u':
+            # Independent fifth landmark, not an alias or recolor of Bossbot.
+            suitBuildingNP = loader.loadModel(BureaubotBuilding.MODEL_PATH)
+            suitBuildingNP.reparentTo(newParentNP)
+        else:
+            suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
+            suitBuildingNP = suitNP.copyTo(newParentNP)
         buildingTitle = dnaStore.getTitleFromBlockNumber(self.block)
         if not buildingTitle:
             buildingTitle = TTLocalizer.CogsInc

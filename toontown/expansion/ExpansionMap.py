@@ -36,14 +36,19 @@ class ExpansionMap(DirectFrame):
             button.bind(DGG.ENTER,self.describe,extraArgs=[zone])
             button.bind(DGG.EXIT,self.restore_caption)
             self.buttons[zone]=button
-        self.caption=DirectLabel(parent=self,text='',text_scale=.029,
-            text_fg=(.20,.30,.29,1),text_wordwrap=69,relief=DGG.FLAT,
+        self.caption=DirectLabel(parent=self,text='',text_scale=.034,
+            text_fg=(.08,.12,.15,1),text_wordwrap=69,relief=DGG.FLAT,
             frameColor=(1,.97,.86,.94),frameSize=(-1.05,1.05,-.055,.035),
             pos=(0,0,-.71))
         self.current=DirectLabel(parent=self,text='YOU',text_scale=.023,
             text_fg=(1,1,1,1),frameColor=(.20,.48,.40,1),frameSize=(-.037,.037,-.015,.025),
             relief=DGG.FLAT,sortOrder=7)
         self.current.hide()
+        self.hoverLabel=DirectLabel(parent=self,relief=DGG.FLAT,
+            text='',text_font=font,text_scale=.039,text_fg=(1,1,.88,1),
+            text_shadow=(0,0,0,1),text_wordwrap=16,
+            frameColor=(.055,.09,.13,.95),pad=(.025,.018),sortOrder=20)
+        self.hoverLabel.hide()
 
     def refresh(self,safeMode=False,available=None):
         self.safeMode=safeMode
@@ -57,7 +62,8 @@ class ExpansionMap(DirectFrame):
             # Every district stays visible; unavailable/locked travel is explained
             # on hover and click instead of hiding the new world behind clouds.
             enabled=zone in self.available and zone in self.access and not safeMode
-            button['text_fg']=(.13,.25,.23,1) if enabled else (.40,.39,.36,1)
+            button['text_fg']=(1,1,.88,1)
+            button['text_shadow']=(.035,.065,.09,1)
             if zone==current:
                 self.current.setPos(button.getX()-.10,0,button.getZ()+.04)
                 self.current.show()
@@ -67,8 +73,11 @@ class ExpansionMap(DirectFrame):
         self.show()
 
     def describe(self,zone,event=None):
-        for key,button in self.buttons.items():
-            button['text']=NAMES[key] if key==zone else ''
+        button=self.buttons[zone]
+        self.hoverLabel['text']=NAMES[zone]
+        self.hoverLabel.setPos(max(-.72,min(.72,button.getX())),0,
+                               min(.63,button.getZ()+.12))
+        self.hoverLabel.show()
         roads=', '.join(E.zone_name(z) for z in E.connections(zone)) if zone in E.ALL_ZONES or zone in E.SOURCE_GATES else ''
         if self.safeMode:status='Travel is unavailable right now.'
         elif zone not in self.available:status='Unavailable in this district.'
@@ -77,6 +86,7 @@ class ExpansionMap(DirectFrame):
         self.caption['text']=NAMES[zone]+' — '+status+('\nTunnels: '+roads if roads else '')
 
     def restore_caption(self,event=None):
+        self.hoverLabel.hide()
         for button in self.buttons.values():button['text']=''
         self.caption['text']=getattr(self,'default_caption','Select a neighborhood.')
 

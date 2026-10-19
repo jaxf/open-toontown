@@ -46,7 +46,7 @@ def getBattleExperience(numToons, activeToons, toonExp, toonSkillPtsGained, toon
             p.append(items[1])
             origMerits = toonOrigMerits.get(toonId, [])
             p.append(origMerits)
-            merits = toonMerits.get(toonId, [0, 0, 0, 0])
+            merits = toonMerits.get(toonId, [0] * len(SuitDNA.suitDepts))
             p.append(merits)
             parts = toonParts.get(toonId, [0, 0, 0, 0])
             p.append(parts)

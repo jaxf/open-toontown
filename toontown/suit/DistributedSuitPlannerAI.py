@@ -27,6 +27,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
       2100, 5, 15, 0, 5, 20, 3, (1, 5, 10, 40, 60, 80), (25, 25, 25, 25), (1, 2, 3), []], [2200, 3, 10, 0, 5, 15, 3, (1, 5, 10, 40, 60, 80), (10, 70, 10, 10), (1, 2, 3), []], [2300, 3, 10, 0, 5, 15, 3, (1, 5, 10, 40, 60, 80), (10, 10, 40, 40), (1, 2, 3), []], [1100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (90, 10, 0, 0), (2, 3, 4), []], [1200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 90, 10), (3, 4, 5, 6), []], [1300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (40, 40, 10, 10), (3, 4, 5, 6), []], [3100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (90, 10, 0, 0), (5, 6, 7), []], [3200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (10, 20, 30, 40), (5, 6, 7), []], [3300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (5, 85, 5, 5), (7, 8, 9), []], [4100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 50, 50), (2, 3, 4), []], [4200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 90, 10), (3, 4, 5, 6), []], [4300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (50, 50, 0, 0), (3, 4, 5, 6), []], [5100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 20, 10, 70), (2, 3, 4), []], [5200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (10, 70, 0, 20), (3, 4, 5, 6), []], [5300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (5, 5, 5, 85), (3, 4, 5, 6), []], [9100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (25, 25, 25, 25), (6, 7, 8, 9), []], [9200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (5, 5, 85, 5), (6, 7, 8, 9), []], [11000, 3, 15, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 0, 100), (4, 5, 6), []], [11200, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 0, 100), (4, 5, 6), []], [12000, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 100, 0), (7, 8, 9), []], [13000, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 100, 0, 0), (8, 9, 10), []]]
     from toontown.expansion.CogPatrols import hood_rows
     SuitHoodInfo += hood_rows()
+    from .BureaubotGlobals import street_weights
+    for row in SuitHoodInfo:
+        row[8] = street_weights(row[8])
     SUIT_HOOD_INFO_ZONE = 0
     SUIT_HOOD_INFO_MIN = 1
     SUIT_HOOD_INFO_MAX = 2
@@ -54,8 +57,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     BUILDING_HEIGHT_DISTRIBUTION = [
      14, 18, 25, 23, 20]
     TOTAL_BWEIGHT = 0
-    TOTAL_BWEIGHT_PER_TRACK = [
-     0, 0, 0, 0]
+    TOTAL_BWEIGHT_PER_TRACK = [0] * len(SuitDNA.suitDepts)
     TOTAL_BWEIGHT_PER_HEIGHT = [
      0, 0, 0, 0, 0]
     for currHoodInfo in SuitHoodInfo:
@@ -71,10 +73,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
 
         currHoodInfo[SUIT_HOOD_INFO_HEIGHTS] = heights
         TOTAL_BWEIGHT += weight
-        TOTAL_BWEIGHT_PER_TRACK[0] += weight * tracks[0]
-        TOTAL_BWEIGHT_PER_TRACK[1] += weight * tracks[1]
-        TOTAL_BWEIGHT_PER_TRACK[2] += weight * tracks[2]
-        TOTAL_BWEIGHT_PER_TRACK[3] += weight * tracks[3]
+        for trackIndex, frequency in enumerate(tracks):
+            TOTAL_BWEIGHT_PER_TRACK[trackIndex] += weight * frequency
         TOTAL_BWEIGHT_PER_HEIGHT[0] += weight * heights[0]
         TOTAL_BWEIGHT_PER_HEIGHT[1] += weight * heights[1]
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
@@ -305,6 +305,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         return pointList
 
     def createNewSuit(self, blockNumbers, streetPoints, toonBlockTakeover=None, cogdoTakeover=None, minPathLen=None, maxPathLen=None, buildingHeight=None, suitLevel=None, suitType=None, suitTrack=None, suitName=None, skelecog=None, revives=None):
+        from toontown.expansion.BureauHQGlobals import ZONES as bureauZones
+        bureauPatrol=self.zoneId in bureauZones
         startPoint = None
         blockNumber = None
         if self.notify.getDebug():
@@ -378,9 +380,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                 if cogdoTakeover and suitTrack == None:
                     suitTrack = random.choice(['s'])
         if suitName == None:
-            if not cogdoTakeover:
+            if not cogdoTakeover and not bureauPatrol:
                 suitName, skelecog = self.air.suitInvasionManager.getInvadingCog()
-            if suitName == None:
+            if suitName == None and not bureauPatrol:
                 suitName = self.defaultSuitName
         if suitType == None and suitName != None:
             suitType = SuitDNA.getSuitType(suitName)
@@ -759,13 +761,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         totalWeight = self.TOTAL_BWEIGHT
         totalWeightPerTrack = self.TOTAL_BWEIGHT_PER_TRACK[:]
         totalWeightPerHeight = self.TOTAL_BWEIGHT_PER_HEIGHT[:]
-        numPerTrack = {'c': 0, 'l': 0, 'm': 0, 's': 0}
+        numPerTrack = dict.fromkeys(SuitDNA.suitDepts, 0)
         for sp in list(self.air.suitPlanners.values()):
             sp.countNumBuildingsPerTrack(numPerTrack)
-            numPerTrack['c'] += sp.pendingBuildingTracks.count('c')
-            numPerTrack['l'] += sp.pendingBuildingTracks.count('l')
-            numPerTrack['m'] += sp.pendingBuildingTracks.count('m')
-            numPerTrack['s'] += sp.pendingBuildingTracks.count('s')
+            for dept in SuitDNA.suitDepts:
+                numPerTrack[dept] += sp.pendingBuildingTracks.count(dept)
 
         numPerHeight = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
         for sp in list(self.air.suitPlanners.values()):
@@ -779,7 +779,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         while numToAssign > 0:
             smallestCount = None
             smallestTracks = []
-            for trackIndex in range(4):
+            for trackIndex in range(len(SuitDNA.suitDepts)):
                 if totalWeightPerTrack[trackIndex]:
                     track = SuitDNA.suitDepts[trackIndex]
                     count = numPerTrack[track]
@@ -836,10 +836,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     tracks = currHoodInfo[self.SUIT_HOOD_INFO_TRACK]
                     heights = currHoodInfo[self.SUIT_HOOD_INFO_HEIGHTS]
                     totalWeight -= weight
-                    totalWeightPerTrack[0] -= weight * tracks[0]
-                    totalWeightPerTrack[1] -= weight * tracks[1]
-                    totalWeightPerTrack[2] -= weight * tracks[2]
-                    totalWeightPerTrack[3] -= weight * tracks[3]
+                    for trackIndex, frequency in enumerate(tracks):
+                        totalWeightPerTrack[trackIndex] -= weight * frequency
                     totalWeightPerHeight[0] -= weight * heights[0]
                     totalWeightPerHeight[1] -= weight * heights[1]
                     totalWeightPerHeight[2] -= weight * heights[2]
@@ -1024,7 +1022,14 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                 toon.b_setBattleId(toonId)
         pos = self.battlePosDict[canonicalZoneId]
         from toontown.expansion import ExpansionGlobals as E
-        if canonicalZoneId in E.STREETS:
+        if canonicalZoneId in E.HQ_ZONES:
+            from toontown.expansion.BureauHQGlobals import BATTLE_PADS
+            leg=suit.legList.getLeg(suit.currentLeg)
+            elapsed=globalClock.getFrameTime()-suit.pathStartTime-leg.getStartTime()
+            location=leg.getPosAtTime(max(0,elapsed))
+            x,y=min(BATTLE_PADS[canonicalZoneId],key=lambda p:(p[0]-location.x)**2+(p[1]-location.y)**2)
+            pos=Point3(x,y,.12)
+        elif canonicalZoneId in E.STREETS:
             from toontown.expansion.WorldLayout import road_paths
             leg=suit.legList.getLeg(suit.currentLeg)
             elapsed=globalClock.getFrameTime()-suit.pathStartTime-leg.getStartTime()
@@ -1144,7 +1149,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def buildingListQuery(self):
         buildingDict = {}
         self.countNumBuildingsPerTrack(buildingDict)
-        buildingList = [0, 0, 0, 0]
+        buildingList = [0] * len(SuitDNA.suitDepts)
         for dept in SuitDNA.suitDepts:
             if dept in buildingDict:
                 buildingList[SuitDNA.suitDepts.index(dept)] = buildingDict[dept]
@@ -1152,18 +1157,19 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         self.sendUpdateToAvatarId(self.air.getAvatarIdFromSender(), 'buildingListResponse', [buildingList])
 
     def pickLevelTypeAndTrack(self, level=None, type=None, track=None):
-        if level == None:
+        if level is None:
             level = random.choice(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_LVL])
-        if type == None:
-            typeChoices = list(range(max(level - 4, 1), min(level, self.MAX_SUIT_TYPES) + 1))
-            type = random.choice(typeChoices)
+        if track is None:
+            track = SuitDNA.suitDepts[SuitBattleGlobals.pickFromFreqList(
+                self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_TRACK])]
+        if type is None:
+            # All eight Bureaubots can patrol level-appropriate streets.
+            maxType = SuitDNA.suitsPerDept if track == 'u' else self.MAX_SUIT_TYPES
+            type = random.choice(list(range(max(level - 4, 1), min(level, maxType) + 1)))
         else:
             level = min(max(level, type), type + 4)
-        if track == None:
-            track = SuitDNA.suitDepts[SuitBattleGlobals.pickFromFreqList(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_TRACK])]
         self.notify.debug('pickLevelTypeAndTrack: %d %d %s' % (level, type, track))
-        return (
-         level, type, track)
+        return level, type, track
 
     @classmethod
     def dump(cls):

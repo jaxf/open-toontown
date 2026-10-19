@@ -1,3 +1,4 @@
+from toontown.shtiker.CogPageGlobals import pad_collection
 from panda3d.core import *
 from panda3d.otp import *
 from toontown.toonbase.ToontownGlobals import *
@@ -93,22 +94,10 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.disguisePage = None
         self.sosPage = None
         self.gardenPage = None
-        self.cogTypes = [0,
-         0,
-         0,
-         0]
-        self.cogLevels = [0,
-         0,
-         0,
-         0]
-        self.cogParts = [0,
-         0,
-         0,
-         0]
-        self.cogMerits = [0,
-         0,
-         0,
-         0]
+        self.cogTypes = [0] * len(SuitDNA.suitDepts)
+        self.cogLevels = [0] * len(SuitDNA.suitDepts)
+        self.cogParts = [0] * len(SuitDNA.suitDepts)
+        self.cogMerits = [0] * len(SuitDNA.suitDepts)
         self.savedCheesyEffect = CENormal
         self.savedCheesyHoodId = 0
         self.savedCheesyExpireTime = 0
@@ -873,30 +862,32 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return
 
     def setCogStatus(self, cogStatusList):
-        self.cogs = cogStatusList
+        self.cogs = pad_collection(cogStatusList, len(SuitDNA.suitHeadTypes), 1)
+        if hasattr(self, 'suitPage'):
+            self.suitPage.updatePage()
 
     def setCogCount(self, cogCountList):
-        self.cogCounts = cogCountList
+        self.cogCounts = pad_collection(cogCountList, len(SuitDNA.suitHeadTypes))
         if hasattr(self, 'suitPage'):
             self.suitPage.updatePage()
 
     def setCogRadar(self, radar):
-        self.cogRadar = radar
+        self.cogRadar = pad_collection(radar, len(SuitDNA.suitDepts))
         if hasattr(self, 'suitPage'):
-            self.suitPage.updateCogRadarButtons(radar)
+            self.suitPage.updateCogRadarButtons(self.cogRadar)
 
     def setBuildingRadar(self, radar):
-        self.buildingRadar = radar
+        self.buildingRadar = pad_collection(radar, len(SuitDNA.suitDepts))
         if hasattr(self, 'suitPage'):
-            self.suitPage.updateBuildingRadarButtons(radar)
+            self.suitPage.updateBuildingRadarButtons(self.buildingRadar)
 
     def setCogTypes(self, types):
-        self.cogTypes = types
+        self.cogTypes = pad_collection(types or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
     def setCogLevels(self, levels):
-        self.cogLevels = levels
+        self.cogLevels = pad_collection(levels or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
@@ -904,7 +895,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return self.cogLevels
 
     def setCogParts(self, parts):
-        self.cogParts = parts
+        self.cogParts = pad_collection(parts or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
@@ -912,7 +903,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return self.cogParts
 
     def setCogMerits(self, merits):
-        self.cogMerits = merits
+        self.cogMerits = pad_collection(merits or [], len(SuitDNA.suitDepts))
         if self.disguisePage:
             self.disguisePage.updatePage()
 
@@ -1811,13 +1802,15 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         messenger.send('cog-summons-response', [returnCode, suitIndex, doId])
 
     def setCogSummonsEarned(self, cogSummonsEarned):
-        self.cogSummonsEarned = cogSummonsEarned
+        self.cogSummonsEarned = pad_collection(cogSummonsEarned, len(SuitDNA.suitHeadTypes))
 
     def getCogSummonsEarned(self):
         return self.cogSummonsEarned
 
     def hasCogSummons(self, suitIndex, type = None):
         summons = self.getCogSummonsEarned()
+        if not 0 <= suitIndex < len(summons):
+            return False
         curSetting = summons[suitIndex]
         if type == 'single':
             return curSetting & 1

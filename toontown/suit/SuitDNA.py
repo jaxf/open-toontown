@@ -1,3 +1,4 @@
+from . import BureaubotGlobals
 import random
 from panda3d.core import *
 from direct.directnotify.DirectNotifyGlobal import *
@@ -75,14 +76,20 @@ suitDepts = ['c',
  'l',
  'm',
  's']
+# HQ promotions remain the four existing boss/disguise tracks.
+hqDepts = suitDepts[:]
+suitDepts.append(BureaubotGlobals.DEPT)
+suitHeadTypes.extend(BureaubotGlobals.CODES)
+for code, (_, _, body, _) in BureaubotGlobals.BY_CODE.items():
+    {'a': suitATypes, 'b': suitBTypes, 'c': suitCTypes}[body].append(code)
 suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
- 's': TTLocalizer.Sellbot}
+ 's': TTLocalizer.Sellbot, 'u': TTLocalizer.Bureaubot}
 suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
- 's': TTLocalizer.SellbotP}
+ 's': TTLocalizer.SellbotP, 'u': TTLocalizer.BureaubotP}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
@@ -110,19 +117,7 @@ def getSuitBodyType(name):
 
 
 def getSuitDept(name):
-    index = suitHeadTypes.index(name)
-    if index < suitsPerDept:
-        return suitDepts[0]
-    elif index < suitsPerDept * 2:
-        return suitDepts[1]
-    elif index < suitsPerDept * 3:
-        return suitDepts[2]
-    elif index < suitsPerDept * 4:
-        return suitDepts[3]
-    else:
-        print('Unknown dept for suit name: ', name)
-        return None
-    return None
+    return suitDepts[suitHeadTypes.index(name) // suitsPerDept]
 
 
 def getDeptFullname(dept):
@@ -143,7 +138,7 @@ def getSuitType(name):
 
 
 def getRandomSuitType(level, rng = random):
-    return random.randint(max(level - 4, 1), min(level, 8))
+    return rng.randint(max(level - 4, 1), min(level, 8))
 
 
 def getRandomSuitByDept(dept):

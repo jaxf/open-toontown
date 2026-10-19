@@ -356,6 +356,13 @@ def terrain(street=False):
             mesh.face([pts[0],pts[2],pts[3]],color=tint)
             collision_face(floor,pts)
     mesh.attach(root, ground_layer=0)
+    if not street:
+        # Scenery-only ground under the relocated eastern tree backdrop. The
+        # existing forest collision boundary still limits the playable area.
+        backdrop=Mesh('east-forest-ground',GRASS)
+        backdrop.face([(140,-160,-.08),(270,-160,-.08),(270,190,-.08),(140,190,-.08)],
+                      color=(.88,.92,.74,1),shade=False)
+        backdrop.attach(root,ground_layer=0)
     if street:
         path=catmull(ROOT_ROUTE)
         ribbon(root,'grassy-verge',path,22,STONE,.035,(.85,.85,.73,1))
@@ -372,6 +379,8 @@ def terrain(street=False):
             ('root-route-arrival',[(0,-115),(0,-80),(-7,-48),(0,-20)],12),
             ('bramble-path',[(-120,20),(-90,20),(-65,12),(-40,5)],10),
             ('east-shop-walk',[(35,-25),(63,-8),(70,25),(56,55),(32,80)],8),
+            ('bureau-hq-approach',[(42,24),(65,27),(88,20),(118,20)],12),
+            ('seed-money-approach',[(32,80),(15,88),(-3,96),(-3,103)],8),
             ('west-shop-walk',[(-35,-28),(-57,-13),(-62,38),(-40,73)],8),
         ]:
             ribbon(root,name,catmull(points),w+1,STONE,.04)

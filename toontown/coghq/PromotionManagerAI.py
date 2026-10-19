@@ -18,15 +18,9 @@ class PromotionManagerAI:
 
     def recoverMerits(self, av, cogList, zoneId, multiplier = 1, extraMerits = None):
         avId = av.getDoId()
-        meritsRecovered = [0,
-         0,
-         0,
-         0]
+        meritsRecovered = [0] * len(SuitDNA.suitDepts)
         if extraMerits is None:
-            extraMerits = [0,
-             0,
-             0,
-             0]
+            extraMerits = [0] * len(SuitDNA.suitDepts)
         if self.air.suitInvasionManager.getInvading():
             multiplier *= getInvasionMultiplier()
         for i in range(len(extraMerits)):
@@ -36,6 +30,8 @@ class PromotionManagerAI:
 
         self.notify.debug('recoverMerits: multiplier = %s' % multiplier)
         for cogDict in cogList:
+            if cogDict['track'] not in SuitDNA.suitDepts:
+                continue
             dept = SuitDNA.suitDepts.index(cogDict['track'])
             if avId in cogDict['activeToons']:
                 if CogDisguiseGlobals.isSuitComplete(av.getCogParts(), SuitDNA.suitDepts.index(cogDict['track'])):
@@ -53,14 +49,8 @@ class PromotionManagerAI:
                     else:
                         self.notify.debug('recoverMerits: virtual cog!')
 
-        if meritsRecovered != [0,
-         0,
-         0,
-         0]:
-            actualCounted = [0,
-             0,
-             0,
-             0]
+        if meritsRecovered != [0] * len(SuitDNA.suitDepts):
+            actualCounted = [0] * len(SuitDNA.suitDepts)
             merits = av.getCogMerits()
             for i in range(len(meritsRecovered)):
                 max = CogDisguiseGlobals.getTotalMerits(av, i)
@@ -74,6 +64,6 @@ class PromotionManagerAI:
                     av.b_setCogMerits(merits)
 
             if reduce(lambda x, y: x + y, actualCounted):
-                self.air.writeServerEvent('merits', avId, '%s|%s|%s|%s' % tuple(actualCounted))
+                self.air.writeServerEvent('merits', avId, '|'.join(map(str,actualCounted)))
                 self.notify.debug('recoverMerits: av %s recovered merits %s' % (avId, actualCounted))
         return meritsRecovered

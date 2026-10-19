@@ -33,6 +33,14 @@ def keys():
     return {action:saved.get(action,key) for action,key in DEFAULTS.items()}
 
 
+def type_to_chat_enabled():
+    # Arrow-key users can type directly. Letter-based movement must keep its
+    # keys for walking; Enter and the chat button still open the same editor.
+    mapping = keys()
+    return not any(len(mapping[action]) == 1 and mapping[action].isalpha()
+                   for action in ('forward', 'reverse', 'turnLeft', 'turnRight', 'jump', 'sprint'))
+
+
 def field_of_view():
     return max(50,min(100,float(base.settings.getSetting('camera-fov',70))))
 
@@ -52,11 +60,28 @@ class Shortcuts(DirectObject):
                 self.accept('time-'+key,self.pie,[False])
                 self.accept('time-'+key+'-up',self.pie,[True])
                 self.events.extend(['time-'+key,'time-'+key+'-up'])
+            elif action=='chat':
+                # Open on release so the opening Enter cannot submit the entry.
+                self.accept(key,self.arm_chat)
+                self.accept(key+'-up',self.open_chat)
+                self.events.extend([key,key+'-up'])
             else:
                 self.accept(key,self.dispatch,[action]);self.events.append(key)
                 if action in HELD:
                     self.accept(key+'-up',messenger.send,[EVENTS[action]+'-up'])
                     self.events.append(key+'-up')
+
+    def arm_chat(self):
+        avatar=getattr(base,'localAvatar',None)
+        chat=getattr(avatar,'chatMgr',None)
+        self.chatArmed=bool(chat and not self.typing() and
+            not getattr(base,'capturingControl',False) and
+            chat.fsm.getCurrentState().getName()=='mainMenu')
+
+    def open_chat(self):
+        if getattr(self,'chatArmed',False):
+            self.chatArmed=False
+            self.dispatch('chat')
 
     def typing(self):
         avatar=getattr(base,'localAvatar',None)

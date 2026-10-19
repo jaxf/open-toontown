@@ -1,6 +1,6 @@
 from panda3d.core import *
 from direct.distributed import DistributedObject
-from . import SuitPlannerBase
+from . import SuitPlannerBase, SuitDNA
 from toontown.toonbase import ToontownGlobals
 
 class DistributedSuitPlanner(DistributedObject.DistributedObject, SuitPlannerBase.SuitPlannerBase):
@@ -9,10 +9,7 @@ class DistributedSuitPlanner(DistributedObject.DistributedObject, SuitPlannerBas
         DistributedObject.DistributedObject.__init__(self, cr)
         SuitPlannerBase.SuitPlannerBase.__init__(self)
         self.suitList = []
-        self.buildingList = [0,
-         0,
-         0,
-         0]
+        self.buildingList = [0] * len(SuitDNA.suitDepts)
         self.pathViz = None
         return
 

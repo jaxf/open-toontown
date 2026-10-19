@@ -30,4 +30,6 @@ def getBrushOffText(suitName, index):
     return brushoffs[index]
 
 
-SuitBrushOffs = OTPLocalizer.SuitBrushOffs
+from .BureaubotDialog import BRUSH_OFF as BureaubotBrushOffs
+SuitBrushOffs = dict(OTPLocalizer.SuitBrushOffs)
+SuitBrushOffs.update(BureaubotBrushOffs)
