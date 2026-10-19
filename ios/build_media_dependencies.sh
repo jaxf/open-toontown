@@ -31,7 +31,7 @@ build() {
   local name=$1
   shift
   cmake -S "$TT_MEDIA_WORK/media-sources/$name" -B "$TT_MEDIA_WORK/$name-device" \
-    -G 'Unix Makefiles' -DCMAKE_SYSTEM_NAME=iOS \
+    -G 'Unix Makefiles' -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_SYSTEM_PROCESSOR=arm64 \
     -DCMAKE_OSX_SYSROOT="$TT_MEDIA_SDK" -DCMAKE_OSX_ARCHITECTURES=arm64 \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="$TT_MEDIA_PREFIX" -DCMAKE_INSTALL_LIBDIR=lib \
