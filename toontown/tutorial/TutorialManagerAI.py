@@ -1,3 +1,4 @@
+from toontown.suit import SuitDNA
 from otp.ai.AIBaseGlobal import *
 from panda3d.core import *
 from panda3d.toontown import *
@@ -98,8 +99,8 @@ class TutorialManagerAI(DistributedObjectAI.DistributedObjectAI):
             av.inventory.addItem(ToontownBattleGlobals.SQUIRT_TRACK, 0)
             av.d_setInventory(av.inventory.makeNetString())
             # No cogs defeated
-            av.b_setCogStatus([1] * 32)
-            av.b_setCogCount([0] * 32)
+            av.b_setCogStatus([1] * len(SuitDNA.suitHeadTypes))
+            av.b_setCogCount([0] * len(SuitDNA.suitHeadTypes))
         return
 
     def allDone(self):

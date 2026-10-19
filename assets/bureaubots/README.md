@@ -1,30 +1,31 @@
 # Bureaubot models
 
-Eight original heads and a gear/clipboard department emblem, fitted to the
-original Toontown Cog A/B/C bodies. Each full-body BAM includes the body's
-skeleton, attached head, medallion and embedded textures. The head BAMs and
-emblem are also supplied separately for reuse.
+Eight original heads on the classic Toontown Cog A/B/C rigs, with burnt-orange
+pinstripe suits and a pewter clipboard badge at the normal chest attachment.
+The same badge appears on the gallery, archive building and exterior elevator.
 
-The editable source is `toontown/suit/BureaubotModels.py`. The game builds its
-gallery actors from this source and binds the existing neutral/walk animations;
-the exported BAMs are reviewable model assets, not networked battle enemies.
-Animation clips remain in the normal resources checkout. Full-body exports
-contain the posed rig, not embedded animation clips.
+`toontown/suit/BureaubotModels.py` constructs the editable meshes and material.
+`BureaubotGlobals.py` owns the shared catalog, DNA codes and attack pools.
+`Suit.py` uses those meshes for live networked Cogs, including battle animations
+and defeat actors. The alternative `want-new-cogs` setting also loads the
+compatible classic rig for this department.
 
-Regenerate all exports and the model sheet from the repository root:
+The individual full-body BAMs contain the skeleton, head, chest badge and
+embedded textures. Animation clips are loaded from the normal resources
+checkout, not embedded in these review exports.
+
+From the repository root, with Panda3D and the resources checkout:
 
 ```sh
 python tools/preview_bureaubots.py --export assets/bureaubots/models
-```
-
-Preview the actual five-row gallery with local avatar/OTP adapters:
-
-```sh
 python tools/preview_cog_gallery.py
+python tools/preview_bureaubot_building.py
+python -m unittest discover -s tests -p 'test_bureaubot*.py' -v
 ```
 
-In the game, open the Shtickerbook's Cog Gallery and click a Bureaubot portrait
-or its department emblem. The model viewer supports previous/next, turning,
-and close. All original 32 Cog records, quotas, summons and four radar tracks
-remain on their existing indices; the eight new gallery entries are a separate
-display catalog and do not invent defeat progress.
+The Cog Gallery now uses the standard progress, radar and summon interactions
+for all 40 entries. The standalone model viewer remains available to preview
+tools; it no longer replaces the fifth row's game controls.
+
+See [integration notes](../../docs/BUREAUBOTS_CONCEPT.md) for save compatibility,
+server behavior, validation and deployment requirements.

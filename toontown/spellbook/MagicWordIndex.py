@@ -281,6 +281,12 @@ class MaxToon(MagicWord):
         toon.b_setCogTypes([SuitDNA.suitsPerDept - 1] * 4)
         toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 4)
 
+        from toontown.shtiker.CogPageGlobals import COG_QUOTAS, COG_COMPLETE2
+        toon.b_setCogStatus([COG_COMPLETE2] * len(SuitDNA.suitHeadTypes))
+        toon.b_setCogCount(list(COG_QUOTAS[1]) * len(SuitDNA.suitDepts))
+        toon.b_setCogRadar([1] * len(SuitDNA.suitDepts))
+        toon.b_setBuildingRadar([1] * len(SuitDNA.suitDepts))
+        toon.restockAllCogSummons()
         return f"Successfully maxed {toon.getName()}!"
     
 class MaxGags(MagicWord):

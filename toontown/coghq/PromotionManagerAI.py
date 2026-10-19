@@ -36,6 +36,8 @@ class PromotionManagerAI:
 
         self.notify.debug('recoverMerits: multiplier = %s' % multiplier)
         for cogDict in cogList:
+            if cogDict['track'] not in SuitDNA.hqDepts:
+                continue
             dept = SuitDNA.suitDepts.index(cogDict['track'])
             if avId in cogDict['activeToons']:
                 if CogDisguiseGlobals.isSuitComplete(av.getCogParts(), SuitDNA.suitDepts.index(cogDict['track'])):

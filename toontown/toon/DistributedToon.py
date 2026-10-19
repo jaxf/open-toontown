@@ -1,3 +1,4 @@
+from toontown.shtiker.CogPageGlobals import pad_collection
 from panda3d.core import *
 from panda3d.otp import *
 from toontown.toonbase.ToontownGlobals import *
@@ -873,22 +874,24 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return
 
     def setCogStatus(self, cogStatusList):
-        self.cogs = cogStatusList
+        self.cogs = pad_collection(cogStatusList, len(SuitDNA.suitHeadTypes), 1)
+        if hasattr(self, 'suitPage'):
+            self.suitPage.updatePage()
 
     def setCogCount(self, cogCountList):
-        self.cogCounts = cogCountList
+        self.cogCounts = pad_collection(cogCountList, len(SuitDNA.suitHeadTypes))
         if hasattr(self, 'suitPage'):
             self.suitPage.updatePage()
 
     def setCogRadar(self, radar):
-        self.cogRadar = radar
+        self.cogRadar = pad_collection(radar, len(SuitDNA.suitDepts))
         if hasattr(self, 'suitPage'):
-            self.suitPage.updateCogRadarButtons(radar)
+            self.suitPage.updateCogRadarButtons(self.cogRadar)
 
     def setBuildingRadar(self, radar):
-        self.buildingRadar = radar
+        self.buildingRadar = pad_collection(radar, len(SuitDNA.suitDepts))
         if hasattr(self, 'suitPage'):
-            self.suitPage.updateBuildingRadarButtons(radar)
+            self.suitPage.updateBuildingRadarButtons(self.buildingRadar)
 
     def setCogTypes(self, types):
         self.cogTypes = types
@@ -1811,13 +1814,15 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         messenger.send('cog-summons-response', [returnCode, suitIndex, doId])
 
     def setCogSummonsEarned(self, cogSummonsEarned):
-        self.cogSummonsEarned = cogSummonsEarned
+        self.cogSummonsEarned = pad_collection(cogSummonsEarned, len(SuitDNA.suitHeadTypes))
 
     def getCogSummonsEarned(self):
         return self.cogSummonsEarned
 
     def hasCogSummons(self, suitIndex, type = None):
         summons = self.getCogSummonsEarned()
+        if not 0 <= suitIndex < len(summons):
+            return False
         curSetting = summons[suitIndex]
         if type == 'single':
             return curSetting & 1

@@ -1,27 +1,13 @@
-"""Bureaubot gallery models, built on the original three animated Cog bodies.
-
-These are display actors, not networked battle Cogs. Keep their catalog separate
-from SuitDNA: the live server's Cog counts, summons and disguises have 32 slots.
-Geometry faces -Y; the existing suit head joint faces +Y.
-"""
+"""Editable Bureaubot meshes shared by live Cogs and model previews."""
 import math
 
 from direct.actor.Actor import Actor
 from panda3d.core import (ColorAttrib, Geom, GeomNode, GeomTriangles, GeomVertexData,
                          GeomVertexFormat, GeomVertexWriter, NodePath,
-                         Point3, Texture, Triangulator)
+                         Point3, Texture, Triangulator, PNMImage)
 
-# key, display name, original body, body scale
-CATALOG = (
-    ('paper-shuffler', 'Paper Shuffler', 'c', .96),
-    ('rubber-stamp', 'Rubber Stamp', 'b', .78),
-    ('desk-jockey', 'Desk Jockey', 'a', .90),
-    ('clock-watcher', 'Clock Watcher', 'b', .98),
-    ('red-tape', 'Red Tape', 'c', 1.32),
-    ('bottleneck', 'Bottleneck', 'b', 1.20),
-    ('gatekeeper', 'Gatekeeper', 'a', 1.17),
-    ('head-honcho', 'Head Honcho', 'c', 1.70),
-)
+from .BureaubotGlobals import CATALOG, ANIMATIONS
+
 PAPER = (.83, .81, .69, 1)
 METAL = (.62, .64, .60, 1)
 DARK = (.10, .11, .11, 1)
@@ -117,21 +103,71 @@ def _face(root, y, z, width=.48, mouth=True, sleepy=False):
 
 
 def build_logo():
-    """Silver gear/clipboard insignia, shared by the book and suit lapels."""
+    """Embossed pewter clipboard; the same relief icon on book, chest and doors."""
     root = NodePath('bureaubot-emblem')
-    teeth = []
-    for i in range(48):
-        a = 2*math.pi*i/48
-        radius = .51 if i % 4 in (1, 2) else .43
-        teeth.append((math.cos(a)*radius, math.sin(a)*radius))
-    _prism(root, 'gear', teeth, .12, METAL)
-    _disc(root, 'inset', 0, -.085, 0, .355, .355, COPPER, sides=32)
-    _box(root, 'clipboard', (0, -.13, -.015), (.38,.055,.48), WHITE)
-    _box(root, 'clip', (0, -.17, .23), (.20,.05,.09), METAL)
-    for z in (.10, .01, -.08):
-        _box(root, 'rule', (0,-.17,z), (.24,.015,.022), COPPER)
-    _stroke(root, 'approval', [(-.08,-.16),(-.01,-.22),(.16,-.06)], -.20,.045,TEAL)
+    edge = (.30,.32,.33,1)
+    silver = (.69,.72,.73,1)
+    highlight = (.88,.90,.90,1)
+    _prism(root,'clipboard-bevel',[(-.32,-.46),(.32,-.46),(.38,-.38),
+        (.38,.33),(.29,.42),(-.29,.42),(-.38,.33),(-.38,-.38)],.13,edge)
+    _box(root,'metal-face',(0,-.085,-.015),(.64,.04,.76),silver)
+    _box(root,'paper-relief',(0,-.12,-.035),(.51,.025,.60),highlight)
+    _box(root,'clip-shadow',(0,-.15,.34),(.30,.05,.15),edge)
+    _box(root,'clip',(0,-.185,.37),(.24,.025,.10),silver)
+    for z in (.13,.02,-.09):
+        _box(root,'engraved-rule',(0,-.155,z),(.33,.018,.027),edge)
+    _stroke(root,'approval',[(-.14,-.22),(-.04,-.31),(.17,-.15)],-.16,.045,edge)
+    _stroke(root,'rim-glint',[(-.35,-.39),(-.35,.33),(-.28,.39)],-.085,.025,highlight)
     return root
+
+
+_texture_cache = {}
+
+
+def apply_clothes(actor, model_loader):
+    """Burnt-orange cloth, preserving the original mapped pinstripes/collar."""
+    for part, texture in (('torso','blazer'),('arms','sleeve'),('legs','leg')):
+        if texture not in _texture_cache:
+            source = model_loader.loadTexture('phase_3.5/maps/c_' + texture + '.jpg')
+            pixels = PNMImage()
+            source.store(pixels)
+            for y in range(pixels.getYSize()):
+                for x in range(pixels.getXSize()):
+                    rgb = pixels.getXel(x,y)
+                    light = max(rgb)
+                    # Preserve the white shirt and bright tie detail.
+                    if light < .63:
+                        value = min(1., .15 + light * 2.7)
+                        pixels.setXel(x,y,value*.78,value*.29,value*.075)
+            tex = Texture('bureaubot-' + texture)
+            tex.load(pixels)
+            tex.setMinfilter(Texture.FTLinearMipmapLinear)
+            tex.setMagfilter(Texture.FTLinear)
+            _texture_cache[texture] = tex
+        mesh = actor.find('**/' + part)
+        if not mesh.isEmpty():
+            mesh.setTexture(_texture_cache[texture],1)
+    hands = actor.find('**/hands')
+    if not hands.isEmpty():
+        hands.setColor(*METAL)
+    for mesh in actor.findAllMatches('**/+GeomNode'):
+        for i in range(mesh.node().getNumGeoms()):
+            state = mesh.node().getGeomState(i)
+            tint = state.getAttrib(ColorAttrib)
+            if tint is not None:
+                color = tint.getColor()
+                if (.02 < color.x < .07 and .03 < color.y < .07
+                        and .04 < color.z < .10):
+                    mesh.node().setGeomState(i,state.setAttrib(
+                        ColorAttrib.makeFlat((.32,.12,.035,1))))
+
+
+def attach_badge(actor):
+    chest = actor.find('**/joint_attachMeter')
+    emblem = build_logo()
+    emblem.reparentTo(chest)
+    emblem.setPosHprScale(.02,.05,.04,180,0,0,.51,.51,.51)
+    return emblem
 
 
 def build_head(key):
@@ -250,25 +286,9 @@ def make_actor(key, model_loader):
     actor = Actor('phase_3.5/models/char/' + prefix + 'mod',
                   {'neutral': phase + '/models/char/' + prefix + 'neutral',
                    'walk': phase + '/models/char/' + prefix + 'walk'})
-    for part, texture in (('torso','blazer'),('arms','sleeve'),('legs','leg')):
-        tex = model_loader.loadTexture('phase_3.5/maps/c_' + texture + '.jpg')
-        tex.setMinfilter(Texture.FTLinearMipmapLinear)
-        mesh = actor.find('**/' + part)
-        mesh.setTexture(tex, 1)
-        mesh.setColorScale(1.45,1.25,.94,1)
-    actor.find('**/hands').setColor(*METAL)
-    # The original bodies use separate, solid navy polygons inside the cuffs.
-    # Recolor those only; keep shoe, collar and mechanical wrist materials.
-    for mesh in actor.findAllMatches('**/+GeomNode'):
-        for i in range(mesh.node().getNumGeoms()):
-            state = mesh.node().getGeomState(i)
-            tint = state.getAttrib(ColorAttrib)
-            if tint is not None:
-                color = tint.getColor()
-                if (.02 < color.x < .07 and .03 < color.y < .07
-                        and .04 < color.z < .10):
-                    mesh.node().setGeomState(i,state.setAttrib(
-                        ColorAttrib.makeFlat((.29,.17,.11,1))))
+    apply_clothes(actor,model_loader)
+    actor.loadAnims({anim: 'phase_%s/models/char/%s%s' % (phase,prefix,file)
+                     for anim,file,phase in ANIMATIONS[body]})
     joint = actor.exposeJoint(None,'modelRoot','joint_head')
     head = build_head(key)
     head.reparentTo(joint)
@@ -277,14 +297,7 @@ def make_actor(key, model_loader):
         head.setScale(1.16)
     actor.pose('neutral',0)
     actor.update()
-    # Attach the medallion to the same chest joint used by original Cogs.
-    chest = actor.find('**/joint_attachMeter')
-    if not chest.isEmpty():
-        emblem = build_logo()
-        emblem.reparentTo(chest)
-        emblem.setH(180)
-        emblem.setScale(.40)
-        emblem.setPos(.42,.04,.10)
+    attach_badge(actor)
     actor.setScale(scale)
     actor.setName(name)
     actor.setTag('department','Bureaubots')

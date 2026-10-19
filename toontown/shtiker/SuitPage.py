@@ -26,15 +26,15 @@ BUILDING_RADAR_POS = (0.375,
 PANEL_COLORS = (Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.75, 0.78, 0.8, 1),
  Vec4(0.75, 0.82, 0.79, 1),
- Vec4(0.825, 0.76, 0.77, 1))
+ Vec4(0.825, 0.76, 0.77, 1), Vec4(.84,.77,.68,1))
 PANEL_COLORS_COMPLETE1 = (Vec4(0.7, 0.725, 0.545, 1),
  Vec4(0.625, 0.725, 0.65, 1),
  Vec4(0.6, 0.75, 0.525, 1),
- Vec4(0.675, 0.675, 0.55, 1))
+ Vec4(0.675, 0.675, 0.55, 1), Vec4(.71,.70,.55,1))
 PANEL_COLORS_COMPLETE2 = (Vec4(0.9, 0.725, 0.32, 1),
  Vec4(0.825, 0.725, 0.45, 1),
  Vec4(0.8, 0.75, 0.325, 1),
- Vec4(0.875, 0.675, 0.35, 1))
+ Vec4(0.875, 0.675, 0.35, 1), Vec4(.9,.72,.35,1))
 SHADOW_SCALE_POS = ((1.225,
   0,
   10,
@@ -220,8 +220,9 @@ class SuitPage(ShtikerPage.ShtikerPage):
             button.setPos(-.825, 0, GALLERY_ROW_TOP-row*GALLERY_ROW_STEP)
         logo = BureaubotModels.build_logo()
         self.bureauButton = DirectButton(parent=self.iconNode, relief=None,
-            geom=logo, geom_scale=.145, pos=(-.825,0,GALLERY_ROW_TOP-4*GALLERY_ROW_STEP),
-            command=self.showBureaubot, extraArgs=[0])
+            geom=logo, geom_scale=.17, state=DGG.DISABLED, pos=(-.825,0,GALLERY_ROW_TOP-4*GALLERY_ROW_STEP),
+            command=self.toggleRadar, extraArgs=[4])
+        self.radarButtons.append(self.bureauButton)
         logo.removeNode()
         for radarButton in self.radarButtons:
             radarButton.building = 0
@@ -230,16 +231,12 @@ class SuitPage(ShtikerPage.ShtikerPage):
         gui = loader.loadModel('phase_3.5/models/gui/suitpage_gui')
         self.panelModel = gui.find('**/card')
         self.shadowModels = []
-        for index in range(1, len(SuitDNA.suitHeadTypes) + 1):
+        for index in range(1, 33):
             self.shadowModels.append(gui.find('**/shadow' + str(index)))
 
         del gui
         self.makePanels()
-        self.makeBureaubotPanels()
-        self.radarOn = [0,
-         0,
-         0,
-         0]
+        self.radarOn = [0] * len(SuitDNA.suitDepts)
         priceScale = 0.1
         emblemIcon = loader.loadModel('phase_3.5/models/gui/tt_m_gui_gen_emblemIcons')
         silverModel = emblemIcon.find('**/tt_t_gui_gen_emblemSilver')
@@ -262,9 +259,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.moneyRadarButton.destroy()
         self.salesRadarButton.destroy()
         self.bureauButton.destroy()
-        for panel in self.bureaubotPanels:
-            panel.destroy()
-        self.bureaubotPanels = []
         for panel in self.panels:
             panel.destroy()
 
@@ -394,24 +388,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
         return
 
-    def makeBureaubotPanels(self):
-        self.bureaubotPanels = []
-        for index, (key, name, body, scale) in enumerate(BureaubotModels.CATALOG):
-            panel = DirectButton(parent=self.panelNode,
-                pos=(-.66+index*.199,0,GALLERY_ROW_TOP-4*GALLERY_ROW_STEP),
-                scale=.6, relief=None, image=self.panelModel,
-                image_scale=(1,1,GALLERY_CARD_HEIGHT),
-                image_color=(.83,.77,.68,1), text=name,
-                text_scale=.043, text_pos=(0,GALLERY_NAME_Z),
-                text_fg=(0,0,0,1), text_font=ToontownGlobals.getSuitFont(),
-                text_wordwrap=7, command=self.showBureaubot, extraArgs=[index])
-            panel.head = BureaubotModels.fit_head(panel,key)
-            self.fitGalleryHead(panel.head,panel)
-            DirectLabel(parent=panel,relief=None,text=TTLocalizer.BureaubotViewModel,
-                text_pos=(0,GALLERY_FOOTER_Z),text_scale=.039,
-                text_fg=(.22,.15,.09,1),text_font=ToontownGlobals.getSuitFont())
-            self.bureaubotPanels.append(panel)
-
     def showBureaubot(self,index):
         self.closeBureaubot()
         self.guiTop.hide()
@@ -446,17 +422,20 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def addSuitHead(self, panel, suitName):
         panelIndex = self.panels.index(panel)
         shadow = panel.attachNewNode('shadow')
-        shadowModel = self.shadowModels[panelIndex]
-        shadowModel.copyTo(shadow)
-        coords = SHADOW_SCALE_POS[panelIndex]
-        shadow.setScale(coords[0])
-        shadow.setPos(coords[1], coords[2], coords[3])
-        panel.shadow = shadow
         panel.head = Suit.attachSuitHead(panel, suitName)
         self.fitGalleryHead(panel.head,panel)
-        # Original silhouettes are registered for the old, taller cards.
-        # Scale the silhouette uniformly with its corresponding head.
-        self.fitGalleryHead(shadow,panel)
+        if panelIndex >= 32:
+            panel.head.copyTo(shadow)
+            shadow.setColor(0, 0, 0, .45)
+            shadow.setTransparency(TransparencyAttrib.MAlpha)
+            shadow.setPos(.008, .02, -.008)
+        else:
+            self.shadowModels[panelIndex].copyTo(shadow)
+            coords = SHADOW_SCALE_POS[panelIndex]
+            shadow.setScale(coords[0])
+            shadow.setPos(coords[1], coords[2], coords[3])
+            self.fitGalleryHead(shadow,panel)
+        panel.shadow = shadow
 
     def addCogRadarLabel(self, panel):
         cogRadarLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, GALLERY_FOOTER_Z), relief=None, state=DGG.DISABLED, text='', text_scale=0.041, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
@@ -468,7 +447,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         okButtonList = (buttons.find('**/ChtBx_OKBtn_UP'), buttons.find('**/ChtBx_OKBtn_DN'), buttons.find('**/ChtBx_OKBtn_Rllvr'))
         gui = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
         iconGeom = gui.find('**/summons')
-        summonButton = DirectButton(parent=panel, pos=(0.1, 0.0, -0.13), scale=0.1, relief=None, state=DGG.NORMAL, image=okButtonList, image_scale=13.0, geom=iconGeom, geom_scale=0.7, text=('',
+        summonButton = DirectButton(parent=panel, pos=(0.13, 0.0, -0.09), scale=0.07, relief=None, state=DGG.NORMAL, image=okButtonList, image_scale=13.0, geom=iconGeom, geom_scale=0.7, text=('',
          TTLocalizer.IssueSummons,
          TTLocalizer.IssueSummons,
          ''), text_scale=0.4, text_pos=(-1.1, -0.4), command=self.summonButtonPressed, extraArgs=[panel])
@@ -570,9 +549,9 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.updateBuildingRadarButtons(base.localAvatar.buildingRadar)
 
     def updateCogStatus(self, dept, type, status):
-        if dept < 0 or dept > len(SuitDNA.suitDepts):
+        if dept < 0 or dept >= len(SuitDNA.suitDepts):
             print('ucs: bad cog dept: ', dept)
-        elif type < 0 or type > SuitDNA.suitsPerDept:
+        elif type < 0 or type >= SuitDNA.suitsPerDept:
             print('ucs: bad cog type: ', type)
         elif status < COG_UNSEEN or status > COG_COMPLETE2:
             print('ucs: bad status: ', status)
@@ -615,7 +594,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for panel in panels:
             panel.cogRadarLabel['text'] = TTLocalizer.SuitPageCogRadar % panel.count
             if self.radarOn[deptNum]:
-                panel.quotaLabel.hide()
+                if panel.quotaLabel:
+                    panel.quotaLabel.hide()
 
                 def showLabel(label):
                     label.show()
@@ -630,7 +610,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
                     taskMgr.doMethodLater(RADAR_DELAY * len(panels), activateButton, 'activateButtonLater')
             else:
                 panel.cogRadarLabel.hide()
-                panel.quotaLabel.show()
+                if panel.quotaLabel:
+                    panel.quotaLabel.show()
 
         return
 
@@ -644,16 +625,13 @@ class SuitPage(ShtikerPage.ShtikerPage):
         if not timeout and hasattr(base.cr, 'currSuitPlanner') and base.cr.currSuitPlanner != None:
             buildingList = base.cr.currSuitPlanner.buildingList
         else:
-            buildingList = [0,
-             0,
-             0,
-             0]
+            buildingList = [0] * len(SuitDNA.suitDepts)
         button = self.radarButtons[deptNum]
         if button.building:
             if not button.buildingRadarLabel:
                 self.addBuildingRadarLabel(button)
             if self.radarOn[deptNum]:
-                num = buildingList[deptNum]
+                num = buildingList[deptNum] if deptNum < len(buildingList) else 0
                 if num == 1:
                     button.buildingRadarLabel['text'] = TTLocalizer.SuitPageBuildingRadarS % num
                 else:

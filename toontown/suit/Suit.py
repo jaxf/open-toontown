@@ -1,6 +1,6 @@
 from direct.actor import Actor
 from otp.avatar import Avatar
-from . import SuitDNA
+from . import SuitDNA, BureaubotGlobals, BureaubotModels
 from toontown.toonbase import ToontownGlobals
 from panda3d.core import *
 from panda3d.otp import *
@@ -322,7 +322,8 @@ class Suit(Avatar.Avatar):
     medallionColors = {'c': Vec4(0.863, 0.776, 0.769, 1.0),
      's': Vec4(0.843, 0.745, 0.745, 1.0),
      'l': Vec4(0.749, 0.776, 0.824, 1.0),
-     'm': Vec4(0.749, 0.769, 0.749, 1.0)}
+     'm': Vec4(0.749, 0.769, 0.749, 1.0),
+     'u': Vec4(.80, .83, .84, 1.0)}
 
     def __init__(self):
         try:
@@ -401,7 +402,21 @@ class Suit(Avatar.Avatar):
         self.headTexture = None
         self.loseActor = None
         self.isSkeleton = 0
-        if dna.name == 'f':
+        if dna.name in BureaubotGlobals.BY_CODE:
+            key, _, body, self.scale = BureaubotGlobals.BY_CODE[dna.name]
+            self.handColor = VBase4(*BureaubotModels.METAL)
+            self.generateBody()
+            head = BureaubotModels.build_head(key)
+            head.reparentTo(self.exposeJoint(None, 'modelRoot', 'joint_head'))
+            head.setH(180)
+            if body == 'a':
+                head.setScale(1.16)
+            self.headParts.append(head)
+            self.pose('neutral', 0)
+            self.update(force=True)
+            low, high = self.getTightBounds()
+            self.setHeight(high.z * self.scale)
+        elif dna.name == 'f':
             self.scale = 4.0 / cSize
             self.handColor = SuitDNA.corpPolyColor
             self.generateBody()
@@ -610,6 +625,11 @@ class Suit(Avatar.Avatar):
         return
 
     def generateBody(self):
+        if self.style.dept == BureaubotGlobals.DEPT:
+            self.loadModel('phase_3.5/models/char/suit' + self.style.body.upper() + '-mod')
+            self.loadAnims(self.generateAnimDict())
+            self.setSuitClothes()
+            return
         animDict = self.generateAnimDict()
         filePrefix, bodyPhase = ModelDict[self.style.body]
         if ConfigVariableBool('want-new-cogs', 0).value:
@@ -623,6 +643,18 @@ class Suit(Avatar.Avatar):
         self.setSuitClothes()
 
     def generateAnimDict(self):
+        if self.style.dept == BureaubotGlobals.DEPT:
+            body = self.style.body
+            prefix = '/models/char/suit' + body.upper() + '-'
+            phase = 3.5 if body == 'c' else 4
+            groups = ((AllSuits, phase), (AllSuitsMinigame, 4),
+                      (AllSuitsTutorialBattle, phase), (AllSuitsBattle, 5),
+                      (SuitsCEOBattle, 12))
+            anims = {name: 'phase_' + str(p) + prefix + filename
+                     for group, p in groups for name, filename in group}
+            anims.update({name: 'phase_' + str(p) + prefix + filename
+                         for name, filename, p in BureaubotGlobals.ANIMATIONS[body]})
+            return anims
         animDict = {}
         filePrefix, bodyPhase = ModelDict[self.style.body]
         for anim in AllSuits:
@@ -674,6 +706,13 @@ class Suit(Avatar.Avatar):
         if not modelRoot:
             modelRoot = self
         dept = self.style.dept
+        if dept == BureaubotGlobals.DEPT:
+            BureaubotModels.apply_clothes(modelRoot, loader)
+            self.leftHand = self.find('**/joint_Lhold')
+            self.rightHand = self.find('**/joint_Rhold')
+            self.shadowJoint = self.find('**/joint_shadow')
+            self.nametagJoint = self.find('**/joint_nameTag')
+            return
         phase = 3.5
 
         def __doItTheOldWay__():
@@ -785,6 +824,12 @@ class Suit(Avatar.Avatar):
         if tie.isEmpty():
             self.notify.warning('skelecog has no tie model!!!')
             return
+        if dept == BureaubotGlobals.DEPT:
+            tie.setColor(.64,.24,.07,1)
+            logo = BureaubotModels.build_logo()
+            logo.reparentTo(tie)
+            logo.setScale(.35)
+            return
         if dept == 'c':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
         elif dept == 's':
@@ -798,6 +843,9 @@ class Suit(Avatar.Avatar):
         tie.setTexture(tieTex, 1)
 
     def generateCorporateMedallion(self):
+        if self.style.dept == BureaubotGlobals.DEPT:
+            self.corpMedallion = BureaubotModels.attach_badge(self)
+            return
         icons = loader.loadModel('phase_3/models/gui/cog_icons')
         dept = self.style.dept
         if ConfigVariableBool('want-new-cogs', 0).value:
@@ -909,6 +957,9 @@ class Suit(Avatar.Avatar):
         if self.loseActor == None:
             if not self.isSkeleton:
                 filePrefix, phase = TutorialModelDict[self.style.body]
+                if self.style.dept == BureaubotGlobals.DEPT:
+                    filePrefix = '/models/char/suit' + self.style.body.upper() + '-'
+                    phase = 3.5 if self.style.body == 'c' else 4
                 loseModel = 'phase_' + str(phase) + filePrefix + 'lose-mod'
                 loseAnim = 'phase_' + str(phase) + filePrefix + 'lose'
                 self.loseActor = Actor.Actor(loseModel, {'lose': loseAnim})
@@ -923,6 +974,9 @@ class Suit(Avatar.Avatar):
             else:
                 loseModel = 'phase_5/models/char/cog' + self.style.body.upper() + '_robot-lose-mod'
                 filePrefix, phase = TutorialModelDict[self.style.body]
+                if self.style.dept == BureaubotGlobals.DEPT:
+                    filePrefix = '/models/char/suit' + self.style.body.upper() + '-'
+                    phase = 3.5 if self.style.body == 'c' else 4
                 loseAnim = 'phase_' + str(phase) + filePrefix + 'lose'
                 self.loseActor = Actor.Actor(loseModel, {'lose': loseAnim})
                 self.generateCorporateTie(self.loseActor)

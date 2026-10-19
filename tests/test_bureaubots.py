@@ -67,5 +67,81 @@ class BureaubotModelsTest(unittest.TestCase):
             B.make_actor('missing',self.app.loader)
 
 
+
+class LiveSuitMethodsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import ast
+        from types import SimpleNamespace
+        from direct.actor import Actor
+        from panda3d.core import ConfigVariableBool, VBase4
+        from test_bureaubot_integration import ROOT, production_methods, battle_catalog
+        from toontown.suit import SuitDNA, BureaubotGlobals as BG
+        cls.app=ShowBase()
+        ns={'BureaubotGlobals':BG,'BureaubotModels':B,'SuitDNA':SuitDNA,
+            'SuitBattleGlobals':battle_catalog(),'VBase4':VBase4,'Actor':Actor,
+            'ConfigVariableBool':ConfigVariableBool,'loader':cls.app.loader}
+        tree=ast.parse((ROOT/'toontown/suit/Suit.py').read_text())
+        for node in tree.body:
+            if isinstance(node,ast.Assign) and isinstance(node.targets[0],ast.Name):
+                name=node.targets[0].id
+                if name.startswith('AllSuits') or name=='SuitsCEOBattle':
+                    ns[name]=ast.literal_eval(node.value)
+        ns['TutorialModelDict']={b:('/models/char/suit'+b.upper()+'-',3.5 if b=='c' else 4) for b in 'abc'}
+        methods=production_methods('toontown/suit/Suit.py','Suit',
+            ['generateSuit','generateBody','generateAnimDict','setSuitClothes',
+             'generateCorporateMedallion','getLoseActor','generateCorporateTie'],ns)
+        methods['setHeight']=lambda self,height:setattr(self,'height',height)
+        methods['generateHealthBar']=lambda self:None  # OTP-dependent meter is unchanged.
+        cls.SuitHarness=type('SuitHarness',(Actor.Actor,),methods)
+        cls.BG=BG;cls.SuitDNA=SuitDNA
+
+    @classmethod
+    def tearDownClass(cls):cls.app.destroy()
+
+    def test_live_heads_chests_attacks_and_defeat_rigs(self):
+        from panda3d.core import ConfigVariableBool
+        config=ConfigVariableBool('want-new-cogs',False)
+        original=config.value
+        try:
+            for newCogs in (False,True):
+                config.setValue(newCogs)
+                for code in self.BG.CODES:
+                    with self.subTest(code=code,newCogs=newCogs):
+                        suit=self.SuitHarness()
+                        suit.style=self.SuitDNA.SuitDNA();suit.style.newSuit(code)
+                        suit.isWaiter=False
+                        try:
+                            suit.generateSuit()
+                            self.assertGreater(suit.height,4)
+                            self.assertEqual(suit.corpMedallion.getParent().getName(),'joint_attachMeter')
+                            for name,_,_ in self.BG.ANIMATIONS[suit.style.body]:
+                                self.assertIsNotNone(suit.getAnimControl(name),name)
+                                suit.pose(name,1);suit.update(force=True)
+                            defeated=suit.getLoseActor()
+                            self.assertIsNotNone(defeated.getAnimControl('lose'))
+                            self.assertFalse(defeated.find('**/'+self.BG.BY_CODE[code][0]+'-head').isEmpty())
+                            defeated.cleanup();defeated.removeNode()
+                        finally:suit.cleanup();suit.removeNode()
+        finally:config.setValue(original)
+
+    def test_building_keeps_collision_door_sign_and_elevator(self):
+        from toontown.building.BureaubotBuilding import decorate_building,add_elevator_badge
+        building=self.app.loader.loadModel('phase_4/models/modules/suit_landmark_corp')
+        try:
+            before=building.findAllMatches('**/+CollisionNode').getNumPaths()
+            decorate_building(building)
+            self.assertEqual(before,building.findAllMatches('**/+CollisionNode').getNumPaths())
+            self.assertFalse(building.find('**/*_door_origin').isEmpty())
+            self.assertFalse(building.find('**/sign_origin').isEmpty())
+            self.assertFalse(building.find('**/bureaubot-archive-facade').isEmpty())
+            elevator=self.app.loader.loadModel('phase_4/models/modules/elevator')
+            elevator.reparentTo(building.find('**/*_door_origin'))
+            self.assertFalse(add_elevator_badge(elevator).isEmpty())
+            self.assertFalse(elevator.find('**/left-door').isEmpty())
+            self.assertFalse(elevator.find('**/right-door').isEmpty())
+        finally:building.removeNode()
+
+
 if __name__=='__main__':
     unittest.main()

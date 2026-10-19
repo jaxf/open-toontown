@@ -3060,3 +3060,7 @@ def getAttackTaunt(attackName, index = None):
 
 
 SuitAttackTaunts = TTLocalizer.SuitAttackTaunts
+
+
+from toontown.suit.BureaubotGlobals import install_battle_catalog
+install_battle_catalog(SuitAttributes)

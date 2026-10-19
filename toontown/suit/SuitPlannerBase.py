@@ -436,6 +436,9 @@ class SuitPlannerBase:
       []]]
     from toontown.expansion.CogPatrols import hood_rows
     SuitHoodInfo += hood_rows()
+    from .BureaubotGlobals import street_weights
+    for row in SuitHoodInfo:
+        row[8] = street_weights(row[8])
     SUIT_HOOD_INFO_ZONE = 0
     SUIT_HOOD_INFO_MIN = 1
     SUIT_HOOD_INFO_MAX = 2
@@ -448,10 +451,7 @@ class SuitPlannerBase:
     SUIT_HOOD_INFO_LVL = 9
     SUIT_HOOD_INFO_HEIGHTS = 10
     TOTAL_BWEIGHT = 0
-    TOTAL_BWEIGHT_PER_TRACK = [0,
-     0,
-     0,
-     0]
+    TOTAL_BWEIGHT_PER_TRACK = [0] * 5
     TOTAL_BWEIGHT_PER_HEIGHT = [0,
      0,
      0,
@@ -473,10 +473,8 @@ class SuitPlannerBase:
 
         currHoodInfo[SUIT_HOOD_INFO_HEIGHTS] = heights
         TOTAL_BWEIGHT += weight
-        TOTAL_BWEIGHT_PER_TRACK[0] += weight * tracks[0]
-        TOTAL_BWEIGHT_PER_TRACK[1] += weight * tracks[1]
-        TOTAL_BWEIGHT_PER_TRACK[2] += weight * tracks[2]
-        TOTAL_BWEIGHT_PER_TRACK[3] += weight * tracks[3]
+        for trackIndex, frequency in enumerate(tracks):
+            TOTAL_BWEIGHT_PER_TRACK[trackIndex] += weight * frequency
         TOTAL_BWEIGHT_PER_HEIGHT[0] += weight * heights[0]
         TOTAL_BWEIGHT_PER_HEIGHT[1] += weight * heights[1]
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]

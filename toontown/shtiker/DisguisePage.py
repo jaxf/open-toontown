@@ -32,7 +32,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.bkgd.setTextureOff(1)
         self.tabs = []
         self.pageFrame = DirectFrame(parent=self.frame, relief=None)
-        for dept in SuitDNA.suitDepts:
+        for dept in SuitDNA.hqDepts:
             if dept == 'c':
                 tabIndex = 1
                 textPos = (1.57, 0.75)

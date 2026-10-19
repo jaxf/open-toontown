@@ -1,3 +1,4 @@
+from toontown.shtiker.CogPageGlobals import pad_collection
 from otp.ai.AIBaseGlobal import *
 from panda3d.core import *
 from otp.otpbase import OTPGlobals
@@ -1169,11 +1170,11 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def b_setCogStatus(self, cogStatusList):
         self.setCogStatus(cogStatusList)
-        self.d_setCogStatus(cogStatusList)
+        self.d_setCogStatus(self.cogs)
 
     def setCogStatus(self, cogStatusList):
         self.notify.debug('setting cogs to %s' % cogStatusList)
-        self.cogs = cogStatusList
+        self.cogs = pad_collection(cogStatusList, len(SuitDNA.suitHeadTypes), 1)
 
     def d_setCogStatus(self, cogStatusList):
         self.sendUpdate('setCogStatus', [cogStatusList])
@@ -1183,11 +1184,11 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def b_setCogCount(self, cogCountList):
         self.setCogCount(cogCountList)
-        self.d_setCogCount(cogCountList)
+        self.d_setCogCount(self.cogCounts)
 
     def setCogCount(self, cogCountList):
         self.notify.debug('setting cogCounts to %s' % cogCountList)
-        self.cogCounts = cogCountList
+        self.cogCounts = pad_collection(cogCountList, len(SuitDNA.suitHeadTypes))
 
     def d_setCogCount(self, cogCountList):
         self.sendUpdate('setCogCount', [cogCountList])
@@ -1197,17 +1198,10 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def b_setCogRadar(self, radar):
         self.setCogRadar(radar)
-        self.d_setCogRadar(radar)
+        self.d_setCogRadar(self.cogRadar)
 
     def setCogRadar(self, radar):
-        if not radar:
-            self.notify.warning('cogRadar set to bad value: %s. Resetting to [0,0,0,0]' % radar)
-            self.cogRadar = [0,
-             0,
-             0,
-             0]
-        else:
-            self.cogRadar = radar
+        self.cogRadar = pad_collection(radar, len(SuitDNA.suitDepts))
 
     def d_setCogRadar(self, radar):
         self.sendUpdate('setCogRadar', [radar])
@@ -1217,17 +1211,10 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def b_setBuildingRadar(self, radar):
         self.setBuildingRadar(radar)
-        self.d_setBuildingRadar(radar)
+        self.d_setBuildingRadar(self.buildingRadar)
 
     def setBuildingRadar(self, radar):
-        if not radar:
-            self.notify.warning('buildingRadar set to bad value: %s. Resetting to [0,0,0,0]' % radar)
-            self.buildingRadar = [0,
-             0,
-             0,
-             0]
-        else:
-            self.buildingRadar = radar
+        self.buildingRadar = pad_collection(radar, len(SuitDNA.suitDepts))
 
     def d_setBuildingRadar(self, radar):
         self.sendUpdate('setBuildingRadar', [radar])
@@ -1302,7 +1289,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.air.writeServerEvent('cogSuit', self.doId, '%s|%s|%s' % (dept, self.cogTypes[dept], self.cogLevels[dept]))
 
     def getNumPromotions(self, dept):
-        if dept not in SuitDNA.suitDepts:
+        if dept not in SuitDNA.hqDepts:
             self.notify.warning('getNumPromotions: Invalid parameter dept=%s' % dept)
             return 0
         deptIndex = SuitDNA.suitDepts.index(dept)
@@ -3164,7 +3151,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.air.writeServerEvent('suspicious', self.doId, 'invalid cog summons type: %s' % type)
             self.sendUpdate('cogSummonsResponse', ['fail', suitIndex, 0])
             return
-        if suitIndex >= len(SuitDNA.suitHeadTypes):
+        if not 0 <= suitIndex < len(SuitDNA.suitHeadTypes):
             self.air.writeServerEvent('suspicious', self.doId, 'invalid suitIndex: %s' % suitIndex)
             self.sendUpdate('cogSummonsResponse', ['fail', suitIndex, 0])
             return
@@ -3190,7 +3177,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         return
 
     def doSummonSingleCog(self, suitIndex):
-        if suitIndex >= len(SuitDNA.suitHeadTypes):
+        if not 0 <= suitIndex < len(SuitDNA.suitHeadTypes):
             self.notify.warning('Bad suit index: %s' % suitIndex)
             return ['badIndex', suitIndex, 0]
         suitName = SuitDNA.suitHeadTypes[suitIndex]
@@ -3220,7 +3207,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         if building == None:
             return ['badlocation', suitIndex, 0]
         level = None
-        if suitIndex >= len(SuitDNA.suitHeadTypes):
+        if not 0 <= suitIndex < len(SuitDNA.suitHeadTypes):
             self.notify.warning('Bad suit index: %s' % suitIndex)
             return ['badIndex', suitIndex, 0]
         suitName = SuitDNA.suitHeadTypes[suitIndex]
@@ -3239,7 +3226,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         if invMgr.getInvading():
             returnCode = 'busy'
         else:
-            if suitIndex >= len(SuitDNA.suitHeadTypes):
+            if not 0 <= suitIndex < len(SuitDNA.suitHeadTypes):
                 self.notify.warning('Bad suit index: %s' % suitIndex)
                 return ['badIndex', suitIndex, 0]
             cogType = SuitDNA.suitHeadTypes[suitIndex]
@@ -3251,14 +3238,14 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         return [returnCode, suitIndex, 0]
 
     def b_setCogSummonsEarned(self, cogSummonsEarned):
-        self.d_setCogSummonsEarned(cogSummonsEarned)
         self.setCogSummonsEarned(cogSummonsEarned)
+        self.d_setCogSummonsEarned(self.cogSummonsEarned)
 
     def d_setCogSummonsEarned(self, cogSummonsEarned):
         self.sendUpdate('setCogSummonsEarned', [cogSummonsEarned])
 
     def setCogSummonsEarned(self, cogSummonsEarned):
-        self.cogSummonsEarned = cogSummonsEarned
+        self.cogSummonsEarned = pad_collection(cogSummonsEarned, len(SuitDNA.suitHeadTypes))
 
     def getCogSummonsEarned(self):
         return self.cogSummonsEarned
@@ -3271,6 +3258,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def addCogSummonsEarned(self, suitIndex, type):
         summons = self.getCogSummonsEarned()
+        if not 0 <= suitIndex < len(summons):
+            return False
         curSetting = summons[suitIndex]
         if type == 'single':
             curSetting |= 1
@@ -3301,6 +3290,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def hasCogSummons(self, suitIndex, type = None):
         summons = self.getCogSummonsEarned()
+        if not 0 <= suitIndex < len(summons):
+            return False
         curSetting = summons[suitIndex]
         if type == 'single':
             return curSetting & 1
@@ -3331,7 +3322,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             suitIndex = dept * SuitDNA.suitsPerDept + level
         elif deptIndex in range(len(SuitDNA.suitDepts)):
             randomLevel = random.randrange(0, SuitDNA.suitsPerDept)
-            suitIndex = deptIndex * SuitDNA.suitsPerLevel + randomLevel
+            suitIndex = deptIndex * SuitDNA.suitsPerDept + randomLevel
         else:
             numSuits = len(SuitDNA.suitHeadTypes)
             suitIndex = random.randrange(0, numSuits)
@@ -3340,7 +3331,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         else:
             typeWeights = ['single'] * 70 + ['building'] * 25 + ['invasion'] * 5
             type = random.choice(typeWeights)
-        if suitIndex >= len(SuitDNA.suitHeadTypes):
+        if not 0 <= suitIndex < len(SuitDNA.suitHeadTypes):
             self.notify.warning('Bad suit index: %s' % suitIndex)
         self.addCogSummonsEarned(suitIndex, type)
         return (suitIndex, type)

@@ -47,6 +47,8 @@ def main():
     for key,value in zip(attrs.keys,attrs.values):
         name = next(v for k,v in zip(value.keys,value.values) if k.value=='name')
         names[key.value] = {'name':getattr(TTLocalizer,name.attr)}
+    from toontown.suit import BureaubotGlobals as BG, BureaubotModels as B
+    names.update({code:{'name':entry[1]} for code,entry in BG.BY_CODE.items()})
     module('toontown.battle.SuitBattleGlobals',SuitAttributes=names)
     # Parse the original model/texture choices from Suit.generateSuit itself.
     tree = ast.parse((ROOT/'toontown/suit/Suit.py').read_text())
@@ -72,6 +74,8 @@ def main():
             parts[key] = (heads,texture,color)
 
     def attach_head(parent,key):
+        if key in BG.BY_CODE:
+            return B.fit_head(parent,BG.BY_CODE[key][0])
         body = SuitDNA.getSuitBodyType(key)
         phase = '3.5' if body=='c' else '4'
         source = app.loader.loadModel('phase_'+phase+'/models/char/suit'+body.upper()+'-heads')
@@ -91,8 +95,8 @@ def main():
         return head
 
     module('toontown.suit.Suit',attachSuitHead=attach_head)
-    avatar = SimpleNamespace(cogs=[5]*32,cogCounts=[45,40,35,30,25,20,15,10]*4,
-        cogRadar=[1]*4,buildingRadar=[1]*4,emblems=[0,0],
+    avatar = SimpleNamespace(cogs=[5]*40,cogCounts=[45,40,35,30,25,20,15,10]*5,
+        cogRadar=[1]*5,buildingRadar=[1]*5,emblems=[0,0],
         uniqueName=lambda name:name,hasCogSummons=lambda index:False)
     builtins.localAvatar = app.localAvatar = avatar
     app.cr = SimpleNamespace(wantEmblems=False,currSuitPlanner=None)
@@ -111,8 +115,8 @@ def main():
     out = ROOT/'docs/previews'
     out.mkdir(parents=True,exist_ok=True)
     capture(app,out/'cog-gallery-bureaubots.png')
-    assert len(page.panels)==32 and len(page.bureaubotPanels)==8
-    assert len(page.radarButtons)==4
+    assert len(page.panels)==40
+    assert len(page.radarButtons)==5
     for i in range(8):
         page.showBureaubot(i)
         page.bureaubotViewer.rotate(30)
@@ -127,11 +131,16 @@ def main():
     center = viewerShot.getXel(viewerShot.getXSize()//2,viewerShot.getYSize()//2)
     assert max(center) < .8, 'The model must be visible in front of the book.'
     page.closeBureaubot()
-    # Legacy radar and incomplete collections still use exactly 32 slots.
-    for dept in range(4):
+    # All five rows use the same progress and radar controls.
+    for dept in range(5):
         page.toggleRadar(dept)
         page.toggleRadar(dept)
-    avatar.cogs=[1,2,3,4,5,2,3,5]*4
+    avatar.hasCogSummons=lambda index: index>=32
+    page.updatePage()
+    assert all(panel.summonButton is not None for panel in page.panels[32:])
+    capture(app,out/'cog-gallery-summons.png')
+    avatar.hasCogSummons=lambda index:False
+    avatar.cogs=[1,2,3,4,5,2,3,5]*5
     page.updatePage()
     capture(app,out/'cog-gallery-progress.png')
     page.exit()
@@ -142,7 +151,7 @@ def main():
     assert not app.taskMgr.hasTaskNamed('showCogRadarLater')
     assert not app.taskMgr.hasTaskNamed('activateButtonLater')
     app.destroy()
-    print('Gallery: 40 cards; 8 models; four legacy radar rows; lifecycle checks passed.')
+    print('Gallery: 40 cards; 8 models; five functional radar rows; lifecycle checks passed.')
 
 
 if __name__=='__main__':

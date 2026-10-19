@@ -1548,6 +1548,8 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                  'isVirtual': suit.isVirtual(),
                  'hasRevives': suit.getMaxSkeleRevives(),
                  'activeToons': self.activeToons[:]}
+                if not encounter['isVirtual']:
+                    self.air.suitInvasionManager.cogDefeated(suit.dna.name, suit.getSkelecog())
                 self.suitsKilled.append(encounter)
                 self.suitsKilledThisBattle.append(encounter)
             self.__removeSuit(suit)
