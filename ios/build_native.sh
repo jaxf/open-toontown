@@ -12,6 +12,7 @@ TT_SDK=$(xcrun --sdk iphoneos --show-sdk-path)
 TT_JOBS=$(sysctl -n hw.logicalcpu)
 TT_ENGINE=06615744481946654610833679a0893589114504
 TT_CPYTHON=8183fa5e3f78ca6ab862de7fb8b14f3d929421e0
+TT_ODE=a5fc0bc282703ab34d7d3d2500bafae7428eeaa9 # upstream 0.16.6
 mkdir -p "$TT_WORK"
 fetch_source() {
   local url=$1 revision=$2 folder=$3
@@ -68,6 +69,30 @@ else
   TT_BINDINGS=OFF
   TT_BUILD_DIR="$TT_WORK/panda-device"
   TT_EXTRA=(-DTT_IOS_PYTHON_FRAMEWORK=)
+  # Build the physics dependency for the device before the engine. Never let
+  # Panda discover a Homebrew/macOS ODE library while cross-compiling.
+  TT_ODE_SOURCE="$TT_WORK/ode"
+  TT_ODE_PREFIX="$TT_WORK/dependencies"
+  fetch_source https://github.com/odedevs/ode.git "$TT_ODE" "$TT_ODE_SOURCE"
+  cmake -S "$TT_ODE_SOURCE" -B "$TT_WORK/ode-device" -G 'Unix Makefiles' \
+    -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT="$TT_SDK" \
+    -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$TT_ODE_PREFIX" \
+    -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+    -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+    -DCMAKE_IGNORE_PREFIX_PATH='/opt/homebrew;/usr/local' \
+    -DBUILD_SHARED_LIBS=OFF -DODE_DOUBLE_PRECISION=OFF \
+    -DODE_WITH_DEMOS=OFF -DODE_WITH_TESTS=OFF -DODE_WITH_OPCODE=ON \
+    -DODE_WITH_GIMPACT=OFF -DODE_WITH_LIBCCD=OFF
+  cmake --build "$TT_WORK/ode-device" --parallel "$TT_JOBS"
+  cmake --install "$TT_WORK/ode-device"
+  xcrun lipo "$TT_ODE_PREFIX/lib/libode.a" -verify_arch arm64
+  mkdir -p "$TT_ODE_PREFIX/share/licenses/ode"
+  cp "$TT_ODE_SOURCE/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/LICENSE.TXT" \
+    "$TT_ODE_PREFIX/share/licenses/ode/"
+  TT_EXTRA+=("-DODE_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DODE_RELEASE_LIBRARY=$TT_ODE_PREFIX/lib/libode.a" -DHAVE_ODE=ON)
   if [[ $TT_COMPONENT == bindings ]]; then
     # The build interpreter runs on macOS; only the framework is linked on iOS.
     bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
@@ -96,7 +121,7 @@ else
   TT_OPTIONS=()
   # No desktop dependencies may satisfy an iPhone build. Optional codecs and
   # physics dependencies need their own device builds in a later stage.
-  for package in OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET ODE SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
+  for package in OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
     TT_OPTIONS+=("-DHAVE_${package}=OFF")
   done
   "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_BUILD_DIR" -G 'Unix Makefiles' \
