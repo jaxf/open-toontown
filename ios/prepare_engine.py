@@ -80,7 +80,8 @@ def prepare(root):
         Path(__file__).with_name('device-python.cmake').read_text())
     native = Path(__file__).with_name('native')
     for name in ('TTBuiltinModules.h', 'TTBuiltinModules.cxx', 'TTLinkCheck.cxx',
-                 'TTPandaInputView.h', 'TTPandaInputView.mm'):
+                 'TTPandaInputView.h', 'TTPandaInputView.mm', 'TTGraphicsHost.h',
+                 'TTGLESView.h', 'TTGLESView.mm', 'TTGraphicsPipe.mm', 'TTGraphicsLinkCheck.mm'):
         (root / name).write_text((native / name).read_text())
     overlay = Path(__file__).with_name('native-components.cmake').read_text()
     target = root / 'CMakeLists.txt'

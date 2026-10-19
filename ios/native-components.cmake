@@ -37,8 +37,7 @@ target_link_libraries(tt_toontown PUBLIC tt_otp panda)
 set_target_properties(tt_otp tt_toontown PROPERTIES UNITY_BUILD OFF)
 
 # The existing pandagles2 target requires EGL, which iOS does not provide.
-# Compile the existing ES2 state guardian now; a UIKit/EAGL pipe must still
-# supply the drawable and context before it can render the actual game.
+# Supply our UIKit/EAGL pipe instead, without changing desktop display targets.
 add_library(tt_uikit_input STATIC "${PROJECT_SOURCE_DIR}/TTPandaInputView.mm")
 set_target_properties(tt_uikit_input PROPERTIES UNITY_BUILD OFF)
 target_compile_options(tt_uikit_input PRIVATE -fobjc-arc -fno-fast-math -Wall -Werror)
@@ -51,8 +50,23 @@ target_link_libraries(tt_uikit_input PRIVATE panda "-framework UIKit")
 
 if(TARGET p3gles2gsg)
   add_library(tt_gles2 STATIC $<TARGET_OBJECTS:p3gles2gsg>)
-  target_link_libraries(tt_gles2 PUBLIC panda)
-  add_custom_target(tt_native_compile DEPENDS tt_uikit_input tt_otp tt_toontown tt_gles2 pandaphysics p3openal_audio)
+  target_link_libraries(tt_gles2 PUBLIC panda p3glstuff PKG::GLES2)
+  add_library(tt_uikit_display STATIC
+    "${PROJECT_SOURCE_DIR}/TTGLESView.mm" "${PROJECT_SOURCE_DIR}/TTGraphicsPipe.mm")
+  set_target_properties(tt_uikit_display PROPERTIES UNITY_BUILD OFF)
+  target_compile_definitions(tt_uikit_display PRIVATE GLES_SILENCE_DEPRECATION)
+  target_compile_options(tt_uikit_display PRIVATE -fobjc-arc -fno-fast-math -Wall -Werror)
+  target_include_directories(tt_uikit_display SYSTEM PRIVATE
+    "$<TARGET_PROPERTY:panda,INTERFACE_INCLUDE_DIRECTORIES>"
+    "$<TARGET_PROPERTY:p3gles2gsg,INTERFACE_INCLUDE_DIRECTORIES>")
+  target_link_libraries(tt_uikit_display PRIVATE tt_uikit_input tt_gles2
+    "-framework UIKit" "-framework QuartzCore" "-framework OpenGLES")
+  add_executable(tt_graphics_linkcheck EXCLUDE_FROM_ALL
+    "${PROJECT_SOURCE_DIR}/TTGraphicsLinkCheck.mm")
+  set_target_properties(tt_graphics_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
+  target_compile_options(tt_graphics_linkcheck PRIVATE -fobjc-arc)
+  target_link_libraries(tt_graphics_linkcheck PRIVATE tt_uikit_display)
+  add_custom_target(tt_native_compile DEPENDS tt_graphics_linkcheck tt_otp tt_toontown pandaphysics p3openal_audio)
 else()
   message(FATAL_ERROR "The device compilation gate requires the ES2 renderer target")
 endif()
@@ -81,7 +95,7 @@ if(INTERROGATE_PYTHON_INTERFACE)
     "${PROJECT_SOURCE_DIR}/TTBuiltinModules.cxx" "${PROJECT_SOURCE_DIR}/TTLinkCheck.cxx")
   set_target_properties(tt_python_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
   target_link_libraries(tt_python_linkcheck PRIVATE
-    panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown)
+    panda3d.core panda3d.direct panda3d.physics panda3d.otp panda3d.toontown tt_uikit_display)
   add_custom_target(tt_python_compile DEPENDS tt_python_linkcheck)
 endif()
 

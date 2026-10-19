@@ -109,10 +109,11 @@ is not the final Python runtime bundle.
 
 `bash ios/build_native.sh panda /absolute/build-folder` cross-compiles the
 pinned custom engine's C++ core, physics, nametags, movement, DNA, suits, pets
-and ES2 state guardian, plus the SDK OpenAL backend. Its CMake overlay follows the existing makepanda
+and ES2 state guardian, plus the UIKit/EAGL pipe and SDK OpenAL backend. Its CMake overlay follows the existing makepanda
 source lists and excludes macOS-only AppKit/IOKit paths on iOS. It does not
 include Python bindings, Python-dependent navigation, third-party codecs,
-ODE, the UIKit window/context, or tested audio playback yet. A green compile check establishes
+ODE or tested audio playback yet. A link-only graphics executable forces the new
+pipe and rendering backend into a device binary. A green compile check establishes
 only compilation of those named components, not game compatibility.
 
 `bash ios/build_native.sh controls /absolute/build-folder` compiles the native
@@ -129,8 +130,8 @@ default arrows/Control bindings; saved mobile rebinding remains a release gate.
 left-button press/drag/release on `GraphicsWindowInputDevice`, with UIKit points
 scaled to the actual framebuffer pixels. Other fingers never become right-clicks.
 Cancellation clears the pointer before release; a normal tap retains its release
-position for Panda's next frame. The future renderer must attach that same input
-device to its window, supply drawable dimensions and manage input availability.
+position for Panda's next frame. `TTGraphicsPipe` attaches that same input device
+to its window and supplies drawable dimensions from `TTGLESView`.
 Battle/minigame controls, keyboard entry, accessibility and device interaction remain
 release requirements. Compiling the overlay does not establish working input.
 
@@ -149,6 +150,42 @@ All build commands leave detailed compiler output in the Actions logs. None
 produces an IPA or runs a simulator. The Python ABI is a build candidate;
 the full game still needs to be tested against it. Do not use a macOS wheel
 to fill any missing iOS modules.
+
+### Native graphics host contract
+
+`TTGraphicsPipe` supplies one UIKit window using an EAGL ES2 context, RGBA8
+color and 16-bit depth. The actual framebuffer dimensions drive the window size
+and pointer conversion. Layout changes invalidate drawable storage without
+submitting GL commands from UIKit layout callbacks. Frame entry reallocates it
+when active, restores external bindings, and binds the nonzero iOS screen FBO
+through Panda's state cache. Host-backed texture buffers share that context.
+Unsupported framebuffer requests are subject to Panda's normal property checks;
+this first surface does not provide MSAA, stencil or sRGB.
+
+The eventual app host must:
+
+1. Create and retain a visible UIKit container, then call
+   `TTConfigureGraphicsHost(container)` before ShowBase window creation.
+2. Supply PRC with empty `load-display`/`aux-display`/`threading-model`,
+   `window-type onscreen` and `sync-video false`. The pipe rejects a draw thread.
+   Call `TTSetGraphicsActive(YES)` after the application becomes active, before
+   creating the Panda window. Add `TTControlsView` above the drawable.
+3. Step the embedded client on the main thread from a display link. Stop frame
+   delivery and disable the Python control bridge when resigning active.
+   The drawable independently disables touch/rendering and finishes outstanding
+   GPU work before backgrounding. Explicitly resume after activation.
+4. Remove Panda outputs and invalidate the control bridge before finalizing
+   Python, on the main thread while still in the foreground. Then call
+   `TTClearGraphicsHost()`. Suspension retains the window instead of destroying it.
+
+These sources still need the application lifecycle host, runtime validation,
+asset dependencies and device gameplay. Compile/link checks do not demonstrate
+that a frame or a DirectGUI click has worked on an iPhone.
+
+References: Apple's [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext)
+and [drawable storage](https://developer.apple.com/documentation/opengles/eaglcontext/renderbufferstorage(_:from:))
+contracts. OpenGL ES is deprecated by Apple; this stage uses the existing pinned
+engine's ES2 renderer. A Metal migration is separate work.
 
 ### Release checklist
 

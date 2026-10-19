@@ -115,14 +115,18 @@ else
     "${TT_OPTIONS[@]}" "${TT_EXTRA[@]}"
   "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" \
     --target tt_native_compile
+  xcrun lipo "$TT_BUILD_DIR/bin/tt_graphics_linkcheck" -verify_arch arm64
+  xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_graphics_linkcheck" \
+    | tee "$TT_WORK/graphics-platform.txt"
+  grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/graphics-platform.txt"
   if [[ $TT_BINDINGS == ON ]]; then
     "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" --target tt_python_compile
     xcrun lipo "$TT_BUILD_DIR/bin/tt_python_linkcheck" -verify_arch arm64
     xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_python_linkcheck" \
       | tee "$TT_WORK/bindings-platform.txt"
     grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/bindings-platform.txt"
-    printf '%s\n' 'PANDA DEVICE PYTHON MODULES LINKED. UIKit window, app packaging and gameplay still required.'
+    printf '%s\n' 'PANDA DEVICE MODULES AND UIKIT PIPE LINKED. App host, packaging and gameplay still required.'
   else
-    printf '%s\n' 'PANDA DEVICE C++ COMPILED. No Python bindings, UIKit window or playable IPA yet.'
+    printf '%s\n' 'PANDA DEVICE C++ AND UIKIT PIPE LINKED. No runtime rendering test or playable IPA yet.'
   fi
 fi
