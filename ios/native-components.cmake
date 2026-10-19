@@ -42,6 +42,11 @@ set_target_properties(tt_otp tt_toontown PROPERTIES UNITY_BUILD OFF)
 add_library(tt_uikit_input STATIC "${PROJECT_SOURCE_DIR}/TTPandaInputView.mm")
 set_target_properties(tt_uikit_input PROPERTIES UNITY_BUILD OFF)
 target_compile_options(tt_uikit_input PRIVATE -fobjc-arc -fno-fast-math -Wall -Werror)
+# Upstream release-mode inline headers intentionally discard assertion-only
+# locals. Treat those dependency headers as system headers, retaining -Werror
+# for the new input adapter itself.
+target_include_directories(tt_uikit_input SYSTEM PRIVATE
+  "$<TARGET_PROPERTY:panda,INTERFACE_INCLUDE_DIRECTORIES>")
 target_link_libraries(tt_uikit_input PRIVATE panda "-framework UIKit")
 
 if(TARGET p3gles2gsg)
