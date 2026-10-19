@@ -102,6 +102,7 @@ static PyStatus TTAppendPath(PyConfig *config, NSString *path) {
         Py_DECREF(module);
     }
     if (!_runtime) PyErr_Clear(); // Never send token-bearing exception text to UI/logs.
+    if (_runtime) TTRegisterAudioBackend(); // Static app: no desktop plugin dlopen.
     PyEval_SaveThread(); // Allow the game's Python workers between UI callbacks.
     if (!_runtime && error) *error = TTRuntimeError(2);
     return _runtime != NULL;

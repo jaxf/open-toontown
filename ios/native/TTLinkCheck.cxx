@@ -6,5 +6,6 @@ void TTRegisterGraphicsPipe(void);
 // generated wrappers and their underlying native engine implementations.
 int main() {
   TTRegisterGraphicsPipe();
+  TTRegisterAudioBackend();
   return TTRegisterBuiltinModules() == 0 ? 0 : 1;
 }

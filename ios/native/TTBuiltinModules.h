@@ -5,4 +5,7 @@
 /// Returns -1 if Python has already started or registration fails.
 int TTRegisterBuiltinModules(void);
 
+/// Register the linked OpenAL factory before the game creates audio managers.
+void TTRegisterAudioBackend(void);
+
 #endif

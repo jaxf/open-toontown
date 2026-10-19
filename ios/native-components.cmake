@@ -98,7 +98,7 @@ if(INTERROGATE_PYTHON_INTERFACE)
     "${PROJECT_SOURCE_DIR}/TTBuiltinModules.cxx" "${PROJECT_SOURCE_DIR}/TTLinkCheck.cxx")
   set_target_properties(tt_python_linkcheck PROPERTIES MACOSX_BUNDLE OFF)
   target_link_libraries(tt_python_linkcheck PRIVATE
-    panda3d.core panda3d.direct panda3d.physics panda3d.ode panda3d.otp panda3d.toontown tt_uikit_display)
+    panda3d.core panda3d.direct panda3d.physics panda3d.ode panda3d.otp panda3d.toontown tt_uikit_display p3openal_audio)
   # Real UIApplication entry point and controller, still without a distributable
   # runtime/content payload. This target proves native app-host compilation/link.
   add_executable(tt_ios_app MACOSX_BUNDLE EXCLUDE_FROM_ALL
@@ -117,7 +117,7 @@ if(INTERROGATE_PYTHON_INTERFACE)
   target_compile_options(tt_ios_app PRIVATE "$<$<COMPILE_LANGUAGE:OBJCXX>:-fobjc-arc>"
     -fno-fast-math -Wall -Werror)
   target_link_libraries(tt_ios_app PRIVATE tt_uikit_display
-    panda3d.core panda3d.direct panda3d.physics panda3d.ode panda3d.otp panda3d.toontown
+    panda3d.core panda3d.direct panda3d.physics panda3d.ode panda3d.otp panda3d.toontown p3openal_audio
     "-framework UIKit" "-framework QuartzCore" "-framework CoreGraphics")
   add_custom_target(tt_python_compile DEPENDS tt_python_linkcheck tt_ios_app)
 endif()

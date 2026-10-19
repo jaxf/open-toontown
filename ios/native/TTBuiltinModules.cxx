@@ -7,6 +7,11 @@ extern "C" PyObject *PyInit_physics(void);
 extern "C" PyObject *PyInit_ode(void);
 extern "C" PyObject *PyInit_otp(void);
 extern "C" PyObject *PyInit_toontown(void);
+extern "C" void init_libOpenALAudio(void);
+
+void TTRegisterAudioBackend(void) {
+  init_libOpenALAudio();
+}
 
 int TTRegisterBuiltinModules(void) {
   if (Py_IsInitialized()) return -1;

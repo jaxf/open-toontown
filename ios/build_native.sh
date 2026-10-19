@@ -93,6 +93,20 @@ else
     "$TT_ODE_PREFIX/share/licenses/ode/"
   TT_EXTRA+=("-DODE_INCLUDE_DIR=$TT_ODE_PREFIX/include"
              "-DODE_RELEASE_LIBRARY=$TT_ODE_PREFIX/lib/libode.a" -DHAVE_ODE=ON)
+  bash "$TT_ROOT/ios/build_media_dependencies.sh" "$TT_WORK"
+  TT_EXTRA+=(-DHAVE_ZLIB=ON -DHAVE_PNG=ON -DHAVE_JPEG=ON -DHAVE_FREETYPE=ON -DHAVE_VORBIS=ON
+             "-DZLIB_INCLUDE_DIR=$TT_SDK/usr/include" "-DZLIB_LIBRARY=$TT_SDK/usr/lib/libz.tbd"
+             "-DPNG_PNG_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DPNG_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libpng16.a"
+             "-DJPEG_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DJPEG_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libjpeg.a"
+             "-DFREETYPE_INCLUDE_DIR_ft2build=$TT_ODE_PREFIX/include/freetype2"
+             "-DFREETYPE_INCLUDE_DIR_freetype2=$TT_ODE_PREFIX/include/freetype2"
+             "-DFREETYPE_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libfreetype.a"
+             "-DOGG_INCLUDE_DIR=$TT_ODE_PREFIX/include" "-DOGG_LIBRARY=$TT_ODE_PREFIX/lib/libogg.a"
+             "-DVORBIS_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DVORBIS_vorbis_LIBRARY=$TT_ODE_PREFIX/lib/libvorbis.a"
+             "-DVORBIS_vorbisfile_LIBRARY=$TT_ODE_PREFIX/lib/libvorbisfile.a")
   if [[ $TT_COMPONENT == bindings ]]; then
     # The build interpreter runs on macOS; only the framework is linked on iOS.
     bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
@@ -121,7 +135,7 @@ else
   TT_OPTIONS=()
   # No desktop dependencies may satisfy an iPhone build. Optional codecs and
   # physics dependencies need their own device builds in a later stage.
-  for package in OPENSSL ZLIB JPEG PNG TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE VORBIS OPUS FMODEX FREETYPE HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
+  for package in OPENSSL TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE OPUS FMODEX HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
     TT_OPTIONS+=("-DHAVE_${package}=OFF")
   done
   "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_BUILD_DIR" -G 'Unix Makefiles' \

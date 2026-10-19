@@ -12,7 +12,6 @@ multisamples 0
 framebuffer-srgb false
 mobile-client true
 toontown-auto-run false
-# The static OpenAL factory and iOS audio session still need integration.
-# Keep the actual requested audio backend; never substitute silent audio to
-# declare the full game complete.
+# The host registers the linked OpenAL factory. Audio-session interruption
+# handling and actual device playback still require integration/testing.
 audio-library-name p3openal_audio

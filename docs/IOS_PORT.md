@@ -194,6 +194,30 @@ engine's ES2 renderer. A Metal migration is separate work.
 
 ### Native application host
 
+The device build also builds pinned static dependencies rather than using
+libraries installed on the build Mac:
+
+| Dependency | Pinned upstream release | Purpose |
+| --- | --- | --- |
+| ODE | 0.16.6 | Game physics, including racing and triangle-mesh collisions |
+| libpng | 1.6.59 | PNG textures/images |
+| libjpeg-turbo | 3.2.0 | JPEG textures/images |
+| FreeType | 2.15.0 | Font rendering |
+| libogg / libvorbis | 1.3.6 / 1.3.7 | Ogg/Vorbis music and sound decoding |
+| zlib / OpenAL | iPhone SDK | Compression and audio output |
+
+The exact commit pins are in `ios/build_native.sh` and
+`ios/build_media_dependencies.sh`. ODE uses single precision and OPCODE
+triangle-mesh support; the full `panda3d.ode` module is included in the built-in
+registration table and required by the app link. Third-party notices are retained
+under the dependency prefix for later payload assembly. No dependency tests are
+run in a simulator. Device physics, image/font rendering and audio playback
+still require actual-device validation.
+
+The host explicitly registers the linked OpenAL audio factory before starting
+the game, avoiding desktop audio-plugin discovery. Audio-session interruptions
+and route changes remain separate integration work.
+
 `TTApplication` creates the landscape iPhone/iPad window. `TTGameViewController`
 collects a private IPv4 address and an issued player token, loads the embedded
 runtime, configures the graphics host and drives `Client.step()` from a 60 Hz
