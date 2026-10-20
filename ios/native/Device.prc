@@ -12,6 +12,13 @@ multisamples 0
 framebuffer-srgb false
 mobile-client true
 toontown-auto-run false
+# Match the bundled payload, including DirectGUI's engine fallback models.
+model-path engine-models
+verify-ssl true
+ca-bundle-filename ../python/site-packages/certifi/cacert.pem
+require-window true
+icon-filename
+cursor-filename
 # The host registers the linked OpenAL factory. Audio-session interruption
 # handling and actual device playback still require integration/testing.
 audio-library-name p3openal_audio

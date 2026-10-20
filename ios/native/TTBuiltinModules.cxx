@@ -8,9 +8,12 @@ extern "C" PyObject *PyInit_ode(void);
 extern "C" PyObject *PyInit_otp(void);
 extern "C" PyObject *PyInit_toontown(void);
 extern "C" void init_libOpenALAudio(void);
+extern "C" void init_libpandaegg(void);
 
 void TTRegisterAudioBackend(void) {
   init_libOpenALAudio();
+  // Full content and DirectGUI fallback models include text .egg assets.
+  init_libpandaegg();
 }
 
 int TTRegisterBuiltinModules(void) {

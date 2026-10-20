@@ -2,6 +2,40 @@
 #include "TTBuiltinModules.h"
 #include <Python.h>
 
+// Capture type and code locations only: messages/locals can contain tokens.
+static NSError *TTPythonError(NSInteger code) {
+    PyObject *exception = PyErr_GetRaisedException();
+    NSMutableString *detail = [NSMutableString stringWithString:@"Game startup/frame failed"];
+    if (exception) {
+        [detail appendFormat:@" (%s)", Py_TYPE(exception)->tp_name];
+        PyObject *trace = PyException_GetTraceback(exception);
+        while (trace && trace != Py_None) {
+            PyObject *frame = PyObject_GetAttrString(trace, "tb_frame");
+            PyObject *line = PyObject_GetAttrString(trace, "tb_lineno");
+            PyObject *frameCode = frame ? PyObject_GetAttrString(frame, "f_code") : NULL;
+            PyObject *filename = frameCode ? PyObject_GetAttrString(frameCode, "co_filename") : NULL;
+            PyObject *function = frameCode ? PyObject_GetAttrString(frameCode, "co_name") : NULL;
+            const char *fileText = filename && PyUnicode_Check(filename) ? PyUnicode_AsUTF8(filename) : NULL;
+            const char *nameText = function && PyUnicode_Check(function) ? PyUnicode_AsUTF8(function) : NULL;
+            if (fileText && nameText && line && PyLong_Check(line)) {
+                NSString *leaf = [[NSString stringWithUTF8String:fileText] lastPathComponent];
+                [detail appendFormat:@"\n%@:%ld %s", leaf, PyLong_AsLong(line), nameText];
+            }
+            Py_XDECREF(function); Py_XDECREF(filename); Py_XDECREF(frameCode);
+            Py_XDECREF(line); Py_XDECREF(frame);
+            PyObject *next = PyObject_GetAttrString(trace, "tb_next");
+            Py_DECREF(trace);
+            trace = next;
+        }
+        Py_XDECREF(trace);
+        Py_DECREF(exception);
+    }
+    PyErr_Clear();
+    [detail appendString:@"\nClose and reopen the app before retrying."];
+    return [NSError errorWithDomain:@"OpenToontown.Runtime" code:code
+        userInfo:@{NSLocalizedDescriptionKey: detail}];
+}
+
 static NSError *TTRuntimeError(NSInteger code) {
     NSArray<NSString *> *messages = @[
         @"This build is missing game files or its packaged Python runtime.",
@@ -43,8 +77,7 @@ static PyStatus TTAppendPath(PyConfig *config, NSString *path) {
     NSURL *game = [root URLByAppendingPathComponent:@"Game" isDirectory:YES];
     NSURL *python = [root URLByAppendingPathComponent:@"python" isDirectory:YES];
     NSURL *platform = [root URLByAppendingPathComponent:@"Device.prc"];
-    // This is an intentionally incomplete development bundle until packaging
-    // supplies the full content/runtime. Do not launch a reduced game instead.
+    // Never start if a partial payload was installed.
     if (!TTExists(game, @"etc/Configrc.prc") || !TTExists(game, @"resources/phase_3") ||
         !TTExists(game, @"toontown/mobile/EmbeddedRuntime.py") ||
         !TTExists(python, @"lib/python3.13/encodings/__init__.py") ||
@@ -59,6 +92,9 @@ static PyStatus TTAppendPath(PyConfig *config, NSString *path) {
         return NO;
     }
     attempted = YES;
+    // Use shipped trust data, not the build Mac's OpenSSL installation path.
+    NSString *certificates = [python.path stringByAppendingPathComponent:@"site-packages/certifi/cacert.pem"];
+    setenv("SSL_CERT_FILE", certificates.fileSystemRepresentation, 1);
     PyPreConfig pre;
     PyPreConfig_InitIsolatedConfig(&pre);
     pre.utf8_mode = 1;
@@ -101,10 +137,10 @@ static PyStatus TTAppendPath(PyConfig *config, NSString *path) {
             server.UTF8String, token.UTF8String);
         Py_DECREF(module);
     }
-    if (!_runtime) PyErr_Clear(); // Never send token-bearing exception text to UI/logs.
+    if (!_runtime && error) *error = TTPythonError(2);
+    else if (!_runtime) PyErr_Clear();
     if (_runtime) TTRegisterAudioBackend(); // Static app: no desktop plugin dlopen.
     PyEval_SaveThread(); // Allow the game's Python workers between UI callbacks.
-    if (!_runtime && error) *error = TTRuntimeError(2);
     return _runtime != NULL;
 }
 
@@ -120,9 +156,9 @@ static PyStatus TTAppendPath(PyConfig *config, NSString *path) {
     BOOL success = result != NULL && value >= 0;
     if (truth) *truth = success && value == 1;
     Py_XDECREF(result);
-    if (!success) PyErr_Clear();
+    if (!success && error) *error = TTPythonError(3);
+    else if (!success) PyErr_Clear();
     PyGILState_Release(gil);
-    if (!success && error) *error = TTRuntimeError(3);
     return success;
 }
 

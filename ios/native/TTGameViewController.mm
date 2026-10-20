@@ -3,6 +3,7 @@
 #import "TTGraphicsHost.h"
 #import "TTGameInputBridge.h"
 #import <QuartzCore/CADisplayLink.h>
+#import <AVFAudio/AVAudioSession.h>
 #include <arpa/inet.h>
 
 @interface TTGameViewController ()
@@ -34,6 +35,7 @@ static BOOL TTValidServer(NSString *server) {
     UITextField *_token;
     UIButton *_connect;
     UILabel *_status;
+    UIButton *_copyDiagnostic;
     TTControlsView *_controls;
     TTGameInputBridge *_input;
     TTEmbeddedRuntime *_runtime;
@@ -89,7 +91,11 @@ static BOOL TTValidServer(NSString *server) {
     _status.numberOfLines = 0;
     _status.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
     _status.text = @"Connect this device to your private network before joining.";
-    UIStackView *stack = [[UIStackView alloc] initWithArrangedSubviews:@[title, _server, _token, _connect, _status]];
+    _copyDiagnostic = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_copyDiagnostic setTitle:@"Copy error details" forState:UIControlStateNormal];
+    [_copyDiagnostic addTarget:self action:@selector(copyDiagnostic) forControlEvents:UIControlEventTouchUpInside];
+    _copyDiagnostic.hidden = YES;
+    UIStackView *stack = [[UIStackView alloc] initWithArrangedSubviews:@[title, _server, _token, _connect, _status, _copyDiagnostic]];
     stack.axis = UILayoutConstraintAxisVertical;
     stack.spacing = 12;
     stack.translatesAutoresizingMaskIntoConstraints = NO;
@@ -154,6 +160,12 @@ static BOOL TTValidServer(NSString *server) {
             return;
         }
         TTSetGraphicsActive(YES);
+        AVAudioSession *audio = AVAudioSession.sharedInstance;
+        if (![audio setCategory:AVAudioSessionCategoryPlayback error:&error] ||
+            ![audio setActive:YES error:&error]) {
+            [self fail:error];
+            return;
+        }
         if (![self->_runtime start:&error]) {
             [self fail:error];
             return;
@@ -182,6 +194,11 @@ static BOOL TTValidServer(NSString *server) {
     _movementEnabled = enabled;
     [_input setActive:enabled];
     _controls.hidden = !enabled;
+}
+
+- (void)copyDiagnostic {
+    // Status contains exception type/source locations, never token or locals.
+    UIPasteboard.generalPasteboard.string = _status.text;
 }
 
 - (void)frame:(CADisplayLink *)link {
@@ -246,6 +263,7 @@ static BOOL TTValidServer(NSString *server) {
     _form.hidden = NO;
     _connect.enabled = NO; // Panda does not support interpreter restarts safely.
     _status.text = error.localizedDescription ?: @"The game could not start. Close and reopen the app.";
+    _copyDiagnostic.hidden = NO;
 }
 
 - (void)dealloc {
