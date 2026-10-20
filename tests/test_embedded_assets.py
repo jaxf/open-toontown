@@ -42,7 +42,8 @@ class EmbeddedAssetTests(unittest.TestCase):
         configure_embedded_paths(self.root)
         for name in ('loading-background', 'progress-background', 'toon_council'):
             self.assertIsNotNone(self.loader.load_sync(Filename('phase_3/models/gui/' + name), self.options))
-        self.assertEqual(self.vfs.get_cwd(), Filename.from_os_specific(str(self.root)))
+        # macOS resolves /var to /private/var; Windows expands short 8.3 names.
+        self.assertTrue(os.path.samefile(self.vfs.get_cwd().to_os_specific(), self.root))
         count = self.paths.get_num_directories()
         configure_embedded_paths(self.root)
         self.assertEqual(count, self.paths.get_num_directories())
