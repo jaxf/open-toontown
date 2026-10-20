@@ -36,7 +36,9 @@ jobs:
             tests
       - name: Check payload assembly policy
         if: matrix.component == 'bindings'
-        run: python3 -m unittest discover -s tests -p test_ipa_packaging.py -v
+        run: |
+          python3 -m unittest discover -s tests -p test_ipa_packaging.py -v
+          python3 -m unittest discover -s tests -p test_ios_engine_startup.py -v
       - name: Compile iPhone arm64 component
         env:
           TT_COMPONENT: ${{ matrix.component }}

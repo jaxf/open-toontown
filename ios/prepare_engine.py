@@ -21,11 +21,35 @@ def replace_once(root, name, old, new):
     path.write_text(text.replace(old, new, 1))
 
 
+def defer_dna_loader(root):
+    # Static iOS linking runs this parser's globals before Panda's config
+    # globals. Construct the dedicated loader only when DNA first needs it.
+    # Patch both Bison input and the fallback parser, without changing desktop
+    # engine sources outside this disposable iOS checkout.
+    for name in ('dnaParser.yxx', 'dnaParser.cxx.prebuilt'):
+        path = 'panda/src/dna/' + name
+        replace_once(root, path, 'static Loader loader;',
+                     'static Loader &dna_model_loader() {\n'
+                     '  static Loader loader;\n'
+                     '  return loader;\n'
+                     '}')
+        text = (root / path).read_text()
+        old = 'loader.load_sync('
+        new = 'dna_model_loader().load_sync('
+        if old in text:
+            if text.count(old) != 3 or new in text:
+                raise ValueError('Unexpected DNA model loading sites: ' + name)
+            (root / path).write_text(text.replace(old, new))
+        elif text.count(new) != 3:
+            raise ValueError('Missing DNA model loading sites: ' + name)
+
+
 def prepare(root):
     root = Path(root).resolve()
     revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != PIN:
         raise ValueError('Only the audited engine revision may be patched')
+    defer_dna_loader(root)
     # Upstream's set() stores its help text as a truthy value, ignoring OFF.
     # Make this a real boolean option so the C++-only gate needs no bindings.
     replace_once(root, 'dtool/Config.cmake',
