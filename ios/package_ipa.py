@@ -113,6 +113,9 @@ def audit_payload(app):
         'python/site-packages/panda3d/__init__.py',
         'python/site-packages/pytz/__init__.py', 'python/site-packages/certifi/cacert.pem',
         'Game/etc/toon.dc', 'Game/etc/otp.dc', 'Game/toontown/toonbase/ToontownStart.py',
+        'Game/resources/phase_3/models/gui/loading-background.bam',
+        'Game/resources/phase_3/models/gui/progress-background.bam',
+        'Game/resources/phase_3/models/gui/toon_council.bam',
     ]
     for name in required:
         if not (app / name).is_file():
@@ -148,8 +151,9 @@ def assemble(root, work, packages, destination):
         copy_file(built / name, app / name)
     with (app / 'Info.plist').open('rb') as source:
         info = plistlib.load(source)
-    info.update(CFBundleVersion=str(int(run('git', '-C', root, 'rev-list', '--count', 'HEAD'))),
-                CFBundleSupportedPlatforms=['iPhoneOS'])
+    # Keep the explicit app build number. Shallow CI checkouts always report
+    # a commit count of one, which made distinct IPAs indistinguishable in logs.
+    info.update(CFBundleSupportedPlatforms=['iPhoneOS'])
     with (app / 'Info.plist').open('wb') as output:
         plistlib.dump(info, output)
     for source in game_files(root):
@@ -209,7 +213,8 @@ def assemble(root, work, packages, destination):
             if path.is_file():
                 archive.write(path, path.relative_to(destination))
     report = {key: value for key, value in manifest.items() if key != 'files'}
-    report.update(file_count=len(manifest['files']), framework_count=len(binaries),
+    report.update(build_version=info['CFBundleVersion'],
+                  file_count=len(manifest['files']), framework_count=len(binaries),
                   ipa_bytes=ipa.stat().st_size, signing='ad-hoc; requires AltStore re-signing')
     (destination / 'build-report.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))

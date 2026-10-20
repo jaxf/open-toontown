@@ -11,6 +11,14 @@ reading Panda configuration during static initialization, before `main`.
 Build 2 defers that dedicated loader until the first DNA model load. First
 confirm that the connection screen opens; then proceed with login/gameplay.
 
+The second IPA reached the form but failed at `ToontownLoadingScreen.py:12`
+while loading `progress-background`. Build 3 synchronizes Panda's independent
+VFS working directory with the game bundle and prepends absolute model roots.
+The same failure was reproduced with a stale VFS cwd on the host; the fix loaded
+all three original startup BAMs extracted from the IPA. This is asset-loading
+evidence, not an iPhone rendering/login test. Build 3 also preserves the explicit
+plist build number instead of using a shallow checkout's constant commit count.
+
 ## Install and connect
 
 1. Save `OpenToontown.ipa` to Files. In AltStore Classic, open **My Apps**, tap

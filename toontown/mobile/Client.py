@@ -8,6 +8,32 @@ import os
 from pathlib import Path
 
 
+class BundledModelPathError(OSError):
+    """A required startup model cannot be resolved inside the app bundle."""
+
+
+def configure_embedded_paths(bundle_root):
+    """Keep Panda's independent VFS cwd aligned with the native app payload."""
+    from panda3d.core import Filename, VirtualFileSystem, get_model_path
+    bundle_root = Path(bundle_root).resolve()
+    vfs = VirtualFileSystem.get_global_ptr()
+    # Native static initialization can create the VFS before UIKit/Python
+    # changes the OS cwd. os.chdir alone never updates this cached location.
+    vfs.chdir(Filename.fromOsSpecific(str(bundle_root)))
+    paths = get_model_path()
+    existing = {paths.get_directory(i) for i in range(paths.get_num_directories())}
+    # Absolute roots also keep model and texture lookup independent of later
+    # OS cwd changes. Prepending leaves desktop-configured fallback paths intact.
+    for relative in ('engine-models', '.', 'resources'):
+        path = Filename.fromOsSpecific(str((bundle_root / relative).resolve()))
+        if path not in existing:
+            paths.prepend_directory(path)
+    for model in ('loading-background', 'progress-background', 'toon_council'):
+        filename = Filename('phase_3/models/gui/' + model + '.bam')
+        if not vfs.resolve_filename(filename, paths.get_value()) or not vfs.exists(filename):
+            raise BundledModelPathError('Required bundled startup model is unavailable')
+
+
 def prepare(session, bundle_root, user_data, embedded=False, platform_config=None):
     """Load platform configuration before native pipe registration/ShowBase.
 
@@ -34,6 +60,8 @@ def prepare(session, bundle_root, user_data, embedded=False, platform_config=Non
     if platform_config is not None:
         loadPrcFile(Filename.fromOsSpecific(str(Path(platform_config).resolve())))
     loadPrcFileData('private-client', session.prc(embedded))
+    if embedded:
+        configure_embedded_paths(bundle_root)
 
 
 def start(session, bundle_root, user_data, embedded=False, platform_config=None):
