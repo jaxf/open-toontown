@@ -5,6 +5,12 @@ payload completeness, framework links and signatures. Installation, startup,
 server login and gameplay must still be tested on an actual iPhone/iPad.
 No simulator is used. Mac and Windows launchers remain separate.
 
+Build 1 installed on an iPhone but crashed before the connection screen.
+Its symbolicated report identifies the DNA parser's global `Loader` constructor
+reading Panda configuration during static initialization, before `main`.
+Build 2 defers that dedicated loader until the first DNA model load. First
+confirm that the connection screen opens; then proceed with login/gameplay.
+
 ## Install and connect
 
 1. Save `OpenToontown.ipa` to Files. In AltStore Classic, open **My Apps**, tap

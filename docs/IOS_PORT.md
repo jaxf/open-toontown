@@ -1,6 +1,7 @@
 # Full-game iPhone/iPad port
 
-Status: **first AltStore test IPA assembled; no on-device gameplay verified yet**.
+Status: **first IPA installed but crashed before the first screen; build 2
+addresses that startup failure. No on-device gameplay verified yet**.
 This is a native full-game port, not a web wrapper, streaming client, or a
 standalone Ministry Plaza viewer. Keep this PR in draft until the gates below
 are actually verified. Desktop behavior remains the default.
