@@ -1,6 +1,6 @@
 # Full-game iPhone/iPad port
 
-Status: **foundation only; no installable IPA, no on-device gameplay yet**.
+Status: **first AltStore test IPA assembled; no on-device gameplay verified yet**.
 This is a native full-game port, not a web wrapper, streaming client, or a
 standalone Ministry Plaza viewer. Keep this PR in draft until the gates below
 are actually verified. Desktop behavior remains the default.
@@ -98,9 +98,10 @@ python -m ios.stage_game --output /tmp/open-toontown-game-content.zip
 ### Cloud device compilation
 
 `.github/workflows/ios-native.yml` runs three compilation jobs on GitHub's
-standard `macos-15` runner when this branch's iOS build sources change. No
-local Xcode installation is needed to run that workflow. It is restricted to
-public repositories; it uses no larger runners, cache or artifact uploads.
+standard `macos-15` runner when this branch's iOS build or game sources change.
+No local Xcode installation is needed to run that workflow. It is restricted to
+public repositories; it uses no larger runners or build cache. The bindings job
+now assembles an AltStore test IPA and uploads it with one-day retention.
 
 `bash ios/build_native.sh python /absolute/build-folder` builds a host
 interpreter and an arm64 **iPhoneOS** Python framework from the same pinned
@@ -225,8 +226,9 @@ OpenSSL uses upstream's `ios64-xcrun` target. Both Panda and the device Python
 build link the pinned static libraries; the build checks `_ssl` and `_hashlib`
 extensions for arm64/iOS. The game preflight requires `ssl` and Panda's
 `HTTPClient` API, and the native link check references HTTPClient directly.
-Certificate trust data still needs packaging and device HTTPS verification;
-certificate validation is not disabled.
+The IPA assembler includes certifi's trust data; HTTPS behavior still needs
+device verification. The iOS configuration overrides the desktop default to
+enable certificate validation.
 
 `TTApplication` creates the landscape iPhone/iPad window. `TTGameViewController`
 collects a private IPv4 address and an issued player token, loads the embedded
@@ -255,13 +257,29 @@ connection and destroy Panda windows even if connection shutdown raises.
 Any background teardown waits for foreground activation. Python is not finalized
 and restarted in-process because Panda has process-wide native state.
 
-The compilation target creates an **unsigned development app bundle only**.
-It does not yet copy/embed/sign Python.framework, the target standard library,
-third-party modules or the full game assets, and is not uploaded as an IPA.
-The intended payload layout is `Game/`, `python/lib/python3.13/` (including
-processed `lib-dynload` modules), `python/site-packages/` and `Frameworks/`.
-`Device.prc` is included now. Native dependencies, full payload assembly, signing,
-launch-time performance, audio/session handling and device testing remain gates.
+The compilation target creates an **unsigned development app bundle**.
+The workflow then runs `ios/assemble_ipa.sh` and `ios/package_ipa.py` to fill it
+with the complete game, pinned resources, Python framework/stdlib, Direct,
+`panda3d` package, hash-pinned pure-Python `pytz`/`certifi`, and dependency licenses.
+It converts native Python extensions to individual frameworks using CPython's
+`.fwork` / `.origin` contract. Mach-O checks reject simulator/host binaries and
+unbundled libraries; relocation removes build-directory runtime search paths.
+The app's iOS PRC enables HTTPS verification and points Panda to the shipped CA
+bundle; Python receives that same bundle through `SSL_CERT_FILE`.
+
+The payload layout is `Game/`, `python/lib/python3.13/`, `python/site-packages/`
+and `Frameworks/`. A manifest records content hashes and source revisions.
+Assembly checks required native modules and source syntax, signs nested code
+ad-hoc, verifies signatures, and creates `Payload/OpenToontown.app` in the IPA.
+**AltStore must re-sign and provision this for the user's phone.** Compilation
+and archive validation do not prove that iOS can install or run the game.
+See [first device test](IOS_DEVICE_TEST.md).
+
+The host activates a playback audio session before startup and includes an error
+copy button. Reports contain exception type and source locations, never exception
+messages or locals that might include credentials. Interruptions/route recovery,
+packaged runtime imports, startup performance and actual device gameplay remain
+validation/integration gates.
 
 ### Release checklist
 
@@ -288,6 +306,24 @@ that iOS will keep a multiplayer socket alive while suspended. Reconnection
 UI/session handling still needs implementation and device verification.
 
 ## Validation so far
+
+First complete IPA checkpoint, 2026-10-20:
+
+- [Device build and IPA assembly](https://github.com/jaxf/open-toontown/actions/runs/39369497981)
+  passed all three jobs at `5a8fe26c1fee4613314dfcd2be04df1632134199`.
+  The app linked with the static `.egg` loader, playback audio-session setup and
+  token-safe error reporting. Payload validation and nested ad-hoc signature
+  verification succeeded. The resulting IPA is 358,404,682 bytes, includes
+  12,565 manifest-tracked payload files and 52 embedded frameworks, and uses
+  server resource revision `d00df01af876cc9c5d1a22329f394a9a50245e9c`.
+- Five packaging-policy tests pass locally and on the build Mac. They cover
+  framework marker round trips, duplicate module rejection, simulator rejection,
+  accidental host-library rejection and incomplete-payload rejection.
+- [Desktop regression matrix](https://github.com/jaxf/open-toontown/actions/runs/39368507868)
+  passed all four configurations with 27 checks each for the packaging change.
+  The subsequent loader fix changes only iOS native code and device-test docs.
+- No device execution occurred. The IPA still requires AltStore provisioning
+  and actual iPhone/iPad installation, import, startup, login and gameplay tests.
 
 Verified compilation/link checkpoint, 2026-10-19:
 
@@ -327,8 +363,8 @@ Verified compilation/link checkpoint, 2026-10-19:
   and administrator suites also passed (8 + 6 + 5 checks).
   The eight embedded-lifecycle tests passed locally too.
 
-No IPA, on-device rendering, packaged runtime import test or actual
-phone interaction has passed yet. Native dependencies still need packaged import
+The IPA now exists; on-device rendering, packaged runtime import tests and actual
+phone interaction have not passed yet. Native dependencies still need packaged import
 and capability tests against the full game. The checks above are
 compilation, linking and regression evidence only. No simulator was run.
 
