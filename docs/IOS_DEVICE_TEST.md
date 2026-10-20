@@ -1,0 +1,44 @@
+# First iPhone test
+
+This is a development IPA for the full game. The build checks compilation,
+payload completeness, framework links and signatures. Installation, startup,
+server login and gameplay must still be tested on an actual iPhone/iPad.
+No simulator is used. Mac and Windows launchers remain separate.
+
+## Install and connect
+
+1. Save `OpenToontown.ipa` to Files. In AltStore Classic, open **My Apps**, tap
+   **+**, and select the IPA. AltStore supplies your device provisioning and
+   re-signs the app and its embedded frameworks. The build's ad-hoc signature
+   alone does not authorize installation on your phone.
+2. Connect the iPhone's Tailscale app to the same personal account as the
+   `toontown-server` VM. Keep the VM running.
+3. Open **Open Toontown**, allow the local-network prompt if shown, and enter
+   the private server address `100.113.145.56`. The game uses port `7198`.
+4. Enter your issued 43-character player token. If you have not issued one,
+   run `bash host.sh account` in the VM's SSH terminal. Keep its output private;
+   paste the token only into the app's **Player token** field.
+5. Tap **Connect**. The first game startup may take time. The token is held
+   only in memory, so restarting the app requires entering it again.
+
+## What to test first
+
+- Reach Toon selection/creation and enter a playground. Use the game's name
+  picker initially; a native keyboard for in-game custom text is still pending.
+- Walk and turn with the left joystick; hold movement while tapping **Jump**.
+- Tap menus, Toon selection and the book. Confirm taps outside the overlay
+  reach the game and do not become right-clicks when another finger is held.
+- Check music/sound, rotate between the two landscape orientations, and briefly
+  leave/return to the app. Held movement should clear when interrupted.
+- Enter a street and return to the playground. Exit/reopen and confirm the
+  same token brings back the same account/Toon.
+
+If startup stops, tap **Copy error details** and send that text or a screenshot.
+The copied report contains exception types and source locations, not the token
+or exception-local values. If iOS closes the app entirely, report whether it
+happened at launch, after Connect, during Toon selection or in the world.
+If AltStore refuses installation, send its exact error before trying gameplay.
+
+Activity-specific touch controls, in-game typing, audio interruption/route
+recovery and long-session behavior remain unfinished. This first test must not
+be treated as proof that every minigame or device lifecycle path works.

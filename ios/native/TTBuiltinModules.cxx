@@ -8,7 +8,9 @@ extern "C" PyObject *PyInit_ode(void);
 extern "C" PyObject *PyInit_otp(void);
 extern "C" PyObject *PyInit_toontown(void);
 extern "C" void init_libOpenALAudio(void);
-extern "C" void init_libpandaegg(void);
+// CMake generates this initializer with C++ linkage (makepanda's header
+// declares a different C-linkage entry point).
+extern void init_libpandaegg(void);
 
 void TTRegisterAudioBackend(void) {
   init_libOpenALAudio();
