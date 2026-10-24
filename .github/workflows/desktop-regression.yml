@@ -1,0 +1,56 @@
+name: Desktop compatibility regressions
+
+on:
+  push:
+    branches: [codex/ios-dedicated-server]
+    paths: ['otp/**', 'toontown/**', 'tests/**', '.github/workflows/desktop-regression.yml']
+  pull_request:
+    paths: ['otp/**', 'toontown/**', 'tests/**', '.github/workflows/desktop-regression.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-regression-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop:
+    if: github.event.repository.private == false
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15-intel, windows-2022]
+        python: ['3.9', '3.12']
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            otp
+            toontown
+            tests
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install regression-test engine
+        run: |
+          python -m pip install --disable-pip-version-check --no-cache-dir --only-binary=:all: panda3d==1.10.16
+      - name: Check desktop defaults and mobile isolation
+        run: python -m unittest discover -s tests -p test_platform_defaults.py -v
+      - name: Check shared world routing
+        run: python -m unittest discover -s tests -p test_expansion.py -v
+      - name: Check shared administrator access rules
+        run: python -m unittest discover -s tests -p test_admin_endpoint.py -v
+      - name: Check embedded lifecycle isolation
+        run: python -m unittest discover -s tests -p test_embedded_runtime.py -v
+      - name: Check embedded asset resolution
+        run: python -m unittest discover -s tests -p test_embedded_assets.py -v
+      - name: Report coverage limits
+        if: always()
+        shell: bash
+        run: |
+          echo 'Settings, platform isolation, world routing and access-policy regressions only. Uses stock Panda for these APIs; this is not a custom-engine build or full-game gameplay test.' >> "$GITHUB_STEP_SUMMARY"

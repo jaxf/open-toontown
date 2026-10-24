@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+# Reproducible first native device compilation; never presents it as an IPA.
+set -Eeuo pipefail
+[[ $# == 2 && $1 =~ ^(python|panda|controls|bindings)$ ]] || { echo 'Usage: bash ios/build_native.sh python|panda|controls|bindings /absolute/build-folder' >&2; exit 2; }
+[[ $(uname -s) == Darwin ]] || { echo 'A Mac with full Xcode is required (the cloud workflow supplies it).' >&2; exit 2; }
+TT_COMPONENT=$1
+TT_WORK=$2
+[[ $TT_WORK == /* && $TT_WORK != / ]] || { echo 'Use an absolute build folder, not /.' >&2; exit 2; }
+TT_ROOT=$(cd "$(dirname "$0")/.." && pwd)
+TT_SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+[[ -d $TT_SDK ]] || exit 2
+TT_JOBS=$(sysctl -n hw.logicalcpu)
+TT_ENGINE=06615744481946654610833679a0893589114504
+TT_CPYTHON=8183fa5e3f78ca6ab862de7fb8b14f3d929421e0
+TT_ODE=a5fc0bc282703ab34d7d3d2500bafae7428eeaa9 # upstream 0.16.6
+mkdir -p "$TT_WORK"
+fetch_source() {
+  local url=$1 revision=$2 folder=$3
+  if [[ ! -d $folder ]]; then
+    git init "$folder"
+    git -C "$folder" remote add origin "$url"
+    git -C "$folder" fetch --depth=1 origin "$revision"
+    git -C "$folder" checkout --detach FETCH_HEAD
+  fi
+  [[ $(git -C "$folder" rev-parse HEAD) == "$revision" ]] || { echo 'Source revision mismatch.' >&2; exit 2; }
+}
+xcodebuild -version
+printf 'Device SDK: %s\nComponent: %s\n' "$TT_SDK" "$TT_COMPONENT"
+if [[ $TT_COMPONENT == controls ]]; then
+  # UIKit can be checked independently while the custom engine is ported.
+  xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
+    -fobjc-arc -std=c++17 -Wall -Werror -c "$TT_ROOT/ios/native/TTControlsView.mm" \
+    -o "$TT_WORK/TTControlsView.o"
+  xcrun lipo "$TT_WORK/TTControlsView.o" -verify_arch arm64
+  xcrun vtool -show-build "$TT_WORK/TTControlsView.o" | tee "$TT_WORK/controls-platform.txt"
+  grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/controls-platform.txt"
+  printf '%s\n' 'UIKIT CONTROLS COMPILED. Host/input bridge and device interaction testing still required.'
+elif [[ $TT_COMPONENT == python ]]; then
+  # The standalone Python gate also needs the pinned device crypto library.
+  if [[ ! -f "$TT_WORK/dependencies/lib/libssl.a" ]]; then
+    bash "$TT_ROOT/ios/build_crypto_dependency.sh" "$TT_WORK"
+  fi
+  TT_SOURCE="$TT_WORK/cpython"
+  fetch_source https://github.com/python/cpython.git "$TT_CPYTHON" "$TT_SOURCE"
+  mkdir -p "$TT_WORK/python-host" "$TT_WORK/python-device" "$TT_WORK/python-install"
+  # Same source revision for the build interpreter and target framework.
+  cd "$TT_WORK/python-host"
+  "$TT_SOURCE/configure" --without-ensurepip --disable-test-modules
+  make -j "$TT_JOBS"
+  TT_HOST_PY="$TT_WORK/python-host/python.exe"
+  [[ -x $TT_HOST_PY ]] || TT_HOST_PY="$TT_WORK/python-host/python"
+  [[ -x $TT_HOST_PY ]] || exit 2
+  case $(uname -m) in
+    arm64) TT_BUILD=arm64-apple-darwin ;;
+    x86_64) TT_BUILD=x86_64-apple-darwin ;;
+    *) exit 2 ;;
+  esac
+  # Avoid accidentally linking macOS Homebrew dependencies into iOS.
+  export PATH="$TT_SOURCE/iOS/Resources/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin"
+  unset CPATH LIBRARY_PATH C_INCLUDE_PATH CPLUS_INCLUDE_PATH PKG_CONFIG_PATH
+  cd "$TT_WORK/python-device"
+  "$TT_SOURCE/configure" --host=arm64-apple-ios15.0 --build="$TT_BUILD" \
+    --enable-framework="$TT_WORK/python-install" --with-build-python="$TT_HOST_PY" \
+    --with-openssl="$TT_WORK/dependencies" --with-openssl-rpath=no \
+    --without-ensurepip --disable-test-modules
+  make -j "$TT_JOBS"
+  make install
+  TT_BINARY="$TT_WORK/python-install/Python.framework/Python"
+  xcrun lipo "$TT_BINARY" -verify_arch arm64
+  xcrun vtool -show-build "$TT_BINARY" | tee "$TT_WORK/python-platform.txt"
+  grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-platform.txt"
+  for TT_CRYPTO_MODULE in _ssl _hashlib; do
+    TT_MODULE_FILES=("$TT_WORK/python-install/lib/python3.13/lib-dynload/$TT_CRYPTO_MODULE".*.so)
+    [[ ${#TT_MODULE_FILES[@]} == 1 && -f ${TT_MODULE_FILES[0]} ]] || {
+      echo "Missing device Python extension: $TT_CRYPTO_MODULE" >&2; exit 2;
+    }
+    xcrun lipo "${TT_MODULE_FILES[0]}" -verify_arch arm64
+    xcrun vtool -show-build "${TT_MODULE_FILES[0]}" | tee "$TT_WORK/python-extension-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/python-extension-platform.txt"
+  done
+  printf '%s\n' 'PYTHON DEVICE FRAMEWORK COMPILED. Third-party modules and game integration still required.'
+else
+  TT_BINDINGS=OFF
+  TT_BUILD_DIR="$TT_WORK/panda-device"
+  TT_EXTRA=(-DTT_IOS_PYTHON_FRAMEWORK=)
+  # Build the physics dependency for the device before the engine. Never let
+  # Panda discover a Homebrew/macOS ODE library while cross-compiling.
+  TT_ODE_SOURCE="$TT_WORK/ode"
+  TT_ODE_PREFIX="$TT_WORK/dependencies"
+  fetch_source https://github.com/odedevs/ode.git "$TT_ODE" "$TT_ODE_SOURCE"
+  cmake -S "$TT_ODE_SOURCE" -B "$TT_WORK/ode-device" -G 'Unix Makefiles' \
+    -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT="$TT_SDK" \
+    -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$TT_ODE_PREFIX" \
+    -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+    -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+    -DCMAKE_IGNORE_PREFIX_PATH='/opt/homebrew;/usr/local' \
+    -DBUILD_SHARED_LIBS=OFF -DODE_DOUBLE_PRECISION=OFF \
+    -DODE_WITH_DEMOS=OFF -DODE_WITH_TESTS=OFF -DODE_WITH_OPCODE=ON \
+    -DODE_WITH_GIMPACT=OFF -DODE_WITH_LIBCCD=OFF
+  cmake --build "$TT_WORK/ode-device" --parallel "$TT_JOBS"
+  cmake --install "$TT_WORK/ode-device"
+  xcrun lipo "$TT_ODE_PREFIX/lib/libode.a" -verify_arch arm64
+  mkdir -p "$TT_ODE_PREFIX/share/licenses/ode"
+  cp "$TT_ODE_SOURCE/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/LICENSE.TXT" "$TT_ODE_SOURCE/COPYING" \
+    "$TT_ODE_PREFIX/share/licenses/ode/"
+  mkdir -p "$TT_ODE_PREFIX/share/licenses/ode/OPCODE" "$TT_ODE_PREFIX/share/licenses/ode/ou"
+  cp "$TT_ODE_SOURCE/OPCODE/COPYING" "$TT_ODE_PREFIX/share/licenses/ode/OPCODE/"
+  cp "$TT_ODE_SOURCE/ou/LICENSE.TXT" "$TT_ODE_SOURCE/ou/LICENSE-LESSER.TXT" \
+    "$TT_ODE_SOURCE/ou/LICENSE-BSD.TXT" "$TT_ODE_SOURCE/ou/LICENSE-ZLIB.TXT" \
+    "$TT_ODE_PREFIX/share/licenses/ode/ou/"
+  TT_EXTRA+=("-DODE_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DODE_RELEASE_LIBRARY=$TT_ODE_PREFIX/lib/libode.a" -DHAVE_ODE=ON)
+  bash "$TT_ROOT/ios/build_media_dependencies.sh" "$TT_WORK"
+  bash "$TT_ROOT/ios/build_crypto_dependency.sh" "$TT_WORK"
+  TT_EXTRA+=(-DHAVE_OPENSSL=ON "-DOPENSSL_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DOPENSSL_SSL_LIBRARY=$TT_ODE_PREFIX/lib/libssl.a"
+             "-DOPENSSL_CRYPTO_LIBRARY=$TT_ODE_PREFIX/lib/libcrypto.a")
+  TT_EXTRA+=(-DHAVE_ZLIB=ON -DHAVE_PNG=ON -DHAVE_JPEG=ON -DHAVE_FREETYPE=ON -DHAVE_VORBIS=ON
+             "-DZLIB_INCLUDE_DIR=$TT_SDK/usr/include" "-DZLIB_LIBRARY=$TT_SDK/usr/lib/libz.tbd"
+             "-DPNG_PNG_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DPNG_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libpng16.a"
+             "-DJPEG_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DJPEG_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libjpeg.a"
+             "-DFREETYPE_INCLUDE_DIR_ft2build=$TT_ODE_PREFIX/include/freetype2"
+             "-DFREETYPE_INCLUDE_DIR_freetype2=$TT_ODE_PREFIX/include/freetype2"
+             "-DFREETYPE_LIBRARY_RELEASE=$TT_ODE_PREFIX/lib/libfreetype.a"
+             "-DOGG_INCLUDE_DIR=$TT_ODE_PREFIX/include" "-DOGG_LIBRARY=$TT_ODE_PREFIX/lib/libogg.a"
+             "-DVORBIS_INCLUDE_DIR=$TT_ODE_PREFIX/include"
+             "-DVORBIS_vorbis_LIBRARY=$TT_ODE_PREFIX/lib/libvorbis.a"
+             "-DVORBIS_vorbisfile_LIBRARY=$TT_ODE_PREFIX/lib/libvorbisfile.a")
+  if [[ $TT_COMPONENT == bindings ]]; then
+    # The build interpreter runs on macOS; only the framework is linked on iOS.
+    bash "$TT_ROOT/ios/build_native.sh" python "$TT_WORK"
+    TT_HOST_PY="$TT_WORK/python-host/python.exe"
+    [[ -x $TT_HOST_PY ]] || TT_HOST_PY="$TT_WORK/python-host/python"
+    # Fail early on host/API errors before compiling the full custom engine.
+    # These sources need UIKit and device Python headers, never macOS headers.
+    for TT_NATIVE_SOURCE in TTGameInputBridge TTEmbeddedRuntime TTGameViewController TTApplication; do
+      xcrun --sdk iphoneos clang++ -target arm64-apple-ios15.0 -isysroot "$TT_SDK" \
+        -fobjc-arc -std=c++17 -Wall -Werror \
+        -I "$TT_WORK/python-install/Python.framework/Headers" \
+        -c "$TT_ROOT/ios/native/$TT_NATIVE_SOURCE.mm" -o "$TT_WORK/$TT_NATIVE_SOURCE.o"
+      xcrun lipo "$TT_WORK/$TT_NATIVE_SOURCE.o" -verify_arch arm64
+      xcrun vtool -show-build "$TT_WORK/$TT_NATIVE_SOURCE.o"
+    done
+    TT_BINDINGS=ON
+    TT_BUILD_DIR="$TT_WORK/panda-bindings"
+    TT_EXTRA+=("-DTT_IOS_PYTHON_FRAMEWORK=$TT_WORK/python-install/Python.framework"
+               "-DTT_HOST_PYTHON=$TT_HOST_PY")
+  fi
+  TT_SOURCE="$TT_WORK/panda"
+  fetch_source https://github.com/open-toontown/panda3d.git "$TT_ENGINE" "$TT_SOURCE"
+  python3 "$TT_ROOT/ios/prepare_engine.py" "$TT_SOURCE"
+  TT_CMAKE=$(command -v cmake)
+  [[ -n $TT_CMAKE ]] || { echo 'cmake is required.' >&2; exit 2; }
+  TT_OPTIONS=()
+  # No desktop dependencies may satisfy an iPhone build. Optional codecs and
+  # physics dependencies need their own device builds in a later stage.
+  for package in TIFF OPENEXR SQUISH ASSIMP FCOLLADA EIGEN FFTW FFMPEG SWSCALE SWRESAMPLE OPUS FMODEX HARFBUZZ GTK3 BULLET SPEEDTREE GL GLES1 DX9 CG CGGL CGD3D9 X11 EGL OPENCV ARTOOLKIT VRPN MIMALLOC; do
+    TT_OPTIONS+=("-DHAVE_${package}=OFF")
+  done
+  "$TT_CMAKE" -S "$TT_SOURCE" -B "$TT_BUILD_DIR" -G 'Unix Makefiles' \
+    -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT="$TT_SDK" \
+    -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+    -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+    -DCMAKE_IGNORE_PREFIX_PATH='/opt/homebrew;/usr/local' \
+    -DBUILD_SHARED_LIBS=OFF -DBUILD_IPHONE=iPhoneOS \
+    -DBUILD_PANDATOOL=OFF -DBUILD_CONTRIB=OFF -DBUILD_MODELS=OFF \
+    -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DBUILD_INTERROGATE="$TT_BINDINGS" \
+    -DHAVE_PYTHON="$TT_BINDINGS" -DINTERROGATE_PYTHON_INTERFACE="$TT_BINDINGS" -DINTERROGATE_C_INTERFACE=OFF \
+    -DHAVE_AUDIO=ON -DHAVE_OPENAL=ON -DHAVE_COCOA=OFF -DHAVE_GLES2=ON \
+    -DOPENAL_INCLUDE_DIR="$TT_SDK/System/Library/Frameworks/OpenAL.framework/Headers" \
+    -DOPENAL_LIBRARY="$TT_SDK/System/Library/Frameworks/OpenAL.framework" \
+    -DOPENGLES2_FOUND=ON -DOPENGLES2_INCLUDE_DIR="$TT_SDK/System/Library/Frameworks/OpenGLES.framework/Headers" \
+    -DOPENGLES2_LIBRARY="$TT_SDK/System/Library/Frameworks/OpenGLES.framework" \
+    "${TT_OPTIONS[@]}" "${TT_EXTRA[@]}"
+  "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" \
+    --target tt_native_compile
+  xcrun lipo "$TT_BUILD_DIR/bin/tt_graphics_linkcheck" -verify_arch arm64
+  xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_graphics_linkcheck" \
+    | tee "$TT_WORK/graphics-platform.txt"
+  grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/graphics-platform.txt"
+  if [[ $TT_BINDINGS == ON ]]; then
+    "$TT_CMAKE" --build "$TT_BUILD_DIR" --parallel "$TT_JOBS" --target tt_python_compile
+    xcrun lipo "$TT_BUILD_DIR/bin/tt_python_linkcheck" -verify_arch arm64
+    xcrun vtool -show-build "$TT_BUILD_DIR/bin/tt_python_linkcheck" \
+      | tee "$TT_WORK/bindings-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/bindings-platform.txt"
+    TT_APP="$TT_BUILD_DIR/bin/OpenToontown.app"
+    xcrun lipo "$TT_APP/OpenToontown" -verify_arch arm64
+    xcrun vtool -show-build "$TT_APP/OpenToontown" | tee "$TT_WORK/app-platform.txt"
+    grep -Eq 'platform[[:space:]]+IOS$' "$TT_WORK/app-platform.txt"
+    plutil -lint "$TT_APP/Info.plist"
+    [[ -f "$TT_APP/Device.prc" ]] || { echo 'App platform config was not bundled.' >&2; exit 2; }
+    printf '%s\n' 'NATIVE APP HOST LINKED. Unsigned development bundle only; runtime/content packaging, dependencies and device gameplay are still required. No IPA produced.'
+  else
+    printf '%s\n' 'PANDA DEVICE C++ AND UIKIT PIPE LINKED. No runtime rendering test or playable IPA yet.'
+  fi
+fi

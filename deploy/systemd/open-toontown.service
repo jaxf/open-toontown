@@ -1,0 +1,32 @@
+[Unit]
+Description=Open Toontown private dedicated district
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=toontown
+Group=toontown
+WorkingDirectory=/opt/open-toontown
+Environment=PYTHONDONTWRITEBYTECODE=1
+EnvironmentFile=/etc/open-toontown/server.env
+StateDirectory=open-toontown
+StateDirectoryMode=0700
+ExecStart=/opt/open-toontown/venv/bin/python -m server.run --astron /opt/open-toontown/bin/astrond --state /var/lib/open-toontown --bind ${TOONTOWN_BIND}
+Restart=on-failure
+RestartSec=15
+TimeoutStopSec=60
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/open-toontown
+# AF_NETLINK is needed by interface enumeration (including tailscale wait).
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+
+[Install]
+WantedBy=multi-user.target

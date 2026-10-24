@@ -1,0 +1,5 @@
+repository=https://github.com/open-toontown/panda3d.git
+commit=06615744481946654610833679a0893589114504
+status=audited-not-ios-buildable
+# This is the audited upstream revision, not a tested iOS engine binary.
+# The user's working Mac engine is a cp39 arm64 macOS build, NOT an iOS slice.

@@ -58,7 +58,6 @@ class QuickLauncher(LauncherBase):
 
     def getRegistry(self, name, missingValue = None):
         self.notify.info('getRegistry %s' % ((name, missingValue),))
-        self.notify.info('checking env' % os.environ)
         if missingValue == None:
             missingValue = ''
         value = os.environ.get(name, missingValue)

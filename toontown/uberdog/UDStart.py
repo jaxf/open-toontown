@@ -38,8 +38,6 @@ class game:
 
 builtins.game = game
 
-loadPrcFile('etc/Configrc.prc')
-
 from otp.ai.AIBaseGlobal import *
 from toontown.uberdog.ToontownUDRepository import ToontownUDRepository
 

@@ -53,3 +53,11 @@ The first exploration build adds five neighborhoods, connected tunnels, an
 expanded Shtickerbook map, and server-authorized admin testing controls.
 See [the expansion guide](docs/WORLD_EXPANSION.md) for routes, screenshots,
 restart requirements, validation, and the content still to be built.
+
+# Native mobile port and private hosting (in progress)
+
+The full-game iPhone/iPad port has started; an installable IPA is **not yet
+available**. See [iOS status and release gates](docs/IOS_PORT.md) and
+[friends-only dedicated server setup](docs/DEDICATED_SERVER.md). The new remote
+client route does not launch local servers. Existing desktop/local launchers
+are unchanged. No cloud infrastructure has been provisioned.

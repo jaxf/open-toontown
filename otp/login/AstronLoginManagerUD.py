@@ -38,6 +38,9 @@ class AccountDB:
     def storeAccountId(self, databaseId, accountId, callback):
         raise NotImplementedError('storeAccountId')  # Must be overridden by subclass.
 
+    def release(self, databaseId):
+        pass
+
 
 class DeveloperAccountDB(AccountDB):
 
@@ -102,6 +105,37 @@ class DeveloperAccountDB(AccountDB):
             self.loginManager.notify.warning(f"Attempted to store user {databaseId} with account {accountId} even though it already exists!")
             callback(False)
 
+class InviteAccountDB(AccountDB):
+    """Private hosted mode; never accepts arbitrary developer account names."""
+    def __init__(self, loginManager):
+        super().__init__(loginManager)
+        from otp.login.TokenStore import TokenStore
+        path = config.GetString('accountdb-invite-file', '')
+        if not path:
+            raise ValueError('Invite authentication requires accountdb-invite-file')
+        self.store = TokenStore(path)
+        self.pending = set()
+
+    def lookup(self, playToken, callback):
+        result = self.store.lookup(playToken)
+        if not result:
+            callback({'success': False, 'reason': 'Invitation is invalid, expired or revoked.'})
+            return
+        identity = result['databaseId']
+        if not result['accountId']:
+            if identity in self.pending:
+                callback({'success': False, 'reason': 'Account creation is already in progress.'})
+                return
+            self.pending.add(identity)
+        callback(dict(result, success=True))
+
+    def storeAccountId(self, databaseId, accountId, callback):
+        callback(self.store.bind_account(databaseId, accountId))
+
+    def release(self, databaseId):
+        self.pending.discard(databaseId)
+
+
 class GameOperation:
 
     def __init__(self, loginManager, sender):
@@ -145,13 +179,17 @@ class LoginOperation(GameOperation):
         self.playToken = playToken
         self.loginManager.accountDb.lookup(playToken, self.__handleLookup)
 
+    def _handleDone(self):
+        self.loginManager.accountDb.release(self.databaseId)
+        super()._handleDone()
+
     def __handleLookup(self, result):
         # This is a callback function that will be called by the lookup function
         # of the AstronLoginManager's account DB interface. It processes the
         # lookup function's result & determines which operation should run next.
         if not result.get('success'):
             # The play token was rejected!
-            self.loginManager.air.writeServerEvent('play-token-rejected', self.sender, self.playToken)
+            self.loginManager.air.writeServerEvent('play-token-rejected', self.sender)
             self._handleCloseConnection(result.get('reason', 'The accounts database rejected your play token.'))
             return
 
@@ -853,8 +891,13 @@ class AstronLoginManagerUD(DistributedObjectGlobalUD):
         self.nameGenerator = NameGenerator()
 
         # Instantiate the account database backend.
-        # TODO: In the future, add more database interfaces & make this configurable.
-        self.accountDb = DeveloperAccountDB(self)
+        mode = config.GetString('accountdb-type', 'developer')
+        if mode == 'invite':
+            self.accountDb = InviteAccountDB(self)
+        elif mode == 'developer' and not config.GetBool('dedicated-server', False):
+            self.accountDb = DeveloperAccountDB(self)
+        else:
+            raise ValueError('Dedicated servers require invite authentication')
 
     def closeConnection(self, connectionId, reason='', forOperations=False, isAccount=False):
         if forOperations:

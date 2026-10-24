@@ -1,0 +1,68 @@
+name: iOS device build
+
+on:
+  push:
+    branches: [codex/ios-dedicated-server]
+    paths: ['ios/**', 'otp/**', 'toontown/**', 'assets/**', 'etc/**', '.github/workflows/ios-native.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  device-runtime:
+    # Standard public-repository runner; no larger runner or build cache.
+    if: github.event.repository.private == false
+    runs-on: macos-15
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [bindings, panda, controls]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            ios
+            otp
+            toontown
+            assets
+            etc
+            tests
+      - name: Check payload assembly policy
+        if: matrix.component == 'bindings'
+        run: |
+          python3 -m unittest discover -s tests -p test_ipa_packaging.py -v
+          python3 -m unittest discover -s tests -p test_ios_engine_startup.py -v
+      - name: Compile iPhone arm64 component
+        env:
+          TT_COMPONENT: ${{ matrix.component }}
+        run: bash ios/build_native.sh "$TT_COMPONENT" "$RUNNER_TEMP/toontown-ios"
+      - name: Assemble full game IPA for AltStore
+        if: matrix.component == 'bindings'
+        run: bash ios/assemble_ipa.sh "$RUNNER_TEMP/toontown-ios" "$RUNNER_TEMP/toontown-package"
+      - name: Upload device test package
+        if: matrix.component == 'bindings'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: OpenToontown-iPhone
+          path: |
+            ${{ runner.temp }}/toontown-package/OpenToontown.ipa
+            ${{ runner.temp }}/toontown-package/build-report.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+      - name: Report scope
+        if: always()
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'TEXT'
+          Device compilation and payload validation only. The bindings job
+          assembles the full IPA for AltStore re-signing and retains it for
+          one day. No simulator runs. Installation, native imports, startup,
+          remote login and actual gameplay still require a real iPhone/iPad.
+          TEXT

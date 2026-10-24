@@ -1,0 +1,10 @@
+/var/lib/open-toontown/logs/*.log {
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    su toontown toontown
+}

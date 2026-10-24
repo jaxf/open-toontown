@@ -30,18 +30,17 @@ MagicWordIndex = magicWordIndex.copy()
 # These are the default values generated with spellbook.json to help get them started
 spellbookJsonDefaultValues = CUSTOM_SPELLBOOK_DEFAULT
 
-# If we don't have a config directory, make it
-if not os.path.exists('config/'):
-    os.mkdir('config/')
+spellbookPath = config.GetString('spellbook-config-file', 'config/spellbook.json')
+os.makedirs(os.path.dirname(os.path.abspath(spellbookPath)), exist_ok=True)
 
 # If spellbook.json doesn't exist, make it
-if not os.path.isfile('config/spellbook.json'):
-    with open('config/spellbook.json', 'w') as data:
+if not os.path.isfile(spellbookPath):
+    with open(spellbookPath, 'w') as data:
         data.write(spellbookJsonDefaultValues)
         data.close()
 
 # Now load the data from spellbook.json
-with open('config/spellbook.json') as data:
+with open(spellbookPath) as data:
     spellbook = json.load(data)
 
 # Make changes to all the Magic Words based on the data in spellbook.json

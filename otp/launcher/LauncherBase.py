@@ -2,6 +2,7 @@ import sys
 import os
 import time
 import builtins
+from otp.otpbase.ClientPaths import client_path
 from panda3d.core import *
 from direct.showbase import DConfig
 from direct.showbase.DirectObject import DirectObject
@@ -52,10 +53,8 @@ class LauncherBase(DirectObject):
             ltime[4],
             ltime[5])
         logPrefix = self.getLogFileName() + '-'
-        if not os.path.exists('logs/'):
-            os.makedirs('logs/')
-        logfile = os.path.join('logs', logPrefix + logSuffix + '.log')
-        self.errorfile = 'errorCode'
+        logfile = client_path('logs', logPrefix + logSuffix + '.log')
+        self.errorfile = client_path('errorCode')
         log = open(logfile, 'a')
         logOut = LogAndOutput(sys.__stdout__, log)
         logErr = LogAndOutput(sys.__stderr__, log)
@@ -65,8 +64,7 @@ class LauncherBase(DirectObject):
         print('Current time: ' + time.asctime(time.localtime(time.time())) + ' ' + time.tzname[0])
         print('sys.path = ', sys.path)
         print('sys.argv = ', sys.argv)
-        if ConfigVariableBool('log-private-info', 0).value:
-            print('os.environ = ', os.environ)
+        # Never dump the environment: it can contain login/server credentials.
         self.miniTaskMgr = MiniTaskManager()
         self.nout = MultiplexStream()
         Notify.ptr().setOstreamPtr(self.nout, 0)

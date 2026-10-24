@@ -34,8 +34,9 @@ class ToonBase(OTPBase.OTPBase):
                 mode = 1
             if res == None:
                 res = (800, 600)
-            loadPrcFileData('toonBase Settings Window Res', 'win-size %s %s' % (res[0], res[1]))
-            loadPrcFileData('toonBase Settings Window FullScreen', 'fullscreen %s' % mode)
+            if not ConfigVariableBool('mobile-client', False).value:
+                loadPrcFileData('toonBase Settings Window Res', 'win-size %s %s' % (res[0], res[1]))
+                loadPrcFileData('toonBase Settings Window FullScreen', 'fullscreen %s' % mode)
             loadPrcFileData('toonBase Settings Music Active', 'audio-music-active %s' % music)
             loadPrcFileData('toonBase Settings Sound Active', 'audio-sfx-active %s' % sfx)
             loadPrcFileData('toonBase Settings Toon Chat Sounds', 'toon-chat-sounds %s' % toonChatSounds)
@@ -200,11 +201,8 @@ class ToonBase(OTPBase.OTPBase):
         self.walking = pressed
 
     def takeScreenShot(self):
-        if not os.path.exists('screenshots/'):
-            os.mkdir('screenshots/')
-
-        namePrefix = 'screenshot'
-        namePrefix = 'screenshots/' + launcher.logPrefix + namePrefix
+        from otp.otpbase.ClientPaths import client_path
+        namePrefix = client_path('screenshots', launcher.logPrefix + 'screenshot')
         timedif = globalClock.getRealTime() - self.lastScreenShotTime
         if self.glitchCount > 10 and self.walking:
             return
