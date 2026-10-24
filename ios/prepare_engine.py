@@ -10,6 +10,23 @@ import subprocess
 
 PIN = '06615744481946654610833679a0893589114504'
 
+# CullResult relies on alpha testing for binary and dual transparency.
+# The legacy GLES fallback shader lacks the fixed-function alpha test.
+ALPHA_TEST_GLSL = '''uniform vec2 p3d_TTAlphaTest;
+bool tt_alpha_pass(float a) {
+  float m = p3d_TTAlphaTest.x;
+  float r = p3d_TTAlphaTest.y;
+  if (m == 1.0) return false;
+  if (m == 2.0) return a < r;
+  if (m == 3.0) return a == r;
+  if (m == 4.0) return a <= r;
+  if (m == 5.0) return a > r;
+  if (m == 6.0) return a != r;
+  if (m == 7.0) return a >= r;
+  return true;
+}
+'''
+
 
 def replace_once(root, name, old, new):
     path = root / name
@@ -44,12 +61,49 @@ def defer_dna_loader(root):
             raise ValueError('Missing DNA model loading sites: ' + name)
 
 
+def restore_gles_alpha_test(root):
+    import json
+    shader = 'panda/src/glstuff/glGraphicsStateGuardian_src.cxx'
+    declaration = '  "uniform lowp vec4 p3d_TexAlphaOnly;\\n"\n'
+    code = ''.join('  ' + json.dumps(line + '\n') + '\n'
+                   for line in ALPHA_TEST_GLSL.splitlines())
+    replace_once(root, shader, declaration, declaration + code)
+    ending = '  "  gl_FragColor *= color;\\n"\n'
+    replace_once(root, shader, ending, ending +
+                 '  "  if (!tt_alpha_pass(gl_FragColor.a)) discard;\\n"\n')
+    header = 'panda/src/glstuff/glShaderContext_src.h'
+    replace_once(root, header, '  GLuint _glsl_program;\n',
+                 '  GLuint _glsl_program;\n  GLint _tt_alpha_test_index = -1;\n')
+    context = 'panda/src/glstuff/glShaderContext_src.cxx'
+    replace_once(root, context, '#include "colorAttrib.h"',
+                 '#include "alphaTestAttrib.h"\n#include "colorAttrib.h"')
+    location = '  GLint p = _glgsg->_glGetUniformLocation(_glsl_program, name_buffer);\n'
+    replace_once(root, context, location, location + '''
+  if (strcmp(name_buffer, "p3d_TTAlphaTest") == 0) {
+    _tt_alpha_test_index = p;
+    return;
+  }
+''')
+    # Alpha-only changes are absent from the legacy parameter dependency mask.
+    start = '  // Find out which state properties have changed.\n'
+    replace_once(root, context, start, '''  if (_tt_alpha_test_index >= 0) {
+    const AlphaTestAttrib *alpha;
+    target_rs->get_attrib_def(alpha);
+    const GLfloat test[2] = {(GLfloat)alpha->get_mode(),
+                             (GLfloat)alpha->get_reference_alpha()};
+    _glgsg->_glUniform2fv(_tt_alpha_test_index, 1, test);
+  }
+
+''' + start)
+
+
 def prepare(root):
     root = Path(root).resolve()
     revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != PIN:
         raise ValueError('Only the audited engine revision may be patched')
     defer_dna_loader(root)
+    restore_gles_alpha_test(root)
     # Upstream's set() stores its help text as a truthy value, ignoring OFF.
     # Make this a real boolean option so the C++-only gate needs no bindings.
     replace_once(root, 'dtool/Config.cmake',

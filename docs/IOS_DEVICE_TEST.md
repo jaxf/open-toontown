@@ -56,3 +56,22 @@ If AltStore refuses installation, send its exact error before trying gameplay.
 Activity-specific touch controls, in-game typing, audio interruption/route
 recovery and long-session behavior remain unfinished. This first test must not
 be treated as proof that every minigame or device lifecycle path works.
+# Build 4 rendering correction
+
+The real iPhone reached toon selection after joining the server's Tailscale
+network, but transparent panels rendered black and obscured Make-a-Toon.
+The pinned GLES fallback fragment shader did not implement AlphaTestAttrib;
+binary and dual-pass transparency still relied on that test in CullResult.
+The disposable iOS engine overlay now applies all comparison modes in the
+fallback fragment shader, updating the reference and mode on state changes.
+Desktop engine sources and custom game shaders are unchanged.
+
+Validation: a surfaceless Mesa ES2 test compiles the actual patched fallback
+fragment shader and reads back 55 pixels across all nine comparison modes and
+repeated state changes. Startup and IPA packaging regressions also pass.
+This is not a real iPhone gameplay result. Build 4 still needs device testing
+of toon selection, character creation, and entry into the playground.
+
+Local rendering regression command (prepared engine checkout required):
+`TT_TEST_ENGINE=/path/to/engine python3 -m unittest discover -s tests -p test_gles_alpha.py -v`
+
